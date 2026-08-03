@@ -15,7 +15,7 @@
     </script>
     <style>
         /* ============================================================
-           ROOT & RESET
+           ROOT & RESET (unchanged)
            ============================================================ */
         *,
         *::before,
@@ -138,7 +138,7 @@
         }
 
         /* ============================================================
-           SIDEBAR
+           SIDEBAR (modified: removed advanced management and profile for admin)
            ============================================================ */
         .app-sidebar {
             position: fixed;
@@ -354,7 +354,7 @@
         }
 
         /* ============================================================
-           TOP BAR
+           TOP BAR (no notification bell)
            ============================================================ */
         .topbar {
             display: flex;
@@ -748,7 +748,7 @@
         }
 
         /* ============================================================
-           TABLES
+           TABLES (responsive for mobile)
            ============================================================ */
         .table-wrap {
             overflow-x: auto;
@@ -1084,7 +1084,7 @@
         }
 
         /* ============================================================
-           MEMBER STATS GRID — clean, no emojis, only icons
+           MEMBER STATS GRID — clean, no emojis
            ============================================================ */
         .member-stats-grid {
             display: grid;
@@ -1118,7 +1118,7 @@
         }
 
         /* ============================================================
-           MEMBER CARD
+           MEMBER CARD (QR without label, with rotation)
            ============================================================ */
         .member-card-preview {
             background: linear-gradient(145deg, var(--primary-dark), var(--primary));
@@ -1260,6 +1260,13 @@
             flex-direction: column;
             align-items: center;
             min-width: 70px;
+            /* subtle rotation */
+            transform: rotate(2deg);
+            transition: transform 0.3s ease;
+        }
+
+        .member-card-preview .mc-body .mc-qr:hover {
+            transform: rotate(0deg) scale(1.02);
         }
 
         .member-card-preview .mc-body .mc-qr canvas {
@@ -1269,13 +1276,7 @@
             border-radius: 4px;
         }
 
-        .member-card-preview .mc-body .mc-qr .mc-qr-label {
-            font-size: 7px;
-            color: #475569;
-            margin-top: 2px;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-        }
+        /* removed .mc-qr-label */
 
         .member-card-preview .mc-footer {
             margin-top: 6px;
@@ -1905,7 +1906,7 @@
         }
 
         /* ============================================================
-           LOGIN PAGE
+           LOGIN PAGE (unchanged)
            ============================================================ */
         #loginPage {
             display: flex;
@@ -2757,8 +2758,8 @@
             }
 
             .member-card-preview .mc-body .mc-qr canvas {
-                width: 48px !important;
-                height: 48px !important;
+                width: 44px !important;
+                height: 44px !important;
             }
 
             .member-card-preview .mc-body .mc-info .mc-name {
@@ -2984,8 +2985,8 @@
             }
 
             .member-card-preview .mc-body .mc-qr canvas {
-                width: 40px !important;
-                height: 40px !important;
+                width: 36px !important;
+                height: 36px !important;
             }
 
             .member-card-preview .mc-body .mc-info .mc-name {
@@ -3121,13 +3122,18 @@
             .hide-phone {
                 display: none !important;
             }
+            /* Ensure name column is always visible on mobile for checkin and payments */
+            .table-wrap table td:nth-child(3),
+            .table-wrap table th:nth-child(3) {
+                display: table-cell !important;
+            }
         }
     </style>
 </head>
 <body>
 
     <!-- ============================================================
-    LOGIN PAGE
+    LOGIN PAGE (unchanged)
     ============================================================ -->
     <div id="loginPage">
         <div class="login-box">
@@ -3171,7 +3177,7 @@
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
     <!-- ============================================================
-    SIDEBAR — مع إضافة "تقرير اليوم"
+    SIDEBAR — removed advanced management and profile (profile hidden for admin via JS)
     ============================================================ -->
     <aside class="app-sidebar" id="appSidebar">
         <div class="brand">
@@ -3210,34 +3216,7 @@
                 <i class="fas fa-chart-line"></i>
                 <span>التحليلات</span>
             </button>
-            <!-- 5 new tabs -->
-            <div class="nav-label" style="margin-top:12px;">إدارة متقدمة</div>
-            <button class="nav-item" data-page="plans" onclick="switchTab('plans')">
-                <i class="fas fa-list-ul"></i>
-                <span>خطط العضوية</span>
-            </button>
-            <button class="nav-item" data-page="schedule" onclick="switchTab('schedule')">
-                <i class="fas fa-calendar-plus"></i>
-                <span>جدول الحصص</span>
-            </button>
-            <button class="nav-item" data-page="reports" onclick="switchTab('reports')">
-                <i class="fas fa-file-invoice"></i>
-                <span>التقارير المالية</span>
-            </button>
-            <button class="nav-item" data-page="risk" onclick="switchTab('risk')">
-                <i class="fas fa-shield-alt"></i>
-                <span>إدارة المخاطر</span>
-            </button>
-            <button class="nav-item" data-page="mobile" onclick="switchTab('mobile')">
-                <i class="fas fa-mobile-alt"></i>
-                <span>تطبيق الجوال</span>
-            </button>
-
-            <div class="nav-label" style="margin-top:12px;">شخصي</div>
-            <button class="nav-item" data-page="profile" onclick="switchTab('profile')" id="profileNav">
-                <i class="fas fa-id-card"></i>
-                <span>الملف الشخصي</span>
-            </button>
+            <!-- Removed: إدارة متقدمة and all its sub-tabs, and شخصي (profile) is hidden for admin -->
         </nav>
 
         <div class="sidebar-footer">
@@ -3255,11 +3234,11 @@
     </aside>
 
     <!-- ============================================================
-    MAIN CONTENT
+    MAIN CONTENT (same structure, but we removed the extra pages from HTML)
     ============================================================ -->
     <main class="app-main" id="appMain">
 
-        <!-- TOPBAR — بدون جرس الإشعارات -->
+        <!-- TOPBAR — no notification bell -->
         <header class="topbar">
             <div class="topbar-left">
                 <button class="menu-toggle" onclick="toggleSidebar()">
@@ -3409,6 +3388,7 @@
             <div class="flex-center" style="justify-content:space-between; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
                 <h3 style="font-size:18px;font-weight:700;"><i class="fas fa-calendar-day" style="color:var(--primary);"></i> تقرير اليوم</h3>
                 <span class="text-muted text-sm" id="dailyDate"></span>
+                <button class="btn btn-success btn-sm" onclick="exportDailyReportCSV()"><i class="fas fa-file-csv"></i> CSV</button>
             </div>
 
             <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
@@ -3434,28 +3414,43 @@
                 </div>
             </div>
 
-            <!-- تفاصيل إضافية -->
+            <!-- تفاصيل اليوم — Table format -->
             <div class="card-panel">
                 <div class="card-header">
                     <h3><i class="fas fa-list-ul"></i> تفاصيل اليوم</h3>
                 </div>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                    <div>
-                        <h4 style="font-size:13px; font-weight:600; color:var(--text-secondary);"><i class="fas fa-sign-in-alt"></i> دخول اليوم</h4>
-                        <div id="dailyCheckinsList" class="text-sm text-muted">-</div>
-                    </div>
-                    <div>
-                        <h4 style="font-size:13px; font-weight:600; color:var(--text-secondary);"><i class="fas fa-user-plus"></i> أعضاء جدد اليوم</h4>
-                        <div id="dailyNewMembersList" class="text-sm text-muted">-</div>
-                    </div>
-                    <div>
-                        <h4 style="font-size:13px; font-weight:600; color:var(--text-secondary);"><i class="fas fa-coins"></i> مدفوعات اليوم</h4>
-                        <div id="dailyPaymentsList" class="text-sm text-muted">-</div>
-                    </div>
-                    <div>
-                        <h4 style="font-size:13px; font-weight:600; color:var(--text-secondary);"><i class="fas fa-user-slash"></i> منتهي اليوم</h4>
-                        <div id="dailyExpiredList" class="text-sm text-muted">-</div>
-                    </div>
+                <div class="table-wrap">
+                    <table class="rank-table">
+                        <thead>
+                            <tr>
+                                <th>الفئة</th>
+                                <th>العدد</th>
+                                <th>الأسماء</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><i class="fas fa-sign-in-alt"></i> دخول اليوم</td>
+                                <td id="dailyCheckinsCount">-</td>
+                                <td id="dailyCheckinsList">-</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-user-plus"></i> أعضاء جدد</td>
+                                <td id="dailyNewMembersCount">-</td>
+                                <td id="dailyNewMembersList">-</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-coins"></i> مدفوعات اليوم</td>
+                                <td id="dailyPaymentsCount">-</td>
+                                <td id="dailyPaymentsList">-</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-user-slash"></i> منتهي اليوم</td>
+                                <td id="dailyExpiredCount">-</td>
+                                <td id="dailyExpiredList">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -3570,7 +3565,7 @@
         </div>
 
         <!-- ============================================================
-        PAGE: ANALYTICS (Admin)
+        PAGE: ANALYTICS (Admin) — improved with better error handling
         ============================================================ -->
         <div id="page-analytics" class="page-section">
             <div class="flex-center" style="justify-content:space-between; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
@@ -3648,131 +3643,36 @@
         </div>
 
         <!-- ============================================================
-        NEW PAGES: Plans, Schedule, Reports, Risk, Mobile (static)
-        ============================================================ -->
-        <!-- Plans -->
-        <div id="page-plans" class="page-section">
-            <h3 style="font-size:18px;font-weight:700;"><i class="fas fa-list-ul" style="color:var(--primary);"></i> خطط العضوية</h3>
-            <div class="card-panel">
-                <p>هنا يمكنك إدارة خطط العضوية (شهري، ربع سنوي، سنوي) مع الأسعار والميزات.</p>
-                <div class="table-wrap">
-                    <table>
-                        <thead><tr><th>الخطة</th><th>المدة</th><th>السعر (ج.م)</th><th>الميزات</th><th>إجراءات</th></tr></thead>
-                        <tbody>
-                            <tr><td>عادي</td><td>شهر</td><td>500</td><td>دخول غير محدود</td><td><button class="btn btn-sm btn-outline">تعديل</button></td></tr>
-                            <tr><td>متوسط</td><td>3 أشهر</td><td>1300</td><td>دخول + خصم 10%</td><td><button class="btn btn-sm btn-outline">تعديل</button></td></tr>
-                            <tr><td>مميز</td><td>6 أشهر</td><td>2400</td><td>دخول + خصم 20% + مدرب شخصي</td><td><button class="btn btn-sm btn-outline">تعديل</button></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <button class="btn btn-success btn-sm" style="margin-top:12px;"><i class="fas fa-plus"></i> إضافة خطة جديدة</button>
-            </div>
-        </div>
-
-        <!-- Schedule -->
-        <div id="page-schedule" class="page-section">
-            <h3 style="font-size:18px;font-weight:700;"><i class="fas fa-calendar-plus" style="color:var(--primary);"></i> جدول الحصص التدريبية</h3>
-            <div class="card-panel">
-                <p>إدارة جدول الحصص (يوجا، كروس فيت، تمارين جماعية).</p>
-                <div class="table-wrap">
-                    <table>
-                        <thead><tr><th>اليوم</th><th>الوقت</th><th>النشاط</th><th>المدرب</th><th>عدد المشاركين</th></tr></thead>
-                        <tbody>
-                            <tr><td>الاثنين</td><td>18:00 - 19:00</td><td>يوجا</td><td>أحمد</td><td>12/20</td></tr>
-                            <tr><td>الأربعاء</td><td>19:00 - 20:00</td><td>كروس فيت</td><td>محمد</td><td>8/15</td></tr>
-                            <tr><td>الجمعة</td><td>17:00 - 18:00</td><td>تمارين جماعية</td><td>سارة</td><td>15/25</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <button class="btn btn-success btn-sm" style="margin-top:12px;"><i class="fas fa-plus"></i> إضافة حصة جديدة</button>
-            </div>
-        </div>
-
-        <!-- Reports -->
-        <div id="page-reports" class="page-section">
-            <h3 style="font-size:18px;font-weight:700;"><i class="fas fa-file-invoice" style="color:var(--primary);"></i> التقارير المالية</h3>
-            <div class="card-panel">
-                <p>تقارير الإيرادات والمصروفات الشهرية والسنوية مع تحليل التدفق النقدي.</p>
-                <div class="kpi-row">
-                    <div class="kpi-item"><div class="kpi-val">25,400 ج.م</div><div class="kpi-label">إيرادات الشهر</div></div>
-                    <div class="kpi-item"><div class="kpi-val">8,200 ج.م</div><div class="kpi-label">مصروفات الشهر</div></div>
-                    <div class="kpi-item"><div class="kpi-val">17,200 ج.م</div><div class="kpi-label">صافي الربح</div></div>
-                    <div class="kpi-item"><div class="kpi-val">+12%</div><div class="kpi-label">نمو الربح</div></div>
-                </div>
-                <button class="btn btn-primary btn-sm"><i class="fas fa-download"></i> تصدير التقرير (PDF)</button>
-            </div>
-        </div>
-
-        <!-- Risk -->
-        <div id="page-risk" class="page-section">
-            <h3 style="font-size:18px;font-weight:700;"><i class="fas fa-shield-alt" style="color:var(--primary);"></i> إدارة المخاطر والامتثال</h3>
-            <div class="card-panel">
-                <p>سجل الحوادث، تقييم المخاطر، وإجراءات السلامة.</p>
-                <div class="table-wrap">
-                    <table>
-                        <thead><tr><th>التاريخ</th><th>الحدث</th><th>النوع</th><th>الحالة</th><th>الإجراء</th></tr></thead>
-                        <tbody>
-                            <tr><td>2025-03-01</td><td>سقوط عضو أثناء التمرين</td><td>إصابة</td><td>تم التعامل</td><td>تقرير طبي</td></tr>
-                            <tr><td>2025-02-15</td><td>جهاز مشي معطل</td><td>صيانة</td><td>تم الإصلاح</td><td>استبدال القطع</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <button class="btn btn-success btn-sm" style="margin-top:12px;"><i class="fas fa-plus"></i> تسجيل حدث جديد</button>
-            </div>
-        </div>
-
-        <!-- Mobile -->
-        <div id="page-mobile" class="page-section">
-            <h3 style="font-size:18px;font-weight:700;"><i class="fas fa-mobile-alt" style="color:var(--primary);"></i> تطبيق الجوال</h3>
-            <div class="card-panel">
-                <p>إعدادات ومعلومات عن تطبيق الجوال للتواصل مع الأعضاء.</p>
-                <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:12px;">
-                    <div><i class="fas fa-qrcode" style="font-size:48px;color:var(--primary);"></i><br>رابط التحميل: <a href="#">progym.app</a></div>
-                    <div><i class="fas fa-code" style="font-size:48px;color:var(--primary);"></i><br>إصدار API: v2.3.1</div>
-                    <div><i class="fas fa-database" style="font-size:48px;color:var(--primary);"></i><br>آخر مزامنة: 2025-03-15 14:30</div>
-                </div>
-                <button class="btn btn-primary btn-sm" style="margin-top:12px;"><i class="fas fa-sync"></i> مزامنة التطبيق</button>
-            </div>
-        </div>
-
-        <!-- ============================================================
-        PAGE: PROFILE (Member Dashboard) — نظيف، بدون إيموجي
+        PAGE: PROFILE (Member Dashboard) — included but hidden for admin
         ============================================================ -->
         <div id="page-profile" class="page-section">
-
-            <!-- 6 Member Stat Cards — بدون إيموجي، فقط أيقونات -->
+            <!-- 6 Member Stat Cards -->
             <div class="member-stats-grid" id="memberStatsGrid">
-
                 <div class="stat-card-click" onclick="showCardDetail('member_revenue')">
                     <div class="stat-top"><div class="stat-icon blue"><i class="fas fa-credit-card"></i></div></div>
                     <div class="num" id="mStatRevenue">-</div>
                     <div class="label">مدفوعات هذا الشهر</div>
                 </div>
-
                 <div class="stat-card-click" onclick="showCardDetail('member_xp')">
                     <div class="stat-top"><div class="stat-icon green"><i class="fas fa-star"></i></div></div>
                     <div class="num" id="mStatXp">-</div>
                     <div class="label">نقاط الاجتهاد (XP)</div>
                 </div>
-
                 <div class="stat-card-click" onclick="showCardDetail('member_peak')">
                     <div class="stat-top"><div class="stat-icon amber"><i class="fas fa-clock"></i></div></div>
                     <div class="num" id="mStatPeak">-</div>
                     <div class="label">أكثر وقت دخول</div>
                 </div>
-
                 <div class="stat-card-click" onclick="showCardDetail('member_rank')">
                     <div class="stat-top"><div class="stat-icon purple"><i class="fas fa-trophy"></i></div></div>
                     <div class="num" id="mStatRank">-</div>
                     <div class="label">اللقب الشهري</div>
                 </div>
-
                 <div class="stat-card-click" onclick="showCardDetail('member_percent')">
                     <div class="stat-top"><div class="stat-icon indigo"><i class="fas fa-percent"></i></div></div>
                     <div class="num" id="mStatPercent">-</div>
                     <div class="label">دخول اليوم</div>
                 </div>
-
                 <div class="stat-card-click" onclick="showCardDetail('member_daysleft')">
                     <div class="stat-top"><div class="stat-icon red"><i class="fas fa-hourglass-half"></i></div></div>
                     <div class="num" id="mStatDaysLeft">-</div>
@@ -3790,7 +3690,6 @@
                     <h3>العضوية منتهية الصلاحية</h3>
                     <p>يرجى الاتصال بالمسؤول</p>
                 </div>
-
                 <div style="display:flex; flex-wrap:wrap; gap:14px; margin-bottom:10px;">
                     <div style="flex:1; min-width:160px;">
                         <h3 id="profileName" style="font-size:22px;font-weight:800;">-</h3>
@@ -3803,8 +3702,7 @@
                         <span id="profileExpiryStatus" style="font-weight:700;font-size:13px;display:block;margin-top:4px;"></span>
                     </div>
                 </div>
-
-                <!-- Member Card Preview -->
+                <!-- Member Card Preview with QR only -->
                 <div style="display:flex; justify-content:center; margin-top:6px;">
                     <div class="member-card-preview" id="memberCardPreview">
                         <div class="mc-header">
@@ -3821,10 +3719,7 @@
                                 <div class="mc-detail"><i class="fas fa-star"></i> XP: <span id="previewXp">0</span></div>
                             </div>
                             <div class="mc-qr" id="profileQrBox">
-                                <div style="width:64px;height:64px;display:flex;align-items:center;justify-content:center;background:#f8fafc;border-radius:8px;margin:0 auto;">
-                                    <span style="color:#94a3b8;font-size:8px;">QR</span>
-                                </div>
-                                <div class="mc-qr-label">رقم العضو</div>
+                                <!-- QR will be rendered here; no label -->
                             </div>
                         </div>
                         <div class="mc-footer">
@@ -3833,7 +3728,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="card-actions-row no-print">
                     <button class="btn btn-primary btn-sm" onclick="downloadQR()"><i class="fas fa-qrcode"></i> QR</button>
                     <button class="btn btn-primary btn-sm" onclick="downloadMemberCardPDF()"><i class="fas fa-file-pdf"></i> PDF</button>
@@ -3914,7 +3808,7 @@
     </main>
 
     <!-- ============================================================
-    MODALS — تسجيل عضو جديد
+    MODALS — تسجيل عضو جديد (unchanged)
     ============================================================ -->
     <div class="modal-overlay" id="registerMemberModal">
         <div class="modal-box">
@@ -3981,7 +3875,7 @@
     </div>
 
     <!-- ============================================================
-    MODALS — استعادة/تعيين كلمة مرور المشرف
+    MODALS — استعادة/تعيين كلمة مرور المشرف (unchanged)
     ============================================================ -->
     <div class="modal-overlay" id="registerAdminModal">
         <div class="modal-box">
@@ -4030,7 +3924,7 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- ============================================================
-    JAVASCRIPT — Full Version with all fixes
+    JAVASCRIPT — Full version with all fixes
     ============================================================ -->
     <script>
         // ============================================================
@@ -4069,7 +3963,7 @@
         let refreshInProgress = false;
 
         // ============================================================
-        // XP SYSTEM — يعتمد على التتابع (consecutive days)
+        // XP SYSTEM — based on consecutive days (streak)
         // ============================================================
         function getXp(memberId) {
             const xp = localStorage.getItem('xp_' + memberId);
@@ -4085,19 +3979,15 @@
             setXp(memberId, current + points);
         }
 
-        // حساب XP على أساس التتابع (streak)
+        // Calculate XP based on streak
         function calculateStreakXp(checkins, memberId) {
             const today = getTodayStr();
-            // Get sorted checkin dates for this member
             const dates = checkins
                 .filter(c => c.member_id === memberId)
                 .map(c => normalizeDate(c.checkin_date))
                 .filter(d => d)
                 .sort();
-
             if (dates.length === 0) return 0;
-
-            // Calculate current streak
             let streak = 0;
             let checkDate = today;
             while (dates.includes(checkDate)) {
@@ -4106,22 +3996,16 @@
                 d.setDate(d.getDate() - 1);
                 checkDate = d.toISOString().split('T')[0];
             }
-
-            // XP based on streak: day 1 = 1, day 2 = 2, day 3 = 4, day 4 = 6, day 5 = 8, etc.
-            // Bonus for longer streaks
             let xpEarned = 0;
             for (let i = 1; i <= streak; i++) {
-                xpEarned += Math.min(i * 2, 10); // cap at 10 XP per day
+                xpEarned += Math.min(i * 2, 10);
             }
-            // Bonus for streak >= 5
             if (streak >= 5) xpEarned += 10;
             if (streak >= 10) xpEarned += 20;
             if (streak >= 20) xpEarned += 50;
-
             return xpEarned;
         }
 
-        // تحديث XP للعضو
         function updateMemberXp(memberId, checkins) {
             const xp = calculateStreakXp(checkins, memberId);
             setXp(memberId, xp);
@@ -4129,17 +4013,10 @@
         }
 
         // ============================================================
-        // POINTS SYSTEM — بناءً على عدد مرات الدفع (1 دفعة = 1 نقطة)
+        // POINTS SYSTEM — based on number of payments
         // ============================================================
         function getPoints(memberId) {
-            // Points = number of payments for this member
-            const payments = allPayments.filter(p => p.member_id === memberId);
-            return payments.length;
-        }
-
-        function addPoint(memberId) {
-            // Points are calculated from payments, so no need to store separately
-            // Just trigger a refresh of the display
+            return allPayments.filter(p => p.member_id === memberId).length;
         }
 
         // ============================================================
@@ -4167,7 +4044,7 @@
         }
 
         function addNotification(msg, type = 'info') {
-            // Only store if admin
+            // Only for admin
             const role = localStorage.getItem('gym_role');
             if (role !== 'admin') return;
             const icon = type === 'error' ? 'fa-times-circle' : type === 'warning' ? 'fa-exclamation-triangle' :
@@ -4260,7 +4137,7 @@
             return formatNumber(n) + ' ' + CURRENCY_SYMBOL;
         }
 
-        function getThaiMonth(dateStr) {
+        function getMonthLabel(dateStr) {
             if (!dateStr) return '-';
             try {
                 const d = new Date(normalizeDate(dateStr));
@@ -4826,12 +4703,7 @@
                 checkin: { title: 'تسجيل الدخول', sub: 'تسجيل وعرض سجل الدخول' },
                 payments: { title: 'المدفوعات', sub: 'إدارة سجل المدفوعات' },
                 analytics: { title: 'التحليلات', sub: 'رؤى واتجاهات' },
-                profile: { title: 'الملف الشخصي', sub: 'بياناتك الشخصية وإحصائياتك' },
-                plans: { title: 'خطط العضوية', sub: 'إدارة خطط الاشتراك' },
-                schedule: { title: 'جدول الحصص', sub: 'إدارة الجدول الزمني' },
-                reports: { title: 'التقارير المالية', sub: 'تحليل الإيرادات والمصروفات' },
-                risk: { title: 'إدارة المخاطر', sub: 'السلامة والامتثال' },
-                mobile: { title: 'تطبيق الجوال', sub: 'إعدادات التطبيق' }
+                profile: { title: 'الملف الشخصي', sub: 'بياناتك الشخصية وإحصائياتك' }
             };
             const info = titles[page] || { title: 'صفحة', sub: '' };
             document.getElementById('pageTitle').textContent = info.title;
@@ -4900,8 +4772,6 @@
 
                 renderDashboardCharts(data);
                 showToast('✅ تم تحميل البيانات بنجاح', 'success');
-
-                // تحديث تقرير اليوم تلقائياً
                 loadDailyReport();
 
             } catch (e) {
@@ -4984,7 +4854,7 @@
             const textColor = isDarkMode ? '#b0b0cc' : '#4a4a6a';
             const gridColor = isDarkMode ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
             const revData = data.revenue_by_month || [];
-            const revLabels = revData.map(d => getThaiMonth(d.month));
+            const revLabels = revData.map(d => getMonthLabel(d.month));
             const revValues = revData.map(d => parseFloat(d.total) || 0);
             renderChart('revenueChart', 'bar', revLabels, revValues, 'الإيرادات (ج.م)', '#0ea5e9', textColor, gridColor);
             const trendData = data.checkin_trend || [];
@@ -5028,45 +4898,62 @@
         }
 
         // ============================================================
-        // DAILY REPORT (تقرير اليوم)
+        // DAILY REPORT
         // ============================================================
         function loadDailyReport() {
             const today = getTodayStr();
             document.getElementById('dailyDate').textContent = formatDate(today);
 
-            // اليوم
             const todayCheckins = allCheckins.filter(c => normalizeDate(c.checkin_date) === today);
             document.getElementById('dailyCheckins').textContent = todayCheckins.length;
+            document.getElementById('dailyCheckinsCount').textContent = todayCheckins.length;
             const checkinNames = todayCheckins.map(c => {
                 const m = allMembers.find(mem => mem.member_id === c.member_id);
                 return m ? m.full_name : c.member_id;
             }).join('، ') || 'لا يوجد';
-            document.getElementById('dailyCheckinsList').innerHTML = checkinNames;
+            document.getElementById('dailyCheckinsList').textContent = checkinNames;
 
-            // أعضاء جدد اليوم
             const newToday = allMembers.filter(m => m.start_date && normalizeDate(m.start_date) === today);
             document.getElementById('dailyNewMembers').textContent = newToday.length;
+            document.getElementById('dailyNewMembersCount').textContent = newToday.length;
             const newNames = newToday.map(m => m.full_name + ' (' + m.member_id + ')').join('، ') || 'لا يوجد';
-            document.getElementById('dailyNewMembersList').innerHTML = newNames;
+            document.getElementById('dailyNewMembersList').textContent = newNames;
 
-            // مدفوعات اليوم
             const payToday = allPayments.filter(p => p.payment_date && normalizeDate(p.payment_date) === today);
             document.getElementById('dailyPayments').textContent = payToday.length;
+            document.getElementById('dailyPaymentsCount').textContent = payToday.length;
             const payDetails = payToday.map(p => {
                 const m = allMembers.find(mem => mem.member_id === p.member_id);
                 return (m ? m.full_name : p.member_id) + ' (' + toEGP(p.amount) + ')';
             }).join('، ') || 'لا يوجد';
-            document.getElementById('dailyPaymentsList').innerHTML = payDetails;
+            document.getElementById('dailyPaymentsList').textContent = payDetails;
 
-            // منتهي اليوم
             const expiredToday = allMembers.filter(m => m.expiry_date && normalizeDate(m.expiry_date) === today);
             document.getElementById('dailyExpired').textContent = expiredToday.length;
+            document.getElementById('dailyExpiredCount').textContent = expiredToday.length;
             const expiredNames = expiredToday.map(m => m.full_name + ' (' + m.member_id + ')').join('، ') || 'لا يوجد';
-            document.getElementById('dailyExpiredList').innerHTML = expiredNames;
+            document.getElementById('dailyExpiredList').textContent = expiredNames;
+        }
+
+        function exportDailyReportCSV() {
+            const today = getTodayStr();
+            const headers = ['الفئة', 'العدد', 'الأسماء'];
+            const rows = [
+                ['دخول اليوم', document.getElementById('dailyCheckinsCount').textContent, document.getElementById(
+                    'dailyCheckinsList').textContent],
+                ['أعضاء جدد', document.getElementById('dailyNewMembersCount').textContent, document.getElementById(
+                    'dailyNewMembersList').textContent],
+                ['مدفوعات اليوم', document.getElementById('dailyPaymentsCount').textContent, document.getElementById(
+                    'dailyPaymentsList').textContent],
+                ['منتهي اليوم', document.getElementById('dailyExpiredCount').textContent, document.getElementById(
+                    'dailyExpiredList').textContent]
+            ];
+            downloadCSV(`daily_report_${today}.csv`, headers, rows);
+            showToast('✅ تم تصدير تقرير اليوم CSV', 'success');
         }
 
         // ============================================================
-        // SHOW STAT DETAIL (Admin Modal)
+        // SHOW STAT DETAIL (Admin Modal) — improved and concise
         // ============================================================
         function showStatDetail(type) {
             const todayStr = getTodayStr();
@@ -5092,8 +4979,8 @@
                 case 'members': {
                     title = '👥 إجمالي الأعضاء';
                     let table =
-                        `<table class="rank-table"><thead><tr><th>الرقم</th><th>الاسم</th><th>الهاتف</th><th>النوع</th><th>الحالة</th><th>انتهاء الصلاحية</th><th>اتصال</th></tr></thead><tbody>`;
-                    members.forEach(m => {
+                        `<div class="table-wrap"><table class="rank-table"><thead><tr><th>الرقم</th><th>الاسم</th><th>الهاتف</th><th>النوع</th><th>الحالة</th><th>انتهاء الصلاحية</th><th>اتصال</th></tr></thead><tbody>`;
+                    members.slice(0, 50).forEach(m => {
                         const phone = m.phone || '';
                         const wa = formatPhoneForWhatsApp(phone);
                         const waLink = wa ? `https://wa.me/${wa}?text=${encodeURIComponent('👋 مرحباً ' + m.full_name + ' من Pro Gym')}` : '#';
@@ -5112,8 +4999,43 @@
                                 <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
                             </tr>`;
                     });
-                    table += '</tbody></table>';
-                    content = `العدد: <strong>${members.length}</strong> عضو<br><br>${table}`;
+                    table += '</tbody></table></div>';
+                    content =
+                        `العدد: <strong>${members.length}</strong> عضو (عرض 50 فقط)<br><br>${table}`;
+                    break;
+                }
+                case 'renewal': {
+                    title = '🔄 معدل التجديد';
+                    let activeCount = 0;
+                    members.forEach(m => {
+                        if (!m.expiry_date) { activeCount++; return; }
+                        const expDate = normalizeDate(m.expiry_date);
+                        if (!expDate) { activeCount++; return; }
+                        if (expDate >= todayStr) activeCount++;
+                    });
+                    const total = members.length;
+                    const rate = total > 0 ? Math.round((activeCount / total) * 100) : 0;
+                    const notRenewed = total - activeCount;
+                    content = `
+                            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
+                                <div style="background:var(--bg-body);border-radius:8px;padding:12px;border:1px solid rgba(0,0,0,0.04);text-align:center;">
+                                    <div style="font-size:28px;font-weight:700;color:var(--primary);">${rate}%</div>
+                                    <div style="font-size:12px;color:var(--text-muted);">معدل التجديد</div>
+                                </div>
+                                <div style="background:var(--bg-body);border-radius:8px;padding:12px;border:1px solid rgba(0,0,0,0.04);text-align:center;">
+                                    <div style="font-size:28px;font-weight:700;color:var(--success);">${activeCount}</div>
+                                    <div style="font-size:12px;color:var(--text-muted);">تم التجديد</div>
+                                </div>
+                                <div style="background:var(--bg-body);border-radius:8px;padding:12px;border:1px solid rgba(0,0,0,0.04);text-align:center;">
+                                    <div style="font-size:28px;font-weight:700;color:var(--danger);">${notRenewed}</div>
+                                    <div style="font-size:12px;color:var(--text-muted);">لم يجدد</div>
+                                </div>
+                            </div>
+                            <div class="progress-wrap">
+                                <div class="progress-label"><span>معدل التجديد</span><span>${rate}%</span></div>
+                                <div class="progress-track"><div class="fill" style="width:${rate}%;"></div></div>
+                            </div>
+                        `;
                     break;
                 }
                 case 'todayCheckins': {
@@ -5121,8 +5043,8 @@
                     const todayCheckins = checkins.filter(c => normalizeDate(c.checkin_date) === todayStr);
                     if (!todayCheckins.length) { content = 'لا يوجد دخول اليوم'; } else {
                         let table =
-                            `<table class="rank-table"><thead><tr><th>#</th><th>الرقم</th><th>الاسم</th><th>الوقت</th><th>اتصال</th></tr></thead><tbody>`;
-                        todayCheckins.forEach((c, i) => {
+                            `<div class="table-wrap"><table class="rank-table"><thead><tr><th>#</th><th>الرقم</th><th>الاسم</th><th>الوقت</th><th>اتصال</th></tr></thead><tbody>`;
+                        todayCheckins.slice(0, 50).forEach((c, i) => {
                             const member = members.find(m => m.member_id === c.member_id);
                             const name = member ? member.full_name : '-';
                             const phone = member ? member.phone : '';
@@ -5136,8 +5058,9 @@
                                     <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
                                 </tr>`;
                         });
-                        table += '</tbody></table>';
-                        content = `العدد: <strong>${todayCheckins.length}</strong> مرة<br><br>${table}`;
+                        table += '</tbody></table></div>';
+                        content =
+                        `العدد: <strong>${todayCheckins.length}</strong> مرة<br><br>${table}`;
                     }
                     break;
                 }
@@ -5148,8 +5071,8 @@
                         thisMonth);
                     if (!newMembers.length) { content = 'لا يوجد أعضاء جدد هذا الشهر'; } else {
                         let table =
-                            `<table class="rank-table"><thead><tr><th>الاسم</th><th>الرقم</th><th>تاريخ التسجيل</th><th>النوع</th><th>الحالة</th><th>اتصال</th></tr></thead><tbody>`;
-                        newMembers.forEach(m => {
+                            `<div class="table-wrap"><table class="rank-table"><thead><tr><th>الاسم</th><th>الرقم</th><th>تاريخ التسجيل</th><th>النوع</th><th>الحالة</th><th>اتصال</th></tr></thead><tbody>`;
+                        newMembers.slice(0, 50).forEach(m => {
                             const statusLabel = m.status === 'active' ? '✅ نشط' : m.status === 'expired' ?
                                 '🔴 منتهي' : m.status === 'expiring_soon' ? '🟡 ينتهي قريباً' : '⚪ غير مدفوع';
                             const phone = m.phone || '';
@@ -5167,8 +5090,9 @@
                                     <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
                                 </tr>`;
                         });
-                        table += '</tbody></table>';
-                        content = `العدد: <strong>${newMembers.length}</strong> عضو<br><br>${table}`;
+                        table += '</tbody></table></div>';
+                        content =
+                            `العدد: <strong>${newMembers.length}</strong> عضو<br><br>${table}`;
                     }
                     break;
                 }
@@ -5178,8 +5102,8 @@
                     if (!todayPay.length) { content = 'لا توجد مدفوعات اليوم'; } else {
                         const totalToday = todayPay.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
                         let table =
-                            `<table class="rank-table"><thead><tr><th>#</th><th>الرقم</th><th>الاسم</th><th>المبلغ</th><th>انتهاء الصلاحية</th><th>اتصال</th></tr></thead><tbody>`;
-                        todayPay.forEach((p, i) => {
+                            `<div class="table-wrap"><table class="rank-table"><thead><tr><th>#</th><th>الرقم</th><th>الاسم</th><th>المبلغ</th><th>انتهاء الصلاحية</th><th>اتصال</th></tr></thead><tbody>`;
+                        todayPay.slice(0, 50).forEach((p, i) => {
                             const member = members.find(m => m.member_id === p.member_id);
                             const name = member ? member.full_name : '-';
                             const phone = member ? member.phone : '';
@@ -5196,9 +5120,9 @@
                                     <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
                                 </tr>`;
                         });
-                        table += '</tbody></table>';
+                        table += '</tbody></table></div>';
                         content =
-                        `الإجمالي: <strong>${toEGP(totalToday)}</strong> (${todayPay.length} عملية)<br><br>${table}`;
+                            `الإجمالي: <strong>${toEGP(totalToday)}</strong> (${todayPay.length} عملية)<br><br>${table}`;
                     }
                     break;
                 }
@@ -5212,8 +5136,8 @@
                     });
                     if (!expired.length) { content = 'لا يوجد أعضاء منتهي الصلاحية اليوم'; } else {
                         let table =
-                            `<table class="rank-table"><thead><tr><th>الاسم</th><th>الهاتف</th><th>انتهاء الصلاحية</th><th>اتصال</th></tr></thead><tbody>`;
-                        expired.forEach(m => {
+                            `<div class="table-wrap"><table class="rank-table"><thead><tr><th>الاسم</th><th>الهاتف</th><th>انتهاء الصلاحية</th><th>اتصال</th></tr></thead><tbody>`;
+                        expired.slice(0, 50).forEach(m => {
                             const phone = m.phone || '';
                             const wa = formatPhoneForWhatsApp(phone);
                             const msg = encodeURIComponent(
@@ -5227,8 +5151,9 @@
                                     <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
                                 </tr>`;
                         });
-                        table += '</tbody></table>';
-                        content = `العدد: <strong>${expired.length}</strong> عضو<br><br>${table}`;
+                        table += '</tbody></table></div>';
+                        content =
+                            `العدد: <strong>${expired.length}</strong> عضو<br><br>${table}`;
                     }
                     break;
                 }
@@ -5243,8 +5168,8 @@
                     });
                     if (!expiring.length) { content = 'لا يوجد أعضاء على وشك الانتهاء'; } else {
                         let table =
-                            `<table class="rank-table"><thead><tr><th>الاسم</th><th>الهاتف</th><th>متبقي</th><th>اتصال</th></tr></thead><tbody>`;
-                        expiring.forEach(m => {
+                            `<div class="table-wrap"><table class="rank-table"><thead><tr><th>الاسم</th><th>الهاتف</th><th>متبقي</th><th>اتصال</th></tr></thead><tbody>`;
+                        expiring.slice(0, 50).forEach(m => {
                             const expDate = normalizeDate(m.expiry_date);
                             const daysLeft = daysBetween(todayStr, expDate);
                             const phone = m.phone || '';
@@ -5260,8 +5185,9 @@
                                     <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
                                 </tr>`;
                         });
-                        table += '</tbody></table>';
-                        content = `العدد: <strong>${expiring.length}</strong> عضو<br><br>${table}`;
+                        table += '</tbody></table></div>';
+                        content =
+                            `العدد: <strong>${expiring.length}</strong> عضو<br><br>${table}`;
                     }
                     break;
                 }
@@ -5510,7 +5436,7 @@
         }
 
         // ============================================================
-        // CHECKIN (Admin)
+        // CHECKIN (Admin) — sorted latest first, name visible on mobile
         // ============================================================
         async function fetchCheckins() {
             try {
@@ -5545,9 +5471,7 @@
             try {
                 await apiCall('/checkin', { method: 'POST', body: JSON.stringify({ member_id: id }) });
                 showToast(`✅ تم تسجيل دخول ${id}`, 'success');
-                // تحديث XP بناءً على التتابع
                 const memberCheckins = allCheckins.filter(c => c.member_id === id);
-                // إضافة الشيك-إن الحالي مؤقتاً للحساب
                 const allC = [...allCheckins, { member_id: id, checkin_date: getTodayStr(), checkin_time: new Date()
                         .toLocaleTimeString() }];
                 const xp = updateMemberXp(id, allC);
@@ -5561,7 +5485,7 @@
         }
 
         // ============================================================
-        // PAYMENTS (Admin)
+        // PAYMENTS (Admin) — sorted latest first, name visible
         // ============================================================
         async function fetchPayments() {
             try {
@@ -5600,7 +5524,6 @@
                 await apiCall('/payments', { method: 'POST', body: JSON.stringify({ member_id: id, amount,
                         months_paid: months }) });
                 showToast(`✅ تم تسجيل الدفع لـ ${id}`, 'success');
-                // النقاط تُحسب تلقائياً من عدد المدفوعات
                 const points = getPoints(id);
                 showToast(`💳 النقاط الحالية: ${points}`, 'info');
                 $('paymentAddForm').style.display = 'none';
@@ -5625,7 +5548,7 @@
         }
 
         // ============================================================
-        // ANALYTICS (Admin)
+        // ANALYTICS (Admin) — improved with error handling
         // ============================================================
         let analyticsTab = 'growth';
 
@@ -5679,11 +5602,11 @@
             const textColor = isDarkMode ? '#b0b0cc' : '#4a4a6a';
             const gridColor = isDarkMode ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
             const growth = data.growth?.monthly || [];
-            const gLabels = growth.map(d => getThaiMonth(d.month));
+            const gLabels = growth.map(d => getMonthLabel(d.month));
             const gValues = growth.map(d => parseInt(d.count) || 0);
             renderChart('growthChart', 'bar', gLabels, gValues, 'الأعضاء', '#8b5cf6', textColor, gridColor);
             const retention = data.growth?.retention || [];
-            const rLabels = retention.map(d => getThaiMonth(d.month));
+            const rLabels = retention.map(d => getMonthLabel(d.month));
             const rValues = retention.map(d => parseFloat(d.rate) || 0);
             renderChart('retentionChart', 'line', rLabels, rValues, 'معدل الاحتفاظ (%)', '#10b981', textColor, gridColor);
             const revType = data.revenue?.by_type || [];
@@ -5691,7 +5614,7 @@
             const rtValues = revType.map(d => parseFloat(d.total) || 0);
             renderChart('revenueByTypeChart', 'bar', rtLabels, rtValues, 'الإيرادات (ج.م)', '#0ea5e9', textColor, gridColor);
             const forecast = data.revenue?.forecast || [];
-            const fLabels = forecast.map(d => getThaiMonth(d.month));
+            const fLabels = forecast.map(d => getMonthLabel(d.month));
             const fValues = forecast.map(d => parseFloat(d.amount) || 0);
             renderChart('forecastChart', 'line', fLabels, fValues, 'التوقع (ج.م)', '#ef4444', textColor, gridColor);
             const weekdays = data.patterns?.by_weekday || [];
@@ -5713,7 +5636,7 @@
         }
 
         // ============================================================
-        // PROFILE (Member Dashboard) — with XP and Points
+        // PROFILE (Member Dashboard) — with XP, Points, QR only
         // ============================================================
         async function loadProfile() {
             try {
@@ -5771,9 +5694,7 @@
                 $('profilePhone').innerHTML = '<i class="fas fa-phone"></i> ' + (m.phone || '-');
                 $('profileType').innerHTML = '<i class="fas fa-tag"></i> ' + (m.membership_type || '-');
 
-                // Points = number of payments
                 const points = getPoints(m.member_id);
-                // XP from streak
                 const xp = updateMemberXp(m.member_id, allCheckins);
 
                 $('profilePoints').innerHTML = '<i class="fas fa-coins"></i> النقاط: ' + points;
@@ -5781,7 +5702,7 @@
                 $('profileRank').innerHTML = '<i class="fas fa-medal"></i> المستوى: ' + (m.rank || '-');
 
                 const expiryDisplay = profileExpiryStr && profileExpiryStr !== '-' ? formatDate(profileExpiryStr) :
-                'غير مدفوع';
+                    'غير مدفوع';
                 $('profileExpiryStatus').innerHTML = isExpired ?
                     `<span style="color:var(--danger);"><i class="fas fa-circle"></i> منتهي (${expiryDisplay})</span>` :
                     hasPaymentHistory ?
@@ -5824,9 +5745,6 @@
             }
         }
 
-        // ============================================================
-        // UPDATE MEMBER DASHBOARD
-        // ============================================================
         function updateMemberDashboard() {
             if (!profileMember) return;
             const m = profileMember;
@@ -5898,7 +5816,7 @@
         }
 
         // ============================================================
-        // SHOW CARD DETAIL (Member)
+        // SHOW CARD DETAIL (Member) — XP shows top 12 ranking
         // ============================================================
         function showCardDetail(type) {
             let title = 'تفاصيل';
@@ -5953,7 +5871,7 @@
                     const xp = getXp(profileMemberId);
                     const points = getPoints(profileMemberId);
                     title = '⭐ نقاط الاجتهاد (XP)';
-                    // احسب الـ XP لجميع الأعضاء لعرض الترتيب
+                    // Top 12 ranking for all members
                     const xpList = allMembers.map(m => ({ id: m.member_id, name: m.full_name, xp: getXp(m.member_id) }))
                         .sort((a, b) => b.xp - a.xp)
                         .slice(0, 12);
@@ -6143,7 +6061,7 @@
         }
 
         // ============================================================
-        // TOP 8 — مع خلفية ذهبية للثلاثة الأوائل
+        // TOP 8 — with gold background for top 3
         // ============================================================
         function loadTop8() {
             const container = $('top8Container');
@@ -6254,7 +6172,7 @@
         }
 
         // ============================================================
-        // GENERATE PROFILE QR — حجم مناسب للجوال
+        // GENERATE PROFILE QR — no label, with rotation
         // ============================================================
         function generateProfileQR(memberId) {
             const container = document.getElementById('profileQrBox');
@@ -6269,7 +6187,6 @@
                 return;
             }
             try {
-                // حجم أصغر للجوال
                 const qrSize = window.innerWidth < 480 ? 44 : 56;
                 qrCodeInstance = new QRCode(container, {
                     text: memberId || 'G-XXXX',
@@ -6279,10 +6196,7 @@
                     colorLight: '#ffffff',
                     correctLevel: QRCode.CorrectLevel.H
                 });
-                const label = document.createElement('div');
-                label.className = 'mc-qr-label';
-                label.textContent = 'الرقم: ' + (memberId || 'G-XXXX');
-                container.appendChild(label);
+                // No label added
             } catch (e) {
                 console.warn('خطأ في توليد QR:', e);
                 container.innerHTML =
@@ -6353,7 +6267,7 @@
         }
 
         // ============================================================
-        // GOAL
+        // GOAL, CALENDAR, WEIGHT (unchanged from previous version)
         // ============================================================
         function loadGoalProgress() {
             const stored = localStorage.getItem('goal_' + profileMemberId);
@@ -6401,9 +6315,6 @@
             } else showToast('⚠️ يرجى إدخال رقم', 'error');
         }
 
-        // ============================================================
-        // CALENDAR
-        // ============================================================
         function renderCalendar() {
             const container = $('calendarContainer');
             const now = new Date();
@@ -6479,9 +6390,6 @@
             }
         }
 
-        // ============================================================
-        // WEIGHT & BMI
-        // ============================================================
         function loadWeightData() {
             const stored = localStorage.getItem('weight_' + profileMemberId);
             if (stored) { try { weightRecords = JSON.parse(stored); } catch (e) { weightRecords = []; } }
@@ -6566,7 +6474,7 @@
         }
 
         // ============================================================
-        // WHATSAPP, QR, CSV
+        // WHATSAPP, QR, CSV (some unchanged)
         // ============================================================
         function sendWhatsAppMember(member) {
             if (!member) { showToast('⚠️ لا توجد بيانات العضو', 'error'); return; }
@@ -6774,7 +6682,7 @@
             console.log('🔑 كود إعادة تعيين المشرف: adminreset-2026');
             console.log('👤 المشرف: admin / admin123');
             console.log('⌨️ Ctrl+R = تحديث, ESC = إغلاق النافذة');
-            console.log('✨ جميع التحسينات: نظام XP بالتتابع، نقاط الدفع، تقرير اليوم، أيقونات بدلاً من الإيموجي، QR بحجم مناسب');
+            console.log('✨ جميع التحسينات: نظام XP بالتتابع، نقاط الدفع، تقرير اليوم، أيقونات بدلاً من الإيموجي، QR بحجم مناسب، إزالة التبويبات غير الضرورية');
         });
     </script>
 </body>
