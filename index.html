@@ -5126,37 +5126,44 @@
                     }
                     break;
                 }
-                case 'expired': {
-                    title = '🚫 الأعضاء منتهي الصلاحية اليوم';
-                    const expired = members.filter(m => {
-                        if (!m.expiry_date) return false;
-                        const expDate = normalizeDate(m.expiry_date);
-                        if (!expDate) return false;
-                        return expDate === todayStr;
-                    });
-                    if (!expired.length) { content = 'لا يوجد أعضاء منتهي الصلاحية اليوم'; } else {
-                        let table =
-                            `<div class="table-wrap"><table class="rank-table"><thead><tr><th>الاسم</th><th>الهاتف</th><th>انتهاء الصلاحية</th><th>اتصال</th></tr></thead><tbody>`;
-                        expired.slice(0, 50).forEach(m => {
-                            const phone = m.phone || '';
-                            const wa = formatPhoneForWhatsApp(phone);
-                            const msg = encodeURIComponent(
-                                `مرحباً ${m.full_name} 👋 لاحظنا أن عضويتك انتهت اليوم، ندعوك لتجديد العضوية وممارسة الرياضة مرة أخرى! 💪`
-                                );
-                            const waLink = wa ? `https://wa.me/${wa}?text=${msg}` : '#';
-                            table += `<tr>
-                                    <td><strong>${m.full_name}</strong></td>
-                                    <td>${phone||'-'}</td>
-                                    <td>${formatDate(m.expiry_date)}</td>
-                                    <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
-                                </tr>`;
-                        });
-                        table += '</tbody></table></div>';
-                        content =
-                            `العدد: <strong>${expired.length}</strong> عضو<br><br>${table}`;
-                    }
-                    break;
-                }
+case 'expired': {
+    title = '🚫 الأعضاء منتهي الصلاحية';
+    const todayStr = getTodayStr();
+    const expiredMembers = members.filter(m => {
+        if (!m.expiry_date) return false;
+        const expDate = normalizeDate(m.expiry_date);
+        if (!expDate) return false;
+        return expDate < todayStr;
+    });
+
+    if (!expiredMembers.length) {
+        content = 'لا يوجد أعضاء منتهي الصلاحية';
+    } else {
+        let table = `<div class="table-wrap"><table class="rank-table">
+            <thead><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>تاريخ الانتهاء</th><th>مضى (يوم)</th><th>اتصال</th></tr></thead><tbody>`;
+        expiredMembers.slice(0, 100).forEach((m, idx) => {
+            const phone = m.phone || '';
+            const wa = formatPhoneForWhatsApp(phone);
+            const waLink = wa ? `https://wa.me/${wa}?text=${encodeURIComponent('👋 مرحباً ' + m.full_name + '، لاحظنا انتهاء عضويتك منذ ' + daysBetween(normalizeDate(m.expiry_date), todayStr) + ' يوم، ندعوك لتجديدها والعودة لممارسة الرياضة! 💪')}` : '#';
+            const daysOver = daysBetween(normalizeDate(m.expiry_date), todayStr);
+            // تلوين الخلفية حسب عدد الأيام
+            let bgColor = '';
+            if (daysOver > 30) bgColor = 'background:rgba(220,38,38,0.15);';
+            else if (daysOver > 7) bgColor = 'background:rgba(245,158,11,0.15);';
+            table += `<tr>
+                <td>${idx + 1}</td>
+                <td><strong>${m.full_name || '-'}</strong></td>
+                <td>${phone || '-'}</td>
+                <td>${formatDate(m.expiry_date)}</td>
+                <td style="font-weight:700;color:var(--danger);${bgColor}">${daysOver} يوم</td>
+                <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
+            </tr>`;
+        });
+        table += '</tbody></table></div>';
+        content = `العدد: <strong>${expiredMembers.length}</strong> عضو (عرض أول 100)<br><br>${table}`;
+    }
+    break;
+}
                 case 'expiring': {
                     title = '⏳ الأعضاء على وشك الانتهاء (7 أيام)';
                     const expiring = members.filter(m => {
