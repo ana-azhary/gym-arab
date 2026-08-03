@@ -138,7 +138,7 @@
         }
 
         /* ============================================================
-           SIDEBAR (modified: removed advanced management and profile for admin)
+           SIDEBAR (unchanged)
            ============================================================ */
         .app-sidebar {
             position: fixed;
@@ -354,7 +354,7 @@
         }
 
         /* ============================================================
-           TOP BAR (no notification bell)
+           TOP BAR (unchanged)
            ============================================================ */
         .topbar {
             display: flex;
@@ -531,7 +531,7 @@
         }
 
         /* ============================================================
-           STATS GRID
+           STATS GRID (unchanged)
            ============================================================ */
         .stats-grid {
             display: grid;
@@ -671,7 +671,7 @@
         }
 
         /* ============================================================
-           CARDS & PANELS
+           CARDS & PANELS (unchanged)
            ============================================================ */
         .card-panel {
             background: var(--bg-card);
@@ -748,7 +748,7 @@
         }
 
         /* ============================================================
-           TABLES (responsive for mobile)
+           TABLES (unchanged)
            ============================================================ */
         .table-wrap {
             overflow-x: auto;
@@ -845,7 +845,7 @@
         }
 
         /* ============================================================
-           BADGES / STATUS
+           BADGES / STATUS (unchanged)
            ============================================================ */
         .status-badge {
             padding: 2px 12px;
@@ -876,7 +876,7 @@
         }
 
         /* ============================================================
-           BUTTONS
+           BUTTONS (unchanged)
            ============================================================ */
         .btn {
             padding: 6px 14px;
@@ -962,7 +962,7 @@
         }
 
         /* ============================================================
-           FORMS
+           FORMS (unchanged)
            ============================================================ */
         .form-row {
             display: flex;
@@ -998,7 +998,7 @@
         }
 
         /* ============================================================
-           CHART GRID
+           CHART GRID (unchanged)
            ============================================================ */
         .chart-grid {
             display: grid;
@@ -1043,7 +1043,7 @@
         }
 
         /* ============================================================
-           KPI ROW
+           KPI ROW (unchanged)
            ============================================================ */
         .kpi-row {
             display: grid;
@@ -1084,7 +1084,7 @@
         }
 
         /* ============================================================
-           MEMBER STATS GRID — clean, no emojis
+           MEMBER STATS GRID (unchanged)
            ============================================================ */
         .member-stats-grid {
             display: grid;
@@ -1118,7 +1118,7 @@
         }
 
         /* ============================================================
-           MEMBER CARD (QR without label, with rotation)
+           MEMBER CARD (unchanged)
            ============================================================ */
         .member-card-preview {
             background: linear-gradient(145deg, var(--primary-dark), var(--primary));
@@ -1256,27 +1256,26 @@
             border-radius: 12px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
             text-align: center;
+            width: 76px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-width: 70px;
-            /* subtle rotation */
-            transform: rotate(2deg);
-            transition: transform 0.3s ease;
-        }
-
-        .member-card-preview .mc-body .mc-qr:hover {
-            transform: rotate(0deg) scale(1.02);
         }
 
         .member-card-preview .mc-body .mc-qr canvas {
             display: block;
-            width: 56px !important;
-            height: 56px !important;
+            width: 64px !important;
+            height: 64px !important;
             border-radius: 4px;
         }
 
-        /* removed .mc-qr-label */
+        .member-card-preview .mc-body .mc-qr .mc-qr-label {
+            font-size: 7px;
+            color: #475569;
+            margin-top: 2px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
 
         .member-card-preview .mc-footer {
             margin-top: 6px;
@@ -1311,7 +1310,7 @@
         }
 
         /* ============================================================
-           CALENDAR
+           CALENDAR (unchanged)
            ============================================================ */
         .calendar-grid {
             display: grid;
@@ -1387,7 +1386,7 @@
         }
 
         /* ============================================================
-           PROGRESS
+           PROGRESS (unchanged)
            ============================================================ */
         .progress-wrap {
             margin: 10px 0;
@@ -1488,7 +1487,7 @@
         }
 
         /* ============================================================
-           RANK TABLE
+           RANK TABLE (unchanged)
            ============================================================ */
         .rank-table {
             width: 100%;
@@ -1589,7 +1588,7 @@
         }
 
         /* ============================================================
-           STATUS BANNER
+           STATUS BANNER (unchanged)
            ============================================================ */
         .status-banner {
             padding: 14px 18px;
@@ -1645,7 +1644,7 @@
         }
 
         /* ============================================================
-           EXPIRED OVERLAY
+           EXPIRED OVERLAY (unchanged)
            ============================================================ */
         .relative {
             position: relative;
@@ -1688,7 +1687,7 @@
         }
 
         /* ============================================================
-           MODAL
+           MODAL (unchanged)
            ============================================================ */
         .modal-overlay {
             display: none;
@@ -1710,7 +1709,7 @@
         .modal-box {
             background: var(--bg-surface);
             border-radius: var(--radius-lg);
-            max-width: 600px;
+            max-width: 500px;
             width: 100%;
             max-height: 95vh;
             overflow-y: auto;
@@ -1856,7 +1855,7 @@
         }
 
         /* ============================================================
-           TOAST
+           TOAST (unchanged)
            ============================================================ */
         .toast-container {
             position: fixed;
@@ -2106,7 +2105,7 @@
         }
 
         /* ============================================================
-           DEBUG PANEL
+           DEBUG PANEL (unchanged)
            ============================================================ */
         .debug-panel {
             background: var(--primary-dark);
@@ -2173,7 +2172,7 @@
         }
 
         /* ============================================================
-           ANALYTICS TABS
+           ANALYTICS TABS (unchanged)
            ============================================================ */
         .analytics-tabs {
             display: flex;
@@ -2218,7 +2217,78 @@
         }
 
         /* ============================================================
-           BMI ENCOURAGEMENT
+           NOTIFICATION BELL (Admin only) - z-index fixed
+           ============================================================ */
+        .notification-bell {
+            position: relative;
+            cursor: pointer;
+            z-index: 9999;
+        }
+        .notification-bell .badge-notif {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: var(--danger);
+            color: #fff;
+            font-size: 8px;
+            font-weight: 700;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--bg-surface);
+        }
+        .notification-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--bg-surface);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            min-width: 260px;
+            max-width: 340px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 6px 0;
+            z-index: 10000;
+            margin-top: 6px;
+            backdrop-filter: var(--glass-blur);
+        }
+        .notification-dropdown.show {
+            display: block;
+        }
+        .notification-dropdown .notif-item {
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.02);
+            font-size: 12px;
+            transition: background var(--transition);
+            cursor: default;
+        }
+        .notification-dropdown .notif-item:last-child {
+            border-bottom: none;
+        }
+        .notification-dropdown .notif-item:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+        .notification-dropdown .notif-item .notif-time {
+            font-size: 9px;
+            color: var(--text-muted);
+            display: block;
+            margin-top: 2px;
+        }
+        .notification-dropdown .notif-empty {
+            padding: 20px 14px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        /* ============================================================
+           BMI ENCOURAGEMENT (unchanged)
            ============================================================ */
         .bmi-encouragement {
             padding: 10px 14px;
@@ -2256,7 +2326,7 @@
         }
 
         /* ============================================================
-           TOP HOUR
+           TOP HOUR (unchanged)
            ============================================================ */
         .top-hour-highlight {
             color: var(--danger) !important;
@@ -2268,7 +2338,7 @@
         }
 
         /* ============================================================
-           PRINT
+           PRINT (unchanged)
            ============================================================ */
         @media print {
             body * {
@@ -2320,7 +2390,7 @@
         }
 
         /* ============================================================
-           RESPONSIVE
+           RESPONSIVE (unchanged)
            ============================================================ */
         @media (max-width: 1200px) {
             .stats-grid {
@@ -2758,8 +2828,8 @@
             }
 
             .member-card-preview .mc-body .mc-qr canvas {
-                width: 44px !important;
-                height: 44px !important;
+                width: 50px !important;
+                height: 50px !important;
             }
 
             .member-card-preview .mc-body .mc-info .mc-name {
@@ -2985,8 +3055,8 @@
             }
 
             .member-card-preview .mc-body .mc-qr canvas {
-                width: 36px !important;
-                height: 36px !important;
+                width: 44px !important;
+                height: 44px !important;
             }
 
             .member-card-preview .mc-body .mc-info .mc-name {
@@ -3060,7 +3130,7 @@
         }
 
         /* ============================================================
-           SIDEBAR OVERLAY
+           SIDEBAR OVERLAY (unchanged)
            ============================================================ */
         .sidebar-overlay {
             display: none;
@@ -3076,7 +3146,7 @@
         }
 
         /* ============================================================
-           UTILITY
+           UTILITY (unchanged)
            ============================================================ */
         .flex-center {
             display: flex;
@@ -3121,11 +3191,6 @@
         @media (max-width: 768px) {
             .hide-phone {
                 display: none !important;
-            }
-            /* Ensure name column is always visible on mobile for checkin and payments */
-            .table-wrap table td:nth-child(3),
-            .table-wrap table th:nth-child(3) {
-                display: table-cell !important;
             }
         }
     </style>
@@ -3177,7 +3242,7 @@
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
     <!-- ============================================================
-    SIDEBAR — removed advanced management and profile (profile hidden for admin via JS)
+    SIDEBAR (unchanged)
     ============================================================ -->
     <aside class="app-sidebar" id="appSidebar">
         <div class="brand">
@@ -3194,10 +3259,6 @@
                 <i class="fas fa-chart-pie"></i>
                 <span>لوحة التحكم</span>
                 <span class="badge-nav" id="navMemberCount">0</span>
-            </button>
-            <button class="nav-item" data-page="daily" onclick="switchTab('daily')">
-                <i class="fas fa-calendar-day"></i>
-                <span>تقرير اليوم</span>
             </button>
             <button class="nav-item" data-page="members" onclick="switchTab('members')">
                 <i class="fas fa-users"></i>
@@ -3216,7 +3277,34 @@
                 <i class="fas fa-chart-line"></i>
                 <span>التحليلات</span>
             </button>
-            <!-- Removed: إدارة متقدمة and all its sub-tabs, and شخصي (profile) is hidden for admin -->
+            <!-- 5 new tabs -->
+            <div class="nav-label" style="margin-top:12px;">إدارة متقدمة</div>
+            <button class="nav-item" data-page="plans" onclick="switchTab('plans')">
+                <i class="fas fa-list-ul"></i>
+                <span>خطط العضوية</span>
+            </button>
+            <button class="nav-item" data-page="schedule" onclick="switchTab('schedule')">
+                <i class="fas fa-calendar-plus"></i>
+                <span>جدول الحصص</span>
+            </button>
+            <button class="nav-item" data-page="reports" onclick="switchTab('reports')">
+                <i class="fas fa-file-invoice"></i>
+                <span>التقارير المالية</span>
+            </button>
+            <button class="nav-item" data-page="risk" onclick="switchTab('risk')">
+                <i class="fas fa-shield-alt"></i>
+                <span>إدارة المخاطر</span>
+            </button>
+            <button class="nav-item" data-page="mobile" onclick="switchTab('mobile')">
+                <i class="fas fa-mobile-alt"></i>
+                <span>تطبيق الجوال</span>
+            </button>
+
+            <div class="nav-label" style="margin-top:12px;">شخصي</div>
+            <button class="nav-item" data-page="profile" onclick="switchTab('profile')" id="profileNav">
+                <i class="fas fa-id-card"></i>
+                <span>الملف الشخصي</span>
+            </button>
         </nav>
 
         <div class="sidebar-footer">
@@ -3234,11 +3322,11 @@
     </aside>
 
     <!-- ============================================================
-    MAIN CONTENT (same structure, but we removed the extra pages from HTML)
+    MAIN CONTENT
     ============================================================ -->
     <main class="app-main" id="appMain">
 
-        <!-- TOPBAR — no notification bell -->
+        <!-- TOPBAR -->
         <header class="topbar">
             <div class="topbar-left">
                 <button class="menu-toggle" onclick="toggleSidebar()">
@@ -3253,6 +3341,14 @@
                 <span class="status-dot" id="statusDot"></span>
                 <span class="text-muted text-sm" id="updateTime">-</span>
                 <span class="shortcut-hint" title="اضغط Ctrl+R للتحديث"><i class="fas fa-keyboard"></i> Ctrl+R</span>
+                <!-- Notification bell: only for admin -->
+                <button class="btn-icon notification-bell" id="notificationBell" onclick="toggleNotifications()" title="الإشعارات" style="display:none;">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge-notif" id="notifBadge">0</span>
+                    <div class="notification-dropdown" id="notifDropdown">
+                        <div class="notif-empty">لا توجد إشعارات</div>
+                    </div>
+                </button>
                 <button class="btn-icon" onclick="toggleTheme()" title="تبديل السمة">
                     <i id="themeIcon" class="fas fa-moon"></i>
                 </button>
@@ -3327,7 +3423,7 @@
                 </div>
             </div>
 
-            <!-- WhatsApp Quick Actions -->
+            <!-- WhatsApp Quick Actions (Admin only) -->
             <div class="card-panel" style="display:flex; flex-wrap:wrap; gap:10px; align-items:center; padding:12px 18px;">
                 <button class="btn btn-whatsapp btn-sm" onclick="sendWhatsAppExpiryReminderBulk()">
                     <i class="fab fa-whatsapp"></i> تذكير باقتراب الانتهاء
@@ -3376,80 +3472,6 @@
                     <table>
                         <thead><tr><th>#</th><th>الرقم</th><th class="hide-phone">الاسم</th><th>المبلغ</th><th>التاريخ</th><th>انتهاء الصلاحية</th></tr></thead>
                         <tbody id="dashPaymentTableBody"><tr><td colspan="6" class="empty-row">لا توجد بيانات</td></tr></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- ============================================================
-        PAGE: DAILY REPORT (تقرير اليوم)
-        ============================================================ -->
-        <div id="page-daily" class="page-section">
-            <div class="flex-center" style="justify-content:space-between; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
-                <h3 style="font-size:18px;font-weight:700;"><i class="fas fa-calendar-day" style="color:var(--primary);"></i> تقرير اليوم</h3>
-                <span class="text-muted text-sm" id="dailyDate"></span>
-                <button class="btn btn-success btn-sm" onclick="exportDailyReportCSV()"><i class="fas fa-file-csv"></i> CSV</button>
-            </div>
-
-            <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
-                <div class="stat-card-click" onclick="showStatDetail('todayCheckins')">
-                    <div class="stat-top"><div class="stat-icon amber"><i class="fas fa-check-circle"></i></div></div>
-                    <div class="num" id="dailyCheckins">-</div>
-                    <div class="label">دخول اليوم</div>
-                </div>
-                <div class="stat-card-click" onclick="showStatDetail('newMembers')">
-                    <div class="stat-top"><div class="stat-icon pink"><i class="fas fa-user-plus"></i></div></div>
-                    <div class="num" id="dailyNewMembers">-</div>
-                    <div class="label">أعضاء جدد اليوم</div>
-                </div>
-                <div class="stat-card-click" onclick="showStatDetail('todayPayments')">
-                    <div class="stat-top"><div class="stat-icon teal"><i class="fas fa-hand-holding-usd"></i></div></div>
-                    <div class="num" id="dailyPayments">-</div>
-                    <div class="label">مدفوعات اليوم</div>
-                </div>
-                <div class="stat-card-click" onclick="showStatDetail('expired')">
-                    <div class="stat-top"><div class="stat-icon red"><i class="fas fa-user-slash"></i></div></div>
-                    <div class="num" id="dailyExpired">-</div>
-                    <div class="label">منتهي اليوم</div>
-                </div>
-            </div>
-
-            <!-- تفاصيل اليوم — Table format -->
-            <div class="card-panel">
-                <div class="card-header">
-                    <h3><i class="fas fa-list-ul"></i> تفاصيل اليوم</h3>
-                </div>
-                <div class="table-wrap">
-                    <table class="rank-table">
-                        <thead>
-                            <tr>
-                                <th>الفئة</th>
-                                <th>العدد</th>
-                                <th>الأسماء</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><i class="fas fa-sign-in-alt"></i> دخول اليوم</td>
-                                <td id="dailyCheckinsCount">-</td>
-                                <td id="dailyCheckinsList">-</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-user-plus"></i> أعضاء جدد</td>
-                                <td id="dailyNewMembersCount">-</td>
-                                <td id="dailyNewMembersList">-</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-coins"></i> مدفوعات اليوم</td>
-                                <td id="dailyPaymentsCount">-</td>
-                                <td id="dailyPaymentsList">-</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-user-slash"></i> منتهي اليوم</td>
-                                <td id="dailyExpiredCount">-</td>
-                                <td id="dailyExpiredList">-</td>
-                            </tr>
-                        </tbody>
                     </table>
                 </div>
             </div>
@@ -3565,7 +3587,7 @@
         </div>
 
         <!-- ============================================================
-        PAGE: ANALYTICS (Admin) — improved with better error handling
+        PAGE: ANALYTICS (Admin)
         ============================================================ -->
         <div id="page-analytics" class="page-section">
             <div class="flex-center" style="justify-content:space-between; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
@@ -3643,40 +3665,141 @@
         </div>
 
         <!-- ============================================================
-        PAGE: PROFILE (Member Dashboard) — included but hidden for admin
+        NEW PAGES: Plans, Schedule, Reports, Risk, Mobile (unchanged)
+        ============================================================ -->
+        <!-- Plans -->
+        <div id="page-plans" class="page-section">
+            <h3 style="font-size:18px;font-weight:700;"><i class="fas fa-list-ul" style="color:var(--primary);"></i> خطط العضوية</h3>
+            <div class="card-panel">
+                <p>هنا يمكنك إدارة خطط العضوية (شهري، ربع سنوي، سنوي) مع الأسعار والميزات.</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>الخطة</th><th>المدة</th><th>السعر (ج.م)</th><th>الميزات</th><th>إجراءات</th></tr></thead>
+                        <tbody>
+                            <tr><td>عادي</td><td>شهر</td><td>500</td><td>دخول غير محدود</td><td><button class="btn btn-sm btn-outline">تعديل</button></td></tr>
+                            <tr><td>متوسط</td><td>3 أشهر</td><td>1300</td><td>دخول + خصم 10%</td><td><button class="btn btn-sm btn-outline">تعديل</button></td></tr>
+                            <tr><td>مميز</td><td>6 أشهر</td><td>2400</td><td>دخول + خصم 20% + مدرب شخصي</td><td><button class="btn btn-sm btn-outline">تعديل</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="btn btn-success btn-sm" style="margin-top:12px;"><i class="fas fa-plus"></i> إضافة خطة جديدة</button>
+            </div>
+        </div>
+
+        <!-- Schedule -->
+        <div id="page-schedule" class="page-section">
+            <h3 style="font-size:18px;font-weight:700;"><i class="fas fa-calendar-plus" style="color:var(--primary);"></i> جدول الحصص التدريبية</h3>
+            <div class="card-panel">
+                <p>إدارة جدول الحصص (يوجا، كروس فيت، تمارين جماعية).</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>اليوم</th><th>الوقت</th><th>النشاط</th><th>المدرب</th><th>عدد المشاركين</th></tr></thead>
+                        <tbody>
+                            <tr><td>الاثنين</td><td>18:00 - 19:00</td><td>يوجا</td><td>أحمد</td><td>12/20</td></tr>
+                            <tr><td>الأربعاء</td><td>19:00 - 20:00</td><td>كروس فيت</td><td>محمد</td><td>8/15</td></tr>
+                            <tr><td>الجمعة</td><td>17:00 - 18:00</td><td>تمارين جماعية</td><td>سارة</td><td>15/25</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="btn btn-success btn-sm" style="margin-top:12px;"><i class="fas fa-plus"></i> إضافة حصة جديدة</button>
+            </div>
+        </div>
+
+        <!-- Reports -->
+        <div id="page-reports" class="page-section">
+            <h3 style="font-size:18px;font-weight:700;"><i class="fas fa-file-invoice" style="color:var(--primary);"></i> التقارير المالية</h3>
+            <div class="card-panel">
+                <p>تقارير الإيرادات والمصروفات الشهرية والسنوية مع تحليل التدفق النقدي.</p>
+                <div class="kpi-row">
+                    <div class="kpi-item"><div class="kpi-val">25,400 ج.م</div><div class="kpi-label">إيرادات الشهر</div></div>
+                    <div class="kpi-item"><div class="kpi-val">8,200 ج.م</div><div class="kpi-label">مصروفات الشهر</div></div>
+                    <div class="kpi-item"><div class="kpi-val">17,200 ج.م</div><div class="kpi-label">صافي الربح</div></div>
+                    <div class="kpi-item"><div class="kpi-val">+12%</div><div class="kpi-label">نمو الربح</div></div>
+                </div>
+                <button class="btn btn-primary btn-sm"><i class="fas fa-download"></i> تصدير التقرير (PDF)</button>
+            </div>
+        </div>
+
+        <!-- Risk -->
+        <div id="page-risk" class="page-section">
+            <h3 style="font-size:18px;font-weight:700;"><i class="fas fa-shield-alt" style="color:var(--primary);"></i> إدارة المخاطر والامتثال</h3>
+            <div class="card-panel">
+                <p>سجل الحوادث، تقييم المخاطر، وإجراءات السلامة.</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>التاريخ</th><th>الحدث</th><th>النوع</th><th>الحالة</th><th>الإجراء</th></tr></thead>
+                        <tbody>
+                            <tr><td>2025-03-01</td><td>سقوط عضو أثناء التمرين</td><td>إصابة</td><td>تم التعامل</td><td>تقرير طبي</td></tr>
+                            <tr><td>2025-02-15</td><td>جهاز مشي معطل</td><td>صيانة</td><td>تم الإصلاح</td><td>استبدال القطع</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="btn btn-success btn-sm" style="margin-top:12px;"><i class="fas fa-plus"></i> تسجيل حدث جديد</button>
+            </div>
+        </div>
+
+        <!-- Mobile -->
+        <div id="page-mobile" class="page-section">
+            <h3 style="font-size:18px;font-weight:700;"><i class="fas fa-mobile-alt" style="color:var(--primary);"></i> تطبيق الجوال</h3>
+            <div class="card-panel">
+                <p>إعدادات ومعلومات عن تطبيق الجوال للتواصل مع الأعضاء.</p>
+                <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:12px;">
+                    <div><i class="fas fa-qrcode" style="font-size:48px;color:var(--primary);"></i><br>رابط التحميل: <a href="#">progym.app</a></div>
+                    <div><i class="fas fa-code" style="font-size:48px;color:var(--primary);"></i><br>إصدار API: v2.3.1</div>
+                    <div><i class="fas fa-database" style="font-size:48px;color:var(--primary);"></i><br>آخر مزامنة: 2025-03-15 14:30</div>
+                </div>
+                <button class="btn btn-primary btn-sm" style="margin-top:12px;"><i class="fas fa-sync"></i> مزامنة التطبيق</button>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        PAGE: PROFILE (Member Dashboard)
         ============================================================ -->
         <div id="page-profile" class="page-section">
+
             <!-- 6 Member Stat Cards -->
             <div class="member-stats-grid" id="memberStatsGrid">
+
+                <!-- 1. مدفوعات هذا الشهر -->
                 <div class="stat-card-click" onclick="showCardDetail('member_revenue')">
                     <div class="stat-top"><div class="stat-icon blue"><i class="fas fa-credit-card"></i></div></div>
                     <div class="num" id="mStatRevenue">-</div>
-                    <div class="label">مدفوعات هذا الشهر</div>
+                    <div class="label"><i class="fas fa-credit-card"></i> مدفوعات هذا الشهر</div>
                 </div>
+
+                <!-- 2. نقاط الاجتهاد (XP) -->
                 <div class="stat-card-click" onclick="showCardDetail('member_xp')">
                     <div class="stat-top"><div class="stat-icon green"><i class="fas fa-star"></i></div></div>
                     <div class="num" id="mStatXp">-</div>
-                    <div class="label">نقاط الاجتهاد (XP)</div>
+                    <div class="label"><i class="fas fa-star"></i> نقاط الاجتهاد (XP)</div>
                 </div>
+
+                <!-- 3. أكثر وقت دخول -->
                 <div class="stat-card-click" onclick="showCardDetail('member_peak')">
                     <div class="stat-top"><div class="stat-icon amber"><i class="fas fa-clock"></i></div></div>
                     <div class="num" id="mStatPeak">-</div>
-                    <div class="label">أكثر وقت دخول</div>
+                    <div class="label"><i class="fas fa-clock"></i> أكثر وقت دخول</div>
                 </div>
+
+                <!-- 4. اللقب الشهري -->
                 <div class="stat-card-click" onclick="showCardDetail('member_rank')">
                     <div class="stat-top"><div class="stat-icon purple"><i class="fas fa-trophy"></i></div></div>
                     <div class="num" id="mStatRank">-</div>
-                    <div class="label">اللقب الشهري</div>
+                    <div class="label"><i class="fas fa-trophy"></i> اللقب الشهري</div>
                 </div>
+
+                <!-- 5. دخول اليوم (%) -->
                 <div class="stat-card-click" onclick="showCardDetail('member_percent')">
                     <div class="stat-top"><div class="stat-icon indigo"><i class="fas fa-percent"></i></div></div>
                     <div class="num" id="mStatPercent">-</div>
-                    <div class="label">دخول اليوم</div>
+                    <div class="label"><i class="fas fa-percent"></i> دخول اليوم</div>
                 </div>
+
+                <!-- 6. الأيام المتبقية للتجديد -->
                 <div class="stat-card-click" onclick="showCardDetail('member_daysleft')">
                     <div class="stat-top"><div class="stat-icon red"><i class="fas fa-hourglass-half"></i></div></div>
                     <div class="num" id="mStatDaysLeft">-</div>
-                    <div class="label">أيام متبقية للتجديد</div>
+                    <div class="label"><i class="fas fa-hourglass-half"></i> أيام متبقية للتجديد</div>
                 </div>
             </div>
 
@@ -3690,6 +3813,7 @@
                     <h3>العضوية منتهية الصلاحية</h3>
                     <p>يرجى الاتصال بالمسؤول</p>
                 </div>
+
                 <div style="display:flex; flex-wrap:wrap; gap:14px; margin-bottom:10px;">
                     <div style="flex:1; min-width:160px;">
                         <h3 id="profileName" style="font-size:22px;font-weight:800;">-</h3>
@@ -3702,7 +3826,8 @@
                         <span id="profileExpiryStatus" style="font-weight:700;font-size:13px;display:block;margin-top:4px;"></span>
                     </div>
                 </div>
-                <!-- Member Card Preview with QR only -->
+
+                <!-- Member Card Preview -->
                 <div style="display:flex; justify-content:center; margin-top:6px;">
                     <div class="member-card-preview" id="memberCardPreview">
                         <div class="mc-header">
@@ -3719,7 +3844,10 @@
                                 <div class="mc-detail"><i class="fas fa-star"></i> XP: <span id="previewXp">0</span></div>
                             </div>
                             <div class="mc-qr" id="profileQrBox">
-                                <!-- QR will be rendered here; no label -->
+                                <div style="width:64px;height:64px;display:flex;align-items:center;justify-content:center;background:#f8fafc;border-radius:8px;margin:0 auto;">
+                                    <span style="color:#94a3b8;font-size:8px;">QR</span>
+                                </div>
+                                <div class="mc-qr-label">رقم العضو</div>
                             </div>
                         </div>
                         <div class="mc-footer">
@@ -3728,6 +3856,8 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Card Actions: PDF + Print -->
                 <div class="card-actions-row no-print">
                     <button class="btn btn-primary btn-sm" onclick="downloadQR()"><i class="fas fa-qrcode"></i> QR</button>
                     <button class="btn btn-primary btn-sm" onclick="downloadMemberCardPDF()"><i class="fas fa-file-pdf"></i> PDF</button>
@@ -3735,10 +3865,12 @@
                 </div>
             </div>
 
-            <!-- 🏆 أعلى 8 دخول -->
+            <!-- ============================================================
+            🏆 أعلى 8 دخول خلال العام (ذهبي للثلاثة الأوائل)
+            ============================================================ -->
             <div class="card-panel" id="top8Panel">
                 <div class="card-header">
-                    <h3><i class="fas fa-trophy" style="color:var(--accent);"></i> أعلى 8 دخول خلال العام</h3>
+                    <h3><i class="fas fa-trophy" style="color:var(--accent);"></i> <i class="fas fa-trophy"></i> أعلى 8 دخول خلال العام</h3>
                     <span class="text-xs text-muted">(أفضل 8)</span>
                 </div>
                 <div id="top8Container">
@@ -3746,10 +3878,12 @@
                 </div>
             </div>
 
-            <!-- 🎯 هدف الدخول الشهري -->
+            <!-- ============================================================
+            🎯 هدف الدخول الشهري مع تشجيع
+            ============================================================ -->
             <div class="card-panel" id="goalSection">
                 <div class="flex-center" style="justify-content:space-between; flex-wrap:wrap; gap:6px;">
-                    <h3 style="font-size:16px;font-weight:700;"><i class="fas fa-bullseye" style="color:var(--primary);"></i> هدف الدخول الشهري</h3>
+                    <h3 style="font-size:16px;font-weight:700;"><i class="fas fa-bullseye" style="color:var(--primary);"></i> 🎯 هدف الدخول الشهري</h3>
                 </div>
                 <div class="form-row">
                     <input type="number" id="goalInput" placeholder="الهدف (يوم)" value="20" style="flex:0 0 130px;" />
@@ -3764,23 +3898,31 @@
                         <div class="fill" id="goalProgressFill" style="width:0%;"></div>
                     </div>
                 </div>
-                <div id="goalEncouragement" class="goal-encouragement started">💪 ابدأ رحلتك اليوم!</div>
+                <div id="goalEncouragement" class="goal-encouragement started">
+                    💪 ابدأ رحلتك اليوم!
+                </div>
             </div>
 
-            <!-- 📅 تقويم الدخول -->
+            <!-- ============================================================
+            📅 تقويم الدخول
+            ============================================================ -->
             <div class="card-panel" id="calendarSection">
                 <div class="card-header">
-                    <h3 style="font-size:16px;font-weight:700;"><i class="fas fa-calendar-alt" style="color:var(--primary);"></i> تقويم الدخول (انقر على اليوم لعرض الوقت)</h3>
+                    <h3 style="font-size:16px;font-weight:700;"><i class="fas fa-calendar-alt" style="color:var(--primary);"></i> 📅 تقويم الدخول (انقر على اليوم لعرض الوقت)</h3>
                     <span id="calendarStreak" class="text-xs text-muted"></span>
                 </div>
                 <div class="calendar-grid" id="calendarContainer"></div>
                 <div id="calendarTimeDetail" style="margin-top:10px; font-size:13px; color:var(--primary); text-align:center; font-weight:600;"></div>
-                <div id="calendarEncouragement" style="margin-top:8px; text-align:center; font-size:12px; color:var(--text-muted);">💪 كل يوم هو فرصة جديدة!</div>
+                <div id="calendarEncouragement" style="margin-top:8px; text-align:center; font-size:12px; color:var(--text-muted);">
+                    💪 كل يوم هو فرصة جديدة!
+                </div>
             </div>
 
-            <!-- 📝 تسجيل الوزن وBMI -->
+            <!-- ============================================================
+            📝 تسجيل الوزن وBMI مع تشجيع
+            ============================================================ -->
             <div class="card-panel" id="weightSection">
-                <h3 style="font-size:16px;font-weight:700;"><i class="fas fa-weight" style="color:var(--primary);"></i> تسجيل الوزن وBMI</h3>
+                <h3 style="font-size:16px;font-weight:700;"><i class="fas fa-weight" style="color:var(--primary);"></i> 📝 تسجيل الوزن وBMI</h3>
                 <div class="form-row">
                     <input type="number" id="weightInput" placeholder="الوزن (كجم)" step="0.1" style="flex:0 0 120px;" />
                     <input type="number" id="heightInput" placeholder="الطول (سم)" step="0.1" style="flex:0 0 120px;" />
@@ -3790,7 +3932,9 @@
                     <span><strong>BMI:</strong> <span id="bmiDisplay" style="color:var(--primary);font-weight:700;">-</span></span>
                     <span><strong>الحالة:</strong> <span id="bmiStatus" style="font-weight:700;">-</span></span>
                 </div>
-                <div id="bmiEncouragement" class="bmi-encouragement healthy" style="display:none;">💪 حافظ على صحتك!</div>
+                <div id="bmiEncouragement" class="bmi-encouragement healthy" style="display:none;">
+                    💪 حافظ على صحتك!
+                </div>
                 <div style="margin-top:12px;max-height:180px;"><canvas id="weightChart"></canvas></div>
             </div>
         </div>
@@ -3821,55 +3965,69 @@
                 </h3>
                 <button class="close" onclick="closeRegisterModal('registerMemberModal')">&times;</button>
             </div>
-            <div style="margin-bottom:18px;padding:14px 18px;background:linear-gradient(135deg,rgba(16,185,129,0.08),rgba(56,189,248,0.08));border-radius:var(--radius-sm);border-right:4px solid var(--success);">
-                <p style="font-size:13px;color:var(--text-secondary);margin:0;display:flex;align-items:center;gap:10px;">
-                    <i class="fas fa-sparkles" style="color:var(--success);font-size:18px;"></i>
-                    <span>يتم إنشاء رقم عضو <strong style="color:var(--primary);">تلقائيًا</strong> وجاهز للاستخدام! 💪</span>
+
+            <div style="margin-bottom: 18px; padding: 14px 18px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(56, 189, 248, 0.08)); border-radius: var(--radius-sm); border-right: 4px solid var(--success);">
+                <p style="font-size: 13px; color: var(--text-secondary); margin: 0; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-sparkles" style="color: var(--success); font-size: 18px;"></i>
+                    <span>يتم إنشاء رقم عضو <strong style="color: var(--primary);">تلقائيًا</strong> وجاهز للاستخدام! 💪</span>
                 </p>
             </div>
+
             <div id="registerMemberForm">
                 <div class="form-group">
-                    <label><i class="fas fa-id-card" style="color:var(--primary);margin-left:6px;"></i> رقم العضو <span style="color:var(--danger);">*</span></label>
+                    <label><i class="fas fa-id-card" style="color: var(--primary); margin-left: 6px;"></i> رقم العضو <span style="color: var(--danger);">*</span></label>
                     <div class="copy-group">
                         <input type="text" id="regMemberId" readonly />
-                        <button class="btn-copy" id="copyMemberIdBtn" onclick="copyMemberId()"><i class="fas fa-copy"></i> نسخ</button>
+                        <button class="btn-copy" id="copyMemberIdBtn" onclick="copyMemberId()">
+                            <i class="fas fa-copy"></i> نسخ
+                        </button>
                     </div>
-                    <small id="copyMessage" style="color:var(--success);font-size:11px;display:none;margin-top:4px;"><i class="fas fa-check-circle"></i> تم النسخ!</small>
+                    <small id="copyMessage" style="color: var(--success); font-size: 11px; display: none; margin-top: 4px;">
+                        <i class="fas fa-check-circle"></i> تم النسخ!
+                    </small>
                 </div>
+
                 <div class="form-group">
-                    <label><i class="fas fa-user" style="color:var(--primary);margin-left:6px;"></i> الاسم الكامل <span style="color:var(--danger);">*</span></label>
+                    <label><i class="fas fa-user" style="color: var(--primary); margin-left: 6px;"></i> الاسم الكامل <span style="color: var(--danger);">*</span></label>
                     <input type="text" id="regMemberFullName" placeholder="مثال: محمد علي" />
                 </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
                     <div class="form-group">
-                        <label><i class="fas fa-phone" style="color:var(--primary);margin-left:6px;"></i> رقم الهاتف</label>
+                        <label><i class="fas fa-phone" style="color: var(--primary); margin-left: 6px;"></i> رقم الهاتف</label>
                         <input type="text" id="regMemberPhone" placeholder="05xxxxxxxx" />
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-calendar" style="color:var(--primary);margin-left:6px;"></i> العمر</label>
+                        <label><i class="fas fa-calendar" style="color: var(--primary); margin-left: 6px;"></i> العمر</label>
                         <input type="number" id="regMemberAge" placeholder="25" />
                     </div>
                 </div>
+
                 <div class="form-group">
-                    <label><i class="fas fa-tag" style="color:var(--primary);margin-left:6px;"></i> نوع العضوية</label>
+                    <label><i class="fas fa-tag" style="color: var(--primary); margin-left: 6px;"></i> نوع العضوية</label>
                     <select id="regMemberType">
                         <option value="عادي">🏋️ عادي</option>
                         <option value="متوسط">⭐ متوسط</option>
                         <option value="مميز">👑 مميز</option>
                     </select>
                 </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;">
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px;">
                     <div class="form-group">
-                        <label><i class="fas fa-lock" style="color:var(--primary);margin-left:6px;"></i> كلمة المرور <span style="color:var(--danger);">*</span></label>
+                        <label><i class="fas fa-lock" style="color: var(--primary); margin-left: 6px;"></i> كلمة المرور <span style="color: var(--danger);">*</span></label>
                         <input type="text" id="regMemberPassword" placeholder="على الأقل 4 أحرف" />
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-check-circle" style="color:var(--primary);margin-left:6px;"></i> تأكيد كلمة المرور</label>
+                        <label><i class="fas fa-check-circle" style="color: var(--primary); margin-left: 6px;"></i> تأكيد كلمة المرور</label>
                         <input type="text" id="regMemberPasswordConfirm" placeholder="تأكيد كلمة المرور" />
                     </div>
                 </div>
-                <button class="btn btn-success btn-submit" onclick="registerMember()"><i class="fas fa-user-plus"></i> تسجيل العضو</button>
-                <div id="regMemberResult" style="margin-top:12px;text-align:center;font-size:14px;font-weight:600;padding:8px;border-radius:var(--radius-sm);"></div>
+
+                <button class="btn btn-success btn-submit" onclick="registerMember()">
+                    <i class="fas fa-user-plus"></i> تسجيل العضو
+                </button>
+
+                <div id="regMemberResult" style="margin-top: 12px; text-align: center; font-size: 14px; font-weight: 600; padding: 8px; border-radius: var(--radius-sm);"></div>
             </div>
         </div>
     </div>
@@ -3881,39 +4039,46 @@
         <div class="modal-box">
             <div class="modal-header">
                 <h3>
-                    <span style="background:linear-gradient(135deg,var(--warning),#d97706);padding:8px 12px;border-radius:12px;color:#fff;font-size:18px;">
+                    <span style="background: linear-gradient(135deg, var(--warning), #d97706); padding: 8px 12px; border-radius: 12px; color: #fff; font-size: 18px;">
                         <i class="fas fa-user-shield"></i>
                     </span>
                     استعادة/تعيين كلمة مرور المشرف
                 </h3>
                 <button class="close" onclick="closeRegisterModal('registerAdminModal')">&times;</button>
             </div>
-            <div style="margin-bottom:18px;padding:12px 16px;background:rgba(245,158,11,0.08);border-radius:var(--radius-sm);border-right:4px solid var(--warning);">
-                <p style="font-size:13px;color:var(--text-secondary);margin:0;display:flex;align-items:center;gap:8px;">
-                    <i class="fas fa-exclamation-triangle" style="color:var(--warning);font-size:16px;"></i>
+
+            <div style="margin-bottom: 18px; padding: 12px 16px; background: rgba(245, 158, 11, 0.08); border-radius: var(--radius-sm); border-right: 4px solid var(--warning);">
+                <p style="font-size: 13px; color: var(--text-secondary); margin: 0; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-exclamation-triangle" style="color: var(--warning); font-size: 16px;"></i>
                     <span>يرجى إدخال الكود السري بشكل صحيح لتعيين كلمة مرور جديدة</span>
                 </p>
             </div>
+
             <div id="registerAdminForm">
                 <div class="form-group">
-                    <label><i class="fas fa-key" style="color:var(--warning);margin-left:6px;"></i> الكود السري <span style="color:var(--danger);">*</span></label>
+                    <label><i class="fas fa-key" style="color: var(--warning); margin-left: 6px;"></i> الكود السري <span style="color: var(--danger);">*</span></label>
                     <input type="password" id="regAdminSecret" placeholder="adminreset-2026" />
-                    <small class="text-muted" style="display:block;margin-top:4px;font-size:11px;color:var(--text-muted);">
+                    <small class="text-muted" style="display: block; margin-top: 4px; font-size: 11px; color: var(--text-muted);">
                         <i class="fas fa-info-circle"></i> الكود الافتراضي: <strong>adminreset-2026</strong>
                     </small>
                 </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;">
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px;">
                     <div class="form-group">
-                        <label><i class="fas fa-lock" style="color:var(--warning);margin-left:6px;"></i> كلمة المرور الجديدة <span style="color:var(--danger);">*</span></label>
+                        <label><i class="fas fa-lock" style="color: var(--warning); margin-left: 6px;"></i> كلمة المرور الجديدة <span style="color: var(--danger);">*</span></label>
                         <input type="password" id="regAdminPass" placeholder="6 أحرف فأكثر" />
                     </div>
                     <div class="form-group">
-                        <label><i class="fas fa-check-circle" style="color:var(--warning);margin-left:6px;"></i> تأكيد كلمة المرور</label>
+                        <label><i class="fas fa-check-circle" style="color: var(--warning); margin-left: 6px;"></i> تأكيد كلمة المرور</label>
                         <input type="password" id="regAdminPassConfirm" placeholder="تأكيد كلمة المرور" />
                     </div>
                 </div>
-                <button class="btn btn-primary btn-submit" onclick="registerAdmin()"><i class="fas fa-check-circle"></i> تعيين كلمة المرور الجديدة</button>
-                <div id="regAdminResult" style="margin-top:12px;text-align:center;font-size:14px;font-weight:600;padding:8px;border-radius:var(--radius-sm);"></div>
+
+                <button class="btn btn-primary btn-submit" onclick="registerAdmin()">
+                    <i class="fas fa-check-circle"></i> تعيين كلمة المرور الجديدة
+                </button>
+
+                <div id="regAdminResult" style="margin-top: 12px; text-align: center; font-size: 14px; font-weight: 600; padding: 8px; border-radius: var(--radius-sm);"></div>
             </div>
         </div>
     </div>
@@ -3924,7 +4089,7 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- ============================================================
-    JAVASCRIPT — Full version with all fixes
+    JAVASCRIPT — Full Version with fixes
     ============================================================ -->
     <script>
         // ============================================================
@@ -3962,9 +4127,7 @@
         let autoRefreshTimer = null;
         let refreshInProgress = false;
 
-        // ============================================================
-        // XP SYSTEM — based on consecutive days (streak)
-        // ============================================================
+        // XP system: store in localStorage per member
         function getXp(memberId) {
             const xp = localStorage.getItem('xp_' + memberId);
             return xp ? parseInt(xp) : 0;
@@ -3979,44 +4142,63 @@
             setXp(memberId, current + points);
         }
 
-        // Calculate XP based on streak
-        function calculateStreakXp(checkins, memberId) {
+        // Points (payment count) stored per member
+        function getPoints(memberId) {
+            const pts = localStorage.getItem('points_' + memberId);
+            return pts ? parseInt(pts) : 0;
+        }
+
+        function setPoints(memberId, value) {
+            localStorage.setItem('points_' + memberId, String(value));
+        }
+
+        function addPoint(memberId) {
+            const current = getPoints(memberId);
+            setPoints(memberId, current + 1);
+        }
+
+        // Missions (daily/weekly) - simple simulation
+        const MISSIONS = [
+            { id: 'm1', name: 'ادخل 3 أيام متتالية', xp: 10 },
+            { id: 'm2', name: 'ادخل 5 أيام في الأسبوع', xp: 20 },
+            { id: 'm3', name: 'ادخل 10 أيام في الشهر', xp: 30 },
+            { id: 'm4', name: 'ادخل 20 يوم في الشهر', xp: 50 },
+        ];
+
+        function checkMissions(memberId, checkins) {
+            // Simplified: just count checkins this month
             const today = getTodayStr();
-            const dates = checkins
-                .filter(c => c.member_id === memberId)
-                .map(c => normalizeDate(c.checkin_date))
-                .filter(d => d)
-                .sort();
-            if (dates.length === 0) return 0;
+            const thisMonth = today.slice(0, 7);
+            const monthCheckins = checkins.filter(c => c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) ===
+            thisMonth);
+            const count = monthCheckins.length;
+
+            // Check consecutive days streak
             let streak = 0;
             let checkDate = today;
-            while (dates.includes(checkDate)) {
+            while (checkins.some(c => normalizeDate(c.checkin_date) === checkDate)) {
                 streak++;
                 const d = new Date(checkDate);
                 d.setDate(d.getDate() - 1);
                 checkDate = d.toISOString().split('T')[0];
             }
-            let xpEarned = 0;
-            for (let i = 1; i <= streak; i++) {
-                xpEarned += Math.min(i * 2, 10);
+
+            let earned = 0;
+            if (streak >= 3) earned += 10;
+            if (count >= 5) earned += 20;
+            if (count >= 10) earned += 30;
+            if (count >= 20) earned += 50;
+
+            if (earned > 0) {
+                // Avoid double awarding for same day
+                const lastCheck = localStorage.getItem('mission_last_' + memberId);
+                if (lastCheck !== today) {
+                    localStorage.setItem('mission_last_' + memberId, today);
+                    addXp(memberId, earned);
+                    showToast(`✅ أحرزت ${earned} XP من المهام!`, 'success');
+                }
             }
-            if (streak >= 5) xpEarned += 10;
-            if (streak >= 10) xpEarned += 20;
-            if (streak >= 20) xpEarned += 50;
-            return xpEarned;
-        }
-
-        function updateMemberXp(memberId, checkins) {
-            const xp = calculateStreakXp(checkins, memberId);
-            setXp(memberId, xp);
-            return xp;
-        }
-
-        // ============================================================
-        // POINTS SYSTEM — based on number of payments
-        // ============================================================
-        function getPoints(memberId) {
-            return allPayments.filter(p => p.member_id === memberId).length;
+            return earned;
         }
 
         // ============================================================
@@ -4034,17 +4216,20 @@
                 warning: 'fa-triangle-exclamation',
                 info: 'fa-info-circle'
             };
-            el.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i> ${msg}`;
+            el.innerHTML =
+                `<i class="fas ${icons[type] || icons.info}"></i> ${msg}`;
             container.appendChild(el);
             requestAnimationFrame(() => el.classList.add('show'));
             setTimeout(() => {
                 el.classList.remove('show');
                 setTimeout(() => el.remove(), 500);
             }, 4000);
+            // Only add notification for certain types? We'll handle in caller.
         }
 
+        // Notifications: only for admin, and only for specific events (expired today, payments today, new members today)
         function addNotification(msg, type = 'info') {
-            // Only for admin
+            // Only store if admin
             const role = localStorage.getItem('gym_role');
             if (role !== 'admin') return;
             const icon = type === 'error' ? 'fa-times-circle' : type === 'warning' ? 'fa-exclamation-triangle' :
@@ -4059,6 +4244,45 @@
                 color: color
             });
             if (notifications.length > 20) notifications.shift();
+            updateNotifBadge();
+        }
+
+        function updateNotifBadge() {
+            const badge = $('notifBadge');
+            if (!badge) return;
+            const unread = notifications.filter(n => !n.read).length;
+            badge.textContent = unread;
+            badge.style.display = unread > 0 ? 'flex' : 'none';
+            renderNotifications();
+        }
+
+        function renderNotifications() {
+            const dropdown = $('notifDropdown');
+            if (!dropdown) return;
+            if (!notifications.length) {
+                dropdown.innerHTML = '<div class="notif-empty">لا توجد إشعارات</div>';
+                return;
+            }
+            let html = '';
+            notifications.slice().reverse().forEach(n => {
+                html += `<div class="notif-item" style="border-right:3px solid ${n.color};">
+                            <i class="fas ${n.icon}" style="color:${n.color};margin-left:6px;"></i>
+                            ${n.msg}
+                            <span class="notif-time">${n.time}</span>
+                        </div>`;
+            });
+            dropdown.innerHTML = html;
+        }
+
+        function toggleNotifications() {
+            const dropdown = $('notifDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('show');
+                if (dropdown.classList.contains('show')) {
+                    notifications.forEach(n => n.read = true);
+                    updateNotifBadge();
+                }
+            }
         }
 
         function toggleTheme() {
@@ -4099,7 +4323,7 @@
                     let day = parseInt(parts[0]);
                     if (year > 2500) year -= 543;
                     if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
-                        return `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+                        return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
                     }
                 }
             }
@@ -4137,7 +4361,7 @@
             return formatNumber(n) + ' ' + CURRENCY_SYMBOL;
         }
 
-        function getMonthLabel(dateStr) {
+        function getThaiMonth(dateStr) { // kept for chart labels
             if (!dateStr) return '-';
             try {
                 const d = new Date(normalizeDate(dateStr));
@@ -4159,6 +4383,25 @@
             return diff;
         }
 
+        function parseDateFromSheet(dateStr) {
+            if (!dateStr) return null;
+            const s = String(dateStr).trim();
+            let d = new Date(s);
+            if (!isNaN(d.getTime())) return d;
+            if (s.includes('/')) {
+                const parts = s.split('/');
+                if (parts.length === 3) {
+                    let year = parseInt(parts[2]);
+                    let month = parseInt(parts[1]) - 1;
+                    let day = parseInt(parts[0]);
+                    if (year > 2500) year -= 543;
+                    d = new Date(year, month, day);
+                    if (!isNaN(d.getTime())) return d;
+                }
+            }
+            return null;
+        }
+
         // ============================================================
         // WHATSAPP HELPERS (unchanged)
         // ============================================================
@@ -4176,8 +4419,11 @@
             if (!cleanPhone) { showToast('⚠️ رقم الهاتف غير صحيح', 'error'); return; }
             const formattedDate = expiryDate ? formatDate(expiryDate) : 'غير محدد';
             const msg = encodeURIComponent(
-                `مرحباً ${name} 👋\nنود إعلامك بأن عضويتك ستنتهي خلال ${daysLeft} يوم (${formattedDate})\nيرجى الاتصال بالإدارة لتجديد العضوية...\n💪 نتمنى لك دوام الصحة ونحن في انتظارك!`
-                );
+                `مرحباً ${name} 👋\n` +
+                `نود إعلامك بأن عضويتك ستنتهي خلال ${daysLeft} يوم (${formattedDate})\n` +
+                `يرجى الاتصال بالإدارة لتجديد العضوية...\n` +
+                `💪 نتمنى لك دوام الصحة ونحن في انتظارك!`
+            );
             window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
             showToast(`📱 فتح WhatsApp لـ ${name}`, 'info');
         }
@@ -4188,8 +4434,11 @@
             if (!cleanPhone) { showToast('⚠️ رقم الهاتف غير صحيح', 'error'); return; }
             const formattedDate = expiryDate ? formatDate(expiryDate) : 'غير محدد';
             const msg = encodeURIComponent(
-                `مرحباً ${name} 👋\nلاحظنا أن عضويتك انتهت منذ ${daysOverdue} يوم (${formattedDate})\nندعوك للعودة وممارسة الرياضة مرة أخرى! 💪\nنتمنى لك صحة جيدة ونحن في انتظارك!`
-                );
+                `مرحباً ${name} 👋\n` +
+                `لاحظنا أن عضويتك انتهت منذ ${daysOverdue} يوم (${formattedDate})\n` +
+                `ندعوك للعودة وممارسة الرياضة مرة أخرى! 💪\n` +
+                `نتمنى لك صحة جيدة ونحن في انتظارك!`
+            );
             window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
             showToast(`📱 فتح WhatsApp لـ ${name}`, 'info');
         }
@@ -4201,8 +4450,11 @@
             const formattedDate = paymentDate ? formatDate(paymentDate) : 'اليوم';
             const formattedNewExpiry = newExpiry ? formatDate(newExpiry) : 'غير محدد';
             const msg = encodeURIComponent(
-                `شكراً ${name} 🙏 على الدفع في الوقت المحدد!\nلقد استلمنا مبلغ ${amount} ج.م في ${formattedDate}\nتاريخ انتهاء الصلاحية الجديد هو ${formattedNewExpiry}\n💪 ننصحك بممارسة الرياضة يومياً لتحقيق أهدافك!`
-                );
+                `شكراً ${name} 🙏 على الدفع في الوقت المحدد!\n` +
+                `لقد استلمنا مبلغ ${amount} ج.م في ${formattedDate}\n` +
+                `تاريخ انتهاء الصلاحية الجديد هو ${formattedNewExpiry}\n` +
+                `💪 ننصحك بممارسة الرياضة يومياً لتحقيق أهدافك!`
+            );
             window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
             showToast(`📱 فتح WhatsApp لـ ${name}`, 'info');
         }
@@ -4212,8 +4464,27 @@
             const cleanPhone = formatPhoneForWhatsApp(phone);
             if (!cleanPhone) { showToast('⚠️ رقم الهاتف غير صحيح', 'error'); return; }
             const msg = encodeURIComponent(
-                `مرحباً ${name} 👋 مرحباً بك في Pro Gym!\nلقد تم تسجيلك (${memberId}) ولكن لم يتم الدفع بعد...\nيرجى الاتصال بالإدارة لإتمام الدفع\n💪 نحن في انتظارك بكل سرور! نتمنى لك النجاح في رحلة اللياقة!`
-                );
+                `مرحباً ${name} 👋 مرحباً بك في Pro Gym!\n` +
+                `لقد تم تسجيلك (${memberId}) ولكن لم يتم الدفع بعد...\n` +
+                `يرجى الاتصال بالإدارة لإتمام الدفع\n` +
+                `💪 نحن في انتظارك بكل سرور! نتمنى لك النجاح في رحلة اللياقة!`
+            );
+            window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
+            showToast(`📱 فتح WhatsApp لـ ${name}`, 'info');
+        }
+
+        function sendWelcomeWhatsApp(phone, name, memberId, password, startDate, membershipType, amount, paymentDate,
+            expiryDate) {
+            if (!phone) { showToast('⚠️ هذا العضو ليس لديه رقم هاتف', 'warning'); return; }
+            const cleanPhone = formatPhoneForWhatsApp(phone);
+            if (!cleanPhone) { showToast('⚠️ رقم الهاتف غير صحيح', 'error'); return; }
+            const msg = encodeURIComponent(
+                `👋 مرحباً ${name}، مرحباً بك في Pro Gym!\n` +
+                `رقم العضو: ${memberId}\n` +
+                `النوع: ${membershipType || 'غير محدد'}\n` +
+                `كلمة المرور: ${password}\n` +
+                `💪 يمكنك البدء الآن!`
+            );
             window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
             showToast(`📱 فتح WhatsApp لـ ${name}`, 'info');
         }
@@ -4228,13 +4499,16 @@
                 const wa = formatPhoneForWhatsApp(m.phone);
                 if (wa) {
                     const msg = encodeURIComponent(
-                        `مرحباً ${m.full_name} 👋\nنود إعلامك بأن عضويتك ستنتهي خلال ${daysLeft} يوم (${formatDate(m.expiry_date)})\nيرجى الاتصال بالإدارة لتجديد العضوية... 💪`
-                        );
+                        `مرحباً ${m.full_name} 👋\n` +
+                        `نود إعلامك بأن عضويتك ستنتهي خلال ${daysLeft} يوم (${formatDate(m.expiry_date)})\n` +
+                        `يرجى الاتصال بالإدارة لتجديد العضوية... 💪`
+                    );
                     setTimeout(() => { window.open(`https://wa.me/${wa}?text=${msg}`, '_blank'); }, count * 2000);
                     count++;
                 }
             });
             showToast(`📤 فتح WhatsApp لـ ${count} عضو`, 'info');
+            addNotification(`تم إرسال تذكير لـ ${count} عضو باقتراب الانتهاء`, 'info');
         }
 
         function sendWhatsAppExpiredEncouragementBulk() {
@@ -4247,13 +4521,16 @@
                 const wa = formatPhoneForWhatsApp(m.phone);
                 if (wa) {
                     const msg = encodeURIComponent(
-                        `مرحباً ${m.full_name} 👋\nلقد انتهت عضويتك منذ ${daysOver} يوم (${formatDate(m.expiry_date)})\nندعوك للعودة وممارسة الرياضة مرة أخرى! 💪`
-                        );
+                        `مرحباً ${m.full_name} 👋\n` +
+                        `لقد انتهت عضويتك منذ ${daysOver} يوم (${formatDate(m.expiry_date)})\n` +
+                        `ندعوك للعودة وممارسة الرياضة مرة أخرى! 💪`
+                    );
                     setTimeout(() => { window.open(`https://wa.me/${wa}?text=${msg}`, '_blank'); }, count * 2000);
                     count++;
                 }
             });
             showToast(`📤 فتح WhatsApp لـ ${count} عضو`, 'info');
+            addNotification(`تم إرسال تشجيع لـ ${count} عضو منتهي الصلاحية`, 'info');
         }
 
         function sendWhatsAppNewMemberUnpaidBulk() {
@@ -4269,13 +4546,16 @@
                 const wa = formatPhoneForWhatsApp(m.phone);
                 if (wa) {
                     const msg = encodeURIComponent(
-                        `مرحباً ${m.full_name} 👋 مرحباً بك في Pro Gym!\nلقد تم تسجيلك (${m.member_id}) ولكن لم يتم الدفع بعد...\nيرجى الاتصال بالإدارة لإتمام الدفع 💪`
-                        );
+                        `مرحباً ${m.full_name} 👋 مرحباً بك في Pro Gym!\n` +
+                        `لقد تم تسجيلك (${m.member_id}) ولكن لم يتم الدفع بعد...\n` +
+                        `يرجى الاتصال بالإدارة لإتمام الدفع 💪`
+                    );
                     setTimeout(() => { window.open(`https://wa.me/${wa}?text=${msg}`, '_blank'); }, count * 2000);
                     count++;
                 }
             });
             showToast(`📤 فتح WhatsApp لـ ${count} عضو`, 'info');
+            addNotification(`تم الترحيب بـ ${count} عضو جديد غير مدفوع`, 'info');
         }
 
         // ============================================================
@@ -4333,13 +4613,17 @@
         }
 
         // ============================================================
-        // REGISTER MODALS
+        // REGISTER MODALS (auto-login after registration)
         // ============================================================
         async function openRegisterMember() {
             const modal = document.getElementById('registerMemberModal');
-            if (!modal) { showToast('⚠️ لم يتم العثور على النافذة', 'error'); return; }
+            if (!modal) {
+                showToast('⚠️ لم يتم العثور على النافذة', 'error');
+                return;
+            }
             modal.classList.add('show');
             modal.style.display = 'flex';
+
             document.getElementById('regMemberFullName').value = '';
             document.getElementById('regMemberPhone').value = '';
             document.getElementById('regMemberAge').value = '';
@@ -4349,6 +4633,7 @@
             document.getElementById('regMemberResult').textContent = '';
             document.getElementById('regMemberResult').innerHTML = '';
             document.getElementById('copyMessage').style.display = 'none';
+
             try {
                 const data = await apiCall('/members');
                 const members = data.data || [];
@@ -4362,14 +4647,19 @@
 
         async function openRegisterAdmin() {
             const modal = document.getElementById('registerAdminModal');
-            if (!modal) { showToast('⚠️ لم يتم العثور على النافذة', 'error'); return; }
+            if (!modal) {
+                showToast('⚠️ لم يتم العثور على النافذة', 'error');
+                return;
+            }
             modal.classList.add('show');
             modal.style.display = 'flex';
+
             document.getElementById('regAdminSecret').value = '';
             document.getElementById('regAdminPass').value = '';
             document.getElementById('regAdminPassConfirm').value = '';
             document.getElementById('regAdminResult').textContent = '';
             document.getElementById('regAdminResult').innerHTML = '';
+
             showToast('🔑 يرجى إدخال الكود السري', 'info');
         }
 
@@ -4419,25 +4709,37 @@
             const confirmPass = document.getElementById('regMemberPasswordConfirm').value.trim();
             const resultDiv = document.getElementById('regMemberResult');
 
-            if (!memberId) { resultDiv.innerHTML =
-                    '<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> لا يوجد رقم</span>';
-                resultDiv.style.background = 'rgba(239,68,68,0.06)'; return; }
-            if (!fullName) { resultDiv.innerHTML =
+            if (!memberId) {
+                resultDiv.innerHTML = '<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> لا يوجد رقم</span>';
+                resultDiv.style.background = 'rgba(239, 68, 68, 0.06)';
+                return;
+            }
+            if (!fullName) {
+                resultDiv.innerHTML =
                     '<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> يرجى إدخال الاسم</span>';
-                resultDiv.style.background = 'rgba(239,68,68,0.06)'; return; }
-            if (!password || password.length < 4) { resultDiv.innerHTML =
+                resultDiv.style.background = 'rgba(239, 68, 68, 0.06)';
+                return;
+            }
+            if (!password || password.length < 4) {
+                resultDiv.innerHTML =
                     '<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> كلمة المرور >=4 أحرف</span>';
-                resultDiv.style.background = 'rgba(239,68,68,0.06)'; return; }
-            if (password !== confirmPass) { resultDiv.innerHTML =
+                resultDiv.style.background = 'rgba(239, 68, 68, 0.06)';
+                return;
+            }
+            if (password !== confirmPass) {
+                resultDiv.innerHTML =
                     '<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> كلمة المرور غير متطابقة</span>';
-                resultDiv.style.background = 'rgba(239,68,68,0.06)'; return; }
+                resultDiv.style.background = 'rgba(239, 68, 68, 0.06)';
+                return;
+            }
+
             try {
                 const data = await apiCall('/members');
                 const members = data.data || [];
                 if (members.find(m => m.member_id === memberId)) {
                     resultDiv.innerHTML =
                         `<span style="color:var(--danger);"><i class="fas fa-times-circle"></i> الرقم ${memberId} موجود بالفعل</span>`;
-                    resultDiv.style.background = 'rgba(239,68,68,0.06)';
+                    resultDiv.style.background = 'rgba(239, 68, 68, 0.06)';
                     return;
                 }
                 await apiCall('/members', {
@@ -4454,11 +4756,13 @@
                 });
                 resultDiv.innerHTML =
                     `<span style="color:var(--success);"><i class="fas fa-check-circle"></i> تم التسجيل بنجاح!<br>الرقم: <strong>${memberId}</strong> | كلمة المرور: <strong>${password}</strong></span>`;
-                resultDiv.style.background = 'rgba(16,185,129,0.06)';
+                resultDiv.style.background = 'rgba(16, 185, 129, 0.06)';
                 showToast(`✅ تم تسجيل ${memberId} بنجاح`, 'success');
+                addNotification(`تم تسجيل عضو جديد: ${fullName} (${memberId})`, 'success');
                 // Auto-login
                 localStorage.setItem('gym_role', 'member');
                 localStorage.setItem('gym_user', memberId);
+                // Close modal
                 setTimeout(() => {
                     closeRegisterModal('registerMemberModal');
                     document.getElementById('loginPage').style.display = 'none';
@@ -4469,7 +4773,7 @@
             } catch (error) {
                 resultDiv.innerHTML =
                     `<span style="color:var(--danger);"><i class="fas fa-times-circle"></i> ${error.message}</span>`;
-                resultDiv.style.background = 'rgba(239,68,68,0.06)';
+                resultDiv.style.background = 'rgba(239, 68, 68, 0.06)';
                 showToast('❌ ' + error.message, 'error');
             }
         }
@@ -4483,38 +4787,46 @@
             if (secret !== ADMIN_RESET_CODE) {
                 resultDiv.innerHTML =
                     `<span style="color:var(--danger);"><i class="fas fa-times-circle"></i> الكود السري غير صحيح (adminreset-2026)</span>`;
-                resultDiv.style.background = 'rgba(239,68,68,0.06)';
+                resultDiv.style.background = 'rgba(239, 68, 68, 0.06)';
                 return;
             }
+
             if (newPass.length < 6) {
                 resultDiv.innerHTML =
                     `<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> كلمة المرور يجب أن تكون 6 أحرف على الأقل</span>`;
-                resultDiv.style.background = 'rgba(239,68,68,0.06)';
+                resultDiv.style.background = 'rgba(239, 68, 68, 0.06)';
                 return;
             }
+
             if (newPass !== confirmPass) {
                 resultDiv.innerHTML =
                     `<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> كلمة المرور غير متطابقة</span>`;
-                resultDiv.style.background = 'rgba(239,68,68,0.06)';
+                resultDiv.style.background = 'rgba(239, 68, 68, 0.06)';
                 return;
             }
+
             try {
                 const hash = await sha256(newPass);
                 localStorage.setItem('adminHash', hash);
+
                 resultDiv.innerHTML =
                     `<span style="color:var(--success);"><i class="fas fa-check-circle"></i> تم تعيين كلمة مرور المشرف بنجاح!<br><small>كلمة المرور الجديدة: <strong>${newPass}</strong></small></span>`;
-                resultDiv.style.background = 'rgba(16,185,129,0.06)';
+                resultDiv.style.background = 'rgba(16, 185, 129, 0.06)';
+
                 showToast('✅ تم تعيين كلمة مرور المشرف بنجاح', 'success');
+                addNotification('تم تعيين كلمة مرور مشرف جديدة', 'success');
+
                 setTimeout(() => {
                     closeRegisterModal('registerAdminModal');
                     document.getElementById('loginUser').value = 'admin';
                     document.getElementById('loginPass').value = newPass;
                     showToast('🔑 يرجى النقر على "تسجيل الدخول"', 'info');
                 }, 2000);
+
             } catch (e) {
                 resultDiv.innerHTML =
                     `<span style="color:var(--danger);"><i class="fas fa-times-circle"></i> ${e.message}</span>`;
-                resultDiv.style.background = 'rgba(239,68,68,0.06)';
+                resultDiv.style.background = 'rgba(239, 68, 68, 0.06)';
                 showToast('❌ ' + e.message, 'error');
             }
         }
@@ -4530,6 +4842,7 @@
                 document.getElementById('appMain').style.display = 'block';
 
                 const navItems = document.querySelectorAll('.nav-item');
+                const bell = document.getElementById('notificationBell');
                 if (role === 'admin') {
                     navItems.forEach(item => {
                         const page = item.dataset.page;
@@ -4540,12 +4853,13 @@
                     document.getElementById('sidebarUserName').textContent = 'Admin';
                     document.getElementById('sidebarUserRole').textContent = 'مدير النظام';
                     document.getElementById('sidebarAvatar').textContent = 'A';
+                    bell.style.display = 'flex';
+                    // Load all data immediately
                     refreshDashboard();
                     fetchMembers();
                     fetchCheckins();
                     fetchPayments();
                     loadAnalytics();
-                    loadDailyReport();
                     switchTab('dashboard');
                 } else if (role === 'member' && user) {
                     navItems.forEach(item => {
@@ -4557,16 +4871,22 @@
                     document.getElementById('sidebarUserName').textContent = 'عضو';
                     document.getElementById('sidebarUserRole').textContent = 'مستخدم';
                     document.getElementById('sidebarAvatar').textContent = 'M';
+                    bell.style.display = 'none';
+
                     Promise.all([
                         apiCall('/members').then(d => { allMembers = d.data || []; }),
                         apiCall('/checkin').then(d => { allCheckins = d.data || []; }),
                         apiCall('/payments').then(d => { allPayments = d.data || []; })
                     ]).then(() => {
-                        setTimeout(() => { loadProfile();
-                            switchTab('profile'); }, 300);
+                        setTimeout(() => {
+                            loadProfile();
+                            switchTab('profile');
+                        }, 300);
                     }).catch(() => {
-                        setTimeout(() => { loadProfile();
-                            switchTab('profile'); }, 300);
+                        setTimeout(() => {
+                            loadProfile();
+                            switchTab('profile');
+                        }, 300);
                     });
                 }
                 document.getElementById('profileNav').style.display = role === 'member' ? 'flex' : 'none';
@@ -4595,6 +4915,7 @@
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('appMain').style.display = 'block';
                     showToast('✅ تم تسجيل الدخول كـ admin', 'success');
+                    addNotification('دخول المشرف', 'info');
                     checkAuth();
                     return;
                 } else {
@@ -4619,6 +4940,7 @@
                     document.getElementById('loginPage').style.display = 'none';
                     document.getElementById('appMain').style.display = 'block';
                     showToast(`✅ مرحباً ${member.full_name}`, 'success');
+                    addNotification(`العضو ${member.full_name} دخل`, 'info');
                     checkAuth();
                     return;
                 } else {
@@ -4652,14 +4974,17 @@
         function startAutoRefresh() {
             stopAutoRefresh();
             autoRefreshTimer = setInterval(() => {
-                if (currentPage === 'dashboard' && !refreshInProgress) refreshDashboard();
-                if (currentPage === 'daily' && !refreshInProgress) loadDailyReport();
+                if (currentPage === 'dashboard' && !refreshInProgress) {
+                    refreshDashboard();
+                }
             }, AUTO_REFRESH_INTERVAL);
         }
 
         function stopAutoRefresh() {
-            if (autoRefreshTimer) { clearInterval(autoRefreshTimer);
-                autoRefreshTimer = null; }
+            if (autoRefreshTimer) {
+                clearInterval(autoRefreshTimer);
+                autoRefreshTimer = null;
+            }
         }
 
         // ============================================================
@@ -4669,7 +4994,6 @@
             if (e.ctrlKey && e.key === 'r') {
                 e.preventDefault();
                 if (currentPage === 'dashboard') refreshDashboard();
-                else if (currentPage === 'daily') loadDailyReport();
                 else if (currentPage === 'members') fetchMembers();
                 else if (currentPage === 'checkin') fetchCheckins();
                 else if (currentPage === 'payments') fetchPayments();
@@ -4681,7 +5005,10 @@
                 closeRegisterModal('registerMemberModal');
                 closeRegisterModal('registerAdminModal');
                 const modal = document.querySelector('.modal-overlay.show');
-                if (modal) { const closeBtn = modal.querySelector('.close'); if (closeBtn) closeBtn.click(); }
+                if (modal) {
+                    const closeBtn = modal.querySelector('.close');
+                    if (closeBtn) closeBtn.click();
+                }
             }
         });
 
@@ -4698,12 +5025,16 @@
 
             const titles = {
                 dashboard: { title: 'لوحة التحكم', sub: 'ملخص آخر البيانات' },
-                daily: { title: 'تقرير اليوم', sub: 'إحصائيات اليوم' },
                 members: { title: 'الأعضاء', sub: 'إدارة بيانات الأعضاء' },
                 checkin: { title: 'تسجيل الدخول', sub: 'تسجيل وعرض سجل الدخول' },
                 payments: { title: 'المدفوعات', sub: 'إدارة سجل المدفوعات' },
                 analytics: { title: 'التحليلات', sub: 'رؤى واتجاهات' },
-                profile: { title: 'الملف الشخصي', sub: 'بياناتك الشخصية وإحصائياتك' }
+                profile: { title: 'الملف الشخصي', sub: 'بياناتك الشخصية وإحصائياتك' },
+                plans: { title: 'خطط العضوية', sub: 'إدارة خطط الاشتراك' },
+                schedule: { title: 'جدول الحصص', sub: 'إدارة الجدول الزمني' },
+                reports: { title: 'التقارير المالية', sub: 'تحليل الإيرادات والمصروفات' },
+                risk: { title: 'إدارة المخاطر', sub: 'السلامة والامتثال' },
+                mobile: { title: 'تطبيق الجوال', sub: 'إعدادات التطبيق' }
             };
             const info = titles[page] || { title: 'صفحة', sub: '' };
             document.getElementById('pageTitle').textContent = info.title;
@@ -4711,13 +5042,14 @@
 
             if (isSidebarOpen) toggleSidebar();
 
+            // Load data for the page (if not already loaded)
             if (page === 'dashboard') refreshDashboard();
-            else if (page === 'daily') loadDailyReport();
             else if (page === 'members') fetchMembers();
             else if (page === 'checkin') fetchCheckins();
             else if (page === 'payments') fetchPayments();
             else if (page === 'analytics') loadAnalytics();
             else if (page === 'profile') loadProfile();
+            // New pages are static
         }
 
         function toggleForm(id) {
@@ -4726,7 +5058,7 @@
         }
 
         // ============================================================
-        // DASHBOARD (Admin)
+        // DASHBOARD (Admin) - with immediate data display
         // ============================================================
         async function refreshDashboard() {
             if (refreshInProgress) return;
@@ -4757,6 +5089,7 @@
 
                 const members = data.members || [];
                 allMembers = members;
+                // filter latest this month
                 const thisMonth = getTodayStr().slice(0, 7);
                 const latestMembers = members.filter(m => m.start_date && normalizeDate(m.start_date).slice(0, 7) === thisMonth)
                     .sort((a, b) => (normalizeDate(a.start_date) < normalizeDate(b.start_date) ? 1 : -1));
@@ -4772,13 +5105,28 @@
 
                 renderDashboardCharts(data);
                 showToast('✅ تم تحميل البيانات بنجاح', 'success');
-                loadDailyReport();
+
+                // Notifications: expired today, payments today, new members today
+                const today = getTodayStr();
+                const expiredToday = members.filter(m => m.expiry_date && normalizeDate(m.expiry_date) === today);
+                if (expiredToday.length) {
+                    addNotification(`🔴 ${expiredToday.length} عضو تنتهي صلاحيتهم اليوم`, 'error');
+                }
+                const paidToday = payments.filter(p => p.payment_date && normalizeDate(p.payment_date) === today);
+                if (paidToday.length) {
+                    addNotification(`💰 ${paidToday.length} دفعة اليوم`, 'success');
+                }
+                const newToday = members.filter(m => m.start_date && normalizeDate(m.start_date) === today);
+                if (newToday.length) {
+                    addNotification(`🆕 ${newToday.length} عضو جديد اليوم`, 'info');
+                }
 
             } catch (e) {
                 lastError = e.message;
                 renderDebug(null, e.message);
                 $('statusDot').style.background = '#ea4335';
                 showToast('❌ ' + e.message, 'error');
+                addNotification('❌ فشل تحميل البيانات: ' + e.message, 'error');
             } finally {
                 refreshInProgress = false;
                 btn.disabled = false;
@@ -4790,6 +5138,7 @@
             const tbody = $('dashMemberTableBody');
             if (!members || !members.length) { tbody.innerHTML =
                     '<tr><td colspan="7" class="empty-row">لا توجد بيانات</td></tr>'; return; }
+
             const today = getTodayStr();
             tbody.innerHTML = members.slice(0, 20).map((m, idx) => {
                 const isDateExpired = m.expiry_date && normalizeDate(m.expiry_date) < today;
@@ -4802,6 +5151,7 @@
                     'expiring_soon': '<span class="status-badge expiring"><i class="fas fa-clock"></i> ينتهي قريباً</span>',
                     'no_payment': '<span class="status-badge no-payment"><i class="fas fa-exclamation-triangle"></i> غير مدفوع</span>'
                 };
+
                 return `<tr class="${rowClass}">
                         <td>${idx+1}</td>
                         <td><strong>${m.member_id||'-'}</strong></td>
@@ -4820,6 +5170,7 @@
                 tbody.innerHTML = '<tr><td colspan="6" class="empty-row">لا توجد بيانات</td></tr>';
                 return;
             }
+            // sort by latest date first
             const sorted = [...payments].sort((a, b) => {
                 const da = normalizeDate(a.payment_date);
                 const db = normalizeDate(b.payment_date);
@@ -4854,7 +5205,7 @@
             const textColor = isDarkMode ? '#b0b0cc' : '#4a4a6a';
             const gridColor = isDarkMode ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
             const revData = data.revenue_by_month || [];
-            const revLabels = revData.map(d => getMonthLabel(d.month));
+            const revLabels = revData.map(d => getThaiMonth(d.month));
             const revValues = revData.map(d => parseFloat(d.total) || 0);
             renderChart('revenueChart', 'bar', revLabels, revValues, 'الإيرادات (ج.م)', '#0ea5e9', textColor, gridColor);
             const trendData = data.checkin_trend || [];
@@ -4898,79 +5249,30 @@
         }
 
         // ============================================================
-        // DAILY REPORT
-        // ============================================================
-        function loadDailyReport() {
-            const today = getTodayStr();
-            document.getElementById('dailyDate').textContent = formatDate(today);
-
-            const todayCheckins = allCheckins.filter(c => normalizeDate(c.checkin_date) === today);
-            document.getElementById('dailyCheckins').textContent = todayCheckins.length;
-            document.getElementById('dailyCheckinsCount').textContent = todayCheckins.length;
-            const checkinNames = todayCheckins.map(c => {
-                const m = allMembers.find(mem => mem.member_id === c.member_id);
-                return m ? m.full_name : c.member_id;
-            }).join('، ') || 'لا يوجد';
-            document.getElementById('dailyCheckinsList').textContent = checkinNames;
-
-            const newToday = allMembers.filter(m => m.start_date && normalizeDate(m.start_date) === today);
-            document.getElementById('dailyNewMembers').textContent = newToday.length;
-            document.getElementById('dailyNewMembersCount').textContent = newToday.length;
-            const newNames = newToday.map(m => m.full_name + ' (' + m.member_id + ')').join('، ') || 'لا يوجد';
-            document.getElementById('dailyNewMembersList').textContent = newNames;
-
-            const payToday = allPayments.filter(p => p.payment_date && normalizeDate(p.payment_date) === today);
-            document.getElementById('dailyPayments').textContent = payToday.length;
-            document.getElementById('dailyPaymentsCount').textContent = payToday.length;
-            const payDetails = payToday.map(p => {
-                const m = allMembers.find(mem => mem.member_id === p.member_id);
-                return (m ? m.full_name : p.member_id) + ' (' + toEGP(p.amount) + ')';
-            }).join('، ') || 'لا يوجد';
-            document.getElementById('dailyPaymentsList').textContent = payDetails;
-
-            const expiredToday = allMembers.filter(m => m.expiry_date && normalizeDate(m.expiry_date) === today);
-            document.getElementById('dailyExpired').textContent = expiredToday.length;
-            document.getElementById('dailyExpiredCount').textContent = expiredToday.length;
-            const expiredNames = expiredToday.map(m => m.full_name + ' (' + m.member_id + ')').join('، ') || 'لا يوجد';
-            document.getElementById('dailyExpiredList').textContent = expiredNames;
-        }
-
-        function exportDailyReportCSV() {
-            const today = getTodayStr();
-            const headers = ['الفئة', 'العدد', 'الأسماء'];
-            const rows = [
-                ['دخول اليوم', document.getElementById('dailyCheckinsCount').textContent, document.getElementById(
-                    'dailyCheckinsList').textContent],
-                ['أعضاء جدد', document.getElementById('dailyNewMembersCount').textContent, document.getElementById(
-                    'dailyNewMembersList').textContent],
-                ['مدفوعات اليوم', document.getElementById('dailyPaymentsCount').textContent, document.getElementById(
-                    'dailyPaymentsList').textContent],
-                ['منتهي اليوم', document.getElementById('dailyExpiredCount').textContent, document.getElementById(
-                    'dailyExpiredList').textContent]
-            ];
-            downloadCSV(`daily_report_${today}.csv`, headers, rows);
-            showToast('✅ تم تصدير تقرير اليوم CSV', 'success');
-        }
-
-        // ============================================================
-        // SHOW STAT DETAIL (Admin Modal) — improved and concise
+        // SHOW STAT DETAIL (Admin Modal) - now uses global arrays
         // ============================================================
         function showStatDetail(type) {
             const todayStr = getTodayStr();
             let title = '📊 التفاصيل';
             let content = '';
 
+            // Ensure data is loaded (if not, try to fetch)
             if (allMembers.length === 0 && allPayments.length === 0) {
+                // Try to load data quickly
                 Promise.all([
                     apiCall('/members').then(d => { allMembers = d.data || []; }),
                     apiCall('/payments').then(d => { allPayments = d.data || []; }),
                     apiCall('/checkin').then(d => { allCheckins = d.data || []; })
-                ]).then(() => { showStatDetail(type); }).catch(() => {
+                ]).then(() => {
+                    // re-run this function after data loaded
+                    showStatDetail(type);
+                }).catch(() => {
                     openModal('خطأ', 'لم نتمكن من تحميل البيانات، حاول تحديث الصفحة.');
                 });
                 return;
             }
 
+            // Proceed with data
             const members = allMembers;
             const payments = allPayments;
             const checkins = allCheckins;
@@ -4978,30 +5280,37 @@
             switch (type) {
                 case 'members': {
                     title = '👥 إجمالي الأعضاء';
-                    let table =
-                        `<div class="table-wrap"><table class="rank-table"><thead><tr><th>الرقم</th><th>الاسم</th><th>الهاتف</th><th>النوع</th><th>الحالة</th><th>انتهاء الصلاحية</th><th>اتصال</th></tr></thead><tbody>`;
-                    members.slice(0, 50).forEach(m => {
-                        const phone = m.phone || '';
-                        const wa = formatPhoneForWhatsApp(phone);
-                        const waLink = wa ? `https://wa.me/${wa}?text=${encodeURIComponent('👋 مرحباً ' + m.full_name + ' من Pro Gym')}` : '#';
-                        const statusMap = { 'active': '✅ نشط', 'expired': '🔴 منتهي', 'expiring_soon': '🟡 ينتهي قريباً',
-                            'no_payment': '⚪ غير مدفوع' };
-                        const isRed = (m.status === 'expired' || m.status === 'no_payment') && !payments.some(p =>
-                            p.member_id === m.member_id);
-                        const style = isRed ? 'color:var(--expired-color);font-weight:700;' : '';
-                        table += `<tr style="${style}">
-                                <td><strong>${m.member_id||'-'}</strong></td>
-                                <td>${m.full_name||'-'}</td>
-                                <td>${phone||'-'}</td>
-                                <td>${m.membership_type||'-'}</td>
-                                <td>${statusMap[m.status] || m.status || '-'}</td>
-                                <td>${formatDate(m.expiry_date)}</td>
-                                <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
-                            </tr>`;
-                    });
-                    table += '</tbody></table></div>';
-                    content =
-                        `العدد: <strong>${members.length}</strong> عضو (عرض 50 فقط)<br><br>${table}`;
+                    if (!members.length) {
+                        content = 'لا توجد بيانات للأعضاء';
+                    } else {
+                        let table =
+                            `<table class="rank-table"><thead><tr><th>الرقم</th><th>الاسم</th><th>الهاتف</th><th>النوع</th><th>الحالة</th><th>انتهاء الصلاحية</th><th>اتصال</th></tr></thead><tbody>`;
+                        members.forEach(m => {
+                            const phone = m.phone || '';
+                            const wa = formatPhoneForWhatsApp(phone);
+                            const waLink = wa ? `https://wa.me/${wa}?text=${encodeURIComponent('👋 مرحباً ' + m.full_name + ' من Pro Gym')}` : '#';
+                            const statusMap = {
+                                'active': '✅ نشط',
+                                'expired': '🔴 منتهي',
+                                'expiring_soon': '🟡 ينتهي قريباً',
+                                'no_payment': '⚪ غير مدفوع'
+                            };
+                            const isRed = (m.status === 'expired' || m.status === 'no_payment') && !payments.some(p =>
+                                p.member_id === m.member_id);
+                            const style = isRed ? 'color:var(--expired-color);font-weight:700;' : '';
+                            table += `<tr style="${style}">
+                                    <td><strong>${m.member_id||'-'}</strong></td>
+                                    <td>${m.full_name||'-'}</td>
+                                    <td>${phone||'-'}</td>
+                                    <td>${m.membership_type||'-'}</td>
+                                    <td>${statusMap[m.status] || m.status || '-'}</td>
+                                    <td>${formatDate(m.expiry_date)}</td>
+                                    <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
+                                </tr>`;
+                        });
+                        table += '</tbody></table>';
+                        content = `العدد: <strong>${members.length}</strong> عضو<br><br>${table}`;
+                    }
                     break;
                 }
                 case 'renewal': {
@@ -5041,10 +5350,12 @@
                 case 'todayCheckins': {
                     title = '✅ دخول اليوم';
                     const todayCheckins = checkins.filter(c => normalizeDate(c.checkin_date) === todayStr);
-                    if (!todayCheckins.length) { content = 'لا يوجد دخول اليوم'; } else {
+                    if (!todayCheckins.length) {
+                        content = 'لا يوجد دخول اليوم';
+                    } else {
                         let table =
-                            `<div class="table-wrap"><table class="rank-table"><thead><tr><th>#</th><th>الرقم</th><th>الاسم</th><th>الوقت</th><th>اتصال</th></tr></thead><tbody>`;
-                        todayCheckins.slice(0, 50).forEach((c, i) => {
+                            `<table class="rank-table"><thead><tr><th>#</th><th>الرقم</th><th>الاسم</th><th>الوقت</th><th>اتصال</th></tr></thead><tbody>`;
+                        todayCheckins.forEach((c, i) => {
                             const member = members.find(m => m.member_id === c.member_id);
                             const name = member ? member.full_name : '-';
                             const phone = member ? member.phone : '';
@@ -5058,112 +5369,11 @@
                                     <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
                                 </tr>`;
                         });
-                        table += '</tbody></table></div>';
-                        content =
-                        `العدد: <strong>${todayCheckins.length}</strong> مرة<br><br>${table}`;
+                        table += '</tbody></table>';
+                        content = `العدد: <strong>${todayCheckins.length}</strong> مرة<br><br>${table}`;
                     }
                     break;
                 }
-                case 'newMembers': {
-                    title = '➕ الأعضاء الجدد هذا الشهر';
-                    const thisMonth = todayStr.slice(0, 7);
-                    const newMembers = members.filter(m => m.start_date && normalizeDate(m.start_date).slice(0, 7) ===
-                        thisMonth);
-                    if (!newMembers.length) { content = 'لا يوجد أعضاء جدد هذا الشهر'; } else {
-                        let table =
-                            `<div class="table-wrap"><table class="rank-table"><thead><tr><th>الاسم</th><th>الرقم</th><th>تاريخ التسجيل</th><th>النوع</th><th>الحالة</th><th>اتصال</th></tr></thead><tbody>`;
-                        newMembers.slice(0, 50).forEach(m => {
-                            const statusLabel = m.status === 'active' ? '✅ نشط' : m.status === 'expired' ?
-                                '🔴 منتهي' : m.status === 'expiring_soon' ? '🟡 ينتهي قريباً' : '⚪ غير مدفوع';
-                            const phone = m.phone || '';
-                            const wa = formatPhoneForWhatsApp(phone);
-                            const msg = encodeURIComponent(
-                                `👋 مرحباً ${m.full_name}، مرحباً بك في Pro Gym! نحن سعداء بانضمامك إلينا! 💪`
-                                );
-                            const waLink = wa ? `https://wa.me/${wa}?text=${msg}` : '#';
-                            table += `<tr>
-                                    <td><strong>${m.full_name}</strong></td>
-                                    <td>${m.member_id}</td>
-                                    <td>${formatDate(m.start_date)}</td>
-                                    <td>${m.membership_type||'-'}</td>
-                                    <td>${statusLabel}</td>
-                                    <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
-                                </tr>`;
-                        });
-                        table += '</tbody></table></div>';
-                        content =
-                            `العدد: <strong>${newMembers.length}</strong> عضو<br><br>${table}`;
-                    }
-                    break;
-                }
-                case 'todayPayments': {
-                    title = '💳 مدفوعات اليوم';
-                    const todayPay = payments.filter(p => p.payment_date && normalizeDate(p.payment_date) === todayStr);
-                    if (!todayPay.length) { content = 'لا توجد مدفوعات اليوم'; } else {
-                        const totalToday = todayPay.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
-                        let table =
-                            `<div class="table-wrap"><table class="rank-table"><thead><tr><th>#</th><th>الرقم</th><th>الاسم</th><th>المبلغ</th><th>انتهاء الصلاحية</th><th>اتصال</th></tr></thead><tbody>`;
-                        todayPay.slice(0, 50).forEach((p, i) => {
-                            const member = members.find(m => m.member_id === p.member_id);
-                            const name = member ? member.full_name : '-';
-                            const phone = member ? member.phone : '';
-                            const wa = formatPhoneForWhatsApp(phone);
-                            const msg = encodeURIComponent(`✅ شكراً للدفع ${toEGP(p.amount)} ${name}! تم تجديد العضوية`
-                                );
-                            const waLink = wa ? `https://wa.me/${wa}?text=${msg}` : '#';
-                            table += `<tr>
-                                    <td>${i+1}</td>
-                                    <td><strong>${p.member_id}</strong></td>
-                                    <td>${name}</td>
-                                    <td>${toEGP(p.amount)}</td>
-                                    <td>${formatDate(p.expiry_date)}</td>
-                                    <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
-                                </tr>`;
-                        });
-                        table += '</tbody></table></div>';
-                        content =
-                            `الإجمالي: <strong>${toEGP(totalToday)}</strong> (${todayPay.length} عملية)<br><br>${table}`;
-                    }
-                    break;
-                }
-case 'expired': {
-    title = '🚫 الأعضاء منتهي الصلاحية';
-    const todayStr = getTodayStr();
-    const expiredMembers = members.filter(m => {
-        if (!m.expiry_date) return false;
-        const expDate = normalizeDate(m.expiry_date);
-        if (!expDate) return false;
-        return expDate < todayStr;
-    });
-
-    if (!expiredMembers.length) {
-        content = 'لا يوجد أعضاء منتهي الصلاحية';
-    } else {
-        let table = `<div class="table-wrap"><table class="rank-table">
-            <thead><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>تاريخ الانتهاء</th><th>مضى (يوم)</th><th>اتصال</th></tr></thead><tbody>`;
-        expiredMembers.slice(0, 100).forEach((m, idx) => {
-            const phone = m.phone || '';
-            const wa = formatPhoneForWhatsApp(phone);
-            const waLink = wa ? `https://wa.me/${wa}?text=${encodeURIComponent('👋 مرحباً ' + m.full_name + '، لاحظنا انتهاء عضويتك منذ ' + daysBetween(normalizeDate(m.expiry_date), todayStr) + ' يوم، ندعوك لتجديدها والعودة لممارسة الرياضة! 💪')}` : '#';
-            const daysOver = daysBetween(normalizeDate(m.expiry_date), todayStr);
-            // تلوين الخلفية حسب عدد الأيام
-            let bgColor = '';
-            if (daysOver > 30) bgColor = 'background:rgba(220,38,38,0.15);';
-            else if (daysOver > 7) bgColor = 'background:rgba(245,158,11,0.15);';
-            table += `<tr>
-                <td>${idx + 1}</td>
-                <td><strong>${m.full_name || '-'}</strong></td>
-                <td>${phone || '-'}</td>
-                <td>${formatDate(m.expiry_date)}</td>
-                <td style="font-weight:700;color:var(--danger);${bgColor}">${daysOver} يوم</td>
-                <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
-            </tr>`;
-        });
-        table += '</tbody></table></div>';
-        content = `العدد: <strong>${expiredMembers.length}</strong> عضو (عرض أول 100)<br><br>${table}`;
-    }
-    break;
-}
                 case 'expiring': {
                     title = '⏳ الأعضاء على وشك الانتهاء (7 أيام)';
                     const expiring = members.filter(m => {
@@ -5173,10 +5383,12 @@ case 'expired': {
                         const diff = daysBetween(todayStr, expDate);
                         return diff >= 0 && diff <= 7;
                     });
-                    if (!expiring.length) { content = 'لا يوجد أعضاء على وشك الانتهاء'; } else {
+                    if (!expiring.length) {
+                        content = 'لا يوجد أعضاء على وشك الانتهاء';
+                    } else {
                         let table =
-                            `<div class="table-wrap"><table class="rank-table"><thead><tr><th>الاسم</th><th>الهاتف</th><th>متبقي</th><th>اتصال</th></tr></thead><tbody>`;
-                        expiring.slice(0, 50).forEach(m => {
+                            `<table class="rank-table"><thead><tr><th>الاسم</th><th>الهاتف</th><th>متبقي</th><th>اتصال</th></tr></thead><tbody>`;
+                        expiring.forEach(m => {
                             const expDate = normalizeDate(m.expiry_date);
                             const daysLeft = daysBetween(todayStr, expDate);
                             const phone = m.phone || '';
@@ -5192,14 +5404,14 @@ case 'expired': {
                                     <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
                                 </tr>`;
                         });
-                        table += '</tbody></table></div>';
-                        content =
-                            `العدد: <strong>${expiring.length}</strong> عضو<br><br>${table}`;
+                        table += '</tbody></table>';
+                        content = `العدد: <strong>${expiring.length}</strong> عضو<br><br>${table}`;
                     }
                     break;
                 }
                 case 'revenue': {
                     title = '💰 الإيرادات (آخر 3 أشهر)';
+                    // Build chart for last 3 months
                     const revByMonth = {};
                     payments.forEach(p => {
                         if (p.payment_date) {
@@ -5207,6 +5419,7 @@ case 'expired': {
                             revByMonth[m] = (revByMonth[m] || 0) + parseFloat(p.amount || 0);
                         }
                     });
+
                     const sortedMonths = Object.keys(revByMonth).sort();
                     const lastMonths = sortedMonths.slice(-3);
                     const lastValues = lastMonths.map(m => revByMonth[m] || 0);
@@ -5214,10 +5427,12 @@ case 'expired': {
                         const d = new Date(m + '-01');
                         return d.toLocaleDateString('ar-EG', { month: 'short', year: 'numeric' });
                     });
+
                     if (lastMonths.length === 0) {
                         content =
                             `<div style="text-align:center;padding:20px 0;"><div style="font-size:48px;color:var(--text-muted);margin-bottom:12px;">📊</div><h4 style="color:var(--text-muted);">لا توجد بيانات للإيرادات</h4><p style="color:var(--text-muted);font-size:13px;margin-top:8px;">ابدأ بتسجيل المدفوعات لعرض الرسم البياني</p></div>`;
                     } else {
+                        // Calculate trend
                         let trendText = '';
                         if (lastValues.length >= 2) {
                             const diff = lastValues[lastValues.length - 1] - lastValues[lastValues.length - 2];
@@ -5282,6 +5497,106 @@ case 'expired': {
                     }
                     break;
                 }
+                case 'newMembers': {
+                    title = '➕ الأعضاء الجدد هذا الشهر';
+                    const thisMonth = todayStr.slice(0, 7);
+                    const newMembers = members.filter(m => m.start_date && normalizeDate(m.start_date).slice(0, 7) ===
+                        thisMonth);
+                    if (!newMembers.length) {
+                        content = 'لا يوجد أعضاء جدد هذا الشهر';
+                    } else {
+                        let table =
+                            `<table class="rank-table"><thead><tr><th>الاسم</th><th>الرقم</th><th>تاريخ التسجيل</th><th>النوع</th><th>الحالة</th><th>اتصال</th></tr></thead><tbody>`;
+                        newMembers.forEach(m => {
+                            const statusLabel = m.status === 'active' ? '✅ نشط' : m.status === 'expired' ?
+                                '🔴 منتهي' : m.status === 'expiring_soon' ? '🟡 ينتهي قريباً' : '⚪ غير مدفوع';
+                            const phone = m.phone || '';
+                            const wa = formatPhoneForWhatsApp(phone);
+                            const msg = encodeURIComponent(
+                                `👋 مرحباً ${m.full_name}، مرحباً بك في Pro Gym! نحن سعداء بانضمامك إلينا! 💪`
+                                );
+                            const waLink = wa ? `https://wa.me/${wa}?text=${msg}` : '#';
+                            table += `<tr>
+                                    <td><strong>${m.full_name}</strong></td>
+                                    <td>${m.member_id}</td>
+                                    <td>${formatDate(m.start_date)}</td>
+                                    <td>${m.membership_type||'-'}</td>
+                                    <td>${statusLabel}</td>
+                                    <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
+                                </tr>`;
+                        });
+                        table += '</tbody></table>';
+                        content = `العدد: <strong>${newMembers.length}</strong> عضو<br><br>${table}`;
+                    }
+                    break;
+                }
+                case 'expired': {
+                    title = '🚫 الأعضاء منتهي الصلاحية';
+                    const expired = members.filter(m => {
+                        if (!m.expiry_date) return false;
+                        const expDate = normalizeDate(m.expiry_date);
+                        if (!expDate) return false;
+                        return expDate < todayStr;
+                    });
+                    if (!expired.length) {
+                        content = 'لا يوجد أعضاء منتهي الصلاحية';
+                    } else {
+                        let table =
+                            `<table class="rank-table"><thead><tr><th>الاسم</th><th>الهاتف</th><th>انتهاء الصلاحية</th><th>تجاوز</th><th>اتصال</th></tr></thead><tbody>`;
+                        expired.forEach(m => {
+                            const expDate = normalizeDate(m.expiry_date);
+                            const daysOver = daysBetween(expDate, todayStr);
+                            const phone = m.phone || '';
+                            const wa = formatPhoneForWhatsApp(phone);
+                            const msg = encodeURIComponent(
+                                `مرحباً ${m.full_name} 👋 لاحظنا أن عضويتك انتهت منذ ${daysOver} يوم، ندعوك للعودة وممارسة الرياضة مرة أخرى! 💪`
+                                );
+                            const waLink = wa ? `https://wa.me/${wa}?text=${msg}` : '#';
+                            table += `<tr>
+                                    <td><strong>${m.full_name}</strong></td>
+                                    <td>${phone||'-'}</td>
+                                    <td>${formatDate(m.expiry_date)}</td>
+                                    <td><span class="status-badge expired">${daysOver} يوم</span></td>
+                                    <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
+                                </tr>`;
+                        });
+                        table += '</tbody></table>';
+                        content = `العدد: <strong>${expired.length}</strong> عضو<br><br>${table}`;
+                    }
+                    break;
+                }
+                case 'todayPayments': {
+                    title = '💳 مدفوعات اليوم';
+                    const todayPay = payments.filter(p => p.payment_date && normalizeDate(p.payment_date) === todayStr);
+                    if (!todayPay.length) {
+                        content = 'لا توجد مدفوعات اليوم';
+                    } else {
+                        const totalToday = todayPay.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
+                        let table =
+                            `<table class="rank-table"><thead><tr><th>#</th><th>الرقم</th><th>الاسم</th><th>المبلغ</th><th>انتهاء الصلاحية</th><th>اتصال</th></tr></thead><tbody>`;
+                        todayPay.forEach((p, i) => {
+                            const member = members.find(m => m.member_id === p.member_id);
+                            const name = member ? member.full_name : '-';
+                            const phone = member ? member.phone : '';
+                            const wa = formatPhoneForWhatsApp(phone);
+                            const msg = encodeURIComponent(
+                                `✅ شكراً للدفع ${toEGP(p.amount)} ${name}! تم تجديد العضوية`
+                                );
+                            const waLink = wa ? `https://wa.me/${wa}?text=${msg}` : '#';
+                            table += `<tr>
+                                    <td>${i+1}</td>
+                                    <td><strong>${p.member_id}</strong></td>
+                                    <td>${name}</td>
+                                    <td>${toEGP(p.amount)}</td>
+                                    <td>${formatDate(p.expiry_date)}</td>
+                                    <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
+                                </tr>`;
+                        });
+                        table += '</tbody></table>';
+                        content = `الإجمالي: <strong>${toEGP(totalToday)}</strong> (${todayPay.length} عملية)<br><br>${table}`;
+                    }
+                    break;
+                }
                 default:
                     content = 'لا توجد بيانات';
             }
@@ -5289,14 +5604,17 @@ case 'expired': {
             openModal(title, content);
         }
 
+        // ============================================================
+        // MODAL (Temp)
+        // ============================================================
         function openModal(title, html) {
             const old = document.getElementById('tempModal');
             if (old) old.remove();
+
             const overlay = document.createElement('div');
             overlay.className = 'modal-overlay show';
             overlay.id = 'tempModal';
-            overlay.innerHTML =
-                `
+            overlay.innerHTML = `
                     <div class="modal-box">
                         <div class="modal-header">
                             <h3>${title}</h3>
@@ -5315,7 +5633,7 @@ case 'expired': {
         }
 
         // ============================================================
-        // MEMBERS (Admin)
+        // MEMBERS (Admin) - with red for expired + no payment this month
         // ============================================================
         async function fetchMembers() {
             try {
@@ -5338,18 +5656,22 @@ case 'expired': {
             const tbody = $('membersTableBody');
             if (!members || !members.length) { tbody.innerHTML =
                     '<tr><td colspan="9" class="empty-row">لا توجد بيانات</td></tr>'; return; }
+
             const today = getTodayStr();
             const thisMonth = today.slice(0, 7);
             tbody.innerHTML = members.map(m => {
                 const isDateExpired = m.expiry_date && normalizeDate(m.expiry_date) < today;
+                // Check if has payment in this month
                 const hasPaymentThisMonth = allPayments.some(p =>
                     p.member_id === m.member_id &&
                     p.payment_date && normalizeDate(p.payment_date).slice(0, 7) === thisMonth
                 );
                 const shouldBeRed = isDateExpired && !hasPaymentThisMonth;
                 const rowClass = shouldBeRed ? 'member-row-expired' : '';
+
                 const xp = getXp(m.member_id);
                 const points = getPoints(m.member_id);
+
                 return `<tr class="${rowClass}">
                         <td><strong>${m.member_id||'-'}</strong></td>
                         <td>${m.full_name||'-'}</td>
@@ -5401,6 +5723,7 @@ case 'expired': {
                     })
                 });
                 showToast(`✅ تمت إضافة ${id} بنجاح، كلمة المرور: ${pass}`, 'success');
+                addNotification(`تمت إضافة عضو جديد: ${name} (${id})`, 'success');
                 $('memberAddForm').style.display = 'none';
                 $('mId').value = '';
                 $('mName').value = '';
@@ -5428,6 +5751,7 @@ case 'expired': {
             try {
                 await apiCall(`/members/${id}`, { method: 'DELETE' });
                 showToast(`🗑️ تم حذف ${id}`, 'success');
+                addNotification(`تم حذف العضو: ${id}`, 'warning');
                 await fetchMembers();
                 await refreshDashboard();
             } catch (e) { showToast('❌ ' + e.message, 'error'); }
@@ -5438,12 +5762,13 @@ case 'expired': {
             if (newPass && newPass.length >= 4) {
                 try { await apiCall(`/members/${id}/password`, { method: 'PUT', body: JSON.stringify({ password: newPass }) });
                     showToast(`✅ تم تغيير كلمة مرور ${id}`, 'success');
+                    addNotification(`تم تغيير كلمة مرور العضو: ${id}`, 'info');
                 } catch (e) { showToast('❌ ' + e.message, 'error'); }
             } else if (newPass !== null) showToast('⚠️ كلمة المرور يجب أن تكون >=4 أحرف', 'warning');
         }
 
         // ============================================================
-        // CHECKIN (Admin) — sorted latest first, name visible on mobile
+        // CHECKIN (Admin) - sorted latest first
         // ============================================================
         async function fetchCheckins() {
             try {
@@ -5453,6 +5778,7 @@ case 'expired': {
                 const tbody = $('checkinTableBody');
                 if (!allCheckins.length) { tbody.innerHTML =
                         '<tr><td colspan="5" class="empty-row">لا توجد بيانات</td></tr>'; return; }
+                // Sort by date descending (latest first)
                 const sorted = [...allCheckins].sort((a, b) => {
                     const da = normalizeDate(a.checkin_date) + ' ' + (a.checkin_time || '00:00');
                     const db = normalizeDate(b.checkin_date) + ' ' + (b.checkin_time || '00:00');
@@ -5478,21 +5804,28 @@ case 'expired': {
             try {
                 await apiCall('/checkin', { method: 'POST', body: JSON.stringify({ member_id: id }) });
                 showToast(`✅ تم تسجيل دخول ${id}`, 'success');
-                const memberCheckins = allCheckins.filter(c => c.member_id === id);
-                const allC = [...allCheckins, { member_id: id, checkin_date: getTodayStr(), checkin_time: new Date()
-                        .toLocaleTimeString() }];
-                const xp = updateMemberXp(id, allC);
-                showToast(`⭐ XP الجديد: ${xp}`, 'info');
+                addNotification(`تسجيل دخول: ${id}`, 'info');
+                // Add XP for checkin
+                const member = allMembers.find(m => m.member_id === id);
+                if (member) {
+                    addXp(id, 1); // 1 XP per checkin
+                    // Check missions
+                    const memberCheckins = allCheckins.filter(c => c.member_id === id);
+                    checkMissions(id, memberCheckins);
+                }
+                // Update profile if current page is profile and member is same
+                if (currentPage === 'profile' && profileMemberId === id) {
+                    loadProfile();
+                }
                 $('checkinAddForm').style.display = 'none';
                 $('ciMember').value = '';
                 await fetchCheckins();
                 await refreshDashboard();
-                if (currentPage === 'profile' && profileMemberId === id) loadProfile();
             } catch (e) { showToast('❌ ' + e.message, 'error'); }
         }
 
         // ============================================================
-        // PAYMENTS (Admin) — sorted latest first, name visible
+        // PAYMENTS (Admin) - sorted latest first, add point
         // ============================================================
         async function fetchPayments() {
             try {
@@ -5502,6 +5835,7 @@ case 'expired': {
                 const tbody = $('paymentsTableBody');
                 if (!allPayments.length) { tbody.innerHTML =
                         '<tr><td colspan="6" class="empty-row">لا توجد بيانات</td></tr>'; return; }
+                // Sort by date descending (latest first)
                 const sorted = [...allPayments].sort((a, b) => {
                     const da = normalizeDate(a.payment_date);
                     const db = normalizeDate(b.payment_date);
@@ -5531,14 +5865,20 @@ case 'expired': {
                 await apiCall('/payments', { method: 'POST', body: JSON.stringify({ member_id: id, amount,
                         months_paid: months }) });
                 showToast(`✅ تم تسجيل الدفع لـ ${id}`, 'success');
-                const points = getPoints(id);
-                showToast(`💳 النقاط الحالية: ${points}`, 'info');
+                addNotification(`دفع: ${id} مبلغ ${toEGP(amount)}`, 'success');
+                // Add point for payment
+                addPoint(id);
+                // Also add XP for payment
+                addXp(id, 5);
+                // Update profile if needed
+                if (currentPage === 'profile' && profileMemberId === id) {
+                    loadProfile();
+                }
                 $('paymentAddForm').style.display = 'none';
                 $('pMember').value = '';
                 $('pAmount').value = '';
                 await fetchPayments();
                 await refreshDashboard();
-                if (currentPage === 'profile' && profileMemberId === id) loadProfile();
                 const member = allMembers.find(m => m.member_id === id);
                 if (member && member.phone) {
                     setTimeout(() => {
@@ -5555,7 +5895,7 @@ case 'expired': {
         }
 
         // ============================================================
-        // ANALYTICS (Admin) — improved with error handling
+        // ANALYTICS (Admin) - with growth chart showing all months
         // ============================================================
         let analyticsTab = 'growth';
 
@@ -5609,11 +5949,11 @@ case 'expired': {
             const textColor = isDarkMode ? '#b0b0cc' : '#4a4a6a';
             const gridColor = isDarkMode ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
             const growth = data.growth?.monthly || [];
-            const gLabels = growth.map(d => getMonthLabel(d.month));
+            const gLabels = growth.map(d => getThaiMonth(d.month));
             const gValues = growth.map(d => parseInt(d.count) || 0);
             renderChart('growthChart', 'bar', gLabels, gValues, 'الأعضاء', '#8b5cf6', textColor, gridColor);
             const retention = data.growth?.retention || [];
-            const rLabels = retention.map(d => getMonthLabel(d.month));
+            const rLabels = retention.map(d => getThaiMonth(d.month));
             const rValues = retention.map(d => parseFloat(d.rate) || 0);
             renderChart('retentionChart', 'line', rLabels, rValues, 'معدل الاحتفاظ (%)', '#10b981', textColor, gridColor);
             const revType = data.revenue?.by_type || [];
@@ -5621,7 +5961,7 @@ case 'expired': {
             const rtValues = revType.map(d => parseFloat(d.total) || 0);
             renderChart('revenueByTypeChart', 'bar', rtLabels, rtValues, 'الإيرادات (ج.م)', '#0ea5e9', textColor, gridColor);
             const forecast = data.revenue?.forecast || [];
-            const fLabels = forecast.map(d => getMonthLabel(d.month));
+            const fLabels = forecast.map(d => getThaiMonth(d.month));
             const fValues = forecast.map(d => parseFloat(d.amount) || 0);
             renderChart('forecastChart', 'line', fLabels, fValues, 'التوقع (ج.م)', '#ef4444', textColor, gridColor);
             const weekdays = data.patterns?.by_weekday || [];
@@ -5643,24 +5983,27 @@ case 'expired': {
         }
 
         // ============================================================
-        // PROFILE (Member Dashboard) — with XP, Points, QR only
+        // PROFILE (Member Dashboard)
         // ============================================================
         async function loadProfile() {
             try {
                 if (!allMembers || allMembers.length === 0) {
-                    try { const memberData = await apiCall('/members');
-                        allMembers = memberData.data || []; } catch (e) { console.warn('⚠️ فشل تحميل allMembers:', e
-                            .message); }
+                    try {
+                        const memberData = await apiCall('/members');
+                        allMembers = memberData.data || [];
+                    } catch (e) { console.warn('⚠️ فشل تحميل allMembers:', e.message); }
                 }
                 if (!allCheckins || allCheckins.length === 0) {
-                    try { const checkinData = await apiCall('/checkin');
-                        allCheckins = checkinData.data || []; } catch (e) { console.warn('⚠️ فشل تحميل allCheckins:', e
-                            .message); }
+                    try {
+                        const checkinData = await apiCall('/checkin');
+                        allCheckins = checkinData.data || [];
+                    } catch (e) { console.warn('⚠️ فشل تحميل allCheckins:', e.message); }
                 }
                 if (!allPayments || allPayments.length === 0) {
-                    try { const payData = await apiCall('/payments');
-                        allPayments = payData.data || []; } catch (e) { console.warn('⚠️ فشل تحميل allPayments:', e
-                            .message); }
+                    try {
+                        const payData = await apiCall('/payments');
+                        allPayments = payData.data || [];
+                    } catch (e) { console.warn('⚠️ فشل تحميل allPayments:', e.message); }
                 }
 
                 const [memberData, ciData, payData] = await Promise.all([
@@ -5700,16 +6043,12 @@ case 'expired': {
                 $('profileId').textContent = 'الرقم: ' + (m.member_id || '-');
                 $('profilePhone').innerHTML = '<i class="fas fa-phone"></i> ' + (m.phone || '-');
                 $('profileType').innerHTML = '<i class="fas fa-tag"></i> ' + (m.membership_type || '-');
-
                 const points = getPoints(m.member_id);
-                const xp = updateMemberXp(m.member_id, allCheckins);
-
+                const xp = getXp(m.member_id);
                 $('profilePoints').innerHTML = '<i class="fas fa-coins"></i> النقاط: ' + points;
                 $('profileXp').innerHTML = '<i class="fas fa-star"></i> XP: ' + xp;
                 $('profileRank').innerHTML = '<i class="fas fa-medal"></i> المستوى: ' + (m.rank || '-');
-
-                const expiryDisplay = profileExpiryStr && profileExpiryStr !== '-' ? formatDate(profileExpiryStr) :
-                    'غير مدفوع';
+                const expiryDisplay = profileExpiryStr && profileExpiryStr !== '-' ? formatDate(profileExpiryStr) : 'غير مدفوع';
                 $('profileExpiryStatus').innerHTML = isExpired ?
                     `<span style="color:var(--danger);"><i class="fas fa-circle"></i> منتهي (${expiryDisplay})</span>` :
                     hasPaymentHistory ?
@@ -5752,6 +6091,9 @@ case 'expired': {
             }
         }
 
+        // ============================================================
+        // UPDATE MEMBER DASHBOARD (with XP, points, rank etc.)
+        // ============================================================
         function updateMemberDashboard() {
             if (!profileMember) return;
             const m = profileMember;
@@ -5787,7 +6129,7 @@ case 'expired': {
             const myMonthCheckins = profileCheckins.filter(c => c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) ===
                 thisMonth);
             const myCount = myMonthCheckins.length;
-            let rankTitle = 'مبتدئ';
+            let rankTitle = '🌱 مبتدئ';
             let rankIcon = '<i class="fas fa-seedling"></i>';
             if (myCount >= 25) { rankTitle = 'الملك';
                 rankIcon = '<i class="fas fa-crown"></i>'; } else if (myCount >= 20) { rankTitle = 'المقاتل';
@@ -5823,7 +6165,7 @@ case 'expired': {
         }
 
         // ============================================================
-        // SHOW CARD DETAIL (Member) — XP shows top 12 ranking
+        // SHOW CARD DETAIL (Member) - modified to show top 5 members for rank, top 12 XP
         // ============================================================
         function showCardDetail(type) {
             let title = 'تفاصيل';
@@ -5838,6 +6180,7 @@ case 'expired': {
                         0, 7) === thisMonth);
                     const totalMonth = monthPayments.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
                     const totalAll = allPaymentsHistory.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
+
                     title = '💰 سجل المدفوعات بالكامل';
                     let tableHtml =
                         `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
@@ -5850,8 +6193,10 @@ case 'expired': {
                                 <div style="font-size:22px;font-weight:700;color:var(--success);">${toEGP(totalAll)}</div>
                             </div>
                         </div>`;
+
                     if (allPaymentsHistory.length === 0) {
-                        content = tableHtml + `<p class="text-muted text-center" style="padding:20px 0;">لا يوجد سجل مدفوعات</p>`;
+                        content = tableHtml +
+                            `<p class="text-muted text-center" style="padding:20px 0;">لا يوجد سجل مدفوعات</p>`;
                     } else {
                         let rows = allPaymentsHistory.map((p, i) =>
                             `<tr>
@@ -5877,11 +6222,13 @@ case 'expired': {
                 case 'member_xp': {
                     const xp = getXp(profileMemberId);
                     const points = getPoints(profileMemberId);
+                    const totalCheckins = profileCheckins.length;
                     title = '⭐ نقاط الاجتهاد (XP)';
-                    // Top 12 ranking for all members
+                    // Get top XP members
                     const xpList = allMembers.map(m => ({ id: m.member_id, name: m.full_name, xp: getXp(m.member_id) }))
                         .sort((a, b) => b.xp - a.xp)
                         .slice(0, 12);
+
                     let tableHtml =
                         `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
                             <div style="background:var(--bg-body);border-radius:8px;padding:10px;border:1px solid rgba(0,0,0,0.04);text-align:center;">
@@ -5911,11 +6258,45 @@ case 'expired': {
                     break;
                 }
 
+                case 'member_peak': {
+                    const monthCheckinsAll = allCheckins.filter(c => c.checkin_date && normalizeDate(c.checkin_date).slice(0,
+                        7) === thisMonth);
+                    const hourCounts = {};
+                    monthCheckinsAll.forEach(c => {
+                        if (c.checkin_time) {
+                            const h = c.checkin_time.split(':')[0];
+                            hourCounts[h] = (hourCounts[h] || 0) + 1;
+                        }
+                    });
+                    const sorted = Object.entries(hourCounts).sort((a, b) => b[1] - a[1]).slice(0, 3);
+                    title = '⏰ أكثر أوقات الدخول (هذا الشهر)';
+                    if (sorted.length === 0) {
+                        content = 'لا توجد بيانات دخول هذا الشهر';
+                    } else {
+                        const medals = ['🥇', '🥈', '🥉'];
+                        let tableHtml =
+                            `<table class="rank-table"><thead><tr><th>الترتيب</th><th>الوقت</th><th>عدد المرات</th></tr></thead><tbody>`;
+                        sorted.forEach(([hour, cnt], idx) => {
+                            const cls = idx === 0 ? 'rank-1 top-hour-highlight' : idx === 1 ? 'rank-2' :
+                                'rank-3';
+                            const style = idx === 0 ? 'font-size:18px;font-weight:800;' : '';
+                            tableHtml += `<tr>
+                                        <td class="rank-badge ${cls}">${medals[idx]}</td>
+                                        <td style="${style}"><strong>${hour}:00</strong></td>
+                                        <td>${cnt} مرة</td>
+                                    </tr>`;
+                        });
+                        tableHtml += '</tbody></table>';
+                        content = tableHtml;
+                    }
+                    break;
+                }
+
                 case 'member_rank': {
                     const myMonthCheckins = profileCheckins.filter(c => c.checkin_date && normalizeDate(c.checkin_date).slice(
                         0, 7) === thisMonth);
                     const myCount = myMonthCheckins.length;
-                    let rank = 'مبتدئ';
+                    let rank = '🌱 مبتدئ';
                     let icon = '<i class="fas fa-seedling"></i>';
                     if (myCount >= 25) { rank = 'الملك';
                         icon = '<i class="fas fa-crown"></i>'; } else if (myCount >= 20) { rank = 'المقاتل';
@@ -5924,6 +6305,7 @@ case 'expired': {
                         icon = '<i class="fas fa-thumbs-up"></i>'; } else if (myCount >= 5) { rank = 'كسول';
                         icon = '<i class="fas fa-bed"></i>'; }
                     title = '🏅 اللقب الشهري';
+                    // Show top 5 members this month
                     const memberCounts = {};
                     allCheckins.filter(c => c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) === thisMonth)
                         .forEach(c => {
@@ -5942,9 +6324,8 @@ case 'expired': {
                                 <thead><tr><th>#</th><th>الاسم</th><th>عدد الدخول</th><th>اللقب</th></tr></thead>
                                 <tbody>`;
                     const rankTitles = ['الملك', 'المقاتل', 'المجتهد', 'جيد', 'مبتدئ'];
-                    const icons = ['<i class="fas fa-crown"></i>', '<i class="fas fa-dumbbell"></i>',
-                        '<i class="fas fa-running"></i>', '<i class="fas fa-thumbs-up"></i>',
-                        '<i class="fas fa-seedling"></i>'
+                    const icons = ['<i class="fas fa-crown"></i>', '<i class="fas fa-dumbbell"></i>', '<i class="fas fa-running"></i>',
+                        '<i class="fas fa-thumbs-up"></i>', '<i class="fas fa-seedling"></i>'
                     ];
                     top5.forEach(([id, count], idx) => {
                         const member = allMembers.find(m => m.member_id === id);
@@ -5969,118 +6350,90 @@ case 'expired': {
                     break;
                 }
 
-                default: {
-                    // Fallback for other card types
-                    const handlers = {
-                        'member_peak': () => {
-                            const monthCheckinsAll = allCheckins.filter(c => c.checkin_date && normalizeDate(c
-                                    .checkin_date).slice(0, 7) === thisMonth);
-                            const hourCounts = {};
-                            monthCheckinsAll.forEach(c => {
-                                if (c.checkin_time) {
-                                    const h = c.checkin_time.split(':')[0];
-                                    hourCounts[h] = (hourCounts[h] || 0) + 1;
-                                }
-                            });
-                            const sorted = Object.entries(hourCounts).sort((a, b) => b[1] - a[1]).slice(0, 3);
-                            title = '⏰ أكثر أوقات الدخول (هذا الشهر)';
-                            if (sorted.length === 0) return 'لا توجد بيانات دخول هذا الشهر';
-                            const medals = ['🥇', '🥈', '🥉'];
-                            let tableHtml =
-                                `<table class="rank-table"><thead><tr><th>الترتيب</th><th>الوقت</th><th>عدد المرات</th></tr></thead><tbody>`;
-                            sorted.forEach(([hour, cnt], idx) => {
-                                const cls = idx === 0 ? 'rank-1 top-hour-highlight' : idx === 1 ? 'rank-2' :
-                                    'rank-3';
-                                const style = idx === 0 ? 'font-size:18px;font-weight:800;' : '';
-                                tableHtml += `<tr>
-                                        <td class="rank-badge ${cls}">${medals[idx]}</td>
-                                        <td style="${style}"><strong>${hour}:00</strong></td>
-                                        <td>${cnt} مرة</td>
-                                    </tr>`;
-                            });
-                            tableHtml += '</tbody></table>';
-                            return tableHtml;
-                        },
-                        'member_percent': () => {
-                            const totalMembers = allMembers.length || 1;
-                            const todayCheckinsAll = window._todayCheckinsAll !== undefined ? window
-                                ._todayCheckinsAll :
-                                allCheckins.filter(c => normalizeDate(c.checkin_date) === today).length;
-                            const percentage = window._todayPercentage !== undefined ? window._todayPercentage :
-                                Math.round((todayCheckinsAll / totalMembers) * 100);
-                            title = '📊 دخول اليوم';
-                            const emoji = percentage >= 50 ? '🔥' : percentage >= 25 ? '👍' : '😴';
-                            const statusText = percentage >= 50 ? 'ممتاز! لا تزال نشطاً' :
-                                percentage >= 25 ? 'في تحسن' : 'هناك مجال للتحسين';
-                            return `
-                                <div style="text-align:center;padding:14px 0;">
-                                    <div style="font-size:48px;font-weight:800;color:var(--primary);">${percentage}%</div>
-                                    <div style="font-size:13px;color:var(--text-muted);margin-top:6px;">
-                                        <span style="font-size:18px;">${emoji}</span> ${statusText}
-                                    </div>
-                                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;max-width:280px;margin-left:auto;margin-right:auto;">
-                                        <div style="background:var(--bg-body);border-radius:8px;padding:8px 10px;border:1px solid rgba(0,0,0,0.04);">
-                                            <div style="font-size:10px;color:var(--text-muted);">إجمالي الدخول</div>
-                                            <div style="font-size:18px;font-weight:700;color:var(--primary);">${todayCheckinsAll}</div>
-                                        </div>
-                                        <div style="background:var(--bg-body);border-radius:8px;padding:8px 10px;border:1px solid rgba(0,0,0,0.04);">
-                                            <div style="font-size:10px;color:var(--text-muted);">إجمالي الأعضاء</div>
-                                            <div style="font-size:18px;font-weight:700;color:var(--primary);">${totalMembers}</div>
-                                        </div>
-                                    </div>
-                                    <div style="margin-top:10px;color:var(--text-muted);font-size:12px;">
-                                        <i class="fas fa-calendar-alt"></i> ${formatDate(today)}
-                                    </div>
-                                    <div class="progress-wrap" style="margin-top:10px;">
-                                        <div class="progress-track" style="height:8px;">
-                                            <div class="fill" style="width:${percentage}%;background:${percentage>=50?'var(--success)':percentage>=25?'var(--warning)':'var(--danger)'};"></div>
-                                        </div>
-                                    </div>
+                case 'member_percent': {
+                    const totalMembers = allMembers.length || 1;
+                    const todayCheckinsAll = window._todayCheckinsAll !== undefined ? window._todayCheckinsAll :
+                        allCheckins.filter(c => normalizeDate(c.checkin_date) === today).length;
+                    const percentage = window._todayPercentage !== undefined ? window._todayPercentage :
+                        Math.round((todayCheckinsAll / totalMembers) * 100);
+
+                    title = '📊 دخول اليوم';
+                    const emoji = percentage >= 50 ? '🔥' : percentage >= 25 ? '👍' : '😴';
+                    const statusText = percentage >= 50 ? 'ممتاز! لا تزال نشطاً' :
+                        percentage >= 25 ? 'في تحسن' :
+                        'هناك مجال للتحسين';
+                    content =
+                        `
+                        <div style="text-align:center;padding:14px 0;">
+                            <div style="font-size:48px;font-weight:800;color:var(--primary);">${percentage}%</div>
+                            <div style="font-size:13px;color:var(--text-muted);margin-top:6px;">
+                                <span style="font-size:18px;">${emoji}</span> ${statusText}
+                            </div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;max-width:280px;margin-left:auto;margin-right:auto;">
+                                <div style="background:var(--bg-body);border-radius:8px;padding:8px 10px;border:1px solid rgba(0,0,0,0.04);">
+                                    <div style="font-size:10px;color:var(--text-muted);">إجمالي الدخول</div>
+                                    <div style="font-size:18px;font-weight:700;color:var(--primary);">${todayCheckinsAll}</div>
                                 </div>
-                            `;
-                        },
-                        'member_daysleft': () => {
-                            let days = '-';
-                            if (profileExpiryStr && profileExpiryStr !== '-') {
-                                const diff = daysBetween(today, normalizeDate(profileExpiryStr));
-                                days = diff >= 0 ? diff + ' يوم' : 'منتهي';
-                            }
-                            title = '⏳ الأيام المتبقية للتجديد';
-                            const color = days === 'منتهي' ? 'var(--danger)' : 'var(--primary)';
-                            return `<div style="text-align:center;padding:20px 0;">
-                                <div style="font-size:48px;font-weight:800;color:${color};">${days}</div>
-                                <div style="font-size:13px;color:var(--text-muted);margin-top:6px;">
-                                    ${profileExpiryStr !== '-' ? `ينتهي ${formatDate(profileExpiryStr)}` : 'غير مدفوع'}
+                                <div style="background:var(--bg-body);border-radius:8px;padding:8px 10px;border:1px solid rgba(0,0,0,0.04);">
+                                    <div style="font-size:10px;color:var(--text-muted);">إجمالي الأعضاء</div>
+                                    <div style="font-size:18px;font-weight:700;color:var(--primary);">${totalMembers}</div>
                                 </div>
-                            </div>`;
-                        }
-                    };
-                    if (handlers[type]) {
-                        content = handlers[type]();
-                    } else {
-                        content = 'لا توجد بيانات';
-                    }
+                            </div>
+                            <div style="margin-top:10px;color:var(--text-muted);font-size:12px;">
+                                <i class="fas fa-calendar-alt"></i> ${formatDate(today)}
+                            </div>
+                            <div class="progress-wrap" style="margin-top:10px;">
+                                <div class="progress-track" style="height:8px;">
+                                    <div class="fill" style="width:${percentage}%;background:${percentage>=50?'var(--success)':percentage>=25?'var(--warning)':'var(--danger)'};"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
                     break;
                 }
+
+                case 'member_daysleft': {
+                    let days = '-';
+                    if (profileExpiryStr && profileExpiryStr !== '-') {
+                        const diff = daysBetween(today, normalizeDate(profileExpiryStr));
+                        days = diff >= 0 ? diff + ' يوم' : 'منتهي';
+                    }
+                    title = '⏳ الأيام المتبقية للتجديد';
+                    const color = days === 'منتهي' ? 'var(--danger)' : 'var(--primary)';
+                    content =
+                        `<div style="text-align:center;padding:20px 0;">
+                            <div style="font-size:48px;font-weight:800;color:${color};">${days}</div>
+                            <div style="font-size:13px;color:var(--text-muted);margin-top:6px;">
+                                ${profileExpiryStr !== '-' ? `ينتهي ${formatDate(profileExpiryStr)}` : 'غير مدفوع'}
+                            </div>
+                        </div>`;
+                    break;
+                }
+
+                default:
+                    content = 'لا توجد بيانات';
             }
 
             openModal(title, content);
         }
 
         // ============================================================
-        // TOP 8 — with gold background for top 3
+        // TOP 8 (instead of 7) - gold for first three
         // ============================================================
         function loadTop8() {
             const container = $('top8Container');
             if (!container) return;
+
             if (!allCheckins || allCheckins.length === 0) {
                 container.innerHTML = '<p class="text-muted text-sm">⏳ جارٍ تحميل البيانات...</p>';
                 return;
             }
+
             const today = new Date();
             const oneYearAgo = new Date(today);
             oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
             const oneYearAgoStr = oneYearAgo.toISOString().split('T')[0];
+
             const checkinCounts = {};
             allCheckins.forEach(c => {
                 if (c.checkin_date && normalizeDate(c.checkin_date) >= oneYearAgoStr) {
@@ -6088,23 +6441,31 @@ case 'expired': {
                     if (id) checkinCounts[id] = (checkinCounts[id] || 0) + 1;
                 }
             });
+
             const sorted = Object.entries(checkinCounts).sort((a, b) => b[1] - a[1]).slice(0, 8);
+
             if (sorted.length === 0) {
                 container.innerHTML = '<p class="text-muted text-sm">📭 لا توجد بيانات دخول خلال العام</p>';
                 return;
             }
+
             const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣'];
-            const titles = ['🏆 ملك اللياقة', '👑 نائب الملك', '💪 المقاتل المثابر',
+            const titles = [
+                '🏆 ملك اللياقة', '👑 نائب الملك', '💪 المقاتل المثابر',
                 '🏃 مجتهد جداً', '👍 جيد جداً', '🌟 ممتاز', '✨ بداية جيدة', '💪 واعد'
             ];
+            // First three get gold background
             const colorClasses = ['gold', 'gold', 'gold', '', '', '', '', ''];
+
             let html = '<div class="top7-card">';
             sorted.forEach(([memberId, count], idx) => {
                 const member = allMembers.find(m => m.member_id === memberId);
                 const name = member ? member.full_name : memberId;
                 const colorClass = colorClasses[idx] || '';
+
                 const isMe = memberId === profileMemberId;
                 const meBadge = isMe ? ' 👈 أنت' : '';
+
                 html += `
                     <div class="top7-item ${colorClass}" style="${colorClass === 'gold' ? 'background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.3);' : ''}">
                         <span class="rank-medal">${medals[idx] || '🏅'}</span>
@@ -6115,29 +6476,42 @@ case 'expired': {
                 `;
             });
             html += '</div>';
+
             const myRank = sorted.findIndex(([id]) => id === profileMemberId);
             let encouragementMsg = '';
-            if (myRank === 0) encouragementMsg = '👑 أنت الأفضل! ممتاز! أنت قدوة للآخرين! 💪';
-            else if (myRank === 1) encouragementMsg = '🥈 رائع! أنت على بعد خطوة من المركز الأول! استمر! 💪';
-            else if (myRank === 2) encouragementMsg = '🥉 ممتاز! أنت ضمن أفضل 3! فخور بنفسك! 🏆';
-            else if (myRank >= 0 && myRank < 8) encouragementMsg = '🌟 أنت ضمن أفضل 8! ممتاز! استمر في العمل! 💪';
-            else encouragementMsg = '💪 كل خطوة لها معناها! استمر وستصل! 🚀';
+            if (myRank === 0) {
+                encouragementMsg = '👑 أنت الأفضل! ممتاز! أنت قدوة للآخرين! 💪';
+            } else if (myRank === 1) {
+                encouragementMsg = '🥈 رائع! أنت على بعد خطوة من المركز الأول! استمر! 💪';
+            } else if (myRank === 2) {
+                encouragementMsg = '🥉 ممتاز! أنت ضمن أفضل 3! فخور بنفسك! 🏆';
+            } else if (myRank >= 0 && myRank < 8) {
+                encouragementMsg = '🌟 أنت ضمن أفضل 8! ممتاز! استمر في العمل! 💪';
+            } else {
+                encouragementMsg = '💪 كل خطوة لها معناها! استمر وستصل! 🚀';
+            }
+
             html +=
-                `<div style="text-align:center;margin-top:10px;padding:8px 12px;background:var(--bg-body);border-radius:var(--radius-sm);border-right:4px solid var(--accent);font-size:13px;color:var(--text-secondary);">${encouragementMsg}</div>`;
+                `<div style="text-align:center;margin-top:10px;padding:8px 12px;background:var(--bg-body);border-radius:var(--radius-sm);border-right:4px solid var(--accent);font-size:13px;color:var(--text-secondary);">
+                    ${encouragementMsg}
+                </div>`;
+
             html +=
-                `<div style="text-align:center;margin-top:8px;font-size:11px;color:var(--text-muted);"><i class="fas fa-calendar-alt"></i> بيانات آخر عام (${formatDate(oneYearAgoStr)} - ${formatDate(getTodayStr())})</div>`;
+                `<div style="text-align:center;margin-top:8px;font-size:11px;color:var(--text-muted);">
+                    <i class="fas fa-calendar-alt"></i> بيانات آخر عام (${formatDate(oneYearAgoStr)} - ${formatDate(getTodayStr())})
+                </div>`;
+
             container.innerHTML = html;
         }
 
         // ============================================================
-        // RENDER MEMBER STATUS
+        // RENDER MEMBER STATUS (unchanged)
         // ============================================================
         function renderMemberStatus(member, isExpired, hasPayment, expiryDateStr) {
             const container = document.getElementById('memberStatusBanner');
             let html = '';
             if (isExpired) {
-                html =
-                    `
+                html = `
                         <div class="status-banner expired">
                             <i class="fas fa-exclamation-circle"></i>
                             <div>
@@ -6150,8 +6524,7 @@ case 'expired': {
                         </div>
                     `;
             } else if (!hasPayment) {
-                html =
-                    `
+                html = `
                         <div class="status-banner welcome">
                             <i class="fas fa-hand-peace"></i>
                             <div>
@@ -6164,8 +6537,7 @@ case 'expired': {
                         </div>
                     `;
             } else {
-                html =
-                    `
+                html = `
                         <div class="status-banner active">
                             <i class="fas fa-check-circle"></i>
                             <div>
@@ -6179,7 +6551,7 @@ case 'expired': {
         }
 
         // ============================================================
-        // GENERATE PROFILE QR — no label, with rotation
+        // GENERATE PROFILE QR (unchanged)
         // ============================================================
         function generateProfileQR(memberId) {
             const container = document.getElementById('profileQrBox');
@@ -6194,16 +6566,18 @@ case 'expired': {
                 return;
             }
             try {
-                const qrSize = window.innerWidth < 480 ? 44 : 56;
                 qrCodeInstance = new QRCode(container, {
                     text: memberId || 'G-XXXX',
-                    width: qrSize,
-                    height: qrSize,
+                    width: 64,
+                    height: 64,
                     colorDark: '#0f172a',
                     colorLight: '#ffffff',
                     correctLevel: QRCode.CorrectLevel.H
                 });
-                // No label added
+                const label = document.createElement('div');
+                label.className = 'mc-qr-label';
+                label.textContent = 'الرقم: ' + (memberId || 'G-XXXX');
+                container.appendChild(label);
             } catch (e) {
                 console.warn('خطأ في توليد QR:', e);
                 container.innerHTML =
@@ -6212,7 +6586,7 @@ case 'expired': {
         }
 
         // ============================================================
-        // DOWNLOAD QR
+        // DOWNLOAD QR (unchanged)
         // ============================================================
         function downloadQR() {
             const canvas = document.querySelector('#profileQrBox canvas');
@@ -6232,12 +6606,14 @@ case 'expired': {
         }
 
         // ============================================================
-        // PDF MEMBER CARD
+        // PDF MEMBER CARD (unchanged)
         // ============================================================
         function downloadMemberCardPDF() {
             const card = document.getElementById('memberCardPreview');
             if (!card) { showToast('⚠️ لم يتم العثور على البطاقة', 'error'); return; }
+
             showToast('📄 جارٍ إنشاء PDF...', 'info');
+
             html2canvas(card, {
                 scale: 2,
                 backgroundColor: null,
@@ -6256,6 +6632,7 @@ case 'expired': {
                 const imgHeight = (canvas.height * imgWidth) / canvas.width;
                 const x = (210 - imgWidth) / 2;
                 const y = (297 - imgHeight) / 2;
+
                 doc.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
                 doc.save('member_card_' + (profileMemberId || 'member') + '.pdf');
                 showToast('✅ تم تنزيل PDF', 'success');
@@ -6266,28 +6643,33 @@ case 'expired': {
         }
 
         // ============================================================
-        // PRINT MEMBER CARD
+        // PRINT MEMBER CARD (unchanged)
         // ============================================================
         function printMemberCard() {
             showToast('🖨️ جارٍ فتح نافذة الطباعة...', 'info');
-            setTimeout(() => { window.print(); }, 500);
+            setTimeout(() => {
+                window.print();
+            }, 500);
         }
 
         // ============================================================
-        // GOAL, CALENDAR, WEIGHT (unchanged from previous version)
+        // GOAL (unchanged)
         // ============================================================
         function loadGoalProgress() {
             const stored = localStorage.getItem('goal_' + profileMemberId);
             if (stored) goalTarget = parseInt(stored) || 20;
             $('goalInput').value = goalTarget;
+
             const today = getTodayStr();
             const thisMonth = today.slice(0, 7);
             const count = profileCheckins.filter(c => c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) ===
                 thisMonth).length;
+
             const pct = Math.min(100, Math.round((count / goalTarget) * 100));
             $('goalProgressText').textContent = count + ' / ' + goalTarget + ' يوم';
             const fill = $('goalProgressFill');
             fill.style.width = pct + '%';
+
             const encouragement = $('goalEncouragement');
             if (count >= goalTarget) {
                 fill.classList.add('complete');
@@ -6322,6 +6704,9 @@ case 'expired': {
             } else showToast('⚠️ يرجى إدخال رقم', 'error');
         }
 
+        // ============================================================
+        // CALENDAR (unchanged)
+        // ============================================================
         function renderCalendar() {
             const container = $('calendarContainer');
             const now = new Date();
@@ -6329,6 +6714,7 @@ case 'expired': {
                 month = now.getMonth();
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
+
             const checkinMap = {};
             profileCheckins.forEach(c => {
                 if (c.checkin_date) {
@@ -6337,15 +6723,23 @@ case 'expired': {
                     if (c.checkin_time) checkinMap[d].push(c.checkin_time);
                 }
             });
+
             let streak = 0;
             const today = getTodayStr();
             let checkDate = today;
-            while (checkinMap[checkDate]) { streak++;
+            while (checkinMap[checkDate]) {
+                streak++;
                 const d = new Date(checkDate);
                 d.setDate(d.getDate() - 1);
-                checkDate = d.toISOString().split('T')[0]; }
+                checkDate = d.toISOString().split('T')[0];
+            }
             const streakEl = $('calendarStreak');
-            streakEl.innerHTML = streak > 0 ? `🔥 سلسلة ${streak} يوم!` : '💪 ابدأ سلسلتك اليوم!';
+            if (streak > 0) {
+                streakEl.innerHTML = `🔥 سلسلة ${streak} يوم!`;
+            } else {
+                streakEl.innerHTML = '💪 ابدأ سلسلتك اليوم!';
+            }
+
             let html = '';
             const monthNames = ['أح', 'إث', 'ثل', 'أر', 'خم', 'جم', 'سب'];
             html +=
@@ -6357,26 +6751,43 @@ case 'expired': {
                 const hasCheckin = checkinMap[dateStr] && checkinMap[dateStr].length > 0;
                 const isToday = dateStr === today;
                 const times = hasCheckin ? checkinMap[dateStr].join(', ') : '';
+
                 let badge = '';
                 if (hasCheckin) {
                     let streakCount = 0;
                     let checkDate2 = dateStr;
-                    while (checkinMap[checkDate2]) { streakCount++;
+                    while (checkinMap[checkDate2]) {
+                        streakCount++;
                         const dt = new Date(checkDate2);
                         dt.setDate(dt.getDate() - 1);
-                        checkDate2 = dt.toISOString().split('T')[0]; }
+                        checkDate2 = dt.toISOString().split('T')[0];
+                    }
                     if (streakCount >= 3) badge = `<span class="streak-badge">🔥</span>`;
                 }
-                html += `<div class="day-cell ${hasCheckin?'checkin':''} ${isToday?'today':''}" onclick="showCheckinTime('${dateStr}')" title="${times}">${d}${badge}${hasCheckin ? '<span class="checkin-dot"></span>' : ''}</div>`;
+
+                html += `<div class="day-cell ${hasCheckin?'checkin':''} ${isToday?'today':''}" 
+                              onclick="showCheckinTime('${dateStr}')" 
+                              title="${times}">
+                              ${d}
+                              ${badge}
+                              ${hasCheckin ? '<span class="checkin-dot"></span>' : ''}
+                          </div>`;
             }
             container.innerHTML = html;
             document.getElementById('calendarTimeDetail').innerHTML = '';
+
             const enc = $('calendarEncouragement');
-            if (streak >= 7) enc.innerHTML = '🔥 7 أيام متتالية! أنت رائع! 💪👑';
-            else if (streak >= 5) enc.innerHTML = '🌟 5 أيام متتالية! ممتاز! استمر! 🏃';
-            else if (streak >= 3) enc.innerHTML = '💪 3 أيام متتالية! بدأت تظهر الاتساق! 🎯';
-            else if (streak > 0) enc.innerHTML = '👍 بداية جيدة! لا تتوقف! 💪';
-            else enc.innerHTML = '💪 كل يوم هو فرصة جديدة! هيا بنا! 🚀';
+            if (streak >= 7) {
+                enc.innerHTML = '🔥 7 أيام متتالية! أنت رائع! 💪👑';
+            } else if (streak >= 5) {
+                enc.innerHTML = '🌟 5 أيام متتالية! ممتاز! استمر! 🏃';
+            } else if (streak >= 3) {
+                enc.innerHTML = '💪 3 أيام متتالية! بدأت تظهر الاتساق! 🎯';
+            } else if (streak > 0) {
+                enc.innerHTML = '👍 بداية جيدة! لا تتوقف! 💪';
+            } else {
+                enc.innerHTML = '💪 كل يوم هو فرصة جديدة! هيا بنا! 🚀';
+            }
         }
 
         function showCheckinTime(dateStr) {
@@ -6391,12 +6802,16 @@ case 'expired': {
             const times = map[dateStr] || [];
             const detail = document.getElementById('calendarTimeDetail');
             if (times.length) {
-                detail.innerHTML = `<i class="fas fa-calendar-alt"></i> ${formatDate(dateStr)}: دخل في ${times.join(', ')}`;
+                detail.innerHTML =
+                    `<i class="fas fa-calendar-alt"></i> ${formatDate(dateStr)}: دخل في ${times.join(', ')}`;
             } else {
                 detail.innerHTML = `<i class="fas fa-calendar-alt"></i> ${formatDate(dateStr)}: لا يوجد دخول`;
             }
         }
 
+        // ============================================================
+        // WEIGHT & BMI (unchanged)
+        // ============================================================
         function loadWeightData() {
             const stored = localStorage.getItem('weight_' + profileMemberId);
             if (stored) { try { weightRecords = JSON.parse(stored); } catch (e) { weightRecords = []; } }
@@ -6432,26 +6847,39 @@ case 'expired': {
             const last = weightRecords[weightRecords.length - 1];
             if (!last) { $('bmiDisplay').textContent = '-';
                 $('bmiStatus').textContent = '-';
-                document.getElementById('bmiEncouragement').style.display = 'none'; return; }
+                document.getElementById('bmiEncouragement').style.display = 'none';
+                return; }
             const h = last.height || 175;
             const bmi = last.weight / ((h / 100) ** 2);
             $('bmiDisplay').textContent = bmi.toFixed(1);
+
             const statusEl = $('bmiStatus');
             const encEl = document.getElementById('bmiEncouragement');
-            let status = 'طبيعي',
-                encClass = 'healthy',
-                encMsg = '';
-            if (bmi < 18.5) { status = 'نحيف';
+            let status = 'طبيعي';
+            let encClass = 'healthy';
+            let encMsg = '';
+
+            if (bmi < 18.5) {
+                status = 'نحيف';
                 encClass = 'underweight';
-                encMsg = '🍎 تناول طعاماً صحياً كافياً ومارس الرياضة بشكل مناسب! 💪'; } else if (bmi < 25) { status = 'طبيعي';
+                encMsg = '🍎 تناول طعاماً صحياً كافياً ومارس الرياضة بشكل مناسب! 💪';
+            } else if (bmi < 25) {
+                status = 'طبيعي';
                 encClass = 'healthy';
-                encMsg = '💪 ممتاز! حافظ على صحتك! 🏃'; } else if (bmi < 30) { status = 'زيادة وزن';
+                encMsg = '💪 ممتاز! حافظ على صحتك! 🏃';
+            } else if (bmi < 30) {
+                status = 'زيادة وزن';
                 encClass = 'overweight';
-                encMsg = '💪 ابدأ بتحسين نظامك الغذائي وزيادة الحركة! أنت قادر! 🚀'; } else { status = 'سمنة';
+                encMsg = '💪 ابدأ بتحسين نظامك الغذائي وزيادة الحركة! أنت قادر! 🚀';
+            } else {
+                status = 'سمنة';
                 encClass = 'obese';
-                encMsg = '💪 لا تيأس! ابدأ خطوة بخطوة من أجل صحة أفضل! 🏆'; }
+                encMsg = '💪 لا تيأس! ابدأ خطوة بخطوة من أجل صحة أفضل! 🏆';
+            }
+
             statusEl.textContent = status;
             statusEl.style.color = bmi < 25 ? 'var(--success)' : bmi < 30 ? 'var(--warning)' : 'var(--danger)';
+
             encEl.className = `bmi-encouragement ${encClass}`;
             encEl.textContent = encMsg;
             encEl.style.display = 'block';
@@ -6586,7 +7014,7 @@ case 'expired': {
         }
 
         // ============================================================
-        // TEST CONNECTION
+        // TEST CONNECTION (unchanged)
         // ============================================================
         async function testConnection() {
             const dot = document.getElementById('loginStatusDot');
@@ -6597,21 +7025,26 @@ case 'expired': {
             try {
                 const res = await fetch(PROXY_URL, { headers: { 'X-API-Secret': API_SECRET } });
                 const data = await res.json();
-                if (data.success || data.message) { dot.className = 'dot online';
-                    txt.textContent = '✅ الاتصال بواجهة API ناجح'; } else { dot.className = 'dot offline';
-                    txt.textContent = '❌ API لا يستجيب'; }
-            } catch (e) { dot.className = 'dot offline';
-                txt.textContent = '❌ ' + e.message; }
+                if (data.success || data.message) {
+                    dot.className = 'dot online';
+                    txt.textContent = '✅ الاتصال بواجهة API ناجح';
+                } else {
+                    dot.className = 'dot offline';
+                    txt.textContent = '❌ API لا يستجيب';
+                }
+            } catch (e) {
+                dot.className = 'dot offline';
+                txt.textContent = '❌ ' + e.message;
+            }
         }
 
         // ============================================================
-        // DEBUG
+        // DEBUG (unchanged)
         // ============================================================
         function renderDebug(data, error) {
             const container = $('debugContent');
             if (error) {
-                container.innerHTML =
-                    `<div class="error-text"><i class="fas fa-times-circle"></i> خطأ: ${error}</div>
+                container.innerHTML = `<div class="error-text"><i class="fas fa-times-circle"></i> خطأ: ${error}</div>
                         <div class="text-muted text-sm">${data ? '📦 بيانات جزئية:' : '⚠️ لا توجد بيانات'}</div>
                         ${data ? `<pre>${JSON.stringify(data, null, 2)}</pre>` : ''}`;
                 return;
@@ -6619,8 +7052,7 @@ case 'expired': {
             if (!data) { container.innerHTML =
                     '<span class="text-muted"><i class="fas fa-spinner fa-spin"></i> في انتظار التحميل...</span>'; return; }
             const summary = data.summary || {};
-            container.innerHTML =
-                `
+            container.innerHTML = `
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;color:var(--text-muted);font-size:11px;margin-bottom:6px;">
                         <div>📊 مفاتيح الملخص: ${Object.keys(summary).join(', ')}</div>
                         <div>👥 الأعضاء: ${(data.members||[]).length} عضو</div>
@@ -6659,10 +7091,14 @@ case 'expired': {
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🏋️ Pro Gym System Loaded (Full Version - Arabic)');
             initTheme();
+
             if (!localStorage.getItem('adminHash')) {
-                (async () => { const h = await sha256('admin123');
-                    localStorage.setItem('adminHash', h); })();
+                (async () => {
+                    const h = await sha256('admin123');
+                    localStorage.setItem('adminHash', h);
+                })();
             }
+
             const isLoggedIn = checkAuth();
             if (!isLoggedIn) {
                 document.getElementById('loginPage').style.display = 'flex';
@@ -6672,6 +7108,7 @@ case 'expired': {
                 document.getElementById('loginPage').style.display = 'none';
                 document.getElementById('appMain').style.display = 'block';
             }
+
             setTimeout(() => {
                 if (isLoggedIn) {
                     const role = localStorage.getItem('gym_role');
@@ -6681,15 +7118,25 @@ case 'expired': {
                         fetchCheckins();
                         fetchPayments();
                         loadAnalytics();
-                        loadDailyReport();
-                    } else if (role === 'member') { loadProfile(); }
+                    } else if (role === 'member') {
+                        loadProfile();
+                    }
                 }
             }, 500);
+
             showToast('🏋️ مرحباً بك في Pro Gym!', 'success');
             console.log('🔑 كود إعادة تعيين المشرف: adminreset-2026');
             console.log('👤 المشرف: admin / admin123');
             console.log('⌨️ Ctrl+R = تحديث, ESC = إغلاق النافذة');
-            console.log('✨ جميع التحسينات: نظام XP بالتتابع، نقاط الدفع، تقرير اليوم، أيقونات بدلاً من الإيموجي، QR بحجم مناسب، إزالة التبويبات غير الضرورية');
+            console.log('✨ تم تطبيق جميع التحسينات: نظام XP، نقاط الدفع، أفضل 8، ألقاب شهرية، إشعارات ذكية، عملة جنيه مصري، أيقونات بدلاً من الإموجيات');
+        });
+
+        document.addEventListener('click', function(e) {
+            const dropdown = $('notifDropdown');
+            const bell = document.getElementById('notificationBell');
+            if (dropdown && bell && !bell.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
         });
     </script>
 </body>
