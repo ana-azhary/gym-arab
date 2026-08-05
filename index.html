@@ -6404,59 +6404,87 @@ case 'expired': {
         // ============================================================
         // LOGIN / LOGOUT
         // ============================================================
-        function checkAuth() {
-            const role = localStorage.getItem('gym_role');
-            const user = localStorage.getItem('gym_user');
-            if (role === 'admin' || role === 'member') {
-                document.getElementById('loginPage').style.display = 'none';
-                document.getElementById('appMain').style.display = 'block';
-
-                const navItems = document.querySelectorAll('.nav-item');
-                if (role === 'admin') {
-                    navItems.forEach(item => {
-                        const page = item.dataset.page;
-                        if (page === 'profile') item.style.display = 'none';
-                        else item.style.display = 'flex';
-                    });
-                    profileMemberId = null;
-                    document.getElementById('sidebarUserName').textContent = 'Admin';
-                    document.getElementById('sidebarUserRole').textContent = 'مدير النظام';
-                    document.getElementById('sidebarAvatar').textContent = 'A';
-                    refreshDashboard();
-                    fetchMembers();
-                    fetchCheckins();
-                    fetchPayments();
-                    loadAnalytics();
-                    loadDailyReport();
-                    switchTab('dashboard');
-                } else if (role === 'member' && user) {
-                    navItems.forEach(item => {
-                        const page = item.dataset.page;
-                        if (page === 'profile') item.style.display = 'flex';
-                        else item.style.display = 'none';
-                    });
-                    profileMemberId = user;
-                    document.getElementById('sidebarUserName').textContent = 'عضو';
-                    document.getElementById('sidebarUserRole').textContent = 'مستخدم';
-                    document.getElementById('sidebarAvatar').textContent = 'M';
-                    Promise.all([
-                        apiCall('/members').then(d => { allMembers = d.data || []; }),
-                        apiCall('/checkin').then(d => { allCheckins = d.data || []; }),
-                        apiCall('/payments').then(d => { allPayments = d.data || []; })
-                    ]).then(() => {
-                        setTimeout(() => { loadProfile();
-                            switchTab('profile'); }, 300);
-                    }).catch(() => {
-                        setTimeout(() => { loadProfile();
-                            switchTab('profile'); }, 300);
-                    });
+function checkAuth() {
+    const role = localStorage.getItem('gym_role');
+    const user = localStorage.getItem('gym_user');
+    
+    if (role === 'admin' || role === 'member') {
+        // ซ่อนหน้า Login
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('appMain').style.display = 'block';
+        
+        const navItems = document.querySelectorAll('.nav-item');
+        
+        if (role === 'admin') {
+            // 🔹 Admin Mode
+            navItems.forEach(item => {
+                const page = item.dataset.page;
+                if (page === 'profile') {
+                    item.style.display = 'none';  // ซ่อน Profile สำหรับ Admin
+                } else {
+                    item.style.display = 'flex';   // แสดงเมนูอื่นทั้งหมด
                 }
-                document.getElementById('profileNav').style.display = role === 'member' ? 'flex' : 'none';
-                startAutoRefresh();
-                return true;
-            }
-            return false;
+            });
+            
+            // ตั้งค่า Sidebar Admin
+            profileMemberId = null;
+            document.getElementById('sidebarUserName').textContent = 'Admin';
+            document.getElementById('sidebarUserRole').textContent = 'مدير النظام';
+            document.getElementById('sidebarAvatar').textContent = 'A';
+            
+            // โหลดข้อมูล Admin
+            refreshDashboard();
+            fetchMembers();
+            fetchCheckins();
+            fetchPayments();
+            loadAnalytics();
+            loadDailyReport();
+            switchTab('dashboard');
+            
+        } else if (role === 'member' && user) {
+            // 🔹 Member Mode — ซ่อนเมนู Admin ทั้งหมด
+            navItems.forEach(item => {
+                const page = item.dataset.page;
+                if (page === 'profile') {
+                    item.style.display = 'flex';   // แสดงเฉพาะ Profile
+                } else {
+                    item.style.display = 'none';    // ซ่อนเมนูอื่นทั้งหมด
+                }
+            });
+            
+            // ตั้งค่า Sidebar Member
+            profileMemberId = user;
+            document.getElementById('sidebarUserName').textContent = 'عضو';
+            document.getElementById('sidebarUserRole').textContent = 'مستخدم';
+            document.getElementById('sidebarAvatar').textContent = 'M';
+            
+            // โหลดข้อมูล Member
+            Promise.all([
+                apiCall('/members').then(d => { allMembers = d.data || []; }),
+                apiCall('/checkin').then(d => { allCheckins = d.data || []; }),
+                apiCall('/payments').then(d => { allPayments = d.data || []; })
+            ]).then(() => {
+                setTimeout(() => {
+                    loadProfile();
+                    switchTab('profile');  // ไปที่หน้า Profile ทันที
+                }, 300);
+            }).catch(() => {
+                setTimeout(() => {
+                    loadProfile();
+                    switchTab('profile');
+                }, 300);
+            });
         }
+        
+        // ซ่อน Profile Nav ถ้าเป็น Admin (เผื่อกรณี)
+        document.getElementById('profileNav').style.display = role === 'member' ? 'flex' : 'none';
+        
+        startAutoRefresh();
+        return true;
+    }
+    
+    return false;
+}
 
         async function handleLogin() {
             const user = document.getElementById('loginUser').value.trim();
