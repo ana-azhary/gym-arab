@@ -2673,28 +2673,33 @@
         }
 
         /* PAYMENT TODAY HIGHLIGHT */
-        .payment-today td {
-            background: rgba(16, 185, 129, 0.08) !important;
-            font-weight: 700 !important;
-            border-right: 3px solid var(--success);
-        }
-        .payment-today td:first-child {
-            border-radius: 0 4px 4px 0;
-        }
-        .payment-today:hover td {
-            background: rgba(16, 185, 129, 0.15) !important;
-        }
-        .payment-today .badge-today {
-            background: var(--success);
-            color: #fff;
-            font-size: 8px;
-            padding: 0 8px;
-            border-radius: 30px;
-            line-height: 16px;
-            display: inline-block;
-            margin-right: 4px;
-            font-weight: 700;
-        }
+/* ============================================================
+   PAYMENT TODAY — เฉพาะ Badge "اليوم" สีเขียว
+   ============================================================ */
+
+/* ❌ ลบ highlight ทั้งแถว */
+.payment-today td {
+    background: transparent !important;
+    font-weight: 400 !important;
+    border-right: none !important;
+}
+
+.payment-today:hover td {
+    background: rgba(15, 59, 94, 0.04) !important; /* แค่ hover เล็กน้อย */
+}
+
+/* ✅ เฉพาะ Badge "اليوم" สีเขียว */
+.payment-today .badge-today {
+    background: var(--success) !important;
+    color: #fff !important;
+    font-size: 8px !important;
+    padding: 0 8px !important;
+    border-radius: 30px !important;
+    line-height: 16px !important;
+    display: inline-block !important;
+    margin-right: 4px !important;
+    font-weight: 700 !important;
+}
 
         /* REVENUE ANALYSIS */
         .revenue-analysis {
@@ -3064,6 +3069,28 @@
 .member-row-no-payment td a {
     color: var(--text-primary) !important;  /* ลิงก์ดำ */
 }
+
+/* ============================================================
+   BADGE TIME — สีเขียวเฉพาะเวลา
+   ============================================================ */
+.badge-time {
+    background: var(--success) !important;
+    color: #fff !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    padding: 2px 10px !important;
+    border-radius: 30px !important;
+    display: inline-block !important;
+    white-space: nowrap !important;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Dark mode */
+[data-theme="dark"] .badge-time {
+    background: #34d399 !important;
+    color: #0b1120 !important;
+} 
+
     </style>
 </head>
 <body>
@@ -4512,47 +4539,69 @@ function renderDashPaymentTable(payments) {
                         }
                         break;
                     }
-                    case 'todayPayments': {
-                        title = '💳 مدفوعات اليوم (TODAY)';
-                        const res = await apiCall('/payments');
-                        const allPaymentsFresh = res.data || [];
-                        const todayPayers = allPaymentsFresh.filter(p => normalizeDate(p.payment_date) ===
-                        todayStr);
-                        if (lastData) {
-                            if (!lastData.summary) lastData.summary = {};
-                            lastData.summary.today_payments = todayPayers.length;
-                            const totalToday = todayPayers.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
-                            lastData.summary.this_month_revenue = totalToday;
-                            lastData.today_payers = todayPayers;
-                            updateDashboardCards(lastData.summary);
-                        }
-                        $('statTodayPayments').textContent = todayPayers.length;
-                        if (!todayPayers.length) { content = 'لا توجد مدفوعات اليوم'; } else {
-                            const totalToday = todayPayers.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
-                            let table =
-                                `<div class="table-wrap"><table class="rank-table">
-                                            <thead><tr><th>#</th><th>الرقم</th><th>الاسم</th><th>المبلغ</th><th>انتهاء الصلاحية</th><th>اتصال</th></tr></thead><tbody>`;
-                            todayPayers.slice(0, 50).forEach((p, i) => {
-                                const phone = p.phone || '';
-                                const wa = formatPhoneForWhatsApp(phone);
-                                const waLink = wa ?
-                                    `https://wa.me/${wa}?text=${encodeURIComponent('✅ شكراً للدفع ' + toEGP(p.amount) + ' ' + p.full_name + '! تم تجديد العضوية')}` :
-                                    '#';
-                                table += `<tr>
-                                            <td>${i+1}</td>
-                                            <td><strong>${p.member_id || '-'}</strong></td>
-                                            <td>${p.full_name || '-'}</td>
-                                            <td>${toEGP(p.amount || 0)}</td>
-                                            <td>${formatDate(p.expiry_date)}</td>
-                                            <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
-                                        </tr>`;
-                            });
-                            table += '</tbody></table></div>';
-                            content =
-                                `الإجمالي: <strong>${toEGP(totalToday)}</strong> (${todayPayers.length} عملية)<br><br>${table}`;
-                        }
-                        break;
-                    }
+case 'todayPayments': {
+    title = '💳 مدفوعات اليوم (TODAY)';
+    const res = await apiCall('/payments');
+    const allPaymentsFresh = res.data || [];
+    const todayPayers = allPaymentsFresh.filter(p => normalizeDate(p.payment_date) === todayStr);
+    
+    // ✅ เรียงลำดับตามเวลาจ่าย (ล่าสุดบนสุด)
+    todayPayers.sort((a, b) => {
+        const ta = a.payment_time || '00:00:00';
+        const tb = b.payment_time || '00:00:00';
+        return ta < tb ? 1 : -1;
+    });
+    
+    if (lastData) {
+        if (!lastData.summary) lastData.summary = {};
+        lastData.summary.today_payments = todayPayers.length;
+        const totalToday = todayPayers.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
+        lastData.summary.this_month_revenue = totalToday;
+        lastData.today_payers = todayPayers;
+        updateDashboardCards(lastData.summary);
+    }
+    $('statTodayPayments').textContent = todayPayers.length;
+    
+    if (!todayPayers.length) {
+        content = 'لا توجد مدفوعات اليوم';
+    } else {
+        const totalToday = todayPayers.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
+        let table = `<div class="table-wrap"><table class="rank-table">
+                    <thead><tr><th>#</th><th>الرقم</th><th>الاسم</th><th>المبلغ</th><th>الوقت</th><th>انتهاء الصلاحية</th><th>اتصال</th></tr></thead><tbody>`;
+        
+        todayPayers.slice(0, 50).forEach((p, i) => {
+            // หาชื่อสมาชิก
+            const member = allMembers.find(m => m.member_id === p.member_id);
+            const name = member ? member.full_name : p.member_id || '-';
+            const phone = member ? member.phone : '';
+            
+            // เวลาจ่าย
+            const paymentTime = p.payment_time || '-';
+            
+            // WhatsApp
+            const wa = formatPhoneForWhatsApp(phone);
+            const waLink = wa ? `https://wa.me/${wa}?text=${encodeURIComponent('✅ شكراً للدفع ' + toEGP(p.amount) + ' ' + name + '! تم تجديد العضوية')}` : '#';
+            
+            // ✅ Badge สีเขียวเฉพาะเวลา
+            const timeBadge = paymentTime !== '-' ? `<span class="badge-time">🕐 ${paymentTime}</span>` : '-';
+            
+            table += `<tr>
+                        <td>${i+1}</td>
+                        <td><strong>${p.member_id || '-'}</strong></td>
+                        <td>${name}</td>
+                        <td>${toEGP(p.amount || 0)}</td>
+                        <td>${timeBadge}</td>
+                        <td>${formatDate(p.expiry_date)}</td>
+                        <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
+                    </tr>`;
+        });
+        table += '</tbody></table></div>';
+        content = `الإجمالي: <strong>${toEGP(totalToday)}</strong> (${todayPayers.length} عملية)<br><br>${table}`;
+    }
+    break;
+}
+
+                    
 case 'newMembers': {
     title = '➕ الأعضاء الجدد هذا الشهر';
     const thisMonth = todayStr.slice(0, 7);
