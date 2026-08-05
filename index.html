@@ -6059,51 +6059,10 @@ function generateProfileQR(memberId) {
             });
         }
 
-function printMemberCard() {
-    // ✅ ตรวจสอบว่ามีข้อมูลสมาชิกหรือไม่
-    if (!profileMember) {
-        showToast('⚠️ لا توجد بيانات العضو', 'error');
-        return;
-    }
-    
-    showToast('🖨️ جارٍ فتح نافذة الطباعة...', 'info');
-    
-    // ✅ รอให้ DOM พร้อม แล้วพิมพ์
-    setTimeout(() => {
-        // ✅ ซ่อนปุ่มทั้งหมดก่อนพิมพ์
-        const actions = document.querySelector('.card-actions-row');
-        if (actions) actions.style.display = 'none';
-        
-        // ✅ ปรับขนาดบัตรให้เป็นขนาดจริง 340px
-        const card = document.getElementById('memberCardPreview');
-        if (card) {
-            // เก็บขนาดเดิม
-            const originalWidth = card.style.width;
-            const originalMaxWidth = card.style.maxWidth;
-            const originalTransform = card.style.transform;
-            
-            // ตั้งขนาดให้เป็น 340px พอดี
-            card.style.width = '340px';
-            card.style.maxWidth = '340px';
-            card.style.transform = 'none';
-            card.style.margin = '0 auto';
-            
-            // พิมพ์
-            window.print();
-            
-            // คืนค่าขนาดเดิม
-            setTimeout(() => {
-                card.style.width = originalWidth || '';
-                card.style.maxWidth = originalMaxWidth || '';
-                card.style.transform = originalTransform || '';
-                if (actions) actions.style.display = 'flex';
-            }, 500);
-        } else {
-            window.print();
-            if (actions) actions.style.display = 'flex';
+        function printMemberCard() {
+            showToast('🖨️ جارٍ فتح نافذة الطباعة...', 'info');
+            setTimeout(() => { window.print(); }, 500);
         }
-    }, 300);
-}
 
         // ============================================================
         // GOAL, CALENDAR, WEIGHT
