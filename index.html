@@ -1197,53 +1197,27 @@
 }
 
 /* ============================================================
-   RESPONSIVE — มือถือ
+   RESPONSIVE — มือถือ (ปรับให้พอดี)
    ============================================================ */
 
 @media (max-width: 480px) {
     .member-card-preview {
         padding: 12px 16px;
         min-height: 150px;
-        max-width: 100%;
+        max-width: 320px;  /* ✅ จำกัดความกว้างบนมือถือ */
+        margin: 0 auto;
     }
-    
-    .member-card-preview .mc-header .mc-brand {
-        font-size: 13px;
+}
+
+@media (max-width: 400px) {
+    .member-card-preview {
+        padding: 10px 14px;
+        min-height: 130px;
+        max-width: 280px;  /* ✅ เล็กลงสำหรับจอเล็กมาก */
+        margin: 0 auto;
     }
-    
-    .member-card-preview .mc-header .mc-brand i {
-        font-size: 15px;
-        padding: 2px;
-    }
-    
-    .member-card-preview .mc-header .mc-badge {
-        font-size: 8px;
-        padding: 1px 10px;
-        line-height: 16px;
-    }
-    
-    .member-card-preview .mc-body .mc-info .mc-name {
-        font-size: 14px;
-    }
-    
-    .member-card-preview .mc-body .mc-info .mc-id {
-        font-size: 9px;
-    }
-    
-    .member-card-preview .mc-body .mc-info .mc-detail {
-        font-size: 8px;
-    }
-    
-    .member-card-preview .mc-body .mc-qr {
-        width: 54px;
-        height: 54px;
-        padding: 3px;
-    }
-    
-    .member-card-preview .mc-body .mc-qr canvas {
-        width: 48px !important;
-        height: 48px !important;
-    }
+}
+
     
     #profileQrBox {
         width: 54px;
