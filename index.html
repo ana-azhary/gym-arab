@@ -1102,45 +1102,35 @@
             font-weight: 700;
             opacity: 1;
         }
-        .member-card-preview .mc-body .mc-qr {
-            flex-shrink: 0;
-            background: #ffffff;
-            padding: 6px;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 70px;
-            transform: rotate(2deg);
-            transition: transform 0.3s ease;
-        }
-        .member-card-preview .mc-body .mc-qr:hover {
-            transform: rotate(0deg) scale(1.02);
-        }
-        .member-card-preview .mc-body .mc-qr canvas {
-            display: block;
-            width: 56px !important;
-            height: 56px !important;
-            border-radius: 4px;
-        }
-        .member-card-preview .mc-footer {
-            margin-top: 6px;
-            padding-top: 8px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            display: flex;
-            justify-content: space-between;
-            font-size: 9px;
-            opacity: 0.6;
-            position: relative;
-            z-index: 1;
-        }
-        .member-card-preview .mc-footer .expiry {
-            color: #fca5a5;
-            font-weight: 700;
-            opacity: 1;
-        }
+.member-card-preview .mc-body .mc-qr {
+    flex-shrink: 0;
+    background: #ffffff;
+    padding: 6px;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 70px;
+    min-height: 70px;
+    transform: none !important;
+    transition: none !important;
+}
+
+.member-card-preview .mc-body .mc-qr:hover {
+    transform: none !important;
+}
+
+.member-card-preview .mc-body .mc-qr canvas {
+    display: block;
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 4px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
         .card-actions-row {
             display: flex;
             justify-content: center;
