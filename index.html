@@ -1118,26 +1118,22 @@
     opacity: 1;
 }
 
-/* ============================================================
-   QR CODE — กรอบชัดขึ้น (Desktop)
-   ============================================================ */
-
+/* ✅ QR CODE — กรอบพอดีกับ QR ไม่เกิน */
 .member-card-preview .mc-body .mc-qr {
     flex-shrink: 0;
     background: #ffffff;
-    padding: 6px;  /* ✅ เพิ่มจาก 4px เป็น 6px (เห็นกรอบชัดขึ้น) */
-    border-radius: 10px;  /* ✅ เพิ่มจาก 8px เป็น 10px */
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);  /* ✅ เพิ่มเงาให้เห็นขอบ */
+    padding: 4px;  /* ระยะห่างระหว่างกรอบกับ QR */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 68px;  /* ✅ เพิ่มจาก 64px */
+    width: 68px;   /* ✅ กำหนดขนาดกรอบพอดี */
     height: 68px;
     transform: none !important;
     transition: none !important;
-    border: 2px solid rgba(255, 255, 255, 0.15);  /* ✅ เพิ่มขอบบาง ๆ ให้เห็น */
 }
 
 .member-card-preview .mc-body .mc-qr:hover {
@@ -1146,15 +1142,34 @@
 
 .member-card-preview .mc-body .mc-qr canvas {
     display: block;
-    width: 56px !important;
+    width: 56px !important;  /* ✅ QR ใหญ่ขึ้น */
     height: 56px !important;
     border-radius: 4px;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
 }
 
+/* FOOTER */
+.member-card-preview .mc-footer {
+    margin-top: 2px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    justify-content: space-between;
+    font-size: 8px;
+    opacity: 0.6;
+    position: relative;
+    z-index: 1;
+}
+
+.member-card-preview .mc-footer .expiry {
+    color: #fca5a5;
+    font-weight: 600;
+    opacity: 1;
+}
+
 /* ============================================================
-   PROFILE QR BOX — ในหน้า Profile (Desktop)
+   PROFILE QR BOX — ในหน้า Profile
    ============================================================ */
 
 #profileQrBox {
@@ -1163,14 +1178,13 @@
     align-items: center;
     justify-content: center;
     background: #ffffff;
-    padding: 6px;  /* ✅ เพิ่มจาก 4px เป็น 6px */
-    border-radius: 10px;  /* ✅ เพิ่มจาก 8px เป็น 10px */
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-    width: 68px;  /* ✅ เพิ่มจาก 64px */
-    height: 68px;
+    padding: 4px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    width: 64px;
+    height: 64px;
     transform: none !important;
     transition: none !important;
-    border: 2px solid rgba(255, 255, 255, 0.15);  /* ✅ เพิ่มขอบบาง ๆ */
 }
 
 #profileQrBox canvas {
