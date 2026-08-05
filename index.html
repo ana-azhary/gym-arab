@@ -5675,48 +5675,6 @@ case 'expired': {
 
         function renderProfileData() {
             const m = profileMember;
-            hasPaymentHistory = profilePayments.length > 0;
-            let expiryDate = null;
-            profileExpiryStr = '-';
-            let isExpired = false;
-            if (profilePayments.length > 0) {
-                const sorted = [...profilePayments].sort((a, b) => {
-                    const da = normalizeDate(a.expiry_date || a['تاريخ انتهاء الصلاحية']);
-                    const db = normalizeDate(b.expiry_date || b['تاريخ انتهاء الصلاحية']);
-                    if (!da && !db) return 0;
-                    if (!da) return 1;
-                    if (!db) return -1;
-                    return da.localeCompare(db);
-                });
-                const latest = sorted[sorted.length - 1];
-                profileExpiryStr = latest.expiry_date || latest['تاريخ انتهاء الصلاحية'] || '-';
-                if (profileExpiryStr && profileExpiryStr !== '-') {
-                    expiryDate = new Date(normalizeDate(profileExpiryStr));
-                    isExpired = expiryDate <= new Date();
-                }
-            }
-            isMemberExpired = isExpired;
-
-            renderMemberStatus(m, isExpired, hasPaymentHistory, profileExpiryStr);
-            $('profileName').textContent = m.full_name || '-';
-            $('profileId').textContent = 'الرقم: ' + (m.member_id || '-');
-            $('profilePhone').innerHTML = '<i class="fas fa-phone"></i> ' + (m.phone || '-');
-            $('profileType').innerHTML = '<i class="fas fa-tag"></i> ' + (m.membership_type || '-');
-
-            const points = getPoints(m.member_id);
-            const xp = updateMemberXp(m.member_id, allCheckins);
-
-            $('profilePoints').innerHTML = '<i class="fas fa-coins"></i> النقاط: ' + points;
-            $('profileXp').innerHTML = '<i class="fas fa-star"></i> XP: ' + xp;
-            $('profileRank').innerHTML = '<i class="fas fa-medal"></i> المستوى: ' + (m.rank || '-');
-
-            const expiryDisplay = profileExpiryStr && profileExpiryStr !== '-' ? formatDate(profileExpiryStr) :
-                'غير مدفوع';
-            $('profileExpiryStatus').innerHTML = isExpired ?
-                `<span style="color:var(--danger);"><i class="fas fa-circle"></i> منتهي (${expiryDisplay})</span>` :
-                hasPaymentHistory ?
-                `<span style="color:var(--success);"><i class="fas fa-circle"></i> نشط (ينتهي ${expiryDisplay})</span>` :
-                `<span style="color:var(--warning);"><i class="fas fa-circle"></i> لا يوجد سجل دفع</span>`;
 
             $('previewName').textContent = m.full_name || 'الاسم';
             $('previewId').textContent = m.member_id || 'G-XXXX';
