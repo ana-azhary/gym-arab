@@ -1226,171 +1226,135 @@
 }
 
 /* ============================================================
-/* ============================================================
-   RESPONSIVE — มือถือ (ปรับให้สั้นลง)
+   RESPONSIVE — มือถือ
    ============================================================ */
 
 @media (max-width: 480px) {
     .member-card-preview {
-        padding: 12px 14px;  /* ✅ ลด padding */
-        min-height: 140px;   /* ✅ ลดความสูงจาก 160px เป็น 140px */
-        max-width: 100%;
+        padding: 14px 16px;
+        min-height: 160px;
+        max-width: 300px;          /* ✅ แคบลงจาก 100% */
+        width: 90%;               /* ✅ ให้มีขอบซ้าย-ขวา */
+        margin: 0 auto;
         border-radius: 14px;
-    }
-    
-    /* ✅ ลดระยะห่าง header */
-    .member-card-preview .mc-header {
-        margin-bottom: 2px;  /* ✅ ลดจาก 6px เป็น 2px */
-    }
-    
-    .member-card-preview .mc-header .mc-brand {
-        font-size: 14px;     /* ✅ ลดจาก 15px */
-    }
-    
-    .member-card-preview .mc-header .mc-brand i {
-        font-size: 16px;     /* ✅ ลดจาก 18px */
-        padding: 3px;
-    }
-    
-    .member-card-preview .mc-header .mc-badge {
-        font-size: 8px;      /* ✅ ลดจาก 9px */
-        padding: 1px 10px;
-        line-height: 18px;
-    }
-    
-    /* ✅ ลดระยะห่าง body */
-    .member-card-preview .mc-body {
-        gap: 10px;           /* ✅ ลดจาก 16px */
-        padding: 2px 0;      /* ✅ ลดจาก 4px 0 */
-    }
-    
-    .member-card-preview .mc-body .mc-info .mc-name {
-        font-size: 16px;     /* ✅ ลดจาก 17px */
-        margin-bottom: 0px;  /* ✅ ลดจาก 2px */
-    }
-    
-    .member-card-preview .mc-body .mc-info .mc-id {
-        font-size: 9px;      /* ✅ ลดจาก 10px */
-        margin-bottom: 1px;  /* ✅ ลดจาก 4px */
-    }
-    
-    .member-card-preview .mc-body .mc-info .mc-detail {
-        font-size: 8px;      /* ✅ ลดจาก 9px */
-        margin-top: 0px;     /* ✅ ลดจาก 2px */
-        gap: 3px;            /* ✅ ลดจาก 6px */
-    }
-    
-    .member-card-preview .mc-body .mc-info .mc-detail i {
-        width: 12px;         /* ✅ ลดจาก 14px */
-    }
-    
-    /* ✅ QR Code เล็กลง */
-    .member-card-preview .mc-body .mc-qr {
-        width: 54px;         /* ✅ ลดจาก 60px */
-        height: 54px;
-        padding: 4px;
-        border-radius: 10px; /* ✅ ลดจาก 12px */
-    }
-    
-    .member-card-preview .mc-body .mc-qr canvas {
-        width: 46px !important;  /* ✅ ลดจาก 52px */
-        height: 46px !important;
-    }
-    
-    /* ✅ Footer สั้นลง */
-    .member-card-preview .mc-footer {
-        margin-top: 2px;     /* ✅ ลดจาก 6px */
-        padding-top: 6px;    /* ✅ ลดจาก 10px */
-        font-size: 8px;      /* ✅ ลดจาก 9px */
-    }
-    
-    /* ✅ Profile QR Box */
-    #profileQrBox {
-        width: 54px;
-        height: 54px;
-        padding: 4px;
-        border-radius: 10px;
-    }
-    
-    #profileQrBox canvas {
-        width: 46px !important;
-        height: 46px !important;
     }
 }
 
 @media (max-width: 400px) {
     .member-card-preview {
-        padding: 10px 12px;  /* ✅ ลด padding */
-        min-height: 120px;   /* ✅ ลดความสูงจาก 140px เป็น 120px */
+        padding: 12px 14px;
+        min-height: 140px;
+        max-width: 270px;          /* ✅ เล็กลงสำหรับจอเล็กมาก */
+        width: 92%;
+        margin: 0 auto;
+        border-radius: 12px;
+    }
+}
+    
+    .member-card-preview .mc-header .mc-brand {
+        font-size: 15px;
+    }
+    
+    .member-card-preview .mc-header .mc-brand i {
+        font-size: 18px;
+        padding: 4px;
+    }
+    
+    .member-card-preview .mc-header .mc-badge {
+        font-size: 9px;
+        padding: 2px 12px;
+        line-height: 20px;
+    }
+    
+    .member-card-preview .mc-body .mc-info .mc-name {
+        font-size: 17px;
+    }
+    
+    .member-card-preview .mc-body .mc-info .mc-id {
+        font-size: 10px;
+    }
+    
+    .member-card-preview .mc-body .mc-info .mc-detail {
+        font-size: 9px;
+    }
+    
+    .member-card-preview .mc-body .mc-qr {
+        width: 60px;
+        height: 60px;
+        padding: 4px;
+    }
+    
+    .member-card-preview .mc-body .mc-qr canvas {
+        width: 52px !important;
+        height: 52px !important;
+    }
+    
+    #profileQrBox {
+        width: 60px;
+        height: 60px;
+        padding: 4px;
+    }
+    
+    #profileQrBox canvas {
+        width: 52px !important;
+        height: 52px !important;
+    }
+}
+
+@media (max-width: 400px) {
+    .member-card-preview {
+        padding: 12px 14px;
+        min-height: 140px;
         border-radius: 12px;
     }
     
     .member-card-preview .mc-header .mc-brand {
-        font-size: 12px;
+        font-size: 13px;
     }
     
     .member-card-preview .mc-header .mc-brand i {
-        font-size: 13px;
-        padding: 2px;
+        font-size: 15px;
+        padding: 3px;
     }
     
     .member-card-preview .mc-header .mc-badge {
-        font-size: 7px;
-        padding: 1px 8px;
-        line-height: 16px;
-    }
-    
-    .member-card-preview .mc-body {
-        gap: 8px;
-        padding: 1px 0;
+        font-size: 8px;
+        padding: 1px 10px;
+        line-height: 18px;
     }
     
     .member-card-preview .mc-body .mc-info .mc-name {
-        font-size: 14px;
+        font-size: 15px;
     }
     
     .member-card-preview .mc-body .mc-info .mc-id {
-        font-size: 8px;
+        font-size: 9px;
     }
     
     .member-card-preview .mc-body .mc-info .mc-detail {
-        font-size: 7px;
-        gap: 2px;
-    }
-    
-    .member-card-preview .mc-body .mc-info .mc-detail i {
-        width: 10px;
         font-size: 8px;
     }
     
     .member-card-preview .mc-body .mc-qr {
-        width: 46px;
-        height: 46px;
+        width: 50px;
+        height: 50px;
         padding: 3px;
-        border-radius: 8px;
     }
     
     .member-card-preview .mc-body .mc-qr canvas {
-        width: 40px !important;
-        height: 40px !important;
-    }
-    
-    .member-card-preview .mc-footer {
-        margin-top: 1px;
-        padding-top: 4px;
-        font-size: 7px;
+        width: 44px !important;
+        height: 44px !important;
     }
     
     #profileQrBox {
-        width: 46px;
-        height: 46px;
+        width: 50px;
+        height: 50px;
         padding: 3px;
-        border-radius: 8px;
     }
     
     #profileQrBox canvas {
-        width: 40px !important;
-        height: 40px !important;
+        width: 44px !important;
+        height: 44px !important;
     }
 }
 
