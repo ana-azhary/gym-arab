@@ -5687,81 +5687,89 @@ case 'expired': {
             }
         }
 
-        function renderProfileData() {
-            const m = profileMember;
-            hasPaymentHistory = profilePayments.length > 0;
-            let expiryDate = null;
-            profileExpiryStr = '-';
-            let isExpired = false;
-            if (profilePayments.length > 0) {
-                const sorted = [...profilePayments].sort((a, b) => {
-                    const da = normalizeDate(a.expiry_date || a['تاريخ انتهاء الصلاحية']);
-                    const db = normalizeDate(b.expiry_date || b['تاريخ انتهاء الصلاحية']);
-                    if (!da && !db) return 0;
-                    if (!da) return 1;
-                    if (!db) return -1;
-                    return da.localeCompare(db);
-                });
-                const latest = sorted[sorted.length - 1];
-                profileExpiryStr = latest.expiry_date || latest['تاريخ انتهاء الصلاحية'] || '-';
-                if (profileExpiryStr && profileExpiryStr !== '-') {
-                    expiryDate = new Date(normalizeDate(profileExpiryStr));
-                    isExpired = expiryDate <= new Date();
-                }
-            }
-            isMemberExpired = isExpired;
+function renderProfileData() {
+    const m = profileMember;
+    if (!m) return;
 
-            renderMemberStatus(m, isExpired, hasPaymentHistory, profileExpiryStr);
-            $('profileName').textContent = m.full_name || '-';
-            $('profileId').textContent = 'الرقم: ' + (m.member_id || '-');
-            $('profilePhone').innerHTML = '<i class="fas fa-phone"></i> ' + (m.phone || '-');
-            $('profileType').innerHTML = '<i class="fas fa-tag"></i> ' + (m.membership_type || '-');
+    // ----- คำนวณสถานะ, แต้ม, XP, วันหมดอายุ (คงเดิม) -----
+    hasPaymentHistory = profilePayments.length > 0;
+    let expiryDate = null;
+    profileExpiryStr = '-';
+    let isExpired = false;
 
-            const points = getPoints(m.member_id);
-            const xp = updateMemberXp(m.member_id, allCheckins);
-
-            $('profilePoints').innerHTML = '<i class="fas fa-coins"></i> النقاط: ' + points;
-            $('profileXp').innerHTML = '<i class="fas fa-star"></i> XP: ' + xp;
-            $('profileRank').innerHTML = '<i class="fas fa-medal"></i> المستوى: ' + (m.rank || '-');
-
-            const expiryDisplay = profileExpiryStr && profileExpiryStr !== '-' ? formatDate(profileExpiryStr) :
-                'غير مدفوع';
-            $('profileExpiryStatus').innerHTML = isExpired ?
-                `<span style="color:var(--danger);"><i class="fas fa-circle"></i> منتهي (${expiryDisplay})</span>` :
-                hasPaymentHistory ?
-                `<span style="color:var(--success);"><i class="fas fa-circle"></i> نشط (ينتهي ${expiryDisplay})</span>` :
-                `<span style="color:var(--warning);"><i class="fas fa-circle"></i> لا يوجد سجل دفع</span>`;
-
-            $('previewName').textContent = m.full_name || 'الاسم';
-            $('previewId').textContent = m.member_id || 'G-XXXX';
-            $('previewPhone').textContent = m.phone || '-';
-            $('previewType').textContent = m.membership_type || '-';
-            $('previewExpiry').textContent = expiryDisplay;
-            $('previewPoints').textContent = points;
-            $('previewXp').textContent = xp;
-            $('previewStartDate').textContent = formatDate(m.start_date);
-            $('previewExpiryFooter').textContent = expiryDisplay;
-            $('previewExpiryFooter').className = isExpired ? 'expiry' : '';
-
-            generateProfileQR(m.member_id);
-
-            const showFull = !isExpired && hasPaymentHistory;
-            document.getElementById('goalSection').style.display = showFull ? 'block' : 'none';
-            document.getElementById('calendarSection').style.display = showFull ? 'block' : 'none';
-            document.getElementById('weightSection').style.display = showFull ? 'block' : 'none';
-            document.getElementById('top8Panel').style.display = 'block';
-            document.getElementById('profileExpiredOverlay').classList.toggle('show', isExpired);
-
-            if (showFull) {
-                loadGoalProgress();
-                renderCalendar();
-                loadWeightData();
-                renderWeightChart();
-            }
-
-            updateMemberDashboard();
-            loadTop8();
+    if (profilePayments.length > 0) {
+        const sorted = [...profilePayments].sort((a, b) => {
+            const da = normalizeDate(a.expiry_date || a['تاريخ انتهاء الصلاحية']);
+            const db = normalizeDate(b.expiry_date || b['تاريخ انتهاء الصلاحية']);
+            if (!da && !db) return 0;
+            if (!da) return 1;
+            if (!db) return -1;
+            return da.localeCompare(db);
+        });
+        const latest = sorted[sorted.length - 1];
+        profileExpiryStr = latest.expiry_date || latest['تاريخ انتهاء الصلاحية'] || '-';
+        if (profileExpiryStr && profileExpiryStr !== '-') {
+            expiryDate = new Date(normalizeDate(profileExpiryStr));
+            isExpired = expiryDate <= new Date();
         }
+    }
+    isMemberExpired = isExpired;
+
+    const points = getPoints(m.member_id);
+    const xp = getXp(m.member_id);
+    const expiryDisplay = (profileExpiryStr && profileExpiryStr !== '-') ? formatDate(profileExpiryStr) : 'ยังไม่ชำระ';
+
+    // ----- ซ่อนส่วนหัวและรายละเอียดทั้งหมด -----
+    // ❌ ไม่ต้องสร้าง profileInfoTop หรือซ่อนไว้
+    const topContainer = document.getElementById('profileInfoTop');
+    if (topContainer) {
+        topContainer.style.display = 'none';  // ซ่อนส่วนหัว
+    }
+
+    // ❌ ซ่อน memberStatusBanner (ถ้ามี)
+    const statusBanner = document.getElementById('memberStatusBanner');
+    if (statusBanner) {
+        statusBanner.style.display = 'none';
+    }
+
+    // ❌ ซ่อน memberStatsGrid (6 การ์ดสถิติ) ถ้าอยากให้เหลือแค่บัตร
+    const statsGrid = document.getElementById('memberStatsGrid');
+    if (statsGrid) {
+        statsGrid.style.display = 'none';
+    }
+
+    // ✅ อัปเดตข้อมูลในบัตร (ส่วนล่าง) ตามปกติ
+    $('previewName').textContent = m.full_name || 'ชื่อ';
+    $('previewId').textContent = m.member_id || 'G-XXXX';
+    $('previewPhone').textContent = m.phone || '-';
+    $('previewType').textContent = m.membership_type || '-';
+    $('previewExpiry').textContent = expiryDisplay;
+    $('previewPoints').textContent = points;
+    $('previewXp').textContent = xp;
+    $('previewStartDate').textContent = formatDate(m.start_date);
+    $('previewExpiryFooter').textContent = expiryDisplay;
+    $('previewExpiryFooter').className = isExpired ? 'expiry' : '';
+
+    generateProfileQR(m.member_id);
+
+    // แสดง/ซ่อนส่วนอื่นๆ ตามสถานะ
+    const showFull = !isExpired && hasPaymentHistory;
+    document.getElementById('goalSection').style.display = showFull ? 'block' : 'none';
+    document.getElementById('calendarSection').style.display = showFull ? 'block' : 'none';
+    document.getElementById('weightSection').style.display = showFull ? 'block' : 'none';
+    document.getElementById('top8Panel').style.display = 'block';
+    document.getElementById('profileExpiredOverlay').classList.toggle('show', isExpired);
+
+    if (showFull) {
+        loadGoalProgress();
+        renderCalendar();
+        loadWeightData();
+        renderWeightChart();
+    }
+
+    updateMemberDashboard();
+    loadTop8();
+}
 
         function updateMemberDashboard() {
             if (!profileMember) return;
