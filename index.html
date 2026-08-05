@@ -152,7 +152,6 @@
             }
         }
 
-        /* SIDEBAR */
         .app-sidebar {
             position: fixed;
             top: 0;
@@ -333,7 +332,6 @@
             color: #f87171;
         }
 
-        /* MAIN */
         .app-main {
             margin-right: var(--sidebar-width);
             flex: 1;
@@ -343,7 +341,6 @@
             background: var(--bg-body);
         }
 
-        /* TOPBAR */
         .topbar {
             display: flex;
             justify-content: space-between;
@@ -471,7 +468,6 @@
             font-family: monospace;
         }
 
-        /* PAGE SECTIONS */
         .page-section {
             display: none;
             animation: fadeSlide 0.4s ease;
@@ -490,7 +486,6 @@
             }
         }
 
-        /* STATS GRID */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -618,7 +613,6 @@
             background: var(--stat-teal);
         }
 
-        /* CARDS */
         .card-panel {
             background: var(--bg-card);
             backdrop-filter: var(--glass-blur);
@@ -685,7 +679,6 @@
             box-shadow: 0 0 0 3px rgba(15, 59, 94, 0.10) !important;
         }
 
-        /* TABLES */
         .table-wrap {
             overflow-x: auto;
             overflow-y: auto;
@@ -765,7 +758,6 @@
             color: var(--expired-color) !important;
         }
 
-        /* BADGES */
         .status-badge {
             padding: 2px 12px;
             border-radius: 30px;
@@ -793,7 +785,6 @@
             color: var(--text-muted);
         }
 
-        /* BUTTONS */
         .btn {
             padding: 6px 14px;
             border-radius: var(--radius-sm);
@@ -869,7 +860,6 @@
             box-shadow: 0 8px 24px rgba(37, 211, 102, 0.25);
         }
 
-        /* FORMS */
         .form-row {
             display: flex;
             flex-wrap: wrap;
@@ -900,7 +890,6 @@
             color: var(--text-muted);
         }
 
-        /* CHARTS */
         .chart-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -938,7 +927,6 @@
             max-height: 160px;
         }
 
-        /* KPI */
         .kpi-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
@@ -973,7 +961,6 @@
             font-weight: 500;
         }
 
-        /* MEMBER STATS */
         .member-stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -1000,7 +987,6 @@
             margin-bottom: 2px;
         }
 
-        /* MEMBER CARD */
         .member-card-preview {
             background: linear-gradient(145deg, var(--primary-dark), var(--primary));
             color: #fff;
@@ -1168,7 +1154,6 @@
             border-radius: 30px;
         }
 
-        /* CALENDAR */
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -1235,7 +1220,6 @@
             justify-content: center;
         }
 
-        /* PROGRESS */
         .progress-wrap {
             margin: 10px 0;
         }
@@ -1322,7 +1306,6 @@
             }
         }
 
-        /* RANK TABLE */
         .rank-table {
             width: 100%;
             border-collapse: collapse;
@@ -1411,7 +1394,6 @@
             border-color: rgba(205, 127, 50, 0.2);
         }
 
-        /* STATUS BANNER */
         .status-banner {
             padding: 14px 18px;
             border-radius: var(--radius-md);
@@ -1459,7 +1441,6 @@
             box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
         }
 
-        /* EXPIRED OVERLAY */
         .relative {
             position: relative;
         }
@@ -1495,7 +1476,6 @@
             font-size: 13px;
         }
 
-        /* MODAL */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -1643,7 +1623,6 @@
             background: var(--success);
         }
 
-        /* TOAST */
         .toast-container {
             position: fixed;
             bottom: 28px;
@@ -1688,7 +1667,6 @@
             color: #0f172a;
         }
 
-        /* LOGIN */
         #loginPage {
             display: flex;
             justify-content: center;
@@ -1866,7 +1844,6 @@
             font-weight: 500;
         }
 
-        /* DEBUG */
         .debug-panel {
             background: var(--primary-dark);
             color: #4ade80;
@@ -1925,7 +1902,6 @@
             border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
-        /* ANALYTICS TABS */
         .analytics-tabs {
             display: flex;
             gap: 4px;
@@ -1963,7 +1939,6 @@
             display: block;
         }
 
-        /* BMI */
         .bmi-encouragement {
             padding: 10px 14px;
             border-radius: var(--radius-sm);
@@ -2003,7 +1978,6 @@
             border: 1px solid rgba(239, 68, 68, 0.15);
         }
 
-        /* PRINT */
         @media print {
             body * {
                 visibility: hidden;
@@ -2053,15 +2027,9 @@
             }
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 1200px) {
-            .stats-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            .member-stats-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
+        /* ============================================================
+           COMPACT DAILY REPORT ON MOBILE
+           ============================================================ */
         @media (max-width: 992px) {
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -2656,7 +2624,6 @@
             display: block;
         }
 
-        /* UTILITY */
         .flex-center {
             display: flex;
             align-items: center;
@@ -2704,6 +2671,287 @@
                 display: table-cell !important;
             }
         }
+
+        /* PAYMENT TODAY HIGHLIGHT */
+        .payment-today td {
+            background: rgba(16, 185, 129, 0.08) !important;
+            font-weight: 700 !important;
+            border-right: 3px solid var(--success);
+        }
+        .payment-today td:first-child {
+            border-radius: 0 4px 4px 0;
+        }
+        .payment-today:hover td {
+            background: rgba(16, 185, 129, 0.15) !important;
+        }
+        .payment-today .badge-today {
+            background: var(--success);
+            color: #fff;
+            font-size: 8px;
+            padding: 0 8px;
+            border-radius: 30px;
+            line-height: 16px;
+            display: inline-block;
+            margin-right: 4px;
+            font-weight: 700;
+        }
+
+        /* REVENUE ANALYSIS */
+        .revenue-analysis {
+            background: var(--bg-body);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            margin: 8px 0 14px;
+            border-right: 4px solid var(--primary);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .revenue-analysis .analysis-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 4px 14px;
+            border-radius: 30px;
+        }
+        .revenue-analysis .analysis-badge.up {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+        .revenue-analysis .analysis-badge.down {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+        .revenue-analysis .analysis-badge.flat {
+            background: rgba(148, 163, 184, 0.15);
+            color: var(--text-muted);
+        }
+        .revenue-analysis .analysis-detail {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .revenue-analysis .analysis-detail strong {
+            color: var(--text-primary);
+        }
+
+        /* DAILY REPORT COMPACT */
+        .daily-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 768px) {
+            .daily-stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            .daily-detail-table td {
+                padding: 4px 6px;
+                font-size: 11px;
+            }
+            .daily-detail-table .badge-daily {
+                font-size: 9px;
+                padding: 1px 8px;
+            }
+        }
+        @media (max-width: 480px) {
+            .daily-stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+            }
+            .daily-stats-grid .stat-card-click .num {
+                font-size: 14px;
+            }
+            .daily-stats-grid .stat-card-click .label {
+                font-size: 9px;
+            }
+            .daily-stats-grid .stat-card-click .stat-icon {
+                width: 24px;
+                height: 24px;
+                font-size: 11px;
+            }
+            .daily-stats-grid .stat-card-click {
+                padding: 6px 8px;
+                min-height: 60px;
+            }
+            .daily-detail-table td {
+                padding: 3px 4px;
+                font-size: 10px;
+            }
+            .daily-detail-table .badge-daily {
+                font-size: 8px;
+                padding: 1px 6px;
+            }
+        }
+        .daily-detail-table {
+            font-size: 13px;
+        }
+        .daily-detail-table td {
+            padding: 6px 10px;
+        }
+        .daily-detail-table .badge-daily {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 30px;
+            display: inline-block;
+        }
+        .badge-daily.green {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--success);
+        }
+        .badge-daily.amber {
+            background: rgba(245, 158, 11, 0.12);
+            color: var(--warning);
+        }
+        .badge-daily.blue {
+            background: rgba(59, 130, 246, 0.12);
+            color: var(--info);
+        }
+        .badge-daily.red {
+            background: rgba(239, 68, 68, 0.12);
+            color: var(--danger);
+        }
+    
+    /* ============================================================
+   DAILY REPORT — COMPACT (consistent with other pages)
+   ============================================================ */
+
+/* Daily Stats Cards — ให้เล็กลงเหมือน Dashboard */
+.daily-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+/* ทำให้การ์ดใน Daily Report เล็กลง */
+.daily-stats-grid .stat-card-click {
+    padding: 8px 10px !important;
+    min-height: 60px !important;
+    border-radius: var(--radius-sm) !important;
+}
+
+.daily-stats-grid .stat-card-click .stat-icon {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 12px !important;
+}
+
+.daily-stats-grid .stat-card-click .num {
+    font-size: 16px !important;
+}
+
+.daily-stats-grid .stat-card-click .label {
+    font-size: 10px !important;
+}
+
+/* Daily Details Table — กระชับ */
+.daily-detail-table td {
+    padding: 4px 8px !important;
+    font-size: 12px !important;
+}
+
+.daily-detail-table .badge-daily {
+    font-size: 10px !important;
+    padding: 1px 8px !important;
+    white-space: nowrap;
+}
+
+.daily-detail-table td:last-child {
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Responsive: Mobile */
+@media (max-width: 768px) {
+    .daily-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+    }
+    
+    .daily-stats-grid .stat-card-click {
+        padding: 6px 8px !important;
+        min-height: 52px !important;
+    }
+    
+    .daily-stats-grid .stat-card-click .stat-icon {
+        width: 22px !important;
+        height: 22px !important;
+        font-size: 10px !important;
+    }
+    
+    .daily-stats-grid .stat-card-click .num {
+        font-size: 14px !important;
+    }
+    
+    .daily-stats-grid .stat-card-click .label {
+        font-size: 9px !important;
+    }
+    
+    .daily-detail-table td {
+        padding: 3px 6px !important;
+        font-size: 10px !important;
+    }
+    
+    .daily-detail-table .badge-daily {
+        font-size: 8px !important;
+        padding: 1px 6px !important;
+    }
+    
+    .daily-detail-table td:last-child {
+        max-width: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .daily-stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+    }
+    
+    .daily-stats-grid .stat-card-click {
+        padding: 4px 6px !important;
+        min-height: 44px !important;
+    }
+    
+    .daily-stats-grid .stat-card-click .stat-icon {
+        width: 18px !important;
+        height: 18px !important;
+        font-size: 9px !important;
+    }
+    
+    .daily-stats-grid .stat-card-click .num {
+        font-size: 12px !important;
+    }
+    
+    .daily-stats-grid .stat-card-click .label {
+        font-size: 8px !important;
+    }
+    
+    .daily-detail-table td {
+        padding: 2px 4px !important;
+        font-size: 9px !important;
+    }
+    
+    .daily-detail-table .badge-daily {
+        font-size: 7px !important;
+        padding: 1px 4px !important;
+    }
+    
+    .daily-detail-table td:last-child {
+        max-width: 60px;
+    }
+}
+    
+    
     </style>
 </head>
 <body>
@@ -2781,6 +3029,10 @@
             </button>
             <button class="nav-item" data-page="analytics" onclick="switchTab('analytics')">
                 <i class="fas fa-chart-line"></i> <span>التحليلات</span>
+            </button>
+            <!-- Profile is hidden for admin, shown for member via JS -->
+            <button class="nav-item" data-page="profile" onclick="switchTab('profile')" id="profileNav" style="display:none;">
+                <i class="fas fa-id-card"></i> <span>الملف الشخصي</span>
             </button>
         </nav>
         <div class="sidebar-footer">
@@ -2895,7 +3147,6 @@
                 </div>
             </div>
 
-            <!-- 🔥 DASHBOARD PAYMENTS TABLE — SORTED LATEST FIRST -->
             <div class="card-panel">
                 <div class="card-header">
                     <h3><i class="fas fa-receipt"></i> المدفوعات هذا الشهر <span class="badge" id="dashPaymentBadge">0</span></h3>
@@ -2911,29 +3162,49 @@
             </div>
         </div>
 
-        <!-- PAGE: DAILY -->
+        <!-- PAGE: DAILY (COMPACT) -->
         <div id="page-daily" class="page-section">
             <div class="flex-center" style="justify-content:space-between; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
                 <h3 style="font-size:18px;font-weight:700;"><i class="fas fa-calendar-day" style="color:var(--primary);"></i> تقرير اليوم</h3>
                 <span class="text-muted text-sm" id="dailyDate"></span>
                 <button class="btn btn-success btn-sm" onclick="exportDailyReportCSV()"><i class="fas fa-file-csv"></i> CSV</button>
             </div>
-            <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
-                <div class="stat-card-click" onclick="showStatDetail('todayCheckins')"><div class="stat-top"><div class="stat-icon amber"><i class="fas fa-check-circle"></i></div></div><div class="num" id="dailyCheckins">-</div><div class="label">دخول اليوم</div></div>
-                <div class="stat-card-click" onclick="showStatDetail('newMembers')"><div class="stat-top"><div class="stat-icon pink"><i class="fas fa-user-plus"></i></div></div><div class="num" id="dailyNewMembers">-</div><div class="label">أعضاء جدد اليوم</div></div>
-                <div class="stat-card-click" onclick="showStatDetail('todayPayments')"><div class="stat-top"><div class="stat-icon teal"><i class="fas fa-hand-holding-usd"></i></div></div><div class="num" id="dailyPayments">-</div><div class="label">مدفوعات اليوم</div></div>
-                <div class="stat-card-click" onclick="showStatDetail('expired')"><div class="stat-top"><div class="stat-icon red"><i class="fas fa-user-slash"></i></div></div><div class="num" id="dailyExpired">-</div><div class="label">منتهي اليوم</div></div>
+
+            <!-- Daily Stats Cards (4 cards) -->
+            <div class="daily-stats-grid">
+                <div class="stat-card-click" onclick="showStatDetail('todayCheckins')">
+                    <div class="stat-top"><div class="stat-icon amber"><i class="fas fa-check-circle"></i></div></div>
+                    <div class="num" id="dailyCheckins">-</div>
+                    <div class="label">دخول اليوم</div>
+                </div>
+                <div class="stat-card-click" onclick="showStatDetail('newMembers')">
+                    <div class="stat-top"><div class="stat-icon pink"><i class="fas fa-user-plus"></i></div></div>
+                    <div class="num" id="dailyNewMembers">-</div>
+                    <div class="label">أعضاء جدد اليوم</div>
+                </div>
+                <div class="stat-card-click" onclick="showStatDetail('todayPayments')">
+                    <div class="stat-top"><div class="stat-icon teal"><i class="fas fa-hand-holding-usd"></i></div></div>
+                    <div class="num" id="dailyPayments">-</div>
+                    <div class="label">مدفوعات اليوم</div>
+                </div>
+                <div class="stat-card-click" onclick="showStatDetail('expired')">
+                    <div class="stat-top"><div class="stat-icon red"><i class="fas fa-user-slash"></i></div></div>
+                    <div class="num" id="dailyExpired">-</div>
+                    <div class="label">منتهي اليوم</div>
+                </div>
             </div>
+
+            <!-- Daily Details Table -->
             <div class="card-panel">
                 <div class="card-header"><h3><i class="fas fa-list-ul"></i> تفاصيل اليوم</h3></div>
                 <div class="table-wrap">
-                    <table class="rank-table">
+                    <table class="rank-table daily-detail-table">
                         <thead><tr><th>الفئة</th><th>العدد</th><th>الأسماء</th></tr></thead>
                         <tbody>
-                            <tr><td><i class="fas fa-sign-in-alt"></i> دخول اليوم</td><td id="dailyCheckinsCount">-</td><td id="dailyCheckinsList">-</td></tr>
-                            <tr><td><i class="fas fa-user-plus"></i> أعضاء جدد</td><td id="dailyNewMembersCount">-</td><td id="dailyNewMembersList">-</td></tr>
-                            <tr><td><i class="fas fa-coins"></i> مدفوعات اليوم</td><td id="dailyPaymentsCount">-</td><td id="dailyPaymentsList">-</td></tr>
-                            <tr><td><i class="fas fa-user-slash"></i> منتهي اليوم</td><td id="dailyExpiredCount">-</td><td id="dailyExpiredList">-</td></tr>
+                            <tr><td><span class="badge-daily amber"><i class="fas fa-sign-in-alt"></i> دخول اليوم</span></td><td id="dailyCheckinsCount">-</td><td id="dailyCheckinsList">-</td></tr>
+                            <tr><td><span class="badge-daily blue"><i class="fas fa-user-plus"></i> أعضاء جدد</span></td><td id="dailyNewMembersCount">-</td><td id="dailyNewMembersList">-</td></tr>
+                            <tr><td><span class="badge-daily green"><i class="fas fa-coins"></i> مدفوعات اليوم</span></td><td id="dailyPaymentsCount">-</td><td id="dailyPaymentsList">-</td></tr>
+                            <tr><td><span class="badge-daily red"><i class="fas fa-user-slash"></i> منتهي اليوم</span></td><td id="dailyExpiredCount">-</td><td id="dailyExpiredList">-</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -3004,7 +3275,7 @@
             </div>
         </div>
 
-        <!-- PAGE: PAYMENTS -->
+        <!-- PAGE: PAYMENTS (SORTED LATEST FIRST — TODAY AT TOP) -->
         <div id="page-payments" class="page-section">
             <div class="flex-center" style="justify-content:space-between; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
                 <h3 style="font-size:18px;font-weight:700;"><i class="fas fa-coins" style="color:var(--primary);"></i> المدفوعات</h3>
@@ -3028,7 +3299,6 @@
                         <button class="btn btn-success btn-sm" onclick="exportPaymentsCSV()"><i class="fas fa-file-csv"></i> CSV</button>
                     </div>
                 </div>
-                <!-- 🔥 PAYMENTS TABLE — SORTED LATEST FIRST -->
                 <div class="table-wrap">
                     <table>
                         <thead><tr><th>#</th><th>الرقم</th><th>الاسم</th><th>المبلغ</th><th>التاريخ</th><th>انتهاء الصلاحية</th></tr></thead>
@@ -3076,7 +3346,7 @@
             </div>
         </div>
 
-        <!-- PAGE: PROFILE -->
+        <!-- PAGE: PROFILE (Member Dashboard) -->
         <div id="page-profile" class="page-section">
             <div class="member-stats-grid" id="memberStatsGrid">
                 <div class="stat-card-click" onclick="showCardDetail('member_revenue')"><div class="stat-top"><div class="stat-icon blue"><i class="fas fa-credit-card"></i></div></div><div class="num" id="mStatRevenue">-</div><div class="label">مدفوعات هذا الشهر</div></div>
@@ -3241,7 +3511,7 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- ============================================================
-    JAVASCRIPT — ฉบับสมบูรณ์ (FIXED: Payments sorted latest first)
+    JAVASCRIPT (Full Version with All Fixes)
     ============================================================ -->
     <script>
         // ============================================================
@@ -3280,6 +3550,7 @@
         let autoRefreshTimer = null;
         let refreshInProgress = false;
         let revenueModalChartInstance = null;
+        let allPaymentsTotal = 0;
 
         // ============================================================
         // CACHING HELPERS
@@ -3593,7 +3864,7 @@
         }
 
         // ============================================================
-        // API — 🔥 เพิ่ม ?t=timestamp อัตโนมัติ
+        // API
         // ============================================================
         async function apiCall(endpoint, options = {}, retries = 2) {
             let finalEndpoint = endpoint;
@@ -3655,7 +3926,7 @@
         }
 
         // ============================================================
-        // 🔥 UPDATE DASHBOARD CARDS
+        // UPDATE DASHBOARD CARDS
         // ============================================================
         function updateDashboardCards(summary) {
             if (!summary) return;
@@ -3670,7 +3941,7 @@
         }
 
         // ============================================================
-        // 🔥 FETCH MEMBERS WITH EXPIRY
+        // FETCH MEMBERS WITH EXPIRY
         // ============================================================
         async function fetchMembersWithExpiry() {
             if (lastData && lastData.members && lastData.members.length > 0) {
@@ -3699,7 +3970,7 @@
         }
 
         // ============================================================
-        // 🔥 DASHBOARD
+        // DASHBOARD
         // ============================================================
         async function refreshDashboard() {
             if (refreshInProgress) return;
@@ -3730,7 +4001,6 @@
 
                 const payments = data.payments || [];
                 allPayments = payments;
-                // 🔥 RENDER PAYMENTS SORTED LATEST FIRST
                 renderDashPaymentTable(payments);
                 $('dashPaymentBadge').textContent = payments.length + ' عملية';
                 const total = payments.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
@@ -3803,26 +4073,32 @@
             }).join('');
         }
 
-        // 🔥🔥🔥 RENDER DASHBOARD PAYMENTS — SORTED LATEST FIRST 🔥🔥🔥
+        // 🔥 SORTED LATEST FIRST — TODAY AT TOP
         function renderDashPaymentTable(payments) {
             const tbody = $('dashPaymentTableBody');
             if (!payments || !payments.length) {
                 tbody.innerHTML = '<tr><td colspan="6" class="empty-row">لا توجد بيانات</td></tr>';
                 return;
             }
-            // ✅ เรียงจากวันที่ล่าสุดก่อน (ใหม่สุดอยู่บน)
+            const today = getTodayStr();
             const sorted = [...payments].sort((a, b) => {
-                const da = new Date(normalizeDate(a.payment_date) || '1970-01-01').getTime();
-                const db = new Date(normalizeDate(b.payment_date) || '1970-01-01').getTime();
-                return db - da;
+                const da = normalizeDate(a.payment_date);
+                const db = normalizeDate(b.payment_date);
+                if (!da && !db) return 0;
+                if (!da) return 1;
+                if (!db) return -1;
+                return da < db ? 1 : -1;
             });
             tbody.innerHTML = sorted.slice(0, 15).map((p, i) => {
                 const member = allMembers.find(m => m.member_id === p.member_id);
                 const name = member ? member.full_name : '-';
-                return `<tr>
+                const isToday = normalizeDate(p.payment_date) === today;
+                const rowClass = isToday ? 'payment-today' : '';
+                const todayBadge = isToday ? '<span class="badge-today">اليوم</span>' : '';
+                return `<tr class="${rowClass}">
                             <td>${i+1}</td>
                             <td><strong>${p.member_id||'-'}</strong></td>
-                            <td class="hide-phone">${name}</td>
+                            <td class="hide-phone">${name} ${todayBadge}</td>
                             <td>${toEGP(p.amount)}</td>
                             <td>${formatDate(p.payment_date)}</td>
                             <td>${formatDate(p.expiry_date)}</td>
@@ -3940,10 +4216,16 @@
             ];
             downloadCSV(`daily_report_${today}.csv`, headers, rows);
             showToast('✅ تم تصدير تقرير اليوم CSV', 'success');
+
+            
         }
 
+
+
+
+        
         // ============================================================
-        // 🔥🔥🔥 SHOW STAT DETAIL 🔥🔥🔥
+        // SHOW STAT DETAIL (Full implementation)
         // ============================================================
         async function showStatDetail(type) {
             const todayStr = getTodayStr();
@@ -3970,52 +4252,128 @@
             const payments = (lastData && lastData.payments) ? lastData.payments : allPayments;
             const checkins = (lastData && lastData.checkins) ? lastData.checkins : allCheckins;
 
-            let freshData = null;
-            let freshCount = 0;
-
             try {
                 switch (type) {
-
-                    case 'members': {
-                        title = '👥 إجمالي الأعضاء';
-                        const allMembersFresh = await fetchMembersWithExpiry();
-                        freshCount = allMembersFresh.length;
-                        freshData = allMembersFresh;
-
+                    case 'todayCheckins': {
+                        title = '✅ دخول اليوم (TODAY)';
+                        const res = await apiCall('/checkin');
+                        const allCheckinsFresh = res.data || [];
+                        const todayCheckins = allCheckinsFresh.filter(c => normalizeDate(c.checkin_date) ===
+                        todayStr);
                         if (lastData) {
                             if (!lastData.summary) lastData.summary = {};
-                            lastData.summary.total_members = freshCount;
+                            lastData.summary.today_checkins = todayCheckins.length;
+                            lastData.checkins = todayCheckins.slice(0, 20);
+                            updateDashboardCards(lastData.summary);
+                        }
+                        $('statTodayCheckins').textContent = todayCheckins.length;
+                        if (!todayCheckins.length) { content = 'لا يوجد دخول اليوم'; } else {
+                            let table =
+                                `<div class="table-wrap"><table class="rank-table"><thead><tr><th>#</th><th>الرقم</th><th>الاسم</th><th>الوقت</th><th>اتصال</th></tr></thead><tbody>`;
+                            todayCheckins.slice(0, 50).forEach((c, i) => {
+                                const member = members.find(m => m.member_id === c.member_id);
+                                const name = member ? member.full_name : '-';
+                                const phone = member ? member.phone : '';
+                                const wa = formatPhoneForWhatsApp(phone);
+                                const waLink = wa ?
+                                    `https://wa.me/${wa}?text=${encodeURIComponent('👋 مرحباً ' + name + '! سعدنا برؤيتك في Pro Gym اليوم! 💪')}` :
+                                    '#';
+                                table += `<tr>
+                                            <td>${i+1}</td>
+                                            <td><strong>${c.member_id}</strong></td>
+                                            <td>${name}</td>
+                                            <td>${c.checkin_time||'-'}</td>
+                                            <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
+                                        </tr>`;
+                            });
+                            table += '</tbody></table></div>';
+                            content =
+                            `العدد: <strong>${todayCheckins.length}</strong> مرة<br><br>${table}`;
+                        }
+                        break;
+                    }
+                    case 'todayPayments': {
+                        title = '💳 مدفوعات اليوم (TODAY)';
+                        const res = await apiCall('/payments');
+                        const allPaymentsFresh = res.data || [];
+                        const todayPayers = allPaymentsFresh.filter(p => normalizeDate(p.payment_date) ===
+                        todayStr);
+                        if (lastData) {
+                            if (!lastData.summary) lastData.summary = {};
+                            lastData.summary.today_payments = todayPayers.length;
+                            const totalToday = todayPayers.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
+                            lastData.summary.this_month_revenue = totalToday;
+                            lastData.today_payers = todayPayers;
+                            updateDashboardCards(lastData.summary);
+                        }
+                        $('statTodayPayments').textContent = todayPayers.length;
+                        if (!todayPayers.length) { content = 'لا توجد مدفوعات اليوم'; } else {
+                            const totalToday = todayPayers.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
+                            let table =
+                                `<div class="table-wrap"><table class="rank-table">
+                                            <thead><tr><th>#</th><th>الرقم</th><th>الاسم</th><th>المبلغ</th><th>انتهاء الصلاحية</th><th>اتصال</th></tr></thead><tbody>`;
+                            todayPayers.slice(0, 50).forEach((p, i) => {
+                                const phone = p.phone || '';
+                                const wa = formatPhoneForWhatsApp(phone);
+                                const waLink = wa ?
+                                    `https://wa.me/${wa}?text=${encodeURIComponent('✅ شكراً للدفع ' + toEGP(p.amount) + ' ' + p.full_name + '! تم تجديد العضوية')}` :
+                                    '#';
+                                table += `<tr>
+                                            <td>${i+1}</td>
+                                            <td><strong>${p.member_id || '-'}</strong></td>
+                                            <td>${p.full_name || '-'}</td>
+                                            <td>${toEGP(p.amount || 0)}</td>
+                                            <td>${formatDate(p.expiry_date)}</td>
+                                            <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
+                                        </tr>`;
+                            });
+                            table += '</tbody></table></div>';
+                            content =
+                                `الإجمالي: <strong>${toEGP(totalToday)}</strong> (${todayPayers.length} عملية)<br><br>${table}`;
+                        }
+                        break;
+                    }
+                    case 'newMembers': {
+                        title = '➕ الأعضاء الجدد هذا الشهر';
+                        const thisMonth = todayStr.slice(0, 7);
+                        const allMembersFresh = await fetchMembersWithExpiry();
+                        const newMembers = allMembersFresh.filter(m => m.start_date && normalizeDate(m.start_date)
+                            .slice(0, 7) === thisMonth);
+                        if (lastData) {
+                            if (!lastData.summary) lastData.summary = {};
+                            lastData.summary.new_members_this_month = newMembers.length;
                             lastData.members = allMembersFresh;
                             updateDashboardCards(lastData.summary);
                         }
-                        $('statTotalMembers').textContent = freshCount;
-
-                        let table =
-                            `<div class="table-wrap"><table class="rank-table"><thead><tr><th>الرقم</th><th>الاسم</th><th>الهاتف</th><th>النوع</th><th>الحالة</th><th>انتهاء الصلاحية</th><th>اتصال</th></tr></thead><tbody>`;
-                        allMembersFresh.slice(0, 50).forEach(m => {
-                            const phone = m.phone || '';
-                            const wa = formatPhoneForWhatsApp(phone);
-                            const waLink = wa ?
-                                `https://wa.me/${wa}?text=${encodeURIComponent('👋 مرحباً ' + m.full_name + ' من Pro Gym')}` :
-                                '#';
-                            const statusMap = { 'active': '✅ نشط', 'expired': '🔴 منتهي',
-                                'expiring_soon': '🟡 ينتهي قريباً', 'no_payment': '⚪ غير مدفوع' };
-                            table += `<tr>
-                                        <td><strong>${m.member_id||'-'}</strong></td>
-                                        <td>${m.full_name||'-'}</td>
-                                        <td>${phone||'-'}</td>
-                                        <td>${m.membership_type||'-'}</td>
-                                        <td>${statusMap[m.status] || m.status || '-'}</td>
-                                        <td>${formatDate(m.expiry_date)}</td>
-                                        <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
-                                    </tr>`;
-                        });
-                        table += '</tbody></table></div>';
-                        content =
-                            `العدد: <strong>${allMembersFresh.length}</strong> عضو (عرض 50 فقط)<br><br>${table}`;
+                        $('statNewMembers').textContent = newMembers.length;
+                        if (!newMembers.length) { content = 'لا يوجد أعضاء جدد هذا الشهر'; } else {
+                            let table =
+                                `<div class="table-wrap"><table class="rank-table"><thead><tr><th>الاسم</th><th>الرقم</th><th>تاريخ التسجيل</th><th>النوع</th><th>الحالة</th><th>اتصال</th></tr></thead><tbody>`;
+                            newMembers.slice(0, 50).forEach(m => {
+                                const statusLabel = m.status === 'active' ? '✅ نشط' : m.status ===
+                                    'expired' ? '🔴 منتهي' : m.status === 'expiring_soon' ?
+                                    '🟡 ينتهي قريباً' : '⚪ غير مدفوع';
+                                const phone = m.phone || '';
+                                const wa = formatPhoneForWhatsApp(phone);
+                                const msg = encodeURIComponent(
+                                    `👋 مرحباً ${m.full_name}، مرحباً بك في Pro Gym! نحن سعداء بانضمامك إلينا! 💪`
+                                    );
+                                const waLink = wa ? `https://wa.me/${wa}?text=${msg}` : '#';
+                                table += `<tr>
+                                            <td><strong>${m.full_name}</strong></td>
+                                            <td>${m.member_id}</td>
+                                            <td>${formatDate(m.start_date)}</td>
+                                            <td>${m.membership_type||'-'}</td>
+                                            <td>${statusLabel}</td>
+                                            <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
+                                        </tr>`;
+                            });
+                            table += '</tbody></table></div>';
+                            content =
+                            `العدد: <strong>${newMembers.length}</strong> عضو<br><br>${table}`;
+                        }
                         break;
                     }
-
                     case 'expired': {
                         title = '🚫 الأعضاء منتهي الصلاحية';
                         const allMembersFresh = await fetchMembersWithExpiry();
@@ -4026,20 +4384,14 @@
                             const diff = (expDate - new Date()) / (1000 * 60 * 60 * 24);
                             return diff < 0 || diff === 0;
                         });
-                        freshCount = expiredMembers.length;
-                        freshData = expiredMembers;
-
                         if (lastData) {
                             if (!lastData.summary) lastData.summary = {};
-                            lastData.summary.expired_members = freshCount;
+                            lastData.summary.expired_members = expiredMembers.length;
                             lastData.members = allMembersFresh;
                             updateDashboardCards(lastData.summary);
                         }
-                        $('statExpired').textContent = freshCount;
-
-                        if (!expiredMembers.length) {
-                            content = '🎉 لا يوجد أعضاء منتهي الصلاحية';
-                        } else {
+                        $('statExpired').textContent = expiredMembers.length;
+                        if (!expiredMembers.length) { content = '🎉 لا يوجد أعضاء منتهي الصلاحية'; } else {
                             let table =
                                 `<div class="table-wrap"><table class="rank-table">
                                             <thead><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>تاريخ الانتهاء</th><th>مضى (يوم)</th><th>اتصال</th></tr></thead><tbody>`;
@@ -4068,7 +4420,6 @@
                         }
                         break;
                     }
-
                     case 'expiring': {
                         title = '⏳ الأعضاء على وشك الانتهاء (7 أيام)';
                         const allMembersFresh = await fetchMembersWithExpiry();
@@ -4105,142 +4456,6 @@
                         }
                         break;
                     }
-
-                    case 'todayCheckins': {
-                        title = '✅ دخول اليوم';
-                        const res = await apiCall('/checkin');
-                        const allCheckinsFresh = res.data || [];
-                        const todayCheckins = allCheckinsFresh.filter(c => normalizeDate(c.checkin_date) ===
-                        todayStr);
-                        freshCount = todayCheckins.length;
-                        freshData = todayCheckins;
-
-                        if (lastData) {
-                            if (!lastData.summary) lastData.summary = {};
-                            lastData.summary.today_checkins = freshCount;
-                            lastData.checkins = todayCheckins.slice(0, 20);
-                            updateDashboardCards(lastData.summary);
-                        }
-                        $('statTodayCheckins').textContent = freshCount;
-
-                        if (!todayCheckins.length) { content = 'لا يوجد دخول اليوم'; } else {
-                            let table =
-                                `<div class="table-wrap"><table class="rank-table"><thead><tr><th>#</th><th>الرقم</th><th>الاسم</th><th>الوقت</th><th>اتصال</th></tr></thead><tbody>`;
-                            todayCheckins.slice(0, 50).forEach((c, i) => {
-                                const member = members.find(m => m.member_id === c.member_id);
-                                const name = member ? member.full_name : '-';
-                                const phone = member ? member.phone : '';
-                                const wa = formatPhoneForWhatsApp(phone);
-                                const waLink = wa ?
-                                    `https://wa.me/${wa}?text=${encodeURIComponent('👋 مرحباً ' + name + '! سعدنا برؤيتك في Pro Gym اليوم! 💪')}` :
-                                    '#';
-                                table += `<tr>
-                                            <td>${i+1}</td>
-                                            <td><strong>${c.member_id}</strong></td>
-                                            <td>${name}</td>
-                                            <td>${c.checkin_time||'-'}</td>
-                                            <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
-                                        </tr>`;
-                            });
-                            table += '</tbody></table></div>';
-                            content =
-                            `العدد: <strong>${todayCheckins.length}</strong> مرة<br><br>${table}`;
-                        }
-                        break;
-                    }
-
-                    case 'todayPayments': {
-                        title = '💳 مدفوعات اليوم';
-                        const res = await apiCall('/payments');
-                        const allPaymentsFresh = res.data || [];
-                        const todayPayers = allPaymentsFresh.filter(p => normalizeDate(p.payment_date) ===
-                        todayStr);
-                        freshCount = todayPayers.length;
-                        freshData = todayPayers;
-
-                        if (lastData) {
-                            if (!lastData.summary) lastData.summary = {};
-                            lastData.summary.today_payments = freshCount;
-                            const totalToday = todayPayers.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
-                            lastData.summary.this_month_revenue = totalToday;
-                            lastData.today_payers = todayPayers;
-                            updateDashboardCards(lastData.summary);
-                        }
-                        $('statTodayPayments').textContent = freshCount;
-
-                        if (!todayPayers.length) { content = 'لا توجد مدفوعات اليوم'; } else {
-                            const totalToday = todayPayers.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
-                            let table =
-                                `<div class="table-wrap"><table class="rank-table">
-                                            <thead><tr><th>#</th><th>الرقم</th><th>الاسم</th><th>المبلغ</th><th>انتهاء الصلاحية</th><th>اتصال</th></tr></thead><tbody>`;
-                            todayPayers.slice(0, 50).forEach((p, i) => {
-                                const phone = p.phone || '';
-                                const wa = formatPhoneForWhatsApp(phone);
-                                const waLink = wa ?
-                                    `https://wa.me/${wa}?text=${encodeURIComponent('✅ شكراً للدفع ' + toEGP(p.amount) + ' ' + p.full_name + '! تم تجديد العضوية')}` :
-                                    '#';
-                                table += `<tr>
-                                            <td>${i+1}</td>
-                                            <td><strong>${p.member_id || '-'}</strong></td>
-                                            <td>${p.full_name || '-'}</td>
-                                            <td>${toEGP(p.amount || 0)}</td>
-                                            <td>${formatDate(p.expiry_date)}</td>
-                                            <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
-                                        </tr>`;
-                            });
-                            table += '</tbody></table></div>';
-                            content =
-                                `الإجمالي: <strong>${toEGP(totalToday)}</strong> (${todayPayers.length} عملية)<br><br>${table}`;
-                        }
-                        break;
-                    }
-
-                    case 'newMembers': {
-                        title = '➕ الأعضاء الجدد هذا الشهر';
-                        const thisMonth = todayStr.slice(0, 7);
-                        const allMembersFresh = await fetchMembersWithExpiry();
-                        const newMembers = allMembersFresh.filter(m => m.start_date && normalizeDate(m.start_date)
-                            .slice(0, 7) === thisMonth);
-                        freshCount = newMembers.length;
-                        freshData = newMembers;
-
-                        if (lastData) {
-                            if (!lastData.summary) lastData.summary = {};
-                            lastData.summary.new_members_this_month = freshCount;
-                            lastData.members = allMembersFresh;
-                            updateDashboardCards(lastData.summary);
-                        }
-                        $('statNewMembers').textContent = freshCount;
-
-                        if (!newMembers.length) { content = 'لا يوجد أعضاء جدد هذا الشهر'; } else {
-                            let table =
-                                `<div class="table-wrap"><table class="rank-table"><thead><tr><th>الاسم</th><th>الرقم</th><th>تاريخ التسجيل</th><th>النوع</th><th>الحالة</th><th>اتصال</th></tr></thead><tbody>`;
-                            newMembers.slice(0, 50).forEach(m => {
-                                const statusLabel = m.status === 'active' ? '✅ نشط' : m.status ===
-                                    'expired' ? '🔴 منتهي' : m.status === 'expiring_soon' ?
-                                    '🟡 ينتهي قريباً' : '⚪ غير مدفوع';
-                                const phone = m.phone || '';
-                                const wa = formatPhoneForWhatsApp(phone);
-                                const msg = encodeURIComponent(
-                                    `👋 مرحباً ${m.full_name}، مرحباً بك في Pro Gym! نحن سعداء بانضمامك إلينا! 💪`
-                                    );
-                                const waLink = wa ? `https://wa.me/${wa}?text=${msg}` : '#';
-                                table += `<tr>
-                                            <td><strong>${m.full_name}</strong></td>
-                                            <td>${m.member_id}</td>
-                                            <td>${formatDate(m.start_date)}</td>
-                                            <td>${m.membership_type||'-'}</td>
-                                            <td>${statusLabel}</td>
-                                            <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
-                                        </tr>`;
-                            });
-                            table += '</tbody></table></div>';
-                            content =
-                            `العدد: <strong>${newMembers.length}</strong> عضو<br><br>${table}`;
-                        }
-                        break;
-                    }
-
                     case 'renewal': {
                         title = '🔄 معدل التجديد';
                         const allMembersFresh = await fetchMembersWithExpiry();
@@ -4277,7 +4492,41 @@
                                 `;
                         break;
                     }
-
+                    case 'members': {
+                        title = '👥 إجمالي الأعضاء';
+                        const allMembersFresh = await fetchMembersWithExpiry();
+                        if (lastData) {
+                            if (!lastData.summary) lastData.summary = {};
+                            lastData.summary.total_members = allMembersFresh.length;
+                            lastData.members = allMembersFresh;
+                            updateDashboardCards(lastData.summary);
+                        }
+                        $('statTotalMembers').textContent = allMembersFresh.length;
+                        let table =
+                            `<div class="table-wrap"><table class="rank-table"><thead><tr><th>الرقم</th><th>الاسم</th><th>الهاتف</th><th>النوع</th><th>الحالة</th><th>انتهاء الصلاحية</th><th>اتصال</th></tr></thead><tbody>`;
+                        allMembersFresh.slice(0, 50).forEach(m => {
+                            const phone = m.phone || '';
+                            const wa = formatPhoneForWhatsApp(phone);
+                            const waLink = wa ?
+                                `https://wa.me/${wa}?text=${encodeURIComponent('👋 مرحباً ' + m.full_name + ' من Pro Gym')}` :
+                                '#';
+                            const statusMap = { 'active': '✅ نشط', 'expired': '🔴 منتهي',
+                                'expiring_soon': '🟡 ينتهي قريباً', 'no_payment': '⚪ غير مدفوع' };
+                            table += `<tr>
+                                        <td><strong>${m.member_id||'-'}</strong></td>
+                                        <td>${m.full_name||'-'}</td>
+                                        <td>${phone||'-'}</td>
+                                        <td>${m.membership_type||'-'}</td>
+                                        <td>${statusMap[m.status] || m.status || '-'}</td>
+                                        <td>${formatDate(m.expiry_date)}</td>
+                                        <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
+                                    </tr>`;
+                        });
+                        table += '</tbody></table></div>';
+                        content =
+                            `العدد: <strong>${allMembersFresh.length}</strong> عضو (عرض 50 فقط)<br><br>${table}`;
+                        break;
+                    }
                     case 'revenue': {
                         title = '💰 الإيرادات (آخر 3 أشهر)';
                         const res = await apiCall('/payments');
@@ -4297,17 +4546,61 @@
                             return d.toLocaleDateString('ar-EG', { month: 'short',
                             year: 'numeric' });
                         });
-
                         if (lastData) {
                             if (!lastData.summary) lastData.summary = {};
                             lastData.summary.this_month_revenue = lastValues[lastValues.length - 1] || 0;
                             updateDashboardCards(lastData.summary);
                         }
-
                         if (lastMonths.length === 0) {
                             content =
                                 `<div style="text-align:center;padding:20px 0;"><div style="font-size:48px;color:var(--text-muted);margin-bottom:12px;">📊</div><h4 style="color:var(--text-muted);">لا توجد بيانات للإيرادات</h4><p style="color:var(--text-muted);font-size:13px;margin-top:8px;">ابدأ بتسجيل المدفوعات لعرض الرسم البياني</p></div>`;
                         } else {
+                            let analysisHtml = '';
+                            if (lastValues.length >= 2) {
+                                const current = lastValues[lastValues.length - 1];
+                                const previous = lastValues[lastValues.length - 2];
+                                const diff = current - previous;
+                                let badgeClass = 'flat',
+                                    badgeIcon = '➖',
+                                    badgeText = 'ثابت';
+                                let diffText = '';
+                                if (diff > 0) {
+                                    badgeClass = 'up';
+                                    badgeIcon = '📈';
+                                    badgeText = 'زيادة';
+                                    const pct = previous > 0 ? (diff / previous) * 100 : 100;
+                                    diffText =
+                                        `زيادة ${pct.toFixed(1)}% (${toEGP(diff)}) مقارنة بالشهر السابق`;
+                                } else if (diff < 0) {
+                                    badgeClass = 'down';
+                                    badgeIcon = '📉';
+                                    badgeText = 'انخفاض';
+                                    const pct = previous > 0 ? (Math.abs(diff) / previous) * 100 : 100;
+                                    diffText =
+                                        `انخفاض ${pct.toFixed(1)}% (${toEGP(Math.abs(diff))}) مقارنة بالشهر السابق`;
+                                } else {
+                                    diffText = 'لا يوجد تغيير مقارنة بالشهر السابق';
+                                }
+                                analysisHtml = `
+                                            <div class="revenue-analysis">
+                                                <div>
+                                                    <span class="analysis-badge ${badgeClass}">
+                                                        ${badgeIcon} ${badgeText}
+                                                    </span>
+                                                    <span class="analysis-detail">${diffText}</span>
+                                                </div>
+                                                <div class="analysis-detail">
+                                                    <strong>${lastLabels[lastLabels.length-1] || 'هذا الشهر'}</strong>
+                                                    : ${toEGP(current)} |
+                                                    <strong>${lastLabels[lastLabels.length-2] || 'الشهر الماضي'}</strong>
+                                                    : ${toEGP(previous)}
+                                                </div>
+                                            </div>
+                                        `;
+                            } else {
+                                analysisHtml = `<div class="revenue-analysis">📊 لا توجد بيانات كافية للمقارنة</div>`;
+                            }
+
                             let chartHtml =
                                 `<div style="height:200px;margin-top:12px;"><canvas id="revenueModalChart"></canvas></div>`;
                             let tableHtml =
@@ -4326,6 +4619,7 @@
                                             </div>
                                         </div>`;
                             content = `
+                                        ${analysisHtml}
                                         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
                                             <div style="background:var(--bg-body);border-radius:8px;padding:12px;border:1px solid rgba(0,0,0,0.04);text-align:center;">
                                                 <div style="font-size:11px;color:var(--text-muted);">إجمالي ${lastLabels[lastLabels.length-1] || 'هذا الشهر'}</div>
@@ -4377,7 +4671,6 @@
                         }
                         break;
                     }
-
                     default:
                         content = 'لا توجد بيانات';
                 }
@@ -4385,7 +4678,6 @@
                 console.error('Modal Error:', e);
                 content = '❌ فشل تحميل البيانات: ' + e.message;
             }
-
             openModal(title, content);
         }
 
@@ -4417,7 +4709,67 @@
         }
 
         // ============================================================
-        // MEMBERS (Admin)
+        // FETCH PAYMENTS (SORTED LATEST FIRST — TODAY AT TOP)
+        // ============================================================
+        async function fetchPayments() {
+            try {
+                const data = await apiCall('/payments?limit=300', {
+                    headers: {
+                        'Cache-Control': 'no-cache, no-store, must-revalidate'
+                    }
+                });
+                allPayments = data.data || [];
+                allPaymentsTotal = data.total || allPayments.length;
+
+                $('paymentCountBadge').textContent = allPaymentsTotal;
+
+                const tbody = $('paymentsTableBody');
+                if (!allPayments.length) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="empty-row">لا توجد بيانات</td></tr>';
+                    return;
+                }
+
+                // 🔥 SORT: TODAY at top, then descending date
+                const today = getTodayStr();
+                const sorted = [...allPayments].sort((a, b) => {
+                    const da = normalizeDate(a.payment_date);
+                    const db = normalizeDate(b.payment_date);
+                    // TODAY first
+                    const aToday = da === today ? 1 : 0;
+                    const bToday = db === today ? 1 : 0;
+                    if (aToday !== bToday) return bToday - aToday;
+                    // Then descending date
+                    if (!da && !db) return 0;
+                    if (!da) return 1;
+                    if (!db) return -1;
+                    return da < db ? 1 : -1;
+                });
+
+                tbody.innerHTML = sorted.slice(0, 100).map((p, i) => {
+                    const member = allMembers.find(m => m.member_id === p.member_id);
+                    const name = member ? member.full_name : '-';
+                    const isToday = normalizeDate(p.payment_date) === today;
+                    const rowClass = isToday ? 'payment-today' : '';
+                    const todayBadge = isToday ? '<span class="badge-today">اليوم</span>' : '';
+                    return `<tr class="${rowClass}">
+                                <td>${i+1}</td>
+                                <td><strong>${p.member_id||'-'}</strong></td>
+                                <td>${name} ${todayBadge}</td>
+                                <td>${toEGP(p.amount)}</td>
+                                <td>${formatDate(p.payment_date)}</td>
+                                <td>${formatDate(p.expiry_date)}</td>
+                            </tr>`;
+                }).join('');
+
+                showToast(`✅ تم تحميل ${allPayments.length} عملية من أصل ${allPaymentsTotal}`, 'success');
+
+            } catch (e) {
+                showToast('❌ فشل تحميل المدفوعات: ' + e.message, 'error');
+            }
+        }
+
+        // ============================================================
+        // MEMBERS, CHECKIN, PAYMENTS (Admin)
         // ============================================================
         async function fetchMembers() {
             try {
@@ -4603,41 +4955,8 @@
         }
 
         // ============================================================
-        // 🔥🔥🔥 PAYMENTS (Admin) — SORTED LATEST FIRST 🔥🔥🔥
+        // PAYMENTS (Admin)
         // ============================================================
-        async function fetchPayments() {
-            try {
-                const data = await apiCall('/payments');
-                allPayments = data.data || [];
-                $('paymentCountBadge').textContent = allPayments.length;
-                const tbody = $('paymentsTableBody');
-                if (!allPayments.length) {
-                    tbody.innerHTML = '<tr><td colspan="6" class="empty-row">لا توجد بيانات</td></tr>';
-                    return;
-                }
-                // ✅ เรียงจากวันที่ล่าสุดก่อน (ใหม่สุดอยู่บน)
-                const sorted = [...allPayments].sort((a, b) => {
-                    const da = new Date(normalizeDate(a.payment_date) || '1970-01-01').getTime();
-                    const db = new Date(normalizeDate(b.payment_date) || '1970-01-01').getTime();
-                    return db - da;
-                });
-                tbody.innerHTML = sorted.slice(0, 100).map((p, i) => {
-                    const member = allMembers.find(m => m.member_id === p.member_id);
-                    const name = member ? member.full_name : '-';
-                    return `<tr>
-                                <td>${i+1}</td>
-                                <td><strong>${p.member_id||'-'}</strong></td>
-                                <td>${name}</td>
-                                <td>${toEGP(p.amount)}</td>
-                                <td>${formatDate(p.payment_date)}</td>
-                                <td>${formatDate(p.expiry_date)}</td>
-                            </tr>`;
-                }).join('');
-            } catch (e) {
-                showToast('❌ فشل تحميل المدفوعات: ' + e.message, 'error');
-            }
-        }
-
         async function addPayment() {
             const id = $('pMember').value.trim();
             const amount = parseFloat($('pAmount').value);
@@ -4906,9 +5225,6 @@
             loadTop8();
         }
 
-        // ============================================================
-        // MEMBER DASHBOARD STATS
-        // ============================================================
         function updateMemberDashboard() {
             if (!profileMember) return;
             const m = profileMember;
@@ -4979,9 +5295,6 @@
             $('mStatDaysLeft').textContent = daysLeft;
         }
 
-        // ============================================================
-        // SHOW CARD DETAIL (Member)
-        // ============================================================
         function showCardDetail(type) {
             let title = 'تفاصيل';
             let content = '';
@@ -5071,12 +5384,11 @@
                     content = '📊 تفاصيل إضافية';
                 }
             }
-
             openModal(title, content);
         }
 
         // ============================================================
-        // TOP 8, STATUS, QR, PDF, GOAL, CALENDAR, WEIGHT (unchanged)
+        // TOP 8, STATUS, QR, PDF, GOAL, CALENDAR, WEIGHT
         // ============================================================
         function loadTop8() {
             const container = $('top8Container');
@@ -5271,7 +5583,7 @@
         }
 
         // ============================================================
-        // GOAL, CALENDAR, WEIGHT (unchanged)
+        // GOAL, CALENDAR, WEIGHT
         // ============================================================
         function loadGoalProgress() {
             const stored = localStorage.getItem('goal_' + profileMemberId);
@@ -5480,7 +5792,7 @@
         }
 
         // ============================================================
-        // WHATSAPP, QR, CSV HELPERS (unchanged)
+        // WHATSAPP, QR, CSV HELPERS
         // ============================================================
         function sendWhatsAppMember(member) {
             if (!member) { showToast('⚠️ لا توجد بيانات العضو', 'error'); return; }
@@ -5586,7 +5898,7 @@
         }
 
         // ============================================================
-        // REGISTER MODALS (unchanged)
+        // REGISTER MODALS
         // ============================================================
         async function openRegisterMember() {
             const modal = document.getElementById('registerMemberModal');
@@ -5763,7 +6075,7 @@
                 }, 2000);
             } catch (e) {
                 resultDiv.innerHTML =
-                    `<span style="color:var(--danger);"><i class="fas fa-times-circle"></i> ${e.message}</span>`;
+                    `<span style="color:var(--danger);"><i class="fas fa-times-circle"></i} ${e.message}</span>`;
                 resultDiv.style.background = 'rgba(239,68,68,0.06)';
                 showToast('❌ ' + e.message, 'error');
             }
@@ -6036,7 +6348,7 @@
         // INIT
         // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🏋️ Pro Gym System Loaded (Fixed: Payments sorted latest first)');
+            console.log('🏋️ Pro Gym System Loaded (Enhanced - Daily Compact + Today Payments Top)');
             initTheme();
 
             window.addEventListener('online', () => {
@@ -6082,7 +6394,7 @@
             console.log('🔑 كود إعادة تعيين المشرف: adminreset-2026');
             console.log('👤 المشرف: admin / admin123');
             console.log('⌨️ Ctrl+R = تحديث, ESC = إغلاق النافذة');
-            console.log('✅ تم إصلاح ترتيب المدفوعات: أحدث الدفعات في الأعلى');
+            console.log('✅ تحسينات: تقرير اليوم مضغوط, المدفوعات اليوم في الأعلى, تحليل الإيرادات مع مقارنة الربح/الخسارة');
         });
     </script>
 </body>
