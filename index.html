@@ -1118,25 +1118,22 @@
     opacity: 1;
 }
 
-   QR CODE — กรอบหนาขึ้น เห็นชัด (Desktop)
-   ============================================================ */
-
+/* ✅ QR CODE — กรอบพอดีกับ QR ไม่เกิน */
 .member-card-preview .mc-body .mc-qr {
     flex-shrink: 0;
     background: #ffffff;
-    padding: 6px;  /* ✅ เพิ่มจาก 5px เป็น 6px */
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    padding: 4px;  /* ระยะห่างระหว่างกรอบกับ QR */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 72px;  /* ✅ เพิ่มจาก 68px เป็น 72px */
-    height: 72px;
+    width: 68px;   /* ✅ กำหนดขนาดกรอบพอดี */
+    height: 68px;
     transform: none !important;
     transition: none !important;
-    border: 2px solid rgba(255, 255, 255, 0.12);  /* ✅ เพิ่มขอบขาวบาง ๆ */
 }
 
 .member-card-preview .mc-body .mc-qr:hover {
@@ -1145,11 +1142,30 @@
 
 .member-card-preview .mc-body .mc-qr canvas {
     display: block;
-    width: 60px !important;  /* ✅ เพิ่มจาก 58px เป็น 60px */
-    height: 60px !important;
+    width: 56px !important;  /* ✅ QR ใหญ่ขึ้น */
+    height: 56px !important;
     border-radius: 4px;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
+}
+
+/* FOOTER */
+.member-card-preview .mc-footer {
+    margin-top: 2px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    justify-content: space-between;
+    font-size: 8px;
+    opacity: 0.6;
+    position: relative;
+    z-index: 1;
+}
+
+.member-card-preview .mc-footer .expiry {
+    color: #fca5a5;
+    font-weight: 600;
+    opacity: 1;
 }
 
 /* ============================================================
@@ -1162,25 +1178,23 @@
     align-items: center;
     justify-content: center;
     background: #ffffff;
-    padding: 6px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-    width: 72px;
-    height: 72px;
+    padding: 4px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    width: 64px;
+    height: 64px;
     transform: none !important;
     transition: none !important;
-    border: 2px solid rgba(255, 255, 255, 0.12);
 }
 
 #profileQrBox canvas {
     display: block;
-    width: 60px !important;
-    height: 60px !important;
+    width: 56px !important;
+    height: 56px !important;
     border-radius: 4px;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
 }
-
 
 /* ============================================================
    RESPONSIVE — มือถือ (ปรับให้พอดี)
