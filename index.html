@@ -2123,54 +2123,81 @@
             border: 1px solid rgba(239, 68, 68, 0.15);
         }
 
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            .member-card-preview,
-            .member-card-preview * {
-                visibility: visible;
-            }
-            .member-card-preview {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                max-width: 100%;
-                width: 400px;
-                box-shadow: none !important;
-                border: 1px solid #ccc;
-                border-radius: 8px;
-                page-break-inside: avoid;
-                background: linear-gradient(145deg, #0f172a, #1e293b) !important;
-                color: #fff !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-            .member-card-preview .mc-header .mc-badge,
-            .member-card-preview .mc-header .mc-brand i {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-            .member-card-preview .mc-body .mc-qr {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-            .member-card-preview .mc-body .mc-qr canvas {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-            .member-card-preview::before,
-            .member-card-preview::after {
-                display: none !important;
-            }
-            .no-print {
-                display: none !important;
-            }
-            .card-actions-row {
-                display: none !important;
-            }
-        }
+/* ============================================================
+   PRINT — พิมพ์เฉพาะบัตร ขนาด 340px พอดี
+   ============================================================ */
+
+@media print {
+    /* ซ่อนทุกอย่างที่ไม่ใช่บัตร */
+    body * {
+        visibility: hidden !important;
+    }
+    
+    /* แสดงเฉพาะบัตร */
+    .member-card-preview,
+    .member-card-preview * {
+        visibility: visible !important;
+    }
+    
+    /* บัตรขนาด 340px พอดี ไม่มีขอบเว้น */
+    .member-card-preview {
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 340px !important;
+        max-width: 340px !important;
+        min-height: 170px !important;
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+        border-radius: 12px !important;
+        page-break-inside: avoid !important;
+        background: linear-gradient(145deg, #0f172a, #1e293b) !important;
+        color: #fff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        margin: 0 !important;
+        padding: 16px 20px !important;
+    }
+    
+    /* การ์ดภายในบัตร */
+    .member-card-preview .mc-header .mc-badge,
+    .member-card-preview .mc-header .mc-brand i {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    .member-card-preview .mc-body .mc-qr {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        background: #ffffff !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+    }
+    
+    .member-card-preview .mc-body .mc-qr canvas {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    .member-card-preview::before,
+    .member-card-preview::after {
+        display: none !important;
+    }
+    
+    /* ซ่อนปุ่มทั้งหมด */
+    .no-print,
+    .card-actions-row,
+    .btn,
+    button {
+        display: none !important;
+    }
+    
+    /* ปรับ QR ให้ชัด */
+    .member-card-preview .mc-body .mc-qr canvas {
+        image-rendering: pixelated !important;
+        image-rendering: crisp-edges !important;
+    }
+}
 
         /* ============================================================
            COMPACT DAILY REPORT ON MOBILE
