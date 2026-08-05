@@ -2950,7 +2950,76 @@
         max-width: 60px;
     }
 }
-    
+ 
+/* ============================================================
+   DAILY DETAIL TABLE — คอลัมน์ الفئة แคบที่สุด
+   ============================================================ */
+.daily-detail-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+/* คอลัมน์ الفئة — แคบที่สุด */
+.daily-detail-table th:first-child,
+.daily-detail-table td:first-child {
+    width: 7%;
+    white-space: nowrap;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+/* คอลัมน์ العدد — กว้างพอประมาณ */
+.daily-detail-table th:nth-child(2),
+.daily-detail-table td:nth-child(2) {
+    width: 12%;
+    text-align: center;
+}
+
+/* คอลัมน์ الأسماء — กว้างที่เหลือ พร้อมตัดข้อความ */
+.daily-detail-table th:last-child,
+.daily-detail-table td:last-child {
+    width: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* สำหรับมือถือ ปรับให้เหมาะสม */
+@media (max-width: 768px) {
+    .daily-detail-table th:first-child,
+    .daily-detail-table td:first-child {
+        width: 18%;
+        font-size: 10px;
+    }
+    .daily-detail-table th:nth-child(2),
+    .daily-detail-table td:nth-child(2) {
+        width: 10%;
+    }
+    .daily-detail-table th:last-child,
+    .daily-detail-table td:last-child {
+        font-size: 10px;
+        max-width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .daily-detail-table th:first-child,
+    .daily-detail-table td:first-child {
+        width: 22%;
+        font-size: 9px;
+        padding: 2px 4px;
+    }
+    .daily-detail-table th:nth-child(2),
+    .daily-detail-table td:nth-child(2) {
+        width: 8%;
+        font-size: 9px;
+    }
+    .daily-detail-table th:last-child,
+    .daily-detail-table td:last-child {
+        font-size: 9px;
+        max-width: 70px;
+    }
+}
     
     </style>
 </head>
