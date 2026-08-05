@@ -3704,58 +3704,15 @@
         </div>
 
         <!-- PAGE: PROFILE (Member Dashboard) -->
-        <!-- ============================================================
-PAGE: PROFILE — New Minimal Header
-============================================================ -->
-<div id="page-profile" class="page-section">
-    
-    <!-- ✅ PROFILE HEADER (ใหม่) -->
-    <div class="profile-header" id="profileHeader">
-        <!-- Avatar -->
-        <div class="profile-avatar" id="profileAvatar">
-            <i class="fas fa-user"></i>
-        </div>
-        
-        <!-- User Info -->
-        <div class="profile-user-info">
-            <div class="profile-name-row">
-                <span class="profile-name" id="profileName">-</span>
-                <span class="profile-rank-badge" id="profileRankBadge">
-                    <span class="rank-icon">🌟</span>
-                    <span id="profileRankText">เริ่มต้น</span>
-                </span>
+        <div id="page-profile" class="page-section">
+            <div class="member-stats-grid" id="memberStatsGrid">
+                <div class="stat-card-click" onclick="showCardDetail('member_revenue')"><div class="stat-top"><div class="stat-icon blue"><i class="fas fa-credit-card"></i></div></div><div class="num" id="mStatRevenue">-</div><div class="label">مدفوعات هذا الشهر</div></div>
+                <div class="stat-card-click" onclick="showCardDetail('member_xp')"><div class="stat-top"><div class="stat-icon green"><i class="fas fa-star"></i></div></div><div class="num" id="mStatXp">-</div><div class="label">نقاط الاجتهاد (XP)</div></div>
+                <div class="stat-card-click" onclick="showCardDetail('member_peak')"><div class="stat-top"><div class="stat-icon amber"><i class="fas fa-clock"></i></div></div><div class="num" id="mStatPeak">-</div><div class="label">أكثر وقت دخول</div></div>
+                <div class="stat-card-click" onclick="showCardDetail('member_rank')"><div class="stat-top"><div class="stat-icon purple"><i class="fas fa-trophy"></i></div></div><div class="num" id="mStatRank">-</div><div class="label">اللقب الشهري</div></div>
+                <div class="stat-card-click" onclick="showCardDetail('member_percent')"><div class="stat-top"><div class="stat-icon indigo"><i class="fas fa-percent"></i></div></div><div class="num" id="mStatPercent">-</div><div class="label">دخول اليوم</div></div>
+                <div class="stat-card-click" onclick="showCardDetail('member_daysleft')"><div class="stat-top"><div class="stat-icon red"><i class="fas fa-hourglass-half"></i></div></div><div class="num" id="mStatDaysLeft">-</div><div class="label">أيام متبقية للتجديد</div></div>
             </div>
-            
-            <div class="profile-details">
-                <span class="detail-item"><i class="fas fa-id-badge"></i> <strong id="profileId">-</strong></span>
-                <span class="detail-item"><i class="fas fa-phone"></i> <span id="profilePhone">-</span></span>
-                <span class="detail-item"><i class="fas fa-tag"></i> <span id="profileType">-</span></span>
-                <span class="detail-item"><i class="fas fa-coins"></i> แต้ม: <strong id="profilePoints">0</strong></span>
-                <span class="detail-item"><i class="fas fa-star"></i> XP: <strong id="profileXp">0</strong></span>
-            </div>
-            
-            <div class="profile-status" id="profileExpiryStatus">
-                <span class="status-dot active"></span>
-                <span>กำลังใช้งาน</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Member Stats Cards -->
-    <div class="member-stats-grid" id="memberStatsGrid">
-        <!-- ... ส่วนนี้คงเดิม ... -->
-    </div>
-
-    <!-- Status Banner (คงเดิม) -->
-    <div id="memberStatusBanner"></div>
-
-    <!-- Member Card (คงเดิม) -->
-    <div class="card-panel relative" id="profileCard">
-        <!-- ... -->
-    </div>
-
-    <!-- ส่วนอื่นๆ คงเดิม -->
-</div>
             <div id="memberStatusBanner"></div>
             <div class="card-panel relative" id="profileCard">
                 <div class="expired-overlay" id="profileExpiredOverlay"><i class="fas fa-lock"></i><h3>العضوية منتهية الصلاحية</h3><p>يرجى الاتصال بالمسؤول</p></div>
@@ -5730,81 +5687,82 @@ case 'expired': {
             }
         }
 
-        function renderProfileData() {
-            const m = profileMember;
-            hasPaymentHistory = profilePayments.length > 0;
-            let expiryDate = null;
-            profileExpiryStr = '-';
-            let isExpired = false;
-            if (profilePayments.length > 0) {
-                const sorted = [...profilePayments].sort((a, b) => {
-                    const da = normalizeDate(a.expiry_date || a['تاريخ انتهاء الصلاحية']);
-                    const db = normalizeDate(b.expiry_date || b['تاريخ انتهاء الصلاحية']);
-                    if (!da && !db) return 0;
-                    if (!da) return 1;
-                    if (!db) return -1;
-                    return da.localeCompare(db);
-                });
-                const latest = sorted[sorted.length - 1];
-                profileExpiryStr = latest.expiry_date || latest['تاريخ انتهاء الصلاحية'] || '-';
-                if (profileExpiryStr && profileExpiryStr !== '-') {
-                    expiryDate = new Date(normalizeDate(profileExpiryStr));
-                    isExpired = expiryDate <= new Date();
-                }
-            }
-            isMemberExpired = isExpired;
+function renderProfileData() {
+    const m = profileMember;
+    
+    // ... existing code ...
+    
+    // ✅ ตั้งค่า Profile Header
+    $('profileName').textContent = m.full_name || '-';
+    $('profileId').textContent = m.member_id || 'G-XXXX';
+    $('profilePhone').textContent = m.phone || '-';
+    $('profileType').textContent = m.membership_type || '-';
+    
+    const points = getPoints(m.member_id);
+    const xp = updateMemberXp(m.member_id, allCheckins);
+    
+    $('profilePoints').textContent = points;
+    $('profileXp').textContent = xp;
+    
+    // ✅ ตั้งค่าฉายา + Badge
+    const rank = getMemberRank(m.member_id);
+    const rankIcon = rank.icon || '🌟';
+    const rankName = rank.name || 'เริ่มต้น';
+    const rankClass = rank.class || 'beginner';
+    
+    const rankBadge = $('profileRankBadge');
+    rankBadge.className = `profile-rank-badge ${rankClass}`;
+    rankBadge.innerHTML = `<span class="rank-icon">${rankIcon}</span> <span id="profileRankText">${rankName}</span>`;
+    
+    // ✅ สถานะหมดอายุ
+    const expiryDisplay = profileExpiryStr && profileExpiryStr !== '-' ? formatDate(profileExpiryStr) : 'ยังไม่ชำระ';
+    const statusEl = $('profileExpiryStatus');
+    const dot = statusEl.querySelector('.status-dot');
+    
+    if (isExpired) {
+        dot.className = 'status-dot expired';
+        statusEl.innerHTML = `<span class="status-dot expired"></span> หมดอายุแล้ว (${expiryDisplay})`;
+        statusEl.style.color = 'var(--danger)';
+    } else if (hasPaymentHistory) {
+        dot.className = 'status-dot active';
+        statusEl.innerHTML = `<span class="status-dot active"></span> กำลังใช้งาน (หมดอายุ ${expiryDisplay})`;
+        statusEl.style.color = 'var(--success)';
+    } else {
+        dot.className = 'status-dot warning';
+        statusEl.innerHTML = `<span class="status-dot warning"></span> ยังไม่มีประวัติการชำระ`;
+        statusEl.style.color = 'var(--warning)';
+    }
+    
+    // ... rest of code ...
+}
 
-            renderMemberStatus(m, isExpired, hasPaymentHistory, profileExpiryStr);
-            $('profileName').textContent = m.full_name || '-';
-            $('profileId').textContent = 'الرقم: ' + (m.member_id || '-');
-            $('profilePhone').innerHTML = '<i class="fas fa-phone"></i> ' + (m.phone || '-');
-            $('profileType').innerHTML = '<i class="fas fa-tag"></i> ' + (m.membership_type || '-');
-
-            const points = getPoints(m.member_id);
-            const xp = updateMemberXp(m.member_id, allCheckins);
-
-            $('profilePoints').innerHTML = '<i class="fas fa-coins"></i> النقاط: ' + points;
-            $('profileXp').innerHTML = '<i class="fas fa-star"></i> XP: ' + xp;
-            $('profileRank').innerHTML = '<i class="fas fa-medal"></i> المستوى: ' + (m.rank || '-');
-
-            const expiryDisplay = profileExpiryStr && profileExpiryStr !== '-' ? formatDate(profileExpiryStr) :
-                'غير مدفوع';
-            $('profileExpiryStatus').innerHTML = isExpired ?
-                `<span style="color:var(--danger);"><i class="fas fa-circle"></i> منتهي (${expiryDisplay})</span>` :
-                hasPaymentHistory ?
-                `<span style="color:var(--success);"><i class="fas fa-circle"></i> نشط (ينتهي ${expiryDisplay})</span>` :
-                `<span style="color:var(--warning);"><i class="fas fa-circle"></i> لا يوجد سجل دفع</span>`;
-
-            $('previewName').textContent = m.full_name || 'الاسم';
-            $('previewId').textContent = m.member_id || 'G-XXXX';
-            $('previewPhone').textContent = m.phone || '-';
-            $('previewType').textContent = m.membership_type || '-';
-            $('previewExpiry').textContent = expiryDisplay;
-            $('previewPoints').textContent = points;
-            $('previewXp').textContent = xp;
-            $('previewStartDate').textContent = formatDate(m.start_date);
-            $('previewExpiryFooter').textContent = expiryDisplay;
-            $('previewExpiryFooter').className = isExpired ? 'expiry' : '';
-
-            generateProfileQR(m.member_id);
-
-            const showFull = !isExpired && hasPaymentHistory;
-            document.getElementById('goalSection').style.display = showFull ? 'block' : 'none';
-            document.getElementById('calendarSection').style.display = showFull ? 'block' : 'none';
-            document.getElementById('weightSection').style.display = showFull ? 'block' : 'none';
-            document.getElementById('top8Panel').style.display = 'block';
-            document.getElementById('profileExpiredOverlay').classList.toggle('show', isExpired);
-
-            if (showFull) {
-                loadGoalProgress();
-                renderCalendar();
-                loadWeightData();
-                renderWeightChart();
-            }
-
-            updateMemberDashboard();
-            loadTop8();
-        }
+// ✅ ฟังก์ชันคำนวณฉายา
+function getMemberRank(memberId) {
+    const today = getTodayStr();
+    const thisMonth = today.slice(0, 7);
+    
+    const monthCheckins = allCheckins.filter(c => 
+        c.member_id === memberId &&
+        c.checkin_date &&
+        normalizeDate(c.checkin_date).slice(0, 7) === thisMonth
+    );
+    
+    const count = monthCheckins.length;
+    
+    if (count >= 25) {
+        return { name: 'ราชา', icon: '👑', class: 'legend' };
+    } else if (count >= 20) {
+        return { name: 'นักสู้', icon: '⚔️', class: 'warrior' };
+    } else if (count >= 15) {
+        return { name: 'ขยัน', icon: '🏃', class: 'active' };
+    } else if (count >= 10) {
+        return { name: 'พอใช้', icon: '👍', class: 'active' };
+    } else if (count >= 5) {
+        return { name: 'ขี้เกียจ', icon: '😴', class: 'beginner' };
+    } else {
+        return { name: 'เริ่มต้น', icon: '🌟', class: 'beginner' };
+    }
+}
 
         function updateMemberDashboard() {
             if (!profileMember) return;
