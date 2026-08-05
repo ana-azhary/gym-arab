@@ -2962,7 +2962,7 @@
 /* คอลัมน์ الفئة — แคบที่สุด */
 .daily-detail-table th:first-child,
 .daily-detail-table td:first-child {
-    width: 3%;
+    width: 7%;
     white-space: nowrap;
     padding-left: 6px;
     padding-right: 6px;
@@ -3020,7 +3020,60 @@
         max-width: 70px;
     }
 }
-    
+
+   /* ============================================================
+   MEMBER ROW — NO PAYMENT = TEXT RED ONLY, NO BACKGROUND
+   ============================================================ */
+.member-row-expired td {
+    color: var(--expired-color) !important;
+    font-weight: 600 !important;
+    background-color: var(--expired-bg) !important;
+}
+
+/* ============================================================
+   MEMBER ROW — NO PAYMENT = TEXT RED ONLY FOR THE BADGE
+   ============================================================ */
+
+/* คนหมดอายุ → พื้นหลังแดงจาง ตัวหนังสือแดง */
+.member-row-expired td {
+    color: var(--expired-color) !important;
+    font-weight: 600 !important;
+    background-color: var(--expired-bg) !important;
+}
+
+.member-row-expired td .status-badge {
+    background: rgba(220, 38, 38, 0.15) !important;
+    color: var(--expired-color) !important;
+}
+
+.member-row-expired td strong,
+.member-row-expired td a {
+    color: var(--expired-color) !important;
+}
+
+/* ============================================================
+   คนไม่จ่าย → ตัวหนังสือปกติ (ดำ) ยกเว้น Badge ที่เป็นสีแดง
+   ============================================================ */
+.member-row-no-payment td {
+    color: var(--text-primary) !important;  /* ตัวหนังสือดำ */
+    font-weight: 400 !important;            /* ตัวหนังสือปกติ */
+    background-color: transparent !important;
+}
+
+.member-row-no-payment td strong {
+    color: var(--text-primary) !important;  /* ตัวหนังสือดำ */
+}
+
+.member-row-no-payment td .status-badge {
+    background: rgba(220, 38, 38, 0.12) !important;
+    color: var(--expired-color) !important;  /* เฉพาะ badge นี้สีแดง */
+    font-weight: 700 !important;
+}
+
+.member-row-no-payment td a {
+    color: var(--text-primary) !important;  /* ลิงก์ดำ */
+}
+ 
     </style>
 </head>
 <body>
@@ -4103,77 +4156,171 @@
         // ============================================================
         // RENDER DASHBOARD TABLES
         // ============================================================
-        function renderDashMemberTable(members) {
-            const tbody = $('dashMemberTableBody');
-            if (!members || !members.length) { tbody.innerHTML =
-                    '<tr><td colspan="7" class="empty-row">لا توجد بيانات</td></tr>'; return; }
-            const today = getTodayStr();
-            const now = new Date();
-            tbody.innerHTML = members.slice(0, 20).map((m, idx) => {
-                let status = m.status || 'no_payment';
-                if (m.expiry_date) {
-                    const expDate = new Date(normalizeDate(m.expiry_date));
-                    if (!isNaN(expDate.getTime())) {
-                        const diff = (expDate - now) / (1000 * 60 * 60 * 24);
-                        if (diff < 0 || diff === 0) status = 'expired';
-                        else if (diff <= 7) status = 'expiring_soon';
-                        else status = 'active';
-                    }
-                }
-                const isDateExpired = (status === 'expired');
-                const hasPayment = allPayments.some(p => p.member_id === m.member_id);
-                const shouldBeRed = isDateExpired && (!hasPayment || status === 'no_payment');
-                const rowClass = shouldBeRed ? 'member-row-expired' : '';
-                const statusMap = {
-                    'active': '<span class="status-badge active"><i class="fas fa-check-circle"></i> نشط</span>',
-                    'expired': '<span class="status-badge expired"><i class="fas fa-times-circle"></i> منتهي</span>',
-                    'expiring_soon': '<span class="status-badge expiring"><i class="fas fa-clock"></i> ينتهي قريباً</span>',
-                    'no_payment': '<span class="status-badge no-payment"><i class="fas fa-exclamation-triangle"></i> غير مدفوع</span>'
-                };
-                return `<tr class="${rowClass}">
-                            <td>${idx+1}</td>
-                            <td><strong>${m.member_id||'-'}</strong></td>
-                            <td>${m.full_name||'-'}</td>
-                            <td class="hide-phone">${m.phone||'-'}</td>
-                            <td>${m.membership_type||'-'}</td>
-                            <td>${statusMap[status] || status || '-'}</td>
-                            <td>${formatDate(m.expiry_date)}</td>
-                        </tr>`;
-            }).join('');
+function renderDashMemberTable(members) {
+    const tbody = $('dashMemberTableBody');
+    if (!members || !members.length) {
+        tbody.innerHTML = '<tr><td colspan="7" class="empty-row">لا توجد بيانات</td></tr>';
+        return;
+    }
+    const today = getTodayStr();
+    const now = new Date();
+    const thisMonth = today.slice(0, 7);
+    
+    tbody.innerHTML = members.slice(0, 20).map((m, idx) => {
+        // 🔥 ตรวจสอบสถานะ
+        let status = 'no_payment';
+        
+        const hasPaymentThisMonth = allPayments.some(p => 
+            p.member_id === m.member_id && 
+            p.payment_date && 
+            normalizeDate(p.payment_date).slice(0, 7) === thisMonth
+        );
+        
+        const hasPaymentEver = allPayments.some(p => p.member_id === m.member_id);
+        
+        let expiryDate = null;
+        let expiryStr = '';
+        if (m.expiry_date) {
+            expiryStr = normalizeDate(m.expiry_date);
+            if (expiryStr) {
+                expiryDate = new Date(expiryStr);
+            }
         }
+        
+        let startDate = null;
+        if (m.start_date) {
+            const startStr = normalizeDate(m.start_date);
+            if (startStr) {
+                startDate = new Date(startStr);
+            }
+        }
+        
+        // ตรรกะกำหนดสถานะ
+        if (hasPaymentThisMonth) {
+            status = 'active';
+        } else if (!hasPaymentEver) {
+            status = 'no_payment';
+        } else if (hasPaymentEver) {
+            if (expiryDate && expiryDate < now) {
+                status = 'expired';
+            } else if (expiryDate) {
+                const diff = (expiryDate - now) / (1000 * 60 * 60 * 24);
+                if (diff <= 7 && diff >= 0) {
+                    status = 'expiring_soon';
+                } else if (diff > 7) {
+                    status = 'active';
+                }
+            } else {
+                status = 'no_payment';
+            }
+        }
+        
+        // กรณีพิเศษ: วันที่หมดอายุ = วันที่เริ่มต้น
+        if (m.start_date && m.expiry_date) {
+            const startNorm = normalizeDate(m.start_date);
+            const expiryNorm = normalizeDate(m.expiry_date);
+            if (startNorm && expiryNorm && startNorm === expiryNorm) {
+                status = 'no_payment';
+            }
+        }
+        
+        // กรณีพิเศษ: สมาชิกใหม่ที่ยังไม่จ่าย
+        if (m.start_date && normalizeDate(m.start_date).slice(0, 7) === thisMonth) {
+            if (!hasPaymentThisMonth && !hasPaymentEver) {
+                status = 'no_payment';
+            }
+        }
+        
+        if (!hasPaymentEver) {
+            status = 'no_payment';
+        }
+        
+        if (expiryDate && expiryDate < now && status !== 'no_payment') {
+            status = 'expired';
+        }
+        
+        // ✅ กำหนด CSS class ตามสถานะ
+        const isExpired = (status === 'expired');
+        const isNoPayment = (status === 'no_payment');
+        let rowClass = '';
+        if (isExpired) {
+            rowClass = 'member-row-expired';      // หมดอายุ → พื้นหลังสีแดงจาง
+        } else if (isNoPayment) {
+            rowClass = 'member-row-no-payment';   // ไม่จ่าย → เฉพาะตัวหนังสือแดง
+        }
+        
+        const statusMap = {
+            'active': '<span class="status-badge active"><i class="fas fa-check-circle"></i> نشط</span>',
+            'expired': '<span class="status-badge expired"><i class="fas fa-times-circle"></i> منتهي</span>',
+            'expiring_soon': '<span class="status-badge expiring"><i class="fas fa-clock"></i> ينتهي قريباً</span>',
+            'no_payment': '<span class="status-badge no-payment"><i class="fas fa-exclamation-triangle"></i> غير مدفوع</span>'
+        };
+        
+        return `<tr class="${rowClass}">
+                    <td>${idx+1}</td>
+                    <td><strong>${m.member_id||'-'}</strong></td>
+                    <td>${m.full_name||'-'}</td>
+                    <td class="hide-phone">${m.phone||'-'}</td>
+                    <td>${m.membership_type||'-'}</td>
+                    <td>${statusMap[status] || status || '-'}</td>
+                    <td>${formatDate(m.expiry_date)}</td>
+                </tr>`;
+    }).join('');
+}
 
         // 🔥 SORTED LATEST FIRST — TODAY AT TOP
-        function renderDashPaymentTable(payments) {
-            const tbody = $('dashPaymentTableBody');
-            if (!payments || !payments.length) {
-                tbody.innerHTML = '<tr><td colspan="6" class="empty-row">لا توجد بيانات</td></tr>';
-                return;
-            }
-            const today = getTodayStr();
-            const sorted = [...payments].sort((a, b) => {
-                const da = normalizeDate(a.payment_date);
-                const db = normalizeDate(b.payment_date);
-                if (!da && !db) return 0;
-                if (!da) return 1;
-                if (!db) return -1;
-                return da < db ? 1 : -1;
-            });
-            tbody.innerHTML = sorted.slice(0, 15).map((p, i) => {
-                const member = allMembers.find(m => m.member_id === p.member_id);
-                const name = member ? member.full_name : '-';
-                const isToday = normalizeDate(p.payment_date) === today;
-                const rowClass = isToday ? 'payment-today' : '';
-                const todayBadge = isToday ? '<span class="badge-today">اليوم</span>' : '';
-                return `<tr class="${rowClass}">
-                            <td>${i+1}</td>
-                            <td><strong>${p.member_id||'-'}</strong></td>
-                            <td class="hide-phone">${name} ${todayBadge}</td>
-                            <td>${toEGP(p.amount)}</td>
-                            <td>${formatDate(p.payment_date)}</td>
-                            <td>${formatDate(p.expiry_date)}</td>
-                        </tr>`;
-            }).join('');
-        }
+// 🔥 RENDER PAYMENTS — เฉพาะเดือนนี้ + เรียงล่าสุดบนสุด
+function renderDashPaymentTable(payments) {
+    const tbody = $('dashPaymentTableBody');
+    if (!payments || !payments.length) {
+        tbody.innerHTML = '<tr><td colspan="6" class="empty-row">لا توجد بيانات</td></tr>';
+        return;
+    }
+    
+    const today = getTodayStr();
+    const thisMonth = today.slice(0, 7); // เช่น "2026-08"
+    
+    // ✅ กรองเฉพาะรายการที่จ่ายในเดือนนี้
+    const thisMonthPayments = payments.filter(p => {
+        if (!p.payment_date) return false;
+        const normalized = normalizeDate(p.payment_date);
+        if (!normalized) return false;
+        return normalized.slice(0, 7) === thisMonth;
+    });
+    
+    // ถ้าไม่มีข้อมูลในเดือนนี้
+    if (!thisMonthPayments.length) {
+        tbody.innerHTML = '<tr><td colspan="6" class="empty-row">📭 لا توجد مدفوعات هذا الشهر</td></tr>';
+        return;
+    }
+    
+    // ✅ เรียงลำดับ: วันที่ล่าสุด (วันนี้) อยู่ด้านบนสุด
+    const sorted = [...thisMonthPayments].sort((a, b) => {
+        const da = normalizeDate(a.payment_date);
+        const db = normalizeDate(b.payment_date);
+        if (!da && !db) return 0;
+        if (!da) return 1;
+        if (!db) return -1;
+        return da < db ? 1 : -1;
+    });
+    
+    // ✅ แสดงผล
+    tbody.innerHTML = sorted.slice(0, 50).map((p, i) => {
+        const member = allMembers.find(m => m.member_id === p.member_id);
+        const name = member ? member.full_name : '-';
+        const isToday = normalizeDate(p.payment_date) === today;
+        const rowClass = isToday ? 'payment-today' : '';
+        const todayBadge = isToday ? '<span class="badge-today">اليوم</span>' : '';
+        return `<tr class="${rowClass}">
+                    <td>${i+1}</td>
+                    <td><strong>${p.member_id||'-'}</strong></td>
+                    <td class="hide-phone">${name} ${todayBadge}</td>
+                    <td>${toEGP(p.amount)}</td>
+                    <td>${formatDate(p.payment_date)}</td>
+                    <td>${formatDate(p.expiry_date)}</td>
+                </tr>`;
+    }).join('');
+}
 
         function filterDashMembers() {
             const q = ($('dashMemberSearch').value || '').toLowerCase();
@@ -4402,129 +4549,94 @@
                         }
                         break;
                     }
-                    case 'newMembers': {
-                        title = '➕ الأعضاء الجدد هذا الشهر';
-                        const thisMonth = todayStr.slice(0, 7);
-                        const allMembersFresh = await fetchMembersWithExpiry();
-                        const newMembers = allMembersFresh.filter(m => m.start_date && normalizeDate(m.start_date)
-                            .slice(0, 7) === thisMonth);
-                        if (lastData) {
-                            if (!lastData.summary) lastData.summary = {};
-                            lastData.summary.new_members_this_month = newMembers.length;
-                            lastData.members = allMembersFresh;
-                            updateDashboardCards(lastData.summary);
-                        }
-                        $('statNewMembers').textContent = newMembers.length;
-                        if (!newMembers.length) { content = 'لا يوجد أعضاء جدد هذا الشهر'; } else {
-                            let table =
-                                `<div class="table-wrap"><table class="rank-table"><thead><tr><th>الاسم</th><th>الرقم</th><th>تاريخ التسجيل</th><th>النوع</th><th>الحالة</th><th>اتصال</th></tr></thead><tbody>`;
-                            newMembers.slice(0, 50).forEach(m => {
-                                const statusLabel = m.status === 'active' ? '✅ نشط' : m.status ===
-                                    'expired' ? '🔴 منتهي' : m.status === 'expiring_soon' ?
-                                    '🟡 ينتهي قريباً' : '⚪ غير مدفوع';
-                                const phone = m.phone || '';
-                                const wa = formatPhoneForWhatsApp(phone);
-                                const msg = encodeURIComponent(
-                                    `👋 مرحباً ${m.full_name}، مرحباً بك في Pro Gym! نحن سعداء بانضمامك إلينا! 💪`
-                                    );
-                                const waLink = wa ? `https://wa.me/${wa}?text=${msg}` : '#';
-                                table += `<tr>
-                                            <td><strong>${m.full_name}</strong></td>
-                                            <td>${m.member_id}</td>
-                                            <td>${formatDate(m.start_date)}</td>
-                                            <td>${m.membership_type||'-'}</td>
-                                            <td>${statusLabel}</td>
-                                            <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
-                                        </tr>`;
-                            });
-                            table += '</tbody></table></div>';
-                            content =
-                            `العدد: <strong>${newMembers.length}</strong> عضو<br><br>${table}`;
-                        }
-                        break;
+case 'newMembers': {
+    title = '➕ الأعضاء الجدد هذا الشهر';
+    const thisMonth = todayStr.slice(0, 7);
+    const allMembersFresh = await fetchMembersWithExpiry();
+    const newMembers = allMembersFresh.filter(m => m.start_date && normalizeDate(m.start_date).slice(0, 7) === thisMonth);
+    
+    // ✅ เรียงล่าสุดบนสุด
+    newMembers.sort((a, b) => {
+        const da = normalizeDate(a.start_date);
+        const db = normalizeDate(b.start_date);
+        if (!da && !db) return 0;
+        if (!da) return 1;
+        if (!db) return -1;
+        return da < db ? 1 : -1;
+    });
+    
+    if (lastData) {
+        if (!lastData.summary) lastData.summary = {};
+        lastData.summary.new_members_this_month = newMembers.length;
+        lastData.members = allMembersFresh;
+        updateDashboardCards(lastData.summary);
+    }
+    $('statNewMembers').textContent = newMembers.length;
+    if (!newMembers.length) {
+        content = 'لا يوجد أعضاء جدد هذا الشهر';
+    } else {
+        let table = `<div class="table-wrap"><table class="rank-table"><thead><tr><th>الاسم</th><th>الرقم</th><th>تاريخ التسجيل</th><th>النوع</th><th>الحالة</th><th>اتصال</th></tr></thead><tbody>`;
+        newMembers.slice(0, 50).forEach(m => {
+            // 🔥 กำหนดสถานะตาม expiry_date และประวัติการจ่าย
+            let statusLabel = '';
+            let statusColor = '';
+            
+            // ตรวจสอบว่ามีประวัติการจ่ายเงินหรือไม่
+            const hasPayment = allPayments.some(p => p.member_id === m.member_id);
+            
+            // ตรวจสอบวันหมดอายุ
+            let isExpired = false;
+            let isExpiringSoon = false;
+            let hasValidExpiry = false;
+            
+            if (m.expiry_date) {
+                const expDate = new Date(normalizeDate(m.expiry_date));
+                if (!isNaN(expDate.getTime())) {
+                    hasValidExpiry = true;
+                    const diff = (expDate - new Date()) / (1000 * 60 * 60 * 24);
+                    if (diff < 0 || diff === 0) {
+                        isExpired = true;
+                    } else if (diff <= 7) {
+                        isExpiringSoon = true;
                     }
-                    case 'expired': {
-                        title = '🚫 الأعضاء منتهي الصلاحية';
-                        const allMembersFresh = await fetchMembersWithExpiry();
-                        const expiredMembers = allMembersFresh.filter(m => {
-                            if (!m.expiry_date) return false;
-                            const expDate = new Date(normalizeDate(m.expiry_date));
-                            if (isNaN(expDate.getTime())) return false;
-                            const diff = (expDate - new Date()) / (1000 * 60 * 60 * 24);
-                            return diff < 0 || diff === 0;
-                        });
-                        if (lastData) {
-                            if (!lastData.summary) lastData.summary = {};
-                            lastData.summary.expired_members = expiredMembers.length;
-                            lastData.members = allMembersFresh;
-                            updateDashboardCards(lastData.summary);
-                        }
-                        $('statExpired').textContent = expiredMembers.length;
-                        if (!expiredMembers.length) { content = '🎉 لا يوجد أعضاء منتهي الصلاحية'; } else {
-                            let table =
-                                `<div class="table-wrap"><table class="rank-table">
-                                            <thead><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>تاريخ الانتهاء</th><th>مضى (يوم)</th><th>اتصال</th></tr></thead><tbody>`;
-                            expiredMembers.slice(0, 100).forEach((m, idx) => {
-                                const phone = m.phone || '';
-                                const wa = formatPhoneForWhatsApp(phone);
-                                const daysOver = daysBetween(normalizeDate(m.expiry_date), todayStr);
-                                const waLink = wa ?
-                                    `https://wa.me/${wa}?text=${encodeURIComponent('👋 مرحباً ' + m.full_name + '، لاحظنا انتهاء عضويتك منذ ' + daysOver + ' يوم، ندعوك لتجديدها والعودة لممارسة الرياضة! 💪')}` :
-                                    '#';
-                                let bgColor = '';
-                                if (daysOver > 30) bgColor = 'background:rgba(220,38,38,0.15);';
-                                else if (daysOver > 7) bgColor = 'background:rgba(245,158,11,0.15);';
-                                table += `<tr>
-                                            <td>${idx + 1}</td>
-                                            <td><strong>${m.full_name || '-'}</strong></td>
-                                            <td>${phone || '-'}</td>
-                                            <td>${formatDate(m.expiry_date)}</td>
-                                            <td style="font-weight:700;color:var(--danger);${bgColor}">${daysOver} يوم</td>
-                                            <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
-                                        </tr>`;
-                            });
-                            table += '</tbody></table></div>';
-                            content =
-                                `العدد: <strong>${expiredMembers.length}</strong> عضو (عرض أول 100)<br><br>${table}`;
-                        }
-                        break;
-                    }
-                    case 'expiring': {
-                        title = '⏳ الأعضاء على وشك الانتهاء (7 أيام)';
-                        const allMembersFresh = await fetchMembersWithExpiry();
-                        const expiring = allMembersFresh.filter(m => {
-                            if (!m.expiry_date) return false;
-                            const expDate = new Date(normalizeDate(m.expiry_date));
-                            if (isNaN(expDate.getTime())) return false;
-                            const diff = (expDate - new Date()) / (1000 * 60 * 60 * 24);
-                            return diff > 0 && diff <= 7;
-                        });
-                        if (!expiring.length) { content = 'لا يوجد أعضاء على وشك الانتهاء'; } else {
-                            let table =
-                                `<div class="table-wrap"><table class="rank-table"><thead><tr><th>الاسم</th><th>الهاتف</th><th>متبقي</th><th>اتصال</th></tr></thead><tbody>`;
-                            expiring.slice(0, 50).forEach(m => {
-                                const expDate = new Date(normalizeDate(m.expiry_date));
-                                const diff = (expDate - new Date()) / (1000 * 60 * 60 * 24);
-                                const daysLeft = Math.ceil(diff);
-                                const phone = m.phone || '';
-                                const wa = formatPhoneForWhatsApp(phone);
-                                const msg = encodeURIComponent(
-                                    `مرحباً ${m.full_name} 👋 نود تذكيرك بأن عضويتك ستنتهي خلال ${daysLeft} يوم (${formatDate(m.expiry_date)}) يرجى الاتصال بالإدارة لتجديد العضوية!`
-                                    );
-                                const waLink = wa ? `https://wa.me/${wa}?text=${msg}` : '#';
-                                table += `<tr>
-                                            <td><strong>${m.full_name}</strong></td>
-                                            <td>${phone||'-'}</td>
-                                            <td><span class="status-badge expiring">${daysLeft} يوم</span></td>
-                                            <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
-                                        </tr>`;
-                            });
-                            table += '</tbody></table></div>';
-                            content =
-                            `العدد: <strong>${expiring.length}</strong> عضو<br><br>${table}`;
-                        }
-                        break;
-                    }
+                }
+            }
+            
+            // 🔥 กำหนดสถานะตามเงื่อนไข
+            if (!hasPayment || !hasValidExpiry) {
+                // ไม่มีประวัติการจ่าย หรือ ไม่มีวันหมดอายุ
+                statusLabel = '⚪ غير مدفوع';
+                statusColor = 'no-payment';
+            } else if (isExpired) {
+                statusLabel = '🔴 منتهي';
+                statusColor = 'expired';
+            } else if (isExpiringSoon) {
+                statusLabel = '🟡 ينتهي قريباً';
+                statusColor = 'expiring';
+            } else {
+                statusLabel = '✅ نشط';
+                statusColor = 'active';
+            }
+            
+            const phone = m.phone || '';
+            const wa = formatPhoneForWhatsApp(phone);
+            const msg = encodeURIComponent(`👋 مرحباً ${m.full_name}، مرحباً بك في Pro Gym! نحن سعداء بانضمامك إلينا! 💪`);
+            const waLink = wa ? `https://wa.me/${wa}?text=${msg}` : '#';
+            
+            table += `<tr>
+                        <td><strong>${m.full_name}</strong></td>
+                        <td>${m.member_id}</td>
+                        <td>${formatDate(m.start_date)}</td>
+                        <td>${m.membership_type||'-'}</td>
+                        <td><span class="status-badge ${statusColor}">${statusLabel}</span></td>
+                        <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
+                    </tr>`;
+        });
+        table += '</tbody></table></div>';
+        content = `العدد: <strong>${newMembers.length}</strong> عضو<br><br>${table}`;
+    }
+    break;
+}
                     case 'renewal': {
                         title = '🔄 معدل التجديد';
                         const allMembersFresh = await fetchMembersWithExpiry();
