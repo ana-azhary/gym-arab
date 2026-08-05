@@ -6486,63 +6486,75 @@ function checkAuth() {
     return false;
 }
 
-        async function handleLogin() {
-            const user = document.getElementById('loginUser').value.trim();
-            const pass = document.getElementById('loginPass').value.trim();
-            const errorDiv = document.getElementById('loginError');
-            errorDiv.style.display = 'none';
-            if (!user || !pass) {
-                errorDiv.textContent = '⚠️ يرجى إدخال اسم المستخدم وكلمة المرور';
-                errorDiv.style.display = 'block';
-                return;
-            }
-            if (user === 'admin') {
-                const hash = await sha256(pass);
-                const storedHash = localStorage.getItem('adminHash');
-                if (hash === storedHash) {
-                    localStorage.setItem('gym_role', 'admin');
-                    localStorage.setItem('gym_user', 'admin');
-                    document.getElementById('loginPage').style.display = 'none';
-                    document.getElementById('appMain').style.display = 'block';
-                    showToast('✅ تم تسجيل الدخول كـ admin', 'success');
-                    checkAuth();
-                    return;
-                } else {
-                    errorDiv.textContent = '❌ كلمة المرور غير صحيحة';
-                    errorDiv.style.display = 'block';
-                    return;
-                }
-            }
-            try {
-                const data = await apiCall('/members');
-                const members = data.data || [];
-                const member = members.find(m => m.member_id === user);
-                if (!member) {
-                    errorDiv.textContent = '❌ لم يتم العثور على رقم العضو في النظام';
-                    errorDiv.style.display = 'block';
-                    return;
-                }
-                const storedPass = member.password || '1234';
-                if (pass === storedPass) {
-                    localStorage.setItem('gym_role', 'member');
-                    localStorage.setItem('gym_user', user);
-                    document.getElementById('loginPage').style.display = 'none';
-                    document.getElementById('appMain').style.display = 'block';
-                    showToast(`✅ مرحباً ${member.full_name}`, 'success');
-                    checkAuth();
-                    return;
-                } else {
-                    errorDiv.textContent =
-                        '❌ كلمة المرور غير صحيحة (إذا لم تقم بتعيينها من قبل، استخدم 1234)';
-                    errorDiv.style.display = 'block';
-                    return;
-                }
-            } catch (e) {
-                errorDiv.textContent = '❌ لا يمكن الاتصال بالخادم';
-                errorDiv.style.display = 'block';
-                showToast('❌ ' + e.message, 'error');
-            }
+async function handleLogin() {
+    const user = document.getElementById('loginUser').value.trim();
+    const pass = document.getElementById('loginPass').value.trim();
+    const errorDiv = document.getElementById('loginError');
+    errorDiv.style.display = 'none';
+    
+    if (!user || !pass) {
+        errorDiv.textContent = '⚠️ يرجى إدخال اسم المستخدم وكلمة المرور';
+        errorDiv.style.display = 'block';
+        return;
+    }
+    
+    // 🔹 Admin Login
+    if (user === 'admin') {
+        const hash = await sha256(pass);
+        const storedHash = localStorage.getItem('adminHash');
+        if (hash === storedHash) {
+            localStorage.setItem('gym_role', 'admin');
+            localStorage.setItem('gym_user', 'admin');
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('appMain').style.display = 'block';
+            showToast('✅ تم تسجيل الدخول كـ admin', 'success');
+            checkAuth();
+            return;
+        } else {
+            errorDiv.textContent = '❌ كلمة المرور غير صحيحة';
+            errorDiv.style.display = 'block';
+            return;
         }
+    }
+    
+    // 🔹 Member Login
+    try {
+        const data = await apiCall('/members');
+        const members = data.data || [];
+        const member = members.find(m => m.member_id === user);
+        
+        if (!member) {
+            errorDiv.textContent = '❌ لم يتم العثور على رقم العضو في النظام';
+            errorDiv.style.display = 'block';
+            return;
+        }
+        
+        const storedPass = member.password || '1234';
+        if (pass === storedPass) {
+            localStorage.setItem('gym_role', 'member');
+            localStorage.setItem('gym_user', user);
+            
+            // ✅ ซ่อน Login และแสดงหน้า Member ทันที
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('appMain').style.display = 'block';
+            
+            showToast(`✅ مرحباً ${member.full_name}`, 'success');
+            
+            // ✅ เรียก checkAuth() เพื่อตั้งค่า Member
+            checkAuth();
+            
+            return;
+        } else {
+            errorDiv.textContent = '❌ كلمة المرور غير صحيحة (إذا لم تقم بتعيينها من قبل، استخدم 1234)';
+            errorDiv.style.display = 'block';
+            return;
+        }
+    } catch (e) {
+        errorDiv.textContent = '❌ لا يمكن الاتصال بالخادم';
+        errorDiv.style.display = 'block';
+        showToast('❌ ' + e.message, 'error');
+    }
+}
 
         function logout() {
             if (confirm('هل تريد تسجيل الخروج؟')) {
