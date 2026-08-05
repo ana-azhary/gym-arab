@@ -6029,36 +6029,70 @@ function generateProfileQR(memberId) {
         }
 
         function downloadMemberCardPDF() {
-            const card = document.getElementById('memberCardPreview');
-            if (!card) { showToast('⚠️ لم يتم العثور على البطاقة', 'error'); return; }
-            showToast('📄 جارٍ إنشاء PDF...', 'info');
-            html2canvas(card, {
-                scale: 2,
-                backgroundColor: null,
-                useCORS: true,
-                allowTaint: true,
-                logging: false,
-                width: card.scrollWidth,
-                height: card.scrollHeight,
-                windowWidth: card.scrollWidth,
-                windowHeight: card.scrollHeight
-            }).then(function(canvas) {
-                const imgData = canvas.toDataURL('image/png');
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF('p', 'mm', 'a4');
-                const imgWidth = 180;
-                const imgHeight = (canvas.height * imgWidth) / canvas.width;
-                const x = (210 - imgWidth) / 2;
-                const y = (297 - imgHeight) / 2;
-                doc.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
-                doc.save('member_card_' + (profileMemberId || 'member') + '.pdf');
-                showToast('✅ تم تنزيل PDF', 'success');
-            }).catch(function(err) {
-                console.error('خطأ في PDF:', err);
-                showToast('❌ لا يمكن إنشاء PDF: ' + err.message, 'error');
-            });
-        }
-
+function downloadMemberCardPDF() {
+    const card = document.getElementById('memberCardPreview');
+    if (!card) {
+        showToast('⚠️ لم يتم العثور على البطاقة', 'error');
+        return;
+    }
+    
+    showToast('📄 جارٍ إنشاء PDF...', 'info');
+    
+    // ✅ ตั้งขนาดบัตรให้เป็น 340px ก่อนจับภาพ
+    const originalWidth = card.style.width;
+    const originalMaxWidth = card.style.maxWidth;
+    const originalTransform = card.style.transform;
+    
+    card.style.width = '340px';
+    card.style.maxWidth = '340px';
+    card.style.transform = 'none';
+    card.style.margin = '0 auto';
+    
+    // ✅ ซ่อนปุ่ม
+    const actions = document.querySelector('.card-actions-row');
+    if (actions) actions.style.display = 'none';
+    
+    html2canvas(card, {
+        scale: 2,
+        backgroundColor: null,
+        useCORS: true,
+        allowTaint: true,
+        logging: false,
+        width: 340,
+        height: card.scrollHeight,
+        windowWidth: 340,
+        windowHeight: card.scrollHeight
+    }).then(function(canvas) {
+        // คืนค่าขนาดเดิม
+        card.style.width = originalWidth || '';
+        card.style.maxWidth = originalMaxWidth || '';
+        card.style.transform = originalTransform || '';
+        if (actions) actions.style.display = 'flex';
+        
+        const imgData = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('p', 'mm', 'a4');
+        
+        // ✅ คำนวณขนาดให้พอดีกับกระดาษ A4
+        const imgWidth = 180;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        const x = (210 - imgWidth) / 2;
+        const y = (297 - imgHeight) / 2;
+        
+        doc.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
+        doc.save('member_card_' + (profileMemberId || 'member') + '.pdf');
+        showToast('✅ تم تنزيل PDF بحجم 340px', 'success');
+    }).catch(function(err) {
+        // คืนค่าขนาดเดิม
+        card.style.width = originalWidth || '';
+        card.style.maxWidth = originalMaxWidth || '';
+        card.style.transform = originalTransform || '';
+        if (actions) actions.style.display = 'flex';
+        
+        console.error('PDF Error:', err);
+        showToast('❌ لا يمكن إنشاء PDF: ' + err.message, 'error');
+    });
+}
         function printMemberCard() {
             showToast('🖨️ جارٍ فتح نافذة الطباعة...', 'info');
             setTimeout(() => { window.print(); }, 500);
