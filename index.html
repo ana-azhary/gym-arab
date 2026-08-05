@@ -1139,100 +1139,87 @@
    QR CODE — กรอบสวย เห็นชัด
    ============================================================ */
 
-/* ✅ 1. ปรับขนาด QR และระยะห่าง */
 .member-card-preview .mc-body .mc-qr {
-    padding: 5px;              /* ✅ ลดจาก 6px เหลือ 5px */
-    border-radius: 10px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    width: 68px;               /* ✅ ลดจาก 72px เหลือ 68px */
-    height: 68px;
+    flex-shrink: 0;
+    background: #ffffff;
+    padding: 6px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    transform: none !important;
+    transition: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.member-card-preview .mc-body .mc-qr:hover {
+    transform: none !important;
 }
 
 .member-card-preview .mc-body .mc-qr canvas {
-    width: 58px !important;    /* ✅ 58px พอดี */
-    height: 58px !important;
+    display: block;
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 4px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
 }
 
+/* ============================================================
+   FOOTER — ด้านล่าง
+   ============================================================ */
+
+.member-card-preview .mc-footer {
+    margin-top: 6px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    opacity: 0.5;
+    position: relative;
+    z-index: 1;
+}
+
+.member-card-preview .mc-footer .expiry {
+    color: #f87171;
+    font-weight: 600;
+    opacity: 1;
+}
+
+/* ============================================================
+   PROFILE QR BOX — ในหน้า Profile
+   ============================================================ */
+
 #profileQrBox {
-    padding: 5px;
-    width: 68px;
-    height: 68px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    padding: 6px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    width: 72px;
+    height: 72px;
+    transform: none !important;
+    transition: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 #profileQrBox canvas {
-    width: 58px !important;
-    height: 58px !important;
+    display: block;
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 4px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
 }
-
-/* ✅ 2. ปรับความกว้างบัตรให้พอดี */
-.member-card-preview {
-    max-width: 330px;          /* ✅ ลดจาก 340px เหลือ 330px */
-    min-height: 175px;         /* ✅ เพิ่มจาก 180px เป็น 175px */
-    padding: 16px 20px;
-    border-radius: 14px;
-}
-
-/* ✅ 3. ปรับระยะห่างระหว่างองค์ประกอบ */
-.member-card-preview .mc-header {
-    margin-bottom: 4px;        /* ✅ ลดจาก 6px */
-}
-
-.member-card-preview .mc-body {
-    gap: 12px;                 /* ✅ ลดจาก 16px */
-    padding: 2px 0;
-}
-
-.member-card-preview .mc-body .mc-info .mc-name {
-    font-size: 18px;           /* ✅ ลดจาก 20px */
-    margin-bottom: 1px;
-}
-
-.member-card-preview .mc-body .mc-info .mc-id {
-    font-size: 10px;
-    margin-bottom: 2px;
-}
-
-.member-card-preview .mc-body .mc-info .mc-detail {
-    font-size: 9px;
-    gap: 4px;
-    margin-top: 1px;
-}
-
-.member-card-preview .mc-footer {
-    margin-top: 4px;           /* ✅ ลดจาก 6px */
-    padding-top: 8px;          /* ✅ ลดจาก 10px */
-    font-size: 8px;
-}
-
-/* ✅ 4. ปรับสีข้อความให้ดูหรู */
-.member-card-preview .mc-body .mc-info .mc-name {
-    color: #ffffff;
-    letter-spacing: -0.2px;
-}
-
-.member-card-preview .mc-body .mc-info .mc-id {
-    color: rgba(255, 255, 255, 0.35);  /* ✅ จางลงกว่าเดิม */
-    font-family: 'Courier New', monospace;
-}
-
-.member-card-preview .mc-body .mc-info .mc-detail {
-    color: rgba(255, 255, 255, 0.6);   /* ✅ จางลงกว่าเดิม */
-}
-
-.member-card-preview .mc-body .mc-info .mc-detail span {
-    color: rgba(255, 255, 255, 0.85);
-}
-
-/* ✅ 5. ปรับ Badge ให้ดูดี */
-.member-card-preview .mc-header .mc-badge {
-    background: rgba(255, 255, 255, 0.06);  /* ✅ จางลง */
-    padding: 2px 14px;
-    font-size: 9px;
-    line-height: 22px;
-    letter-spacing: 0.6px;
-    color: rgba(255, 255, 255, 0.7);
-}
-
 
 
 /* ============================================================
