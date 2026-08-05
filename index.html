@@ -1173,55 +1173,224 @@
    ============================================================ */
 
 @media (max-width: 480px) {
-    .member-card-preview {
-        padding: 14px 16px;
-        min-height: 150px;
-        max-width: 100%;
-    }
-    
-    .member-card-preview .mc-header .mc-brand {
-        font-size: 15px;
-    }
-    
-    .member-card-preview .mc-header .mc-brand i {
-        font-size: 18px;
-        padding: 3px;
-    }
-    
-    .member-card-preview .mc-header .mc-badge {
-        font-size: 9px;
-        padding: 1px 10px;
-        line-height: 18px;
-    }
-    
-    .member-card-preview .mc-body .mc-info .mc-name {
-        font-size: 16px;
-    }
-    
-    .member-card-preview .mc-body .mc-info .mc-id {
-        font-size: 10px;
-    }
-    
-    .member-card-preview .mc-body .mc-info .mc-detail {
-        font-size: 9px;
-    }
-    
-    .member-card-preview .mc-body .mc-qr {
-        min-width: 54px;
-        min-height: 54px;
-        padding: 3px;  /* ✅ ขอบบางลงอีก */
-    }
-    
-    .member-card-preview .mc-body .mc-qr canvas {
-        width: 44px !important;
-        height: 44px !important;
-    }
+/* ============================================================
+   MEMBER CARD — ขนาดพอดี กรอบ QR เท่ากับ QR
+   ============================================================ */
+
+.member-card-preview {
+    background: linear-gradient(145deg, var(--primary-dark), var(--primary));
+    color: #fff;
+    padding: 16px 20px;
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 380px;  /* ✅ ลดความกว้างลง ให้พอดี */
+    margin: 0 auto;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    min-height: 160px;  /* ✅ ลดความสูงลง */
+    transition: none !important;
 }
 
-@media (max-width: 400px) {
+.member-card-preview::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -20%;
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle at 70% 30%, rgba(56, 189, 248, 0.08), transparent 70%);
+    pointer-events: none;
+}
+
+.member-card-preview::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--secondary), var(--accent), var(--secondary));
+    opacity: 0.3;
+}
+
+/* HEADER */
+.member-card-preview .mc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 2px;
+}
+
+.member-card-preview .mc-header .mc-brand {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+}
+
+.member-card-preview .mc-header .mc-brand i {
+    font-size: 18px;
+    color: var(--secondary);
+    background: rgba(56, 189, 248, 0.12);
+    padding: 3px;
+    border-radius: 6px;
+}
+
+.member-card-preview .mc-header .mc-badge {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(4px);
+    padding: 1px 12px;
+    border-radius: 30px;
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* BODY */
+.member-card-preview .mc-body {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+    padding: 2px 0;
+}
+
+.member-card-preview .mc-body .mc-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.member-card-preview .mc-body .mc-info .mc-name {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.2px;
+    margin-bottom: 0px;
+}
+
+.member-card-preview .mc-body .mc-info .mc-id {
+    font-size: 10px;
+    opacity: 0.5;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    margin-bottom: 1px;
+}
+
+.member-card-preview .mc-body .mc-info .mc-detail {
+    font-size: 9px;
+    opacity: 0.7;
+    margin-top: 0px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.member-card-preview .mc-body .mc-info .mc-detail span {
+    font-weight: 600;
+    opacity: 1;
+}
+
+/* ✅ QR CODE — กรอบพอดีกับ QR ไม่เกิน */
+.member-card-preview .mc-body .mc-qr {
+    flex-shrink: 0;
+    background: #ffffff;
+    padding: 4px;  /* ระยะห่างระหว่างกรอบกับ QR */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 64px;   /* ✅ กำหนดขนาดกรอบพอดี */
+    height: 64px;
+    transform: none !important;
+    transition: none !important;
+}
+
+.member-card-preview .mc-body .mc-qr:hover {
+    transform: none !important;
+}
+
+.member-card-preview .mc-body .mc-qr canvas {
+    display: block;
+    width: 56px !important;  /* ✅ QR ใหญ่ขึ้น */
+    height: 56px !important;
+    border-radius: 4px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+/* FOOTER */
+.member-card-preview .mc-footer {
+    margin-top: 2px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    justify-content: space-between;
+    font-size: 8px;
+    opacity: 0.6;
+    position: relative;
+    z-index: 1;
+}
+
+.member-card-preview .mc-footer .expiry {
+    color: #fca5a5;
+    font-weight: 600;
+    opacity: 1;
+}
+
+/* ============================================================
+   PROFILE QR BOX — ในหน้า Profile
+   ============================================================ */
+
+#profileQrBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    padding: 4px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    width: 64px;
+    height: 64px;
+    transform: none !important;
+    transition: none !important;
+}
+
+#profileQrBox canvas {
+    display: block;
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 4px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+/* ============================================================
+   RESPONSIVE — มือถือ
+   ============================================================ */
+
+@media (max-width: 480px) {
     .member-card-preview {
-        padding: 10px 12px;
-        min-height: 130px;
+        padding: 12px 14px;
+        min-height: 140px;
+        max-width: 100%;
     }
     
     .member-card-preview .mc-header .mc-brand {
@@ -1230,11 +1399,12 @@
     
     .member-card-preview .mc-header .mc-brand i {
         font-size: 15px;
+        padding: 2px;
     }
     
     .member-card-preview .mc-header .mc-badge {
         font-size: 8px;
-        padding: 1px 8px;
+        padding: 1px 10px;
         line-height: 16px;
     }
     
@@ -1251,14 +1421,80 @@
     }
     
     .member-card-preview .mc-body .mc-qr {
-        min-width: 44px;
-        min-height: 44px;
+        width: 54px;
+        height: 54px;
+        padding: 3px;
+    }
+    
+    .member-card-preview .mc-body .mc-qr canvas {
+        width: 48px !important;
+        height: 48px !important;
+    }
+    
+    #profileQrBox {
+        width: 54px;
+        height: 54px;
+        padding: 3px;
+    }
+    
+    #profileQrBox canvas {
+        width: 48px !important;
+        height: 48px !important;
+    }
+}
+
+@media (max-width: 400px) {
+    .member-card-preview {
+        padding: 10px 12px;
+        min-height: 120px;
+    }
+    
+    .member-card-preview .mc-header .mc-brand {
+        font-size: 12px;
+    }
+    
+    .member-card-preview .mc-header .mc-brand i {
+        font-size: 13px;
+    }
+    
+    .member-card-preview .mc-header .mc-badge {
+        font-size: 7px;
+        padding: 1px 8px;
+        line-height: 14px;
+    }
+    
+    .member-card-preview .mc-body .mc-info .mc-name {
+        font-size: 12px;
+    }
+    
+    .member-card-preview .mc-body .mc-info .mc-id {
+        font-size: 8px;
+    }
+    
+    .member-card-preview .mc-body .mc-info .mc-detail {
+        font-size: 7px;
+    }
+    
+    .member-card-preview .mc-body .mc-qr {
+        width: 46px;
+        height: 46px;
         padding: 2px;
     }
     
     .member-card-preview .mc-body .mc-qr canvas {
-        width: 36px !important;
-        height: 36px !important;
+        width: 42px !important;
+        height: 42px !important;
+    }
+    
+    #profileQrBox {
+        width: 46px;
+        height: 46px;
+        padding: 2px;
+    }
+    
+    #profileQrBox canvas {
+        width: 42px !important;
+        height: 42px !important;
     }
 }
         .card-actions-row {
