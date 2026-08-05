@@ -6056,66 +6056,85 @@ function generateProfileQR(memberId) {
         }
 
 function downloadMemberCardPDF() {
-    if (!profileMember) {
-        showToast('⚠️ لا توجد بيانات العضو', 'error');
+    const card = document.getElementById('memberCardPreview');
+    if (!card) {
+        showToast('⚠️ لم يتم العثور على البطاقة', 'error');
         return;
     }
     
     showToast('📄 جارٍ إنشاء PDF...', 'info');
     
-    const m = profileMember;
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF('p', 'mm', 'a4');
-    const pageWidth = 210;
-    const pageHeight = 297;
+    // ✅ ซ่อนปุ่ม
+    const actions = document.querySelector('.card-actions-row');
+    if (actions) actions.style.display = 'none';
     
-    // ✅ 1. สร้างบัตรด้วย jsPDF โดยตรง (ข้อความภาษาอาหรับคมชัด)
-    // พื้นหลัง
-    doc.setFillColor(15, 23, 42);
-    doc.rect(0, 0, pageWidth, pageHeight, 'F');
+    // ✅ ตั้งขนาดบัตรให้เป็น 340px พอดี
+    const originalWidth = card.style.width;
+    const originalMaxWidth = card.style.maxWidth;
+    const originalTransform = card.style.transform;
     
-    // หัวข้อ
-    doc.setFontSize(28);
-    doc.setTextColor(255, 255, 255);
-    doc.setFont('helvetica', 'bold');
-    doc.text('PRO GYM', 20, 40);
+    card.style.width = '340px';
+    card.style.maxWidth = '340px';
+    card.style.transform = 'none';
+    card.style.margin = '0 auto';
     
-    doc.setFontSize(12);
-    doc.setFont('helvetica', 'normal');
-    doc.text('بطاقة العضوية', 20, 50);
-    
-    // ชื่อสมาชิก
-    doc.setFontSize(32);
-    doc.setTextColor(255, 255, 255);
-    doc.setFont('helvetica', 'bold');
-    doc.text(m.full_name || 'اسم العضو', 20, 90);
-    
-    // รายละเอียด
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(200, 200, 220);
-    doc.text('الرقم: ' + (m.member_id || '-'), 20, 110);
-    doc.text('النوع: ' + (m.membership_type || '-'), 20, 128);
-    doc.text('الهاتف: ' + (m.phone || '-'), 20, 146);
-    
-    let expiryStr = profileExpiryStr || '-';
-    doc.text('انتهاء الصلاحية: ' + formatDate(expiryStr), 20, 164);
-    
-    // ✅ 2. QR Code (ใช้ canvas จากหน้าจอ)
-    const qrCanvas = document.querySelector('#profileQrBox canvas');
-    if (qrCanvas) {
-        const qrData = qrCanvas.toDataURL('image/png');
-        doc.addImage(qrData, 'PNG', 140, 60, 50, 50);
-    }
-    
-    // ✅ 3. ข้อความท้ายบัตร
-    doc.setFontSize(10);
-    doc.setTextColor(150, 150, 180);
-    doc.text('Pro Gym - نظام إدارة اللياقة', 20, 280);
-    
-    // ✅ 4. บันทึก PDF
-    doc.save('member_card_' + (m.member_id || 'member') + '.pdf');
-    showToast('✅ تم تنزيل PDF (جودة عالية)', 'success');
+    // ✅ ใช้ Scale สูงเพื่อให้ข้อความคมชัด
+    html2canvas(card, {
+        scale: 3,  // ✅ เพิ่มจาก 2 เป็น 3 (คมชัดขึ้น)
+        backgroundColor: null,
+        useCORS: true,
+        allowTaint: true,
+        logging: false,
+        width: 340,
+        height: card.scrollHeight,
+        windowWidth: 340,
+        windowHeight: card.scrollHeight,
+        onclone: function(document) {
+            // ✅ ปรับขนาด font ใน clone ให้ใหญ่ขึ้นเพื่อความคมชัด
+            const clonedCard = document.getElementById('memberCardPreview');
+            if (clonedCard) {
+                clonedCard.style.width = '340px';
+                clonedCard.style.maxWidth = '340px';
+            }
+        }
+    }).then(function(canvas) {
+        // ✅ คืนค่าขนาดเดิม
+        card.style.width = originalWidth || '';
+        card.style.maxWidth = originalMaxWidth || '';
+        card.style.transform = originalTransform || '';
+        if (actions) actions.style.display = 'flex';
+        
+        const imgData = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
+        
+        // ✅ ใช้ jsPDF แบบ landscape หรือ portrait
+        const doc = new jsPDF('p', 'mm', 'a4');
+        
+        // ✅ คำนวณขนาดให้พอดีกับกระดาษ A4
+        const imgWidth = 180;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        const x = (210 - imgWidth) / 2;
+        const y = (297 - imgHeight) / 2;
+        
+        // ✅ เพิ่มข้อความภาษาอาหรับโดยตรง (กันกรณีภาพไม่ชัด)
+        // ใช้ jsPDF + html2canvas แบบ hybrid
+        
+        doc.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
+        
+        // ✅ บันทึก PDF
+        doc.save('member_card_' + (profileMemberId || 'member') + '.pdf');
+        showToast('✅ تم تنزيل PDF (جودة عالية)', 'success');
+        
+    }).catch(function(err) {
+        // ✅ คืนค่าขนาดเดิม
+        card.style.width = originalWidth || '';
+        card.style.maxWidth = originalMaxWidth || '';
+        card.style.transform = originalTransform || '';
+        if (actions) actions.style.display = 'flex';
+        
+        console.error('PDF Error:', err);
+        showToast('❌ لا يمكن إنشاء PDF: ' + err.message, 'error');
+    });
 }
 
         function printMemberCard() {
