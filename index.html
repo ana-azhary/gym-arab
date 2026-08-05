@@ -5805,39 +5805,56 @@ case 'expired': {
             container.innerHTML = html;
         }
 
-        function generateProfileQR(memberId) {
-            const container = document.getElementById('profileQrBox');
-            container.innerHTML = '';
-            if (qrCodeInstance) {
-                try { qrCodeInstance.clear(); } catch (e) {}
-                qrCodeInstance = null;
-            }
-            if (typeof QRCode === 'undefined') {
-                container.innerHTML =
-                    `<span style="color:var(--text-muted);font-size:10px;"><i class="fas fa-exclamation-triangle"></i> مكتبة QR غير جاهزة</span>`;
-                return;
-            }
-            try {
-                setTimeout(() => {
-                    const el = document.getElementById('profileQrBox');
-                    if (!el) return;
-                    el.innerHTML = '';
-                    const qrSize = window.innerWidth < 480 ? 44 : 56;
-                    qrCodeInstance = new QRCode(el, {
-                        text: memberId || 'G-XXXX',
-                        width: qrSize,
-                        height: qrSize,
-                        colorDark: '#0f172a',
-                        colorLight: '#ffffff',
-                        correctLevel: QRCode.CorrectLevel.H
-                    });
-                }, 100);
-            } catch (e) {
-                console.warn('خطأ في توليد QR:', e);
-                container.innerHTML =
-                    `<span style="color:var(--text-muted);font-size:10px;"><i class="fas fa-exclamation-triangle"></i> لا يمكن إنشاء QR</span>`;
-            }
+function generateProfileQR(memberId) {
+    const container = document.getElementById('profileQrBox');
+    if (!container) return;
+    
+    // ✅ ล้าง container
+    container.innerHTML = '';
+    
+    // ✅ ลบ instance เดิม
+    if (qrCodeInstance) {
+        try { qrCodeInstance.clear(); } catch (e) {}
+        qrCodeInstance = null;
+    }
+    
+    // ✅ ตรวจสอบ Library
+    if (typeof QRCode === 'undefined') {
+        container.innerHTML = `<span style="color:var(--text-muted);font-size:10px;"><i class="fas fa-exclamation-triangle"></i> QR غير جاهز</span>`;
+        return;
+    }
+    
+    try {
+        // ✅ กำหนดขนาดตามหน้าจอ
+        let qrSize = 56;
+        if (window.innerWidth < 400) qrSize = 36;
+        else if (window.innerWidth < 480) qrSize = 44;
+        
+        // ✅ สร้าง QR Code (ไม่เอียง ไม่มี animation)
+        qrCodeInstance = new QRCode(container, {
+            text: memberId || 'G-XXXX',
+            width: qrSize,
+            height: qrSize,
+            colorDark: '#0f172a',      // สีดำ
+            colorLight: '#ffffff',      // สีขาว
+            correctLevel: QRCode.CorrectLevel.H  // ความแม่นยำสูง
+        });
+        
+        // ✅ ปรับ canvas ให้คมชัด
+        const canvas = container.querySelector('canvas');
+        if (canvas) {
+            canvas.style.width = qrSize + 'px';
+            canvas.style.height = qrSize + 'px';
+            canvas.style.imageRendering = 'pixelated';
+            canvas.style.imageRendering = 'crisp-edges';
+            canvas.style.borderRadius = '4px';
         }
+        
+    } catch (e) {
+        console.warn('⚠️ QR Generation error:', e);
+        container.innerHTML = `<span style="color:var(--text-muted);font-size:10px;"><i class="fas fa-exclamation-triangle"></i> لا يمكن إنشاء QR</span>`;
+    }
+}
 
         function downloadQR() {
             const canvas = document.querySelector('#profileQrBox canvas');
