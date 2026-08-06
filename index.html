@@ -3412,6 +3412,273 @@
     opacity: 0.6;
 }
 
+/* ============================================================
+   FULL SCREEN — หลังจากลบ Debug Panel
+   ============================================================ */
+
+/* ✅ เนื้อหาหลักใช้พื้นที่เต็ม */
+.app-main {
+    margin-right: var(--sidebar-width);
+    flex: 1;
+    min-height: 100vh;
+    padding: 24px 32px 48px;
+    transition: margin var(--transition);
+    background: var(--bg-body);
+    max-width: 100%;  /* ✅ ใช้พื้นที่เต็ม */
+    width: 100%;
+}
+
+/* ✅ การ์ดและพาเนลใช้พื้นที่เต็ม */
+.card-panel {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* ✅ ตารางใช้พื้นที่เต็ม */
+.table-wrap {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.table-wrap table {
+    width: 100%;
+    min-width: 600px;
+    max-width: 100%;
+}
+
+/* ✅ กริดใช้พื้นที่เต็ม */
+.stats-grid,
+.chart-grid,
+.member-stats-grid,
+.daily-stats-grid,
+.kpi-row {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* ✅ Responsive: มือถือ */
+@media (max-width: 992px) {
+    .app-main {
+        margin-right: 0;
+        padding: 14px 16px 28px;
+    }
+}
+
+@media (max-width: 768px) {
+    .app-main {
+        padding: 10px 12px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .app-main {
+        padding: 8px 8px 16px;
+    }
+}
+
+/* ============================================================
+   MOBILE FONT SIZE — ตัวหนังสือใหญ่ขึ้น
+   ============================================================ */
+
+@media (max-width: 768px) {
+    /* ✅ ตัวหนังสือพื้นฐาน */
+    body {
+        font-size: 16px !important;  /* เพิ่มจาก 15px */
+        line-height: 1.7;
+    }
+    
+    /* ✅ ส่วนหัว */
+    .topbar .topbar-left .page-title h2 {
+        font-size: 20px !important;
+    }
+    .topbar .topbar-left .page-title p {
+        font-size: 14px !important;
+    }
+    
+    /* ✅ การ์ดสถิติ */
+    .stat-card-click .num {
+        font-size: 20px !important;
+    }
+    .stat-card-click .label {
+        font-size: 12px !important;
+    }
+    
+    /* ✅ ตาราง */
+    .table-wrap table {
+        font-size: 14px !important;
+    }
+    .table-wrap table th {
+        font-size: 12px !important;
+    }
+    .table-wrap table td {
+        font-size: 13px !important;
+    }
+    
+    /* ✅ ปุ่ม */
+    .btn {
+        font-size: 14px !important;
+        padding: 8px 16px !important;
+    }
+    .btn-sm {
+        font-size: 12px !important;
+        padding: 6px 12px !important;
+    }
+    
+    /* ✅ การ์ดพาเนล */
+    .card-panel .card-header h3 {
+        font-size: 16px !important;
+    }
+    
+    /* ✅ ฟอร์ม */
+    .form-row input,
+    .form-row select {
+        font-size: 14px !important;
+        padding: 8px 12px !important;
+    }
+    
+    /* ✅ Member Stats */
+    .member-stats-grid .stat-card-click .num {
+        font-size: 18px !important;
+    }
+    .member-stats-grid .stat-card-click .label {
+        font-size: 11px !important;
+    }
+    
+    /* ✅ KPI */
+    .kpi-item .kpi-val {
+        font-size: 18px !important;
+    }
+    .kpi-item .kpi-label {
+        font-size: 11px !important;
+    }
+    
+    /* ✅ Sidebar */
+    .app-sidebar .nav-item {
+        font-size: 16px !important;
+        padding: 12px 16px !important;
+    }
+    .app-sidebar .brand .brand-text h1 {
+        font-size: 22px !important;
+    }
+    .app-sidebar .sidebar-footer .sidebar-user .user-info .name {
+        font-size: 15px !important;
+    }
+    
+    /* ✅ Member Card */
+    .member-card-preview .mc-body .mc-info .mc-name {
+        font-size: 19px !important;
+    }
+    .member-card-preview .mc-body .mc-info .mc-id {
+        font-size: 12px !important;
+    }
+    .member-card-preview .mc-body .mc-info .mc-detail {
+        font-size: 11px !important;
+    }
+    .member-card-preview .mc-header .mc-brand {
+        font-size: 17px !important;
+    }
+    .member-card-preview .mc-header .mc-badge {
+        font-size: 11px !important;
+    }
+    .member-card-preview .mc-footer {
+        font-size: 10px !important;
+    }
+    
+    /* ✅ Profile Header */
+    #profileName {
+        font-size: 20px !important;
+    }
+    #profilePhone {
+        font-size: 15px !important;
+    }
+    #rankTitle {
+        font-size: 14px !important;
+    }
+    #rankCount {
+        font-size: 11px !important;
+    }
+    
+    /* ✅ Modal */
+    .modal-box .modal-header h3 {
+        font-size: 20px !important;
+    }
+    .modal-box .form-group label {
+        font-size: 14px !important;
+    }
+    .modal-box .form-group input,
+    .modal-box .form-group select {
+        font-size: 14px !important;
+        padding: 10px 14px !important;
+    }
+    .modal-box .btn-submit {
+        font-size: 16px !important;
+        padding: 14px !important;
+    }
+    
+    /* ✅ Toast */
+    .toast-item {
+        font-size: 14px !important;
+        padding: 14px 18px !important;
+    }
+    
+    /* ✅ Calendar */
+    .calendar-grid .day-cell {
+        font-size: 13px !important;
+        padding: 6px 4px !important;
+    }
+    
+    /* ✅ Progress */
+    .progress-wrap .progress-label {
+        font-size: 13px !important;
+    }
+    
+    /* ✅ Goal & Encouragement */
+    .goal-encouragement {
+        font-size: 14px !important;
+    }
+    .bmi-encouragement {
+        font-size: 14px !important;
+    }
+    
+    /* ✅ Top 7 */
+    .top7-item .top7-name {
+        font-size: 14px !important;
+    }
+    .top7-item .top7-points {
+        font-size: 12px !important;
+    }
+    .top7-item .top7-title {
+        font-size: 11px !important;
+    }
+    
+    /* ✅ Daily Report */
+    .daily-detail-table {
+        font-size: 14px !important;
+    }
+    .daily-detail-table .badge-daily {
+        font-size: 12px !important;
+    }
+    
+    /* ✅ Login */
+    #loginPage .login-box .logo h1 {
+        font-size: 28px !important;
+    }
+    #loginPage .login-box .input-group input {
+        font-size: 16px !important;
+        padding: 14px 48px 14px 16px !important;
+    }
+    #loginPage .login-box .btn-login {
+        font-size: 18px !important;
+        padding: 16px !important;
+    }
+    #loginPage .login-box .register-row .btn-register {
+        font-size: 15px !important;
+        padding: 12px !important;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -4038,39 +4305,110 @@
         // ============================================================
         // XP SYSTEM
         // ============================================================
-        function getXp(memberId) {
-            const xp = localStorage.getItem('xp_' + memberId);
-            return xp ? parseInt(xp) : 0;
-        }
-        function setXp(memberId, value) { localStorage.setItem('xp_' + memberId, String(value)); }
-        function addXp(memberId, points) { const current = getXp(memberId); setXp(memberId, current + points); }
+// ============================================================
+// XP SYSTEM V2 — Streak-based, no reset, warning on 3 missed days
+// ============================================================
 
-        function calculateStreakXp(checkins, memberId) {
-            const today = getTodayStr();
-            const dates = checkins.filter(c => c.member_id === memberId).map(c => normalizeDate(c.checkin_date)).filter(d => d)
-                .sort();
-            if (dates.length === 0) return 0;
-            let streak = 0;
-            let checkDate = today;
-            while (dates.includes(checkDate)) {
-                streak++;
-                const d = new Date(checkDate);
-                d.setDate(d.getDate() - 1);
-                checkDate = d.toISOString().split('T')[0];
-            }
-            let xpEarned = 0;
-            for (let i = 1; i <= streak; i++) { xpEarned += Math.min(i * 2, 10); }
-            if (streak >= 5) xpEarned += 10;
-            if (streak >= 10) xpEarned += 20;
-            if (streak >= 20) xpEarned += 50;
-            return xpEarned;
-        }
+function getXp(memberId) {
+    const key = 'xp_' + memberId;
+    const val = localStorage.getItem(key);
+    return val ? parseInt(val, 10) : 0;
+}
 
-        function updateMemberXp(memberId, checkins) {
-            const xp = calculateStreakXp(checkins, memberId);
-            setXp(memberId, xp);
-            return xp;
+function setXp(memberId, value) {
+    localStorage.setItem('xp_' + memberId, String(value));
+}
+
+function getStreak(memberId) {
+    const key = 'streak_' + memberId;
+    const val = localStorage.getItem(key);
+    return val ? parseInt(val, 10) : 0;
+}
+
+function setStreak(memberId, value) {
+    localStorage.setItem('streak_' + memberId, String(value));
+}
+
+function getLastCheckinDate(memberId) {
+    const key = 'lastCheckin_' + memberId;
+    return localStorage.getItem(key) || null;
+}
+// ============================================================
+// CHECK STREAK WARNING — เตือนเมื่อขาด 2-3 วัน
+// ============================================================
+function checkStreakWarning(memberId) {
+    const lastDate = getLastCheckinDate(memberId);
+    if (!lastDate) return;
+    const today = getTodayStr();
+    const diff = daysBetween(lastDate, today);
+    if (diff >= 3) {
+        showToast(`⚠️ لقد تغيبت ${diff} أيام! سيتم إعادة تعيين تسلسلك اليومي غداً إن لم تحضر.`, 'warning');
+    } else if (diff === 2) {
+        showToast(`⚠️ تغيبت يومين! لا تنسَ الحضور غداً للحفاظ على تسلسلك.`, 'warning');
+    }
+}
+
+function setLastCheckinDate(memberId, dateStr) {
+    localStorage.setItem('lastCheckin_' + memberId, dateStr);
+}
+
+function calculateXpBonusForStreak(streak) {
+    if (streak < 3) return 1;
+    if (streak < 5) return 2;
+    if (streak < 10) return 3;
+    if (streak < 20) return 5;
+    return 8;
+}
+
+function updateMemberXp(memberId, checkins) {
+    const today = getTodayStr();
+    const lastDate = getLastCheckinDate(memberId);
+    let currentStreak = getStreak(memberId);
+    let currentXp = getXp(memberId);
+    let missedDays = 0;
+    let streakReset = false;
+
+    if (lastDate) {
+        const diff = daysBetween(lastDate, today);
+        if (diff === 1) {
+            // เข้าวันถัดไป: Streak +1
+            currentStreak += 1;
+        } else if (diff > 1 && diff <= 3) {
+            // ขาด 2-3 วัน: Streak คงเดิม
+            missedDays = diff - 1;
+        } else if (diff > 3) {
+            // ขาดเกิน 3 วัน: รีเซ็ต Streak
+            missedDays = diff - 1;
+            currentStreak = 0;
+            streakReset = true;
         }
+    } else {
+        // ครั้งแรก
+        currentStreak = 1;
+    }
+
+    // ถ้าวันนี้เช็คอินแล้ว (diff === 0) ไม่ต้องเพิ่ม
+    if (lastDate === today) {
+        return currentXp;
+    }
+
+    const bonus = calculateXpBonusForStreak(currentStreak);
+    const newXp = currentXp + bonus;
+
+    setXp(memberId, newXp);
+    setStreak(memberId, currentStreak);
+    setLastCheckinDate(memberId, today);
+
+    // เตือนเมื่อขาด 3 วันขึ้นไป
+    if (streakReset) {
+        showToast('⚠️ تم إعادة تعيين تسلسلك اليومي بسبب الغياب لأكثر من 3 أيام!', 'warning');
+    } else if (missedDays >= 2) {
+        showToast(`⚠️ لقد تغيبت ${missedDays} أيام، استمر في الحضور لتجنب إعادة التعيين!`, 'warning');
+    }
+
+    return newXp;
+}
+
 
         function getPoints(memberId) {
             return allPayments.filter(p => p.member_id === memberId).length;
@@ -5571,23 +5909,24 @@ case 'expired': {
             } catch (e) { showToast('❌ فشل تحميل الدخول: ' + e.message, 'error'); }
         }
 
-        async function addCheckin() {
-            const id = $('ciMember').value.trim();
-            if (!id) { showToast('⚠️ يرجى إدخال رقم العضو', 'error'); return; }
-            try {
-                await apiCall('/checkin', { method: 'POST', body: JSON.stringify({ member_id: id }) });
-                showToast(`✅ تم تسجيل دخول ${id}`, 'success');
-                const allC = [...allCheckins, { member_id: id, checkin_date: getTodayStr(), checkin_time: new Date()
-                        .toLocaleTimeString() }];
-                const xp = updateMemberXp(id, allC);
-                showToast(`⭐ XP الجديد: ${xp}`, 'info');
-                $('checkinAddForm').style.display = 'none';
-                $('ciMember').value = '';
-                await fetchCheckins();
-                await refreshDashboard();
-                if (currentPage === 'profile' && profileMemberId === id) loadProfile();
-            } catch (e) { showToast('❌ ' + e.message, 'error'); }
-        }
+async function addCheckin() {
+    const id = $('ciMember').value.trim();
+    if (!id) { showToast('⚠️ يرجى إدخال رقم العضو', 'error'); return; }
+    try {
+        await apiCall('/checkin', { method: 'POST', body: JSON.stringify({ member_id: id }) });
+        showToast(`✅ تم تسجيل دخول ${id}`, 'success');
+
+        // ✅ อัปเดต XP และ Streak
+        const xp = updateMemberXp(id, allCheckins);
+        showToast(`⭐ XP الجديد: ${xp}`, 'info');
+
+        $('checkinAddForm').style.display = 'none';
+        $('ciMember').value = '';
+        await fetchCheckins();
+        await refreshDashboard();
+        if (currentPage === 'profile' && profileMemberId === id) loadProfile();
+    } catch (e) { showToast('❌ ' + e.message, 'error'); }
+}
 
         // ============================================================
         // PAYMENTS (Admin)
@@ -5869,9 +6208,7 @@ async function loadProfile() {
             loadTop8();
         }
 
-// ============================================================
-// UPDATE MEMBER DASHBOARD — ใช้ profileCheckins แทน allCheckins
-// ============================================================
+
 // ============================================================
 // UPDATE MEMBER DASHBOARD — อัปเดต 6 การ์ดในหน้า Profile
 // ============================================================
@@ -5885,6 +6222,8 @@ function updateMemberDashboard() {
     const today = getTodayStr();
     const thisMonth = today.slice(0, 7);
 
+
+    
     // ✅ ฟังก์ชันช่วยอัปเดต element อย่างปลอดภัย
     function safeSetText(id, value, defaultValue = '-') {
         const el = document.getElementById(id);
@@ -5917,11 +6256,22 @@ function updateMemberDashboard() {
     const totalPaid = monthPayments.reduce((sum, p) => sum + parseFloat(p.amount || 0), 0);
     safeSetText('mStatRevenue', toEGP(totalPaid));
 
-    // ============================================================
-    // 2. XP (mStatXp)
-    // ============================================================
-    const xp = getXp(m.member_id);
-    safeSetText('mStatXp', xp);
+   // ============================================================
+// 2. XP + Streak + Bonus (mStatXp)
+// ============================================================
+const memberId = m.member_id;
+const currentXp = getXp(memberId);
+const currentStreak = getStreak(memberId);
+const bonusToday = calculateXpBonusForStreak(currentStreak);
+const bonusTomorrow = calculateXpBonusForStreak(currentStreak + 1);
+
+let xpDisplay = `⭐ ${currentXp} XP`;
+if (currentStreak > 0) {
+    xpDisplay += ` | 🔥 ${currentStreak} يوم`;
+}
+xpDisplay += ` | ➕ غداً: +${bonusTomorrow}`;
+
+safeSetText('mStatXp', xpDisplay);
 
     // ============================================================
     // 3. เวลาที่คนเข้าใช้มากที่สุด (mStatPeak)
@@ -6088,57 +6438,141 @@ function showCardDetail(type) {
         // ============================================================
         // member_xp — Minimal
         // ============================================================
-        case 'member_xp': {
-            const xp = getXp(profileMemberId);
-            const points = getPoints(profileMemberId);
-            title = '⭐ نقاط الاجتهاد';
-
-            const xpList = allMembers.map(m => ({ 
-                id: m.member_id, 
-                name: m.full_name, 
-                xp: getXp(m.member_id) 
-            }))
-            .sort((a, b) => b.xp - a.xp)
-            .slice(0, 12);
-
-            let html = `
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
-                    <div ${cardStyle('var(--bg-body)')}>
-                        <div style="font-size:12px;color:var(--text-muted);font-weight:500;">XP الخاص بك</div>
-                        <div style="font-size:24px;font-weight:700;color:var(--primary);margin-top:4px;">${xp}</div>
-                    </div>
-                    <div ${cardStyle('var(--bg-body)')}>
-                        <div style="font-size:12px;color:var(--text-muted);font-weight:500;">نقاط الدفع</div>
-                        <div style="font-size:24px;font-weight:700;color:var(--success);margin-top:4px;">${points}</div>
-                    </div>
-                </div>
-                <div style="font-size:14px;font-weight:600;color:var(--text-secondary);margin-bottom:10px;">🏆 ترتيب XP (أعلى 12)</div>
-                <div style="max-height:280px;overflow-y:auto;">
-                    <table style="width:100%;border-collapse:collapse;font-size:13px;">
-                        <thead>
-                            <tr style="border-bottom:2px solid var(--border-color);">
-                                <th style="text-align:right;padding:8px 0;font-weight:600;color:var(--text-muted);font-size:11px;">#</th>
-                                <th style="text-align:right;padding:8px 0;font-weight:600;color:var(--text-muted);font-size:11px;">الاسم</th>
-                                <th style="text-align:right;padding:8px 0;font-weight:600;color:var(--text-muted);font-size:11px;">XP</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `;
-            xpList.forEach((m, i) => {
-                const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '';
-                const isMe = m.id === profileMemberId;
-                html += `
-                    <tr style="border-bottom:1px solid rgba(0,0,0,0.04);${isMe ? 'background:rgba(245,158,11,0.04);border-right:3px solid var(--accent);' : ''}">
-                        <td style="padding:8px 0;font-size:14px;color:var(--text-muted);">${medal || (i+1)}</td>
-                        <td style="padding:8px 0;font-size:13px;color:var(--text-primary);">${m.name}${isMe ? ' <span style="font-size:11px;color:var(--accent);font-weight:600;">(أنت)</span>' : ''}</td>
-                        <td style="padding:8px 0;font-size:13px;font-weight:600;color:var(--text-primary);">${m.xp}</td>
-                    </tr>
-                `;
-            });
-            html += `</tbody></table></div>`;
-            content = html;
-            break;
+case 'member_xp': {
+    const memberId = profileMemberId;
+    const xp = getXp(memberId);
+    const streak = getStreak(memberId);
+    const bonusToday = calculateXpBonusForStreak(streak);
+    const bonusTomorrow = calculateXpBonusForStreak(streak + 1);
+    
+    // ✅ คำนวณ XP ของทุกคน (เรียงจากมากไปน้อย)
+    const xpList = allMembers.map(m => ({
+        id: m.member_id,
+        name: m.full_name,
+        xp: getXp(m.member_id)
+    })).sort((a, b) => b.xp - a.xp);
+    
+    // ✅ เอาแค่ 12 อันดับแรก
+    const top12 = xpList.slice(0, 12);
+    
+    // ✅ หาอันดับของสมาชิกปัจจุบัน
+    const myRank = xpList.findIndex(m => m.id === memberId) + 1;
+    const myXp = xp;
+    
+    // ✅ คำนวณว่าจะต้องทำอีกกี่ XP เพื่อขึ้นอันดับถัดไป
+    let nextStep = '';
+    if (myRank > 1 && myRank <= 12) {
+        const prev = xpList[myRank - 2]; // คนที่อยู่เหนือเรา 1 อันดับ
+        if (prev) {
+            const diff = prev.xp - myXp + 1;
+            nextStep = `💪 تحتاج إلى ${diff} XP إضافية لتتجاوز ${prev.name}!`;
         }
+    } else if (myRank > 12) {
+        const prev = xpList[11]; // คนอันดับที่ 12
+        if (prev) {
+            const diff = prev.xp - myXp + 1;
+            nextStep = `💪 تحتاج إلى ${diff} XP إضافية لدخول أفضل 12!`;
+        }
+    } else if (myRank === 1) {
+        nextStep = '👑 أنت الأول! حافظ على مكانتك!';
+    }
+    
+    // ✅ สร้างข้อความให้กำลังใจตามอันดับ
+    let encouragement = '';
+    if (myRank <= 3) {
+        encouragement = '🏆 ممتاز! أنت من أفضل الرياضيين!';
+    } else if (myRank <= 6) {
+        encouragement = '⭐ رائع! استمر في التدريب للوصول إلى القمة!';
+    } else if (myRank <= 12) {
+        encouragement = '💪 أنت في أفضل 12! استمر في التحدي!';
+    } else {
+        encouragement = '🚀 كل تمرين يقربك من القائمة! استمر في الحضور!';
+    }
+    
+    title = '⭐ نقاط الاجتهاد (XP)';
+    
+    let tableHtml = `
+        <!-- สรุปสถานะของตัวเอง -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px;">
+            <div style="background:var(--bg-body);border-radius:8px;padding:10px;text-align:center;border:1px solid rgba(0,0,0,0.04);">
+                <div style="font-size:10px;color:var(--text-muted);">مجموع XP</div>
+                <div style="font-size:20px;font-weight:700;color:var(--primary);">${xp}</div>
+            </div>
+            <div style="background:var(--bg-body);border-radius:8px;padding:10px;text-align:center;border:1px solid rgba(0,0,0,0.04);">
+                <div style="font-size:10px;color:var(--text-muted);">التسلسل</div>
+                <div style="font-size:20px;font-weight:700;color:var(--accent);">${streak} يوم</div>
+            </div>
+            <div style="background:var(--bg-body);border-radius:8px;padding:10px;text-align:center;border:1px solid rgba(0,0,0,0.04);">
+                <div style="font-size:10px;color:var(--text-muted);">الترتيب</div>
+                <div style="font-size:20px;font-weight:700;color:var(--success);">#${myRank}</div>
+            </div>
+        </div>
+        
+        <!-- ข้อความให้กำลังใจ + ก้าวต่อไป -->
+        <div style="background:linear-gradient(135deg, rgba(16,185,129,0.08), rgba(56,189,248,0.08));border-radius:8px;padding:12px 16px;margin-bottom:16px;border-right:4px solid var(--success);">
+            <div style="font-size:14px;font-weight:600;color:var(--text-primary);">${encouragement}</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;">${nextStep}</div>
+        </div>
+        
+        <!-- ตาราง 12 อันดับ -->
+        <div style="margin-top:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                <strong style="font-size:14px;">🏆 أفضل 12 عضواً</strong>
+                <span style="font-size:11px;color:var(--text-muted);">(${top12.length} عضو)</span>
+            </div>
+            <div class="table-wrap" style="max-height:300px;">
+                <table class="rank-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>الاسم</th>
+                            <th>XP</th>
+                            <th>التسلسل</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    `;
+    
+    top12.forEach((m, idx) => {
+        const rank = idx + 1;
+        const isMe = m.id === memberId;
+        const streak = getStreak(m.id);
+        const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
+        const bgStyle = isMe ? 'background:rgba(245,158,11,0.08);border-right:3px solid var(--accent);' : '';
+        
+        // XP Bonus ที่ใช้ในวันนี้ (เพื่อให้เห็นว่าถ้าเข้าใช้จะได้เท่าไหร่)
+        const bonus = calculateXpBonusForStreak(streak);
+        
+        tableHtml += `
+            <tr style="${bgStyle}">
+                <td style="font-weight:700;color:${rank <= 3 ? 'var(--accent)' : 'var(--text-muted)'};">${medal}</td>
+                <td>${m.name}${isMe ? ' 👈 أنت' : ''}</td>
+                <td style="font-weight:700;">${m.xp}</td>
+                <td style="font-size:12px;color:var(--text-muted);">${streak} يوم</td>
+            </tr>
+        `;
+    });
+    
+    tableHtml += `
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- ระบบ XP -->
+        <div style="margin-top:14px;padding:12px;background:var(--bg-body);border-radius:8px;border:1px solid rgba(0,0,0,0.04);">
+            <div style="font-size:12px;color:var(--text-muted);">
+                <strong>📋 نظام XP:</strong><br>
+                • كل يوم حضور: <strong>+${bonusToday} XP</strong> (حسب التسلسل)<br>
+                • التسلسل الحالي: <strong>${streak} يوم</strong> → غداً: <strong>+${bonusTomorrow} XP</strong><br>
+                • التسلسل لا يُعاد تعيينه إلا بعد غياب 3 أيام متتالية
+            </div>
+        </div>
+    `;
+    
+    content = tableHtml;
+    break;
+}
 
         // ============================================================
         // member_peak — Minimal + Progress bar
@@ -6224,7 +6658,7 @@ case 'member_rank': {
     else if (myCount >= 20) { rank = 'المقاتل'; icon = '<i class="fas fa-dumbbell"></i>'; emoji = '💪'; }
     else if (myCount >= 15) { rank = 'المجتهد'; icon = '<i class="fas fa-running"></i>'; emoji = '🏃'; }
     else if (myCount >= 10) { rank = 'جيد'; icon = '<i class="fas fa-thumbs-up"></i>'; emoji = '👍'; }
-    else if (myCount >= 5) { rank = 'كسول'; icon = '<i class="fas fa-bed"></i>'; emoji = '😴'; }
+    else if (myCount >= 5) { rank = 'مبتدئ'; icon = '<i class="fas fa-bed"></i>'; emoji = '😴'; }
     
     title = '🏅 اللقب الشهري';
 
@@ -6242,7 +6676,6 @@ case 'member_rank': {
         .sort((a, b) => b[1] - a[1])
         .slice(0, 5);
 
-    // ✅ ถ้าไม่มีข้อมูลของใครเลย (0 คน) ให้แสดงข้อความ
     if (top5.length === 0) {
         content = `
             <div style="text-align:center;padding:20px 0;color:var(--text-muted);">
@@ -6253,7 +6686,6 @@ case 'member_rank': {
         break;
     }
 
-    // ✅ แสดงผล
     let rankHtml = `
         <div style="text-align:center;padding:16px 0;background:linear-gradient(135deg, rgba(245,158,11,0.08), transparent);border-radius:var(--radius-sm);margin-bottom:14px;">
             <div style="font-size:56px;line-height:1.2;filter:drop-shadow(0 4px 16px rgba(245,158,11,0.2));">${emoji}</div>
@@ -6272,19 +6704,19 @@ case 'member_rank': {
                 <tbody>
     `;
     
-    const rankTitles = ['الملك', 'المقاتل', 'المجتهد', 'جيد', 'مبتدئ'];
-    const rankEmojis = ['👑', '💪', '🏃', '👍', '🌱'];
-    
     top5.forEach(([id, count], idx) => {
         const member = allMembers.find(m => m.member_id === id);
         const name = member ? member.full_name : id;
-        let rTitle = rankTitles[idx] || 'جيد';
-        let rEmoji = rankEmojis[idx] || '👍';
+        
+        // ✅ กำหนดฉายาตามจำนวนครั้ง (count) ไม่ใช่ลำดับ
+        let rTitle = 'مبتدئ';
+        let rEmoji = '🌱';
         if (count >= 25) { rTitle = 'الملك'; rEmoji = '👑'; }
         else if (count >= 20) { rTitle = 'المقاتل'; rEmoji = '💪'; }
         else if (count >= 15) { rTitle = 'المجتهد'; rEmoji = '🏃'; }
         else if (count >= 10) { rTitle = 'جيد'; rEmoji = '👍'; }
         else if (count >= 5) { rTitle = 'مبتدئ'; rEmoji = '🌱'; }
+        
         const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : (idx+1);
         const isMe = id === profileMemberId;
         rankHtml += `
@@ -7180,6 +7612,7 @@ function generateProfileQR(memberId) {
 function checkAuth() {
     const role = localStorage.getItem('gym_role');
     const user = localStorage.getItem('gym_user');
+    
     
     console.log('🔍 checkAuth() ถูกเรียก');
     console.log('🔍 role:', role, 'user:', user);
