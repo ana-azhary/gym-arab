@@ -3309,6 +3309,165 @@
     color: #0b1120 !important;
 } 
 
+/* ============================================================
+   TOP 8 — ดีไซน์พรีเมียม หรูหรา
+   ============================================================ */
+
+/* Container หลัก */
+#top8Container {
+    padding: 4px 0;
+}
+
+/* Grid การ์ด */
+.top8-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 8px;
+}
+
+@media (max-width: 768px) {
+    .top8-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .top8-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+}
+
+/* การ์ดแต่ละใบ */
+.top8-item {
+    background: var(--bg-card);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    padding: 14px 10px;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    animation: fadeUp 0.5s ease backwards;
+}
+
+/* จัดการ animation แบบ stagger */
+.top8-item:nth-child(1) { animation-delay: 0.05s; }
+.top8-item:nth-child(2) { animation-delay: 0.10s; }
+.top8-item:nth-child(3) { animation-delay: 0.15s; }
+.top8-item:nth-child(4) { animation-delay: 0.20s; }
+.top8-item:nth-child(5) { animation-delay: 0.25s; }
+.top8-item:nth-child(6) { animation-delay: 0.30s; }
+.top8-item:nth-child(7) { animation-delay: 0.35s; }
+.top8-item:nth-child(8) { animation-delay: 0.40s; }
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Hover effect */
+.top8-item:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-light);
+}
+
+/* Medal / Rank */
+.top8-rank {
+    display: inline-block;
+    font-size: 32px;
+    line-height: 1.2;
+    margin-bottom: 4px;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.1));
+}
+
+/* ชื่อสมาชิก */
+.top8-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* จำนวนครั้ง */
+.top8-count {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+/* Badge พิเศษ (เช่น "👑 คุณ") */
+.top8-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 10px;
+    border-radius: 30px;
+    margin-top: 4px;
+    background: var(--accent-light);
+    color: var(--accent);
+    border: 1px solid rgba(245,158,11,0.15);
+}
+
+/* สีพิเศษสำหรับ前三 */
+.top8-item.gold {
+    background: linear-gradient(135deg, rgba(245,158,11,0.12), rgba(245,158,11,0.04));
+    border-color: rgba(245,158,11,0.25);
+    box-shadow: 0 4px 16px rgba(245,158,11,0.08);
+}
+.top8-item.gold .top8-rank {
+    filter: drop-shadow(0 2px 12px rgba(245,158,11,0.3));
+}
+
+.top8-item.silver {
+    background: linear-gradient(135deg, rgba(148,163,184,0.10), rgba(148,163,184,0.03));
+    border-color: rgba(148,163,184,0.20);
+}
+.top8-item.bronze {
+    background: linear-gradient(135deg, rgba(205,127,50,0.10), rgba(205,127,50,0.03));
+    border-color: rgba(205,127,50,0.20);
+}
+
+/* ข้อความให้กำลังใจ (Encouragement) */
+.top8-encouragement {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: var(--bg-body);
+    border-radius: var(--radius-sm);
+    border-right: 4px solid var(--accent);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-align: center;
+    animation: fadeUp 0.6s ease 0.5s backwards;
+}
+
+/* ฟุตเตอร์ (ช่วงเวลา) */
+.top8-footer {
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    opacity: 0.6;
+}
+
     </style>
 </head>
 <body>
@@ -6273,28 +6432,22 @@ function renderTop8Content(container) {
         console.warn('⚠️ ไม่พบ container');
         return;
     }
-    
-    // ✅ ใช้ allCheckins โดยตรง
+
     if (!allCheckins || allCheckins.length === 0) {
-        console.warn('⚠️ allCheckins ว่าง');
         container.innerHTML = `
-            <div style="text-align:center;padding:20px 0;color:var(--text-muted);">
-                <i class="fas fa-inbox" style="font-size:28px;display:block;margin-bottom:8px;opacity:0.4;"></i>
-                <span>📭 لا توجد بيانات دخول</span>
+            <div style="text-align:center;padding:30px 0;color:var(--text-muted);">
+                <i class="fas fa-inbox" style="font-size:32px;display:block;margin-bottom:10px;opacity:0.3;"></i>
+                <span style="font-size:14px;">📭 لا توجد بيانات دخول خلال العام</span>
             </div>
         `;
         return;
     }
-    
+
     const today = new Date();
     const oneYearAgo = new Date(today);
     oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
     const oneYearAgoStr = oneYearAgo.toISOString().split('T')[0];
-    
-    console.log('📊 คำนวณ Top 8 จากข้อมูล', allCheckins.length, 'รายการ');
-    console.log('📅 ตั้งแต่', oneYearAgoStr);
-    
-    // ✅ นับจำนวนเช็คอินของแต่ละสมาชิก (เฉพาะ 1 ปี)
+
     const checkinCounts = {};
     allCheckins.forEach(c => {
         if (c.checkin_date && normalizeDate(c.checkin_date) >= oneYearAgoStr) {
@@ -6304,86 +6457,91 @@ function renderTop8Content(container) {
             }
         }
     });
-    
-    console.log('📊 checkinCounts:', Object.keys(checkinCounts).length, 'คน');
-    
-    // ✅ เรียงลำดับและเลือก 8 อันดับแรก
+
     const sorted = Object.entries(checkinCounts)
         .sort((a, b) => b[1] - a[1])
         .slice(0, 8);
-    
+
     if (sorted.length === 0) {
         container.innerHTML = `
-            <div style="text-align:center;padding:20px 0;color:var(--text-muted);">
-                <i class="fas fa-inbox" style="font-size:28px;display:block;margin-bottom:8px;opacity:0.4;"></i>
-                <span>📭 لا توجد بيانات دخول خلال العام</span>
+            <div style="text-align:center;padding:30px 0;color:var(--text-muted);">
+                <i class="fas fa-inbox" style="font-size:32px;display:block;margin-bottom:10px;opacity:0.3;"></i>
+                <span style="font-size:14px;">📭 لا توجد بيانات دخول خلال العام</span>
             </div>
         `;
         return;
     }
-    
-    console.log('🏆 Top 8:', sorted);
-    
-    // ✅ แสดงผล Top 8
+
+    // กำหนด medals และ titles
     const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣'];
     const titles = [
-        '🏆 ملك اللياقة',
-        '👑 نائب الملك',
-        '💪 المقاتل المثابر',
-        '🏃 مجتهد جداً',
-        '👍 جيد جداً',
-        '🌟 ممتاز',
-        '✨ بداية جيدة',
-        '💪 واعد'
+        'ملك اللياقة',
+        'نائب الملك',
+        'المقاتل المثابر',
+        'مجتهد جداً',
+        'جيد جداً',
+        'ممتاز',
+        'بداية جيدة',
+        'قادم بقوة'
     ];
     const colorClasses = ['gold', 'gold', 'gold', '', '', '', '', ''];
-    
-    let html = '<div class="top7-card">';
+
+    let html = '<div class="top8-grid">';
+
     sorted.forEach(([memberId, count], idx) => {
-        // ✅ ใช้ allMembers ในการค้นหาชื่อ
         const member = allMembers.find(m => m.member_id === memberId);
         const name = member ? member.full_name : memberId;
-        const colorClass = colorClasses[idx] || '';
         const isMe = memberId === profileMemberId;
-        const meBadge = isMe ? ' 👈 أنت' : '';
+        const colorClass = colorClasses[idx] || '';
         const medal = medals[idx] || '🏅';
-        const title = titles[idx] || '💪 قادم بقوة';
-        
+        const title = titles[idx] || 'قادم بقوة';
+
+        // Badge "👑 أنت" (ถ้าเป็นตัวเอง)
+        const meBadge = isMe ? `<span class="top8-badge">👑 أنت</span>` : '';
+
         html += `
-            <div class="top7-item ${colorClass}" style="${colorClass === 'gold' ? 'background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.3);' : ''}">
-                <span class="rank-medal">${medal}</span>
-                <div class="top7-name">${name}${meBadge}</div>
-                <div class="top7-points">⭐ ${count} ครั้ง</div>
-                <div class="top7-title">${title}</div>
+            <div class="top8-item ${colorClass}">
+                <div class="top8-rank">${medal}</div>
+                <div class="top8-name">${name}${isMe ? ' ✨' : ''}</div>
+                <div class="top8-count">⭐ ${count} ครั้ง</div>
+                ${meBadge}
+                <div style="font-size:10px;color:var(--text-muted);margin-top:3px;font-weight:500;">${title}</div>
             </div>
         `;
     });
+
     html += '</div>';
-    
-    // ✅ ข้อความให้กำลังใจ
+
+    // ข้อความให้กำลังใจ
     const myRank = sorted.findIndex(([id]) => id === profileMemberId);
     let encouragementMsg = '';
+    let emoji = '💪';
     if (myRank === 0) {
-        encouragementMsg = '👑 أنت الأفضل! ممتاز! أنت قدوة للآخرين! 💪';
+        encouragementMsg = '👑 أنت رقم واحد! مذهل! أنت قدوة للجميع!';
+        emoji = '👑';
     } else if (myRank === 1) {
-        encouragementMsg = '🥈 رائع! أنت على بعد خطوة من المركز الأول! استمر! 💪';
+        encouragementMsg = '🥈 رائع! أنت على بعد خطوة واحدة من القمة! استمر!';
+        emoji = '🔥';
     } else if (myRank === 2) {
-        encouragementMsg = '🥉 ممتاز! أنت ضمن أفضل 3! فخور بنفسك! 🏆';
+        encouragementMsg = '🥉 ممتاز! أنت ضمن أفضل 3! فخور بك!';
+        emoji = '⭐';
     } else if (myRank >= 0 && myRank < 8) {
-        encouragementMsg = '🌟 أنت ضمن أفضل 8! ممتاز! استمر في العمل! 💪';
+        encouragementMsg = `🌟 أنت في المرتبة ${myRank+1} من أفضل 8! عمل رائع!`;
+        emoji = '💪';
     } else {
-        encouragementMsg = '💪 كل خطوة لها معناها! استمر وستصل! 🚀';
+        encouragementMsg = '🚀 كل يوم هو فرصة جديدة! استمر وستصل إلى القمة!';
+        emoji = '💪';
     }
-    
+
     html += `
-        <div style="text-align:center;margin-top:12px;padding:10px 14px;background:var(--bg-body);border-radius:var(--radius-sm);border-right:4px solid var(--accent);font-size:13px;color:var(--text-secondary);">
-            ${encouragementMsg}
+        <div class="top8-encouragement">
+            ${emoji} ${encouragementMsg}
         </div>
-        <div style="text-align:center;margin-top:6px;font-size:11px;color:var(--text-muted);">
-            <i class="fas fa-calendar-alt"></i> ข้อมูล ${formatDate(oneYearAgoStr)} - ${formatDate(getTodayStr())}
+        <div class="top8-footer">
+            <i class="fas fa-calendar-alt"></i> البيانات من ${formatDate(oneYearAgoStr)} إلى ${formatDate(getTodayStr())}
         </div>
     `;
-    
+
     container.innerHTML = html;
 }
 
