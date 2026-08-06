@@ -2062,63 +2062,7 @@
             font-weight: 500;
         }
 
-        .debug-panel {
-            background: var(--primary-dark);
-            color: #4ade80;
-            padding: 14px 18px;
-            border-radius: var(--radius-md);
-            margin: 20px 0;
-            font-family: 'SF Mono', 'Courier New', monospace;
-            font-size: 11px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid rgba(74, 222, 128, 0.06);
-            box-shadow: var(--shadow);
-        }
-        .debug-panel .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #94a3b8;
-            margin-bottom: 8px;
-            font-family: var(--font);
-        }
-        .debug-panel .header button {
-            background: #4ade80;
-            color: var(--primary-dark);
-            border: none;
-            padding: 3px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 10px;
-            transition: all var(--transition);
-        }
-        .debug-panel .header button:hover {
-            background: #86efac;
-            transform: scale(1.04);
-        }
-        .debug-panel .error-text {
-            color: #f87171;
-            font-weight: 700;
-        }
-        .debug-panel details summary {
-            color: #4ade80;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .debug-panel pre {
-            color: #b0c4de;
-            font-size: 10px;
-            margin-top: 4px;
-            max-height: 150px;
-            overflow-y: auto;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 10px;
-            border-radius: var(--radius-sm);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-        }
+
 
         .analytics-tabs {
             display: flex;
@@ -3468,6 +3412,659 @@
     opacity: 0.6;
 }
 
+/* ============================================================
+   RESPONSIVE FOR MOBILE (ปรับปรุงใหม่)
+   ============================================================ */
+
+/* --- หน้าจอขนาดกลาง (แท็บเล็ต) --- */
+@media (max-width: 992px) {
+    /* Sidebar เป็นแฮมเบอร์เกอร์ */
+    .app-sidebar {
+        transform: translateX(100%);
+        width: 280px;
+        box-shadow: 0 0 48px rgba(0, 0, 0, 0.3);
+        padding: 20px 14px;
+    }
+    .app-sidebar.open {
+        transform: translateX(0);
+    }
+    .app-main {
+        margin-right: 0;
+        padding: 14px 16px 28px;
+    }
+    .topbar .topbar-left .menu-toggle {
+        display: block;
+    }
+    
+    /* Dashboard การ์ด 2 คอลัมน์ */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    .stat-card-click {
+        padding: 10px 12px;
+    }
+    .stat-card-click .num {
+        font-size: 18px;
+    }
+    .stat-card-click .label {
+        font-size: 11px;
+    }
+    .stat-card-click .stat-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+    
+    /* Daily Report */
+    .daily-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    /* Member Stats 2 คอลัมน์ */
+    .member-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    .member-stats-grid .stat-card-click {
+        padding: 8px 10px;
+        min-height: 60px;
+    }
+    .member-stats-grid .stat-card-click .num {
+        font-size: 16px;
+    }
+    .member-stats-grid .stat-card-click .label {
+        font-size: 10px;
+    }
+    .member-stats-grid .stat-card-click .stat-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+    
+    /* Chart */
+    .chart-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Sidebar user */
+    .app-sidebar .sidebar-footer .sidebar-user {
+        padding: 6px 10px;
+    }
+    .app-sidebar .sidebar-footer .sidebar-user .avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+    .app-sidebar .sidebar-footer .sidebar-user .user-info .name {
+        font-size: 13px;
+    }
+    .app-sidebar .nav-item {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+    .app-sidebar .nav-item i {
+        font-size: 15px;
+    }
+}
+
+/* --- หน้าจอมือถือ (เล็ก) --- */
+@media (max-width: 768px) {
+    .app-main {
+        padding: 10px 12px 20px;
+    }
+    
+    /* Top Bar */
+    .topbar {
+        padding-bottom: 12px;
+        margin-bottom: 16px;
+        gap: 8px;
+    }
+    .topbar .topbar-left .page-title h2 {
+        font-size: 18px;
+    }
+    .topbar .topbar-left .page-title p {
+        font-size: 12px;
+    }
+    .topbar .topbar-right .btn-refresh {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    .topbar .topbar-right .btn-refresh span {
+        display: none;
+    }
+    .topbar .topbar-right .shortcut-hint {
+        display: none;
+    }
+    .topbar .topbar-right .btn-icon {
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+    
+    /* Dashboard */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    .stat-card-click {
+        padding: 8px 10px;
+        min-height: 60px;
+    }
+    .stat-card-click .num {
+        font-size: 16px;
+    }
+    .stat-card-click .label {
+        font-size: 10px;
+    }
+    .stat-card-click .stat-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+    .stat-card-click .trend {
+        display: none;
+    }
+    
+    /* Daily Report */
+    .daily-stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+    .daily-stats-grid .stat-card-click {
+        padding: 6px 8px;
+        min-height: 52px;
+    }
+    .daily-stats-grid .stat-card-click .num {
+        font-size: 14px;
+    }
+    .daily-stats-grid .stat-card-click .label {
+        font-size: 9px;
+    }
+    .daily-stats-grid .stat-card-click .stat-icon {
+        width: 22px;
+        height: 22px;
+        font-size: 10px;
+    }
+    
+    /* Member Stats */
+    .member-stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+    .member-stats-grid .stat-card-click {
+        padding: 6px 8px;
+        min-height: 52px;
+    }
+    .member-stats-grid .stat-card-click .num {
+        font-size: 14px;
+    }
+    .member-stats-grid .stat-card-click .label {
+        font-size: 9px;
+    }
+    .member-stats-grid .stat-card-click .stat-icon {
+        width: 22px;
+        height: 22px;
+        font-size: 10px;
+    }
+    
+    /* Card Panel */
+    .card-panel {
+        padding: 10px 12px;
+        margin-bottom: 12px;
+    }
+    .card-panel .card-header {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .card-panel .card-header h3 {
+        font-size: 13px;
+    }
+    .card-panel .card-header h3 .badge {
+        font-size: 9px;
+        line-height: 18px;
+        padding: 0 8px;
+    }
+    .card-panel .card-header .card-actions {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+    .card-actions input[type="text"] {
+        width: 80px !important;
+        font-size: 10px !important;
+        padding: 3px 8px !important;
+    }
+    
+    /* Tables */
+    .table-wrap {
+        max-height: 350px;
+    }
+    .table-wrap table {
+        font-size: 11px;
+        min-width: 400px;
+    }
+    .table-wrap table th {
+        padding: 6px 10px;
+        font-size: 9px;
+    }
+    .table-wrap table td {
+        padding: 5px 10px;
+        font-size: 10px;
+    }
+    .table-wrap table td .btn-sm {
+        padding: 2px 6px;
+        font-size: 9px;
+    }
+    .table-wrap table td .btn-whatsapp {
+        padding: 2px 6px;
+        font-size: 9px;
+    }
+    .table-wrap::after {
+        content: '← →';
+        display: block;
+        text-align: center;
+        font-size: 10px;
+        color: var(--text-muted);
+        padding: 4px 0;
+        opacity: 0.6;
+    }
+    
+    /* Member Card */
+    .member-card-preview {
+        padding: 14px 16px;
+        min-height: 150px;
+        max-width: 100%;
+        border-radius: 14px;
+    }
+    .member-card-preview .mc-header .mc-brand {
+        font-size: 15px;
+    }
+    .member-card-preview .mc-header .mc-brand i {
+        font-size: 20px;
+    }
+    .member-card-preview .mc-header .mc-badge {
+        font-size: 9px;
+        padding: 2px 12px;
+        line-height: 20px;
+    }
+    .member-card-preview .mc-body .mc-info .mc-name {
+        font-size: 17px;
+    }
+    .member-card-preview .mc-body .mc-info .mc-id {
+        font-size: 10px;
+    }
+    .member-card-preview .mc-body .mc-info .mc-detail {
+        font-size: 9px;
+    }
+    .member-card-preview .mc-body .mc-qr {
+        width: 60px;
+        height: 60px;
+        padding: 4px;
+    }
+    .member-card-preview .mc-body .mc-qr canvas {
+        width: 52px !important;
+        height: 52px !important;
+    }
+    .member-card-preview .mc-footer {
+        font-size: 8px;
+    }
+    
+    /* Profile Header */
+    #profileHeader {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 12px 14px;
+        gap: 10px;
+    }
+    #profileAvatar {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 20px !important;
+    }
+    #profileName {
+        font-size: 18px !important;
+    }
+    #profilePhone {
+        font-size: 13px !important;
+    }
+    #rankBadgeContainer {
+        padding: 4px 12px !important;
+        min-width: 60px !important;
+    }
+    #rankEmoji {
+        font-size: 28px !important;
+    }
+    #rankTitle {
+        font-size: 12px !important;
+    }
+    #rankCount {
+        font-size: 9px !important;
+    }
+    
+    /* Buttons */
+    .btn {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+    .btn-sm {
+        padding: 4px 10px;
+        font-size: 10px;
+    }
+    .card-actions-row .btn {
+        font-size: 10px;
+        padding: 4px 12px;
+    }
+    
+    /* Forms */
+    .form-row input,
+    .form-row select {
+        padding: 5px 10px;
+        font-size: 11px;
+        flex: 1 1 100%;
+        min-width: 0;
+    }
+    
+    /* Chart */
+    .chart-box {
+        padding: 10px 12px;
+    }
+    .chart-box h4 {
+        font-size: 12px;
+    }
+    .chart-box canvas {
+        max-height: 140px;
+    }
+    
+    /* Modal */
+    .modal-box {
+        padding: 16px 14px;
+        max-width: 95%;
+        margin: 10px;
+    }
+    .modal-box .modal-header h3 {
+        font-size: 18px;
+    }
+    .modal-box .modal-header {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .copy-group {
+        flex-wrap: wrap;
+    }
+    .copy-group input {
+        flex: 1 1 100%;
+    }
+    .copy-group .btn-copy {
+        flex: 1 1 100%;
+        text-align: center;
+    }
+    
+    /* Login */
+    #loginPage .login-box {
+        padding: 24px 18px;
+        max-width: 95%;
+    }
+    #loginPage .login-box .logo h1 {
+        font-size: 22px;
+    }
+    #loginPage .login-box .logo i {
+        font-size: 40px;
+    }
+    
+    /* Top 7 */
+    .top7-card {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+    .top7-item {
+        padding: 6px 8px;
+    }
+    .top7-item .rank-medal {
+        font-size: 18px;
+    }
+    .top7-item .top7-name {
+        font-size: 12px;
+    }
+    .top7-item .top7-points {
+        font-size: 10px;
+    }
+    .top7-item .top7-title {
+        font-size: 9px;
+    }
+    
+    /* KPI Row */
+    .kpi-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+    .kpi-item {
+        padding: 8px 10px;
+    }
+    .kpi-item .kpi-val {
+        font-size: 16px;
+    }
+    .kpi-item .kpi-label {
+        font-size: 9px;
+    }
+    
+    /* Calendar */
+    .calendar-grid .day-cell {
+        font-size: 11px;
+        padding: 4px 2px;
+    }
+    .calendar-grid .day-cell .streak-badge {
+        width: 12px;
+        height: 12px;
+        font-size: 6px;
+    }
+    
+    /* Toast */
+    .toast-container {
+        left: 12px;
+        right: 12px;
+        max-width: none;
+        bottom: 16px;
+    }
+    .toast-item {
+        padding: 12px 16px;
+        font-size: 12px;
+    }
+}
+
+/* --- หน้าจอมือถือเล็กมาก --- */
+@media (max-width: 400px) {
+    .app-main {
+        padding: 8px 8px 16px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+    }
+    .stat-card-click {
+        padding: 6px 8px;
+        min-height: 50px;
+    }
+    .stat-card-click .num {
+        font-size: 14px;
+    }
+    .stat-card-click .label {
+        font-size: 9px;
+    }
+    .stat-card-click .stat-icon {
+        width: 22px;
+        height: 22px;
+        font-size: 10px;
+    }
+    
+    .daily-stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+    }
+    .daily-stats-grid .stat-card-click {
+        padding: 4px 6px;
+        min-height: 44px;
+    }
+    .daily-stats-grid .stat-card-click .num {
+        font-size: 12px;
+    }
+    .daily-stats-grid .stat-card-click .label {
+        font-size: 8px;
+    }
+    .daily-stats-grid .stat-card-click .stat-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 9px;
+    }
+    
+    .member-stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+    }
+    .member-stats-grid .stat-card-click {
+        padding: 4px 6px;
+        min-height: 44px;
+    }
+    .member-stats-grid .stat-card-click .num {
+        font-size: 12px;
+    }
+    .member-stats-grid .stat-card-click .label {
+        font-size: 8px;
+    }
+    .member-stats-grid .stat-card-click .stat-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 9px;
+    }
+    
+    .table-wrap table {
+        font-size: 10px;
+        min-width: 320px;
+    }
+    .table-wrap table th {
+        padding: 4px 6px;
+        font-size: 8px;
+    }
+    .table-wrap table td {
+        padding: 4px 6px;
+        font-size: 9px;
+    }
+    .table-wrap table td .btn-sm {
+        padding: 1px 4px;
+        font-size: 8px;
+    }
+    .table-wrap table td .btn-whatsapp {
+        padding: 1px 4px;
+        font-size: 8px;
+    }
+    
+    .member-card-preview {
+        padding: 10px 12px;
+        min-height: 130px;
+    }
+    .member-card-preview .mc-body .mc-qr {
+        width: 50px;
+        height: 50px;
+        padding: 3px;
+    }
+    .member-card-preview .mc-body .mc-qr canvas {
+        width: 44px !important;
+        height: 44px !important;
+    }
+    .member-card-preview .mc-body .mc-info .mc-name {
+        font-size: 15px;
+    }
+    .member-card-preview .mc-body .mc-info .mc-detail {
+        font-size: 8px;
+    }
+    
+    #profileAvatar {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 16px !important;
+    }
+    #profileName {
+        font-size: 15px !important;
+    }
+    #profilePhone {
+        font-size: 11px !important;
+    }
+    #rankBadgeContainer {
+        padding: 4px 8px !important;
+        min-width: 50px !important;
+    }
+    #rankEmoji {
+        font-size: 22px !important;
+    }
+    #rankTitle {
+        font-size: 10px !important;
+    }
+    #rankCount {
+        font-size: 8px !important;
+    }
+    
+    .top7-card {
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+    }
+    .top7-item {
+        padding: 4px 6px;
+    }
+    .top7-item .rank-medal {
+        font-size: 14px;
+    }
+    .top7-item .top7-name {
+        font-size: 10px;
+    }
+    .top7-item .top7-points {
+        font-size: 9px;
+    }
+    .top7-item .top7-title {
+        font-size: 8px;
+    }
+    
+    .kpi-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+    }
+    .kpi-item {
+        padding: 6px 8px;
+    }
+    .kpi-item .kpi-val {
+        font-size: 14px;
+    }
+    .kpi-item .kpi-label {
+        font-size: 8px;
+    }
+    
+    .calendar-grid .day-cell {
+        font-size: 10px;
+        padding: 3px 1px;
+    }
+    
+    .btn {
+        padding: 4px 10px;
+        font-size: 10px;
+    }
+    .btn-sm {
+        padding: 2px 8px;
+        font-size: 9px;
+    }
+    
+    .modal-box {
+        padding: 12px 10px;
+    }
+    
+    #loginPage .login-box {
+        padding: 18px 14px;
+    }
+    #loginPage .login-box .logo h1 {
+        font-size: 18px;
+    }
+    #loginPage .login-box .logo i {
+        font-size: 32px;
+    }
+}
     </style>
 </head>
 <body>
@@ -3950,12 +4547,6 @@
             </div>
         </div>
 
-        <!-- DEBUG PANEL -->
-        <div class="debug-panel" id="debugPanel">
-            <div class="header"><span><i class="fas fa-bug"></i> DEBUG PANEL</span><button onclick="copyDebugInfo()"><i class="fas fa-copy"></i> نسخ</button></div>
-            <div id="debugContent"><span class="text-muted"><i class="fas fa-spinner fa-spin"></i> في انتظار تحميل البيانات...</span></div>
-        </div>
-    </main>
 
     <!-- MODALS -->
     <div class="modal-overlay" id="registerMemberModal">
@@ -6205,128 +6796,164 @@ function showCardDetail(type) {
         // ============================================================
         // member_peak — Minimal + Progress bar
         // ============================================================
-        case 'member_peak': {
-            const monthPeak = profileCheckins.filter(c => 
-                c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) === thisMonth
-            );
-            const hourCounts = {};
-            monthPeak.forEach(c => {
-                if (c.checkin_time) {
-                    const h = c.checkin_time.split(':')[0];
-                    hourCounts[h] = (hourCounts[h] || 0) + 1;
-                }
-            });
-            const sortedHours = Object.entries(hourCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
-
-            title = '⏰ أكثر أوقات الدخول';
-            if (sortedHours.length === 0) {
-                content = `<p class="text-muted text-center" style="padding:30px 0;font-size:14px;">📭 لا توجد بيانات لهذا الشهر</p>`;
-            } else {
-                const total = monthPeak.length || 1;
-                let html = `
-                    <div style="margin-bottom:14px;padding:10px 14px;background:var(--bg-body);border-radius:8px;text-align:center;font-size:13px;color:var(--text-secondary);">
-                        <i class="fas fa-info-circle" style="color:var(--primary);margin-left:6px;"></i>
-                        إجمالي الدخول: <strong style="color:var(--text-primary);">${monthPeak.length}</strong> مرة
-                    </div>
-                    <div style="display:flex;flex-direction:column;gap:8px;">
-                `;
-                const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣'];
-                const colors = ['var(--accent)', 'var(--text-muted)', 'var(--gold)', 'var(--text-muted)', 'var(--text-muted)'];
-                sortedHours.forEach(([hour, cnt], idx) => {
-                    const pct = Math.round((cnt / total) * 100);
-                    const medal = medals[idx] || '#' + (idx+1);
-                    const color = colors[idx] || 'var(--text-muted)';
-                    const isTop = idx === 0;
-                    html += `
-                        <div style="display:flex;align-items:center;gap:12px;padding:6px 10px;background:${isTop ? 'rgba(245,158,11,0.04)' : 'transparent'};border-radius:8px;border:${isTop ? '1px solid rgba(245,158,11,0.12)' : '1px solid rgba(0,0,0,0.02)'};">
-                            <span style="font-size:22px;width:32px;text-align:center;color:${color};">${medal}</span>
-                            <span style="font-weight:700;font-size:${isTop ? '18px' : '15px'};color:var(--text-primary);min-width:60px;">${hour}:00 ${isTop ? '🔥' : ''}</span>
-                            <span style="font-weight:600;font-size:${isTop ? '16px' : '13px'};color:var(--text-primary);min-width:50px;">${cnt} مرة</span>
-                            <div style="flex:1;height:4px;background:var(--bg-body);border-radius:4px;overflow:hidden;">
-                                <div style="height:100%;width:${pct}%;background:${isTop ? 'var(--accent)' : 'var(--primary)'};border-radius:4px;"></div>
-                            </div>
-                            <span style="font-size:11px;color:var(--text-muted);min-width:40px;text-align:left;">${pct}%</span>
-                        </div>
-                    `;
-                });
-                html += `</div>`;
-                content = html;
-            }
-            break;
+case 'member_peak': {
+    // ✅ ใช้ allCheckins (ทุกคน) เพื่อดูชั่วโมงที่คนเข้าใช้มากที่สุด
+    const monthPeak = allCheckins.filter(c => 
+        c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) === thisMonth
+    );
+    const hourCounts = {};
+    monthPeak.forEach(c => {
+        if (c.checkin_time) {
+            const h = c.checkin_time.split(':')[0];
+            hourCounts[h] = (hourCounts[h] || 0) + 1;
         }
+    });
+    const sortedHours = Object.entries(hourCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+    title = '⏰ أكثر أوقات الدخول (هذا الشهر)';
+    if (sortedHours.length === 0) {
+        content = '📭 لا توجد بيانات دخول هذا الشهر';
+    } else {
+        const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣'];
+        const colors = ['#f59e0b', '#94a3b8', '#cd7f32', '#64748b', '#64748b'];
+        let tableHtml = `
+            <div style="margin-bottom:12px;text-align:center;padding:8px;background:var(--bg-body);border-radius:var(--radius-sm);border-right:4px solid var(--accent);">
+                <span style="font-size:13px;color:var(--text-secondary);">
+                    <i class="fas fa-info-circle" style="color:var(--accent);"></i>
+                    จำนวนเช็คอินทั้งหมดในเดือนนี้: <strong>${monthPeak.length}</strong> ครั้ง
+                </span>
+            </div>
+            <table class="rank-table">
+                <thead><tr><th>الترتيب</th><th>الوقت</th><th>عدد المرات</th><th>النسبة</th></tr></thead>
+                <tbody>
+        `;
+        const total = monthPeak.length || 1;
+        sortedHours.forEach(([hour, cnt], idx) => {
+            const pct = Math.round((cnt / total) * 100);
+            const medal = medals[idx] || '#' + (idx+1);
+            const color = colors[idx] || '#64748b';
+            const style = idx === 0 ? 'font-size:20px;font-weight:800;' : '';
+            const bgStyle = idx === 0 ? 'background:rgba(245,158,11,0.08);' : '';
+            tableHtml += `
+                <tr style="${bgStyle}">
+                    <td style="font-size:${idx === 0 ? '28px' : '20px'};">
+                        <span style="color:${color};">${medal}</span>
+                    </td>
+                    <td style="${style}font-weight:700;font-size:${idx === 0 ? '18px' : '15px'};">
+                        ${hour}:00
+                        ${idx === 0 ? ' 🔥' : ''}
+                    </td>
+                    <td style="font-weight:700;font-size:${idx === 0 ? '18px' : '14px'};">
+                        ${cnt} مرة
+                    </td>
+                    <td>
+                        <div style="background:var(--bg-body);border-radius:20px;height:6px;width:100%;position:relative;overflow:hidden;">
+                            <div style="background:${idx === 0 ? 'var(--accent)' : 'var(--primary)'};height:100%;width:${pct}%;border-radius:20px;transition:width 0.5s ease;"></div>
+                        </div>
+                        <span style="font-size:11px;color:var(--text-muted);display:block;margin-top:2px;">${pct}%</span>
+                    </td>
+                </tr>
+            `;
+        });
+        tableHtml += `</tbody></table>`;
+        content = tableHtml;
+    }
+    break;
+}
 
         // ============================================================
         // member_rank — Minimal
         // ============================================================
-        case 'member_rank': {
-            const myMonthCheckins = profileCheckins.filter(c => 
-                c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) === thisMonth
-            );
-            const myCount = myMonthCheckins.length;
-            let rank = 'مبتدئ';
-            let emoji = '🌱';
-            if (myCount >= 25) { rank = 'الملك'; emoji = '👑'; }
-            else if (myCount >= 20) { rank = 'المقاتل'; emoji = '💪'; }
-            else if (myCount >= 15) { rank = 'المجتهد'; emoji = '🏃'; }
-            else if (myCount >= 10) { rank = 'جيد'; emoji = '👍'; }
-            else if (myCount >= 5) { rank = 'كسول'; emoji = '😴'; }
-            title = '🏅 اللقب الشهري';
+case 'member_rank': {
+    // ✅ ฉายาของตัวเอง (ใช้ profileCheckins)
+    const myMonthCheckins = profileCheckins.filter(c => 
+        c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) === thisMonth
+    );
+    const myCount = myMonthCheckins.length;
+    
+    let rank = 'مبتدئ';
+    let icon = '<i class="fas fa-seedling"></i>';
+    let emoji = '🌱';
+    if (myCount >= 25) { rank = 'الملك'; icon = '<i class="fas fa-crown"></i>'; emoji = '👑'; }
+    else if (myCount >= 20) { rank = 'المقاتل'; icon = '<i class="fas fa-dumbbell"></i>'; emoji = '💪'; }
+    else if (myCount >= 15) { rank = 'المجتهد'; icon = '<i class="fas fa-running"></i>'; emoji = '🏃'; }
+    else if (myCount >= 10) { rank = 'جيد'; icon = '<i class="fas fa-thumbs-up"></i>'; emoji = '👍'; }
+    else if (myCount >= 5) { rank = 'كسول'; icon = '<i class="fas fa-bed"></i>'; emoji = '😴'; }
+    
+    title = '🏅 اللقب الشهري';
 
-            // Top 5
-            const memberCounts = {};
-            profileCheckins.filter(c => 
-                c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) === thisMonth
-            ).forEach(c => {
-                if (c.member_id) memberCounts[c.member_id] = (memberCounts[c.member_id] || 0) + 1;
-            });
-            const top5 = Object.entries(memberCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
-
-            let html = `
-                <div style="text-align:center;padding:16px 0;border-bottom:1px solid var(--border-color);margin-bottom:14px;">
-                    <div style="font-size:48px;line-height:1.2;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.04));">${emoji}</div>
-                    <div style="font-size:22px;font-weight:700;color:var(--text-primary);margin-top:4px;">${rank}</div>
-                    <div style="font-size:13px;color:var(--text-muted);margin-top:2px;">${myCount} مرة هذا الشهر</div>
-                </div>
-                <div style="font-size:14px;font-weight:600;color:var(--text-secondary);margin-bottom:10px;">🏆 أفضل 5 أعضاء</div>
-                <div style="max-height:260px;overflow-y:auto;">
-                    <table style="width:100%;border-collapse:collapse;font-size:13px;">
-                        <thead>
-                            <tr style="border-bottom:2px solid var(--border-color);">
-                                <th style="text-align:right;padding:8px 0;font-weight:600;color:var(--text-muted);font-size:11px;">#</th>
-                                <th style="text-align:right;padding:8px 0;font-weight:600;color:var(--text-muted);font-size:11px;">الاسم</th>
-                                <th style="text-align:right;padding:8px 0;font-weight:600;color:var(--text-muted);font-size:11px;">عدد الدخول</th>
-                                <th style="text-align:right;padding:8px 0;font-weight:600;color:var(--text-muted);font-size:11px;">اللقب</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `;
-            const rankTitles = ['الملك', 'المقاتل', 'المجتهد', 'جيد', 'مبتدئ'];
-            const rankEmojis = ['👑', '💪', '🏃', '👍', '🌱'];
-            top5.forEach(([id, count], idx) => {
-                const member = allMembers.find(m => m.member_id === id);
-                const name = member ? member.full_name : id;
-                let rTitle = rankTitles[idx] || 'جيد';
-                let rEmoji = rankEmojis[idx] || '👍';
-                if (count >= 25) { rTitle = 'الملك'; rEmoji = '👑'; }
-                else if (count >= 20) { rTitle = 'المقاتل'; rEmoji = '💪'; }
-                else if (count >= 15) { rTitle = 'المجتهد'; rEmoji = '🏃'; }
-                else if (count >= 10) { rTitle = 'جيد'; rEmoji = '👍'; }
-                else if (count >= 5) { rTitle = 'مبتدئ'; rEmoji = '🌱'; }
-                const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : (idx+1);
-                const isMe = id === profileMemberId;
-                html += `
-                    <tr style="border-bottom:1px solid rgba(0,0,0,0.04);${isMe ? 'background:rgba(245,158,11,0.04);border-right:3px solid var(--accent);' : ''}">
-                        <td style="padding:8px 0;font-size:14px;color:var(--text-muted);">${medal}</td>
-                        <td style="padding:8px 0;font-size:13px;color:var(--text-primary);">${name}${isMe ? ' <span style="font-size:11px;color:var(--accent);font-weight:600;">(أنت)</span>' : ''}</td>
-                        <td style="padding:8px 0;font-size:13px;font-weight:600;color:var(--text-primary);">${count}</td>
-                        <td style="padding:8px 0;font-size:13px;color:var(--text-muted);">${rEmoji} ${rTitle}</td>
-                    </tr>
-                `;
-            });
-            html += `</tbody></table></div>`;
-            content = html;
-            break;
+    // ✅ คำนวณ Top 5 ของเดือนนี้ (ใช้ allCheckins ของทุกคน)
+    const memberCounts = {};
+    allCheckins.filter(c => 
+        c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) === thisMonth
+    ).forEach(c => {
+        if (c.member_id) {
+            memberCounts[c.member_id] = (memberCounts[c.member_id] || 0) + 1;
         }
+    });
+    
+    const top5 = Object.entries(memberCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5);
+
+    // ✅ ถ้าไม่มีข้อมูลของใครเลย (0 คน) ให้แสดงข้อความ
+    if (top5.length === 0) {
+        content = `
+            <div style="text-align:center;padding:20px 0;color:var(--text-muted);">
+                <div style="font-size:48px;margin-bottom:10px;">📊</div>
+                <p>لا توجد بيانات دخول هذا الشهر</p>
+            </div>
+        `;
+        break;
+    }
+
+    // ✅ แสดงผล
+    let rankHtml = `
+        <div style="text-align:center;padding:16px 0;background:linear-gradient(135deg, rgba(245,158,11,0.08), transparent);border-radius:var(--radius-sm);margin-bottom:14px;">
+            <div style="font-size:56px;line-height:1.2;filter:drop-shadow(0 4px 16px rgba(245,158,11,0.2));">${emoji}</div>
+            <div style="font-size:24px;font-weight:800;color:var(--accent);margin-top:6px;">${rank}</div>
+            <div style="font-size:14px;color:var(--text-muted);margin-top:2px;">${myCount} مرة هذا الشهر</div>
+            <div style="margin-top:8px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;">
+                <span style="background:rgba(16,185,129,0.1);padding:2px 14px;border-radius:30px;font-size:12px;color:var(--success);">
+                    <i class="fas fa-calendar-check"></i> ${myCount} يوم
+                </span>
+            </div>
+        </div>
+        <div style="margin-top:10px;"><strong>🏆 أفضل 5 أعضاء هذا الشهر:</strong></div>
+        <div class="table-wrap" style="max-height:250px;">
+            <table class="rank-table">
+                <thead><tr><th>#</th><th>الاسم</th><th>عدد الدخول</th><th>اللقب</th></tr></thead>
+                <tbody>
+    `;
+    
+    const rankTitles = ['الملك', 'المقاتل', 'المجتهد', 'جيد', 'مبتدئ'];
+    const rankEmojis = ['👑', '💪', '🏃', '👍', '🌱'];
+    
+    top5.forEach(([id, count], idx) => {
+        const member = allMembers.find(m => m.member_id === id);
+        const name = member ? member.full_name : id;
+        let rTitle = rankTitles[idx] || 'جيد';
+        let rEmoji = rankEmojis[idx] || '👍';
+        if (count >= 25) { rTitle = 'الملك'; rEmoji = '👑'; }
+        else if (count >= 20) { rTitle = 'المقاتل'; rEmoji = '💪'; }
+        else if (count >= 15) { rTitle = 'المجتهد'; rEmoji = '🏃'; }
+        else if (count >= 10) { rTitle = 'جيد'; rEmoji = '👍'; }
+        else if (count >= 5) { rTitle = 'مبتدئ'; rEmoji = '🌱'; }
+        const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : (idx+1);
+        const isMe = id === profileMemberId;
+        rankHtml += `
+            <tr style="${isMe ? 'background:rgba(245,158,11,0.06);border-right:3px solid var(--accent);' : ''}">
+                <td>${medal}</td>
+                <td>${name}${isMe ? ' 👈 أنت' : ''}</td>
+                <td>${count}</td>
+                <td>${rEmoji} ${rTitle}</td>
+            </tr>
+        `;
+    });
+    
+    rankHtml += `</tbody></table></div>`;
+    content = rankHtml;
+    break;
+}
 
         // ============================================================
         // member_percent — Minimal
@@ -7904,88 +8531,7 @@ function renderTop8Content(container) {
 // ============================================================
 // RENDER DEBUG — แสดงข้อมูลดีบัก (Admin + Member)
 // ============================================================
-function renderDebug(data, error) {
-    const container = document.getElementById('debugContent');
-    if (!container) return;
-    
-    // ✅ ถ้ามี error แสดง error
-    if (error) {
-        container.innerHTML = `
-            <div class="error-text"><i class="fas fa-times-circle"></i> ERROR: ${error}</div>
-            <div class="text-muted text-sm">${data ? '📦 ข้อมูลบางส่วน:' : '⚠️ ไม่มีข้อมูล'}</div>
-            ${data ? `<pre>${JSON.stringify(data, null, 2)}</pre>` : ''}
-        `;
-        return;
-    }
-    
-    // ✅ ใช้ lastData ถ้ามี (Admin) หรือใช้ข้อมูลจากตัวแปรอื่น (Member)
-    const summary = data?.summary || {};
-    const members = data?.members || allMembers || [];
-    const payments = data?.payments || allPayments || [];
-    const checkins = data?.checkins || allCheckins || [];
-    const revenueData = data?.revenue_by_month || [];
-    const trendData = data?.checkin_trend || [];
-    const peakData = data?.peak_hours || [];
-    
-    // ✅ ตรวจสอบว่ามีข้อมูลจาก lastData หรือไม่
-    const hasData = data !== null && data !== undefined;
-    const isMember = !hasData && allMembers.length > 0;
-    
-    if (isMember) {
-        // 🔹 Member Mode — ใช้ข้อมูลจากตัวแปรที่มี
-        container.innerHTML = `
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;color:var(--text-muted);font-size:12px;margin-bottom:8px;">
-                <div>👥 สมาชิกทั้งหมด: <strong style="color:#4ade80;">${allMembers.length}</strong> คน</div>
-                <div>💳 การชำระเงิน: <strong style="color:#4ade80;">${allPayments.length}</strong> รายการ</div>
-                <div>📈 เช็คอินทั้งหมด: <strong style="color:#4ade80;">${allCheckins.length}</strong> ครั้ง</div>
-                <div>👤 สมาชิกปัจจุบัน: <strong style="color:#4ade80;">${profileMember?.full_name || '-'}</strong></div>
-                <div>🆔 รหัส: <strong style="color:#4ade80;">${profileMemberId || '-'}</strong></div>
-                <div>🕐 อัปเดตล่าสุด: <strong style="color:#4ade80;">${new Date().toLocaleString('ar-EG')}</strong></div>
-            </div>
-            <div style="margin-top:6px;padding:6px 12px;background:rgba(56,189,248,0.08);border-radius:6px;border-right:3px solid var(--secondary);">
-                <span style="color:var(--text-muted);font-size:11px;">
-                    <i class="fas fa-info-circle" style="color:var(--secondary);"></i>
-                    ${profileCheckins.length > 0 ? `✅ ประวัติเช็คอินของท่าน: ${profileCheckins.length} ครั้ง` : '⚠️ ยังไม่มีประวัติเช็คอิน'}
-                    ${profilePayments.length > 0 ? ` | 💳 ชำระเงิน: ${profilePayments.length} ครั้ง` : ''}
-                </span>
-            </div>
-            <details style="margin-top:6px;">
-                <summary style="color:#4ade80;cursor:pointer;font-size:12px;font-weight:600;">📄 ดูข้อมูลของท่าน</summary>
-                <pre style="color:#b0c4de;font-size:10px;margin-top:4px;max-height:150px;overflow-y:auto;background:rgba(0,0,0,0.2);padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);">
-${JSON.stringify({
-    member: profileMember,
-    checkins: profileCheckins.slice(0, 10),
-    payments: profilePayments.slice(0, 10),
-    total_checkins: profileCheckins.length,
-    total_payments: profilePayments.length
-}, null, 2)}
-                </pre>
-            </details>
-        `;
-        return;
-    }
-    
-    // 🔹 Admin Mode — ใช้ lastData
-    if (!data) {
-        container.innerHTML = '<span class="text-muted"><i class="fas fa-spinner fa-spin"></i> ในขณะนี้ข้อมูลกำลังโหลด...</span>';
-        return;
-    }
-    
-    container.innerHTML = `
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;color:var(--text-muted);font-size:12px;margin-bottom:8px;">
-            <div>📊 summary keys: ${Object.keys(summary).join(', ')}</div>
-            <div>👥 members: ${members.length} คน</div>
-            <div>💳 payments: ${payments.length} รายการ</div>
-            <div>📈 revenue_by_month: ${revenueData.length} เดือน</div>
-            <div>📉 checkin_trend: ${trendData.length} วัน</div>
-            <div>⏰ peak_hours: ${peakData.length} ชั่วโมง</div>
-        </div>
-        <details>
-            <summary style="color:#4ade80;cursor:pointer;font-size:13px;font-weight:600;">📄 ดู JSON เต็ม</summary>
-            <pre>${JSON.stringify(data, null, 2)}</pre>
-        </details>
-    `;
-}   
+  
     
     </script>
 </body>
