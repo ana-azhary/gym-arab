@@ -3704,41 +3704,53 @@
         </div>
 
         <!-- PAGE: PROFILE (Member Dashboard) -->
-<!-- ✅ ส่วนหัว: แสดง ชื่อ + เบอร์ + ฉายา (แยกจากบัตร) -->
-<div id="profileHeader" style="display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-bottom:12px; padding:10px 14px; background:var(--bg-body); border-radius:var(--radius-sm); border-right:4px solid var(--accent);">
-    <div style="flex:1; min-width:120px;">
-        <h3 id="profileName" style="font-size:20px;font-weight:700;color:var(--text-primary);">-</h3>
-        <p class="text-muted text-sm" id="profilePhone" style="margin-top:2px;">
-            <i class="fas fa-phone" style="color:var(--primary);"></i> <span id="profilePhoneText">-</span>
-        </p>
-    </div>
-    <div style="text-align:left; padding:4px 14px; background:var(--accent-light); border-radius:30px; border:1px solid rgba(245,158,11,0.2);">
-        <span id="profileRankBadge" style="font-size:14px; font-weight:700; color:var(--accent);">
-            <i class="fas fa-crown"></i> <span id="profileRankText">-</span>
-        </span>
-    </div>
-</div>
-
-<!-- ✅ บัตรสมาชิก (อยู่ด้านล่าง) -->
-<div class="card-panel relative" id="profileCard">
-    <div class="expired-overlay" id="profileExpiredOverlay">
-        <i class="fas fa-lock"></i>
-        <h3>العضوية منتهية الصلاحية</h3>
-        <p>يرجى الاتصال بالمسؤول</p>
-    </div>
-    <div style="display:flex; justify-content:center; margin-top:6px;">
-        <div class="member-card-preview" id="memberCardPreview">
-            <!-- เนื้อหาบัตร -->
-            ...
-        </div>
-    </div>
-    <!-- ปุ่มต่างๆ -->
-    <div class="card-actions-row no-print">
-        <button class="btn btn-primary btn-sm" onclick="downloadQR()"><i class="fas fa-qrcode"></i> QR</button>
-        <button class="btn btn-primary btn-sm" onclick="downloadMemberCardPDF()"><i class="fas fa-file-pdf"></i> PDF</button>
-        <button class="btn btn-success btn-sm" onclick="printMemberCard()"><i class="fas fa-print"></i> طباعة</button>
-    </div>
-</div>
+        <div id="page-profile" class="page-section">
+            <div class="member-stats-grid" id="memberStatsGrid">
+                <div class="stat-card-click" onclick="showCardDetail('member_revenue')"><div class="stat-top"><div class="stat-icon blue"><i class="fas fa-credit-card"></i></div></div><div class="num" id="mStatRevenue">-</div><div class="label">مدفوعات هذا الشهر</div></div>
+                <div class="stat-card-click" onclick="showCardDetail('member_xp')"><div class="stat-top"><div class="stat-icon green"><i class="fas fa-star"></i></div></div><div class="num" id="mStatXp">-</div><div class="label">نقاط الاجتهاد (XP)</div></div>
+                <div class="stat-card-click" onclick="showCardDetail('member_peak')"><div class="stat-top"><div class="stat-icon amber"><i class="fas fa-clock"></i></div></div><div class="num" id="mStatPeak">-</div><div class="label">أكثر وقت دخول</div></div>
+                <div class="stat-card-click" onclick="showCardDetail('member_rank')"><div class="stat-top"><div class="stat-icon purple"><i class="fas fa-trophy"></i></div></div><div class="num" id="mStatRank">-</div><div class="label">اللقب الشهري</div></div>
+                <div class="stat-card-click" onclick="showCardDetail('member_percent')"><div class="stat-top"><div class="stat-icon indigo"><i class="fas fa-percent"></i></div></div><div class="num" id="mStatPercent">-</div><div class="label">دخول اليوم</div></div>
+                <div class="stat-card-click" onclick="showCardDetail('member_daysleft')"><div class="stat-top"><div class="stat-icon red"><i class="fas fa-hourglass-half"></i></div></div><div class="num" id="mStatDaysLeft">-</div><div class="label">أيام متبقية للتجديد</div></div>
+            </div>
+            <div id="memberStatusBanner"></div>
+            <div class="card-panel relative" id="profileCard">
+                <div class="expired-overlay" id="profileExpiredOverlay"><i class="fas fa-lock"></i><h3>العضوية منتهية الصلاحية</h3><p>يرجى الاتصال بالمسؤول</p></div>
+                <div style="display:flex; flex-wrap:wrap; gap:14px; margin-bottom:10px;">
+                    <div style="flex:1; min-width:160px;">
+                        <h3 id="profileName" style="font-size:22px;font-weight:800;">-</h3>
+                        <p class="text-muted text-sm" id="profileId"><i class="fas fa-id-badge"></i> الرقم: -</p>
+                        <p class="text-muted text-sm" id="profilePhone"><i class="fas fa-phone"></i> -</p>
+                        <p class="text-muted text-sm" id="profileType"><i class="fas fa-tag"></i> -</p>
+                        <p class="text-muted text-sm" id="profilePoints"><i class="fas fa-coins"></i> النقاط: 0</p>
+                        <p class="text-muted text-sm" id="profileXp"><i class="fas fa-star"></i> XP: 0</p>
+                        <p class="text-muted text-sm" id="profileRank"><i class="fas fa-medal"></i> المستوى: -</p>
+                        <span id="profileExpiryStatus" style="font-weight:700;font-size:13px;display:block;margin-top:4px;"></span>
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:center; margin-top:6px;">
+                    <div class="member-card-preview" id="memberCardPreview">
+                        <div class="mc-header"><div class="mc-brand"><i class="fas fa-dumbbell"></i><span>Pro Gym</span></div><span class="mc-badge" id="previewType">-</span></div>
+                        <div class="mc-body">
+                            <div class="mc-info">
+                                <div class="mc-name" id="previewName">-</div>
+                                <div class="mc-id" id="previewId">-</div>
+                                <div class="mc-detail"><i class="fas fa-phone"></i> <span id="previewPhone">-</span></div>
+                                <div class="mc-detail"><i class="fas fa-calendar"></i> انتهاء الصلاحية: <span id="previewExpiry">-</span></div>
+                                <div class="mc-detail"><i class="fas fa-coins"></i> النقاط: <span id="previewPoints">0</span></div>
+                                <div class="mc-detail"><i class="fas fa-star"></i> XP: <span id="previewXp">0</span></div>
+                            </div>
+                            <div class="mc-qr" id="profileQrBox"></div>
+                        </div>
+                        <div class="mc-footer"><div><i class="fas fa-calendar-check"></i> تاريخ البدء: <span id="previewStartDate">-</span></div><div class="expiry" id="previewExpiryFooter">-</div></div>
+                    </div>
+                </div>
+                <div class="card-actions-row no-print">
+                    <button class="btn btn-primary btn-sm" onclick="downloadQR()"><i class="fas fa-qrcode"></i> QR</button>
+                    <button class="btn btn-primary btn-sm" onclick="downloadMemberCardPDF()"><i class="fas fa-file-pdf"></i> PDF</button>
+                    <button class="btn btn-success btn-sm" onclick="printMemberCard()"><i class="fas fa-print"></i> طباعة</button>
+                </div>
+            </div>
             <div class="card-panel" id="top8Panel">
                 <div class="card-header"><h3><i class="fas fa-trophy" style="color:var(--accent);"></i> أعلى 8 دخول خلال العام</h3><span class="text-xs text-muted">(أفضل 8)</span></div>
                 <div id="top8Container"><p class="text-muted text-sm"><i class="fas fa-spinner fa-spin"></i> جارٍ التحميل...</p></div>
@@ -5624,44 +5636,65 @@ case 'expired': {
             }
         }
 
-
-        const [memberData, ciData, payData] = await Promise.all([
+async function loadProfile() {
+    console.log('🔄 loadProfile() ถูกเรียก');
+    console.log('🔍 profileMemberId:', profileMemberId);
+    
+    if (!profileMemberId) {
+        console.error('❌ profileMemberId เป็น null');
+        showToast('❌ ไม่พบข้อมูลสมาชิก', 'error');
+        return;
+    }
+    
+    showProfileLoading(true);
+    
+    try {
+        // โหลดข้อมูลสมาชิก
+        const [memberRes, checkinRes, paymentRes] = await Promise.all([
             apiCall(`/members/${profileMemberId}`),
             apiCall(`/checkin/member/${profileMemberId}`),
             apiCall(`/payments/member/${profileMemberId}`)
         ]);
-        profileMember = memberData.data || memberData;
-        profileCheckins = ciData.data || [];
-        profilePayments = payData.data || [];
-
+        
+        profileMember = memberRes.data || memberRes;
+        profileCheckins = checkinRes.data || [];
+        profilePayments = paymentRes.data || [];
+        
+        console.log('✅ profileMember:', profileMember);
+        console.log('✅ profileCheckins:', profileCheckins.length);
+        console.log('✅ profilePayments:', profilePayments.length);
+        
+        // เก็บ Cache
         setCachedData('profile_' + profileMemberId, {
             member: profileMember,
             checkins: profileCheckins,
             payments: profilePayments
         });
-
-        // ✅ แยกการอัปเดต
-        renderProfileHeader();   // ← อัปเดตส่วนหัว (ชื่อ + เบอร์ + ฉายา)
-        renderProfileCard();     // ← อัปเดตบัตร
-
+        
+        // ✅ เรียก renderProfileData (ซึ่งจะเรียก loadTop8 ด้วย)
+        renderProfileData();
+        
         showProfileLoading(false);
-
-    } catch (e) {
-                console.error('❌ خطأ في loadProfile:', e);
-                const cached = getCachedData('profile_' + profileMemberId);
-                if (cached) {
-                    profileMember = cached.member;
-                    profileCheckins = cached.checkins || [];
-                    profilePayments = cached.payments || [];
-                    renderProfileData();
-                    showToast('⚠️ جاري عرض البيانات المخزنة مؤقتًا (غير متصل)', 'warning');
-                    showProfileLoading(false);
-                } else {
-                    showToast('❌ فشل تحميل الملف الشخصي: ' + e.message, 'error');
-                    showProfileLoading(false);
-                }
-            }
+        console.log('🎉 loadProfile สำเร็จ');
+        
+    } catch (error) {
+        console.error('❌ loadProfile Error:', error);
+        
+        // ลองใช้ Cache
+        const cached = getCachedData('profile_' + profileMemberId);
+        if (cached) {
+            console.log('📦 ใช้ข้อมูลจาก Cache');
+            profileMember = cached.member;
+            profileCheckins = cached.checkins || [];
+            profilePayments = cached.payments || [];
+            renderProfileData();
+            showToast('⚠️ แสดงข้อมูลจาก Cache', 'warning');
+        } else {
+            showToast('❌ โหลดโปรไฟล์ไม่สำเร็จ: ' + error.message, 'error');
         }
+        showProfileLoading(false);
+    }
+}
 
         function renderProfileData() {
             const m = profileMember;
@@ -5739,229 +5772,620 @@ case 'expired': {
             loadTop8();
         }
 
-        function updateMemberDashboard() {
-            if (!profileMember) return;
-            const m = profileMember;
-            const today = getTodayStr();
-            const thisMonth = today.slice(0, 7);
+// ============================================================
+// UPDATE MEMBER DASHBOARD — ใช้ profileCheckins แทน allCheckins
+// ============================================================
+// ============================================================
+// UPDATE MEMBER DASHBOARD — อัปเดต 6 การ์ดในหน้า Profile
+// ============================================================
+function updateMemberDashboard() {
+    if (!profileMember) {
+        console.warn('⚠️ updateMemberDashboard: ไม่มี profileMember');
+        return;
+    }
+    
+    const m = profileMember;
+    const today = getTodayStr();
+    const thisMonth = today.slice(0, 7);
 
-            const monthPayments = profilePayments.filter(p => p.payment_date && normalizeDate(p.payment_date).slice(0, 7) ===
-                thisMonth);
-            const totalPaid = monthPayments.reduce((sum, p) => sum + parseFloat(p.amount || 0), 0);
-            $('mStatRevenue').textContent = toEGP(totalPaid);
+    // ✅ ฟังก์ชันช่วยอัปเดต element อย่างปลอดภัย
+    function safeSetText(id, value, defaultValue = '-') {
+        const el = document.getElementById(id);
+        if (el) {
+            el.textContent = value !== undefined && value !== null && value !== '' ? value : defaultValue;
+            return true;
+        } else {
+            console.warn(`⚠️ Element not found: #${id}`);
+            return false;
+        }
+    }
 
-            const xp = getXp(m.member_id);
-            $('mStatXp').textContent = xp;
+    function safeSetHTML(id, html) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.innerHTML = html;
+            return true;
+        } else {
+            console.warn(`⚠️ Element not found: #${id}`);
+            return false;
+        }
+    }
 
-            const monthCheckinsAll = allCheckins.filter(c => c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) ===
-                thisMonth);
+    // ============================================================
+    // 1. ยอดชำระเดือนนี้ (mStatRevenue)
+    // ============================================================
+    const monthPayments = profilePayments.filter(p => 
+        p.payment_date && normalizeDate(p.payment_date).slice(0, 7) === thisMonth
+    );
+    const totalPaid = monthPayments.reduce((sum, p) => sum + parseFloat(p.amount || 0), 0);
+    safeSetText('mStatRevenue', toEGP(totalPaid));
+
+    // ============================================================
+    // 2. XP (mStatXp)
+    // ============================================================
+    const xp = getXp(m.member_id);
+    safeSetText('mStatXp', xp);
+
+    // ============================================================
+    // 3. เวลาที่คนเข้าใช้มากที่สุด (mStatPeak)
+    // ============================================================
+    const monthCheckinsAll = profileCheckins.filter(c => 
+        c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) === thisMonth
+    );
+    const hourCounts = {};
+    monthCheckinsAll.forEach(c => {
+        if (c.checkin_time) {
+            const h = c.checkin_time.split(':')[0];
+            hourCounts[h] = (hourCounts[h] || 0) + 1;
+        }
+    });
+    const sortedHours = Object.entries(hourCounts).sort((a, b) => b[1] - a[1]);
+    if (sortedHours.length > 0) {
+        const top = sortedHours[0];
+        safeSetHTML('mStatPeak', `<span class="top-hour-highlight">${top[0]}:00</span> (${top[1]} ครั้ง)`);
+    } else {
+        safeSetText('mStatPeak', 'لا توجد بيانات');
+    }
+
+    // ============================================================
+    // 4. ฉายาประจำเดือน (mStatRank)
+    // ============================================================
+    const myMonthCheckins = profileCheckins.filter(c => 
+        c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) === thisMonth
+    );
+    const myCount = myMonthCheckins.length;
+    let rankTitle = 'مبتدئ';
+    let rankIcon = '<i class="fas fa-seedling"></i>';
+    if (myCount >= 25) { rankTitle = 'الملك'; rankIcon = '<i class="fas fa-crown"></i>'; }
+    else if (myCount >= 20) { rankTitle = 'المقاتل'; rankIcon = '<i class="fas fa-dumbbell"></i>'; }
+    else if (myCount >= 15) { rankTitle = 'المجتهد'; rankIcon = '<i class="fas fa-running"></i>'; }
+    else if (myCount >= 10) { rankTitle = 'جيد'; rankIcon = '<i class="fas fa-thumbs-up"></i>'; }
+    else if (myCount >= 5) { rankTitle = 'كسول'; rankIcon = '<i class="fas fa-bed"></i>'; }
+    safeSetHTML('mStatRank', rankIcon + ' ' + rankTitle + ` (${myCount} ครั้ง)`);
+
+    // ============================================================
+    // 5. เช็คอินวันนี้ (mStatPercent)
+    // ============================================================
+    if (allMembers && allMembers.length > 0) {
+        const totalMembers = allMembers.length;
+        const todayCheckinsAll = allCheckins.filter(c => normalizeDate(c.checkin_date) === today).length;
+        const percentage = Math.round((todayCheckinsAll / totalMembers) * 100);
+        safeSetText('mStatPercent', percentage + '%');
+        
+        // เปลี่ยนสีการ์ดตามเปอร์เซ็นต์
+        const card = document.getElementById('mStatPercent')?.closest('.stat-card-click');
+        if (card) {
+            if (percentage >= 50) card.style.borderRight = '4px solid var(--success)';
+            else if (percentage >= 25) card.style.borderRight = '4px solid var(--warning)';
+            else card.style.borderRight = '4px solid var(--danger)';
+        }
+        window._todayCheckinsAll = todayCheckinsAll;
+        window._todayPercentage = percentage;
+    } else {
+        safeSetText('mStatPercent', '⏳ جارٍ التحميل...');
+    }
+
+    // ============================================================
+    // 6. จำนวนวันเหลือ (mStatDaysLeft)
+    // ============================================================
+    let daysLeft = '-';
+    if (profileExpiryStr && profileExpiryStr !== '-') {
+        const diff = daysBetween(today, normalizeDate(profileExpiryStr));
+        daysLeft = diff >= 0 ? diff + ' วัน' : 'หมดอายุ';
+    }
+    safeSetText('mStatDaysLeft', daysLeft);
+
+    // ============================================================
+    // 7. แต้มสะสม (mStatPoints) — ถ้ามีการ์ดนี้
+    // ============================================================
+    const points = getPoints(m.member_id);
+
+    console.log('✅ updateMemberDashboard: อัปเดตการ์ดทั้งหมดเสร็จ');
+}
+
+// ============================================================
+// SHOW CARD DETAIL — แสดง Modal รายละเอียดการ์ด
+// ============================================================
+// ============================================================
+// SHOW CARD DETAIL — Minimal & Clean Design
+// ============================================================
+function showCardDetail(type) {
+    let title = 'تفاصيل';
+    let content = '';
+    const today = getTodayStr();
+    const thisMonth = today.slice(0, 7);
+
+    // Utility: Minimal card style
+    const cardStyle = (bg = 'transparent') => `
+        style="
+            background: ${bg};
+            border-radius: 10px;
+            padding: 12px 16px;
+            border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        "
+    `;
+
+    switch (type) {
+
+        // ============================================================
+        // member_revenue — Minimal & Clean
+        // ============================================================
+        case 'member_revenue': {
+            const allPaymentsHistory = profilePayments;
+            const monthPayments = allPaymentsHistory.filter(p => 
+                p.payment_date && normalizeDate(p.payment_date).slice(0, 7) === thisMonth
+            );
+            const totalMonth = monthPayments.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
+            const totalAll = allPaymentsHistory.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
+
+            title = '💰 سجل المدفوعات';
+            let html = `
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+                    <div ${cardStyle('var(--bg-body)')}>
+                        <div style="font-size:12px;color:var(--text-muted);font-weight:500;">هذا الشهر</div>
+                        <div style="font-size:24px;font-weight:700;color:var(--primary);margin-top:4px;">${toEGP(totalMonth)}</div>
+                    </div>
+                    <div ${cardStyle('var(--bg-body)')}>
+                        <div style="font-size:12px;color:var(--text-muted);font-weight:500;">الإجمالي</div>
+                        <div style="font-size:24px;font-weight:700;color:var(--success);margin-top:4px;">${toEGP(totalAll)}</div>
+                    </div>
+                </div>
+            `;
+
+            if (allPaymentsHistory.length === 0) {
+                html += `<p class="text-muted text-center" style="padding:20px 0;font-size:14px;">📭 لا يوجد سجل مدفوعات</p>`;
+            } else {
+                let rows = allPaymentsHistory.map((p, i) => `
+                    <tr style="border-bottom:1px solid rgba(0,0,0,0.04);">
+                        <td style="padding:8px 0;font-size:13px;color:var(--text-secondary);">${i+1}</td>
+                        <td style="padding:8px 0;font-size:13px;font-weight:600;color:var(--text-primary);">${toEGP(p.amount)}</td>
+                        <td style="padding:8px 0;font-size:12px;color:var(--text-muted);">${formatDate(p.payment_date)}</td>
+                        <td style="padding:8px 0;font-size:12px;color:var(--text-muted);">${p.months_paid || 1} شهر</td>
+                        <td style="padding:8px 0;font-size:12px;color:var(--text-muted);">${formatDate(p.expiry_date)}</td>
+                    </tr>
+                `).join('');
+
+                html += `
+                    <div style="max-height:280px;overflow-y:auto;margin-top:4px;">
+                        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                            <thead>
+                                <tr style="border-bottom:2px solid var(--border-color);">
+                                    <th style="text-align:right;padding:8px 0;font-weight:600;color:var(--text-muted);font-size:11px;">#</th>
+                                    <th style="text-align:right;padding:8px 0;font-weight:600;color:var(--text-muted);font-size:11px;">المبلغ</th>
+                                    <th style="text-align:right;padding:8px 0;font-weight:600;color:var(--text-muted);font-size:11px;">التاريخ</th>
+                                    <th style="text-align:right;padding:8px 0;font-weight:600;color:var(--text-muted);font-size:11px;">الأشهر</th>
+                                    <th style="text-align:right;padding:8px 0;font-weight:600;color:var(--text-muted);font-size:11px;">انتهاء</th>
+                                </tr>
+                            </thead>
+                            <tbody>${rows}</tbody>
+                        </table>
+                    </div>
+                `;
+            }
+            content = html;
+            break;
+        }
+
+        // ============================================================
+        // member_xp — Minimal
+        // ============================================================
+        case 'member_xp': {
+            const xp = getXp(profileMemberId);
+            const points = getPoints(profileMemberId);
+            title = '⭐ نقاط الاجتهاد';
+
+            const xpList = allMembers.map(m => ({ 
+                id: m.member_id, 
+                name: m.full_name, 
+                xp: getXp(m.member_id) 
+            }))
+            .sort((a, b) => b.xp - a.xp)
+            .slice(0, 12);
+
+            let html = `
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+                    <div ${cardStyle('var(--bg-body)')}>
+                        <div style="font-size:12px;color:var(--text-muted);font-weight:500;">XP الخاص بك</div>
+                        <div style="font-size:24px;font-weight:700;color:var(--primary);margin-top:4px;">${xp}</div>
+                    </div>
+                    <div ${cardStyle('var(--bg-body)')}>
+                        <div style="font-size:12px;color:var(--text-muted);font-weight:500;">نقاط الدفع</div>
+                        <div style="font-size:24px;font-weight:700;color:var(--success);margin-top:4px;">${points}</div>
+                    </div>
+                </div>
+                <div style="font-size:14px;font-weight:600;color:var(--text-secondary);margin-bottom:10px;">🏆 ترتيب XP (أعلى 12)</div>
+                <div style="max-height:280px;overflow-y:auto;">
+                    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                        <thead>
+                            <tr style="border-bottom:2px solid var(--border-color);">
+                                <th style="text-align:right;padding:8px 0;font-weight:600;color:var(--text-muted);font-size:11px;">#</th>
+                                <th style="text-align:right;padding:8px 0;font-weight:600;color:var(--text-muted);font-size:11px;">الاسم</th>
+                                <th style="text-align:right;padding:8px 0;font-weight:600;color:var(--text-muted);font-size:11px;">XP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            xpList.forEach((m, i) => {
+                const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '';
+                const isMe = m.id === profileMemberId;
+                html += `
+                    <tr style="border-bottom:1px solid rgba(0,0,0,0.04);${isMe ? 'background:rgba(245,158,11,0.04);border-right:3px solid var(--accent);' : ''}">
+                        <td style="padding:8px 0;font-size:14px;color:var(--text-muted);">${medal || (i+1)}</td>
+                        <td style="padding:8px 0;font-size:13px;color:var(--text-primary);">${m.name}${isMe ? ' <span style="font-size:11px;color:var(--accent);font-weight:600;">(أنت)</span>' : ''}</td>
+                        <td style="padding:8px 0;font-size:13px;font-weight:600;color:var(--text-primary);">${m.xp}</td>
+                    </tr>
+                `;
+            });
+            html += `</tbody></table></div>`;
+            content = html;
+            break;
+        }
+
+        // ============================================================
+        // member_peak — Minimal + Progress bar
+        // ============================================================
+        case 'member_peak': {
+            const monthPeak = profileCheckins.filter(c => 
+                c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) === thisMonth
+            );
             const hourCounts = {};
-            monthCheckinsAll.forEach(c => {
+            monthPeak.forEach(c => {
                 if (c.checkin_time) {
                     const h = c.checkin_time.split(':')[0];
                     hourCounts[h] = (hourCounts[h] || 0) + 1;
                 }
             });
-            const sortedHours = Object.entries(hourCounts).sort((a, b) => b[1] - a[1]);
-            if (sortedHours.length > 0) {
-                const top = sortedHours[0];
-                $('mStatPeak').innerHTML =
-                    `<span class="top-hour-highlight">${top[0]}:00</span> (${top[1]} مرة)`;
-            } else {
-                $('mStatPeak').textContent = 'لا توجد بيانات';
-            }
+            const sortedHours = Object.entries(hourCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
 
-            const myMonthCheckins = profileCheckins.filter(c => c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) ===
-                thisMonth);
+            title = '⏰ أكثر أوقات الدخول';
+            if (sortedHours.length === 0) {
+                content = `<p class="text-muted text-center" style="padding:30px 0;font-size:14px;">📭 لا توجد بيانات لهذا الشهر</p>`;
+            } else {
+                const total = monthPeak.length || 1;
+                let html = `
+                    <div style="margin-bottom:14px;padding:10px 14px;background:var(--bg-body);border-radius:8px;text-align:center;font-size:13px;color:var(--text-secondary);">
+                        <i class="fas fa-info-circle" style="color:var(--primary);margin-left:6px;"></i>
+                        إجمالي الدخول: <strong style="color:var(--text-primary);">${monthPeak.length}</strong> مرة
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:8px;">
+                `;
+                const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣'];
+                const colors = ['var(--accent)', 'var(--text-muted)', 'var(--gold)', 'var(--text-muted)', 'var(--text-muted)'];
+                sortedHours.forEach(([hour, cnt], idx) => {
+                    const pct = Math.round((cnt / total) * 100);
+                    const medal = medals[idx] || '#' + (idx+1);
+                    const color = colors[idx] || 'var(--text-muted)';
+                    const isTop = idx === 0;
+                    html += `
+                        <div style="display:flex;align-items:center;gap:12px;padding:6px 10px;background:${isTop ? 'rgba(245,158,11,0.04)' : 'transparent'};border-radius:8px;border:${isTop ? '1px solid rgba(245,158,11,0.12)' : '1px solid rgba(0,0,0,0.02)'};">
+                            <span style="font-size:22px;width:32px;text-align:center;color:${color};">${medal}</span>
+                            <span style="font-weight:700;font-size:${isTop ? '18px' : '15px'};color:var(--text-primary);min-width:60px;">${hour}:00 ${isTop ? '🔥' : ''}</span>
+                            <span style="font-weight:600;font-size:${isTop ? '16px' : '13px'};color:var(--text-primary);min-width:50px;">${cnt} مرة</span>
+                            <div style="flex:1;height:4px;background:var(--bg-body);border-radius:4px;overflow:hidden;">
+                                <div style="height:100%;width:${pct}%;background:${isTop ? 'var(--accent)' : 'var(--primary)'};border-radius:4px;"></div>
+                            </div>
+                            <span style="font-size:11px;color:var(--text-muted);min-width:40px;text-align:left;">${pct}%</span>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+                content = html;
+            }
+            break;
+        }
+
+        // ============================================================
+        // member_rank — Minimal
+        // ============================================================
+        case 'member_rank': {
+            const myMonthCheckins = profileCheckins.filter(c => 
+                c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) === thisMonth
+            );
             const myCount = myMonthCheckins.length;
-            let rankTitle = 'مبتدئ';
-            let rankIcon = '<i class="fas fa-seedling"></i>';
-            if (myCount >= 25) { rankTitle = 'الملك';
-                rankIcon = '<i class="fas fa-crown"></i>'; } else if (myCount >= 20) { rankTitle = 'المقاتل';
-                rankIcon = '<i class="fas fa-dumbbell"></i>'; } else if (myCount >= 15) { rankTitle = 'المجتهد';
-                rankIcon = '<i class="fas fa-running"></i>'; } else if (myCount >= 10) { rankTitle = 'جيد';
-                rankIcon = '<i class="fas fa-thumbs-up"></i>'; } else if (myCount >= 5) { rankTitle = 'كسول';
-                rankIcon = '<i class="fas fa-bed"></i>'; }
-            $('mStatRank').innerHTML = rankIcon + ' ' + rankTitle + ` (${myCount} مرة)`;
+            let rank = 'مبتدئ';
+            let emoji = '🌱';
+            if (myCount >= 25) { rank = 'الملك'; emoji = '👑'; }
+            else if (myCount >= 20) { rank = 'المقاتل'; emoji = '💪'; }
+            else if (myCount >= 15) { rank = 'المجتهد'; emoji = '🏃'; }
+            else if (myCount >= 10) { rank = 'جيد'; emoji = '👍'; }
+            else if (myCount >= 5) { rank = 'كسول'; emoji = '😴'; }
+            title = '🏅 اللقب الشهري';
 
-            if (!allMembers || allMembers.length === 0) {
-                $('mStatPercent').textContent = '⏳ جارٍ التحميل...';
-            } else {
-                const totalMembers = allMembers.length;
-                const todayCheckinsAll = allCheckins.filter(c => normalizeDate(c.checkin_date) === today).length;
-                const percentage = Math.round((todayCheckinsAll / totalMembers) * 100);
-                $('mStatPercent').textContent = percentage + '%';
-                const card = $('mStatPercent').closest('.stat-card-click');
-                if (card) {
-                    if (percentage >= 50) card.style.borderRight = '4px solid var(--success)';
-                    else if (percentage >= 25) card.style.borderRight = '4px solid var(--warning)';
-                    else card.style.borderRight = '4px solid var(--danger)';
-                }
-                window._todayCheckinsAll = todayCheckinsAll;
-                window._todayPercentage = percentage;
-            }
+            // Top 5
+            const memberCounts = {};
+            profileCheckins.filter(c => 
+                c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) === thisMonth
+            ).forEach(c => {
+                if (c.member_id) memberCounts[c.member_id] = (memberCounts[c.member_id] || 0) + 1;
+            });
+            const top5 = Object.entries(memberCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
 
-            let daysLeft = '-';
+            let html = `
+                <div style="text-align:center;padding:16px 0;border-bottom:1px solid var(--border-color);margin-bottom:14px;">
+                    <div style="font-size:48px;line-height:1.2;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.04));">${emoji}</div>
+                    <div style="font-size:22px;font-weight:700;color:var(--text-primary);margin-top:4px;">${rank}</div>
+                    <div style="font-size:13px;color:var(--text-muted);margin-top:2px;">${myCount} مرة هذا الشهر</div>
+                </div>
+                <div style="font-size:14px;font-weight:600;color:var(--text-secondary);margin-bottom:10px;">🏆 أفضل 5 أعضاء</div>
+                <div style="max-height:260px;overflow-y:auto;">
+                    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                        <thead>
+                            <tr style="border-bottom:2px solid var(--border-color);">
+                                <th style="text-align:right;padding:8px 0;font-weight:600;color:var(--text-muted);font-size:11px;">#</th>
+                                <th style="text-align:right;padding:8px 0;font-weight:600;color:var(--text-muted);font-size:11px;">الاسم</th>
+                                <th style="text-align:right;padding:8px 0;font-weight:600;color:var(--text-muted);font-size:11px;">عدد الدخول</th>
+                                <th style="text-align:right;padding:8px 0;font-weight:600;color:var(--text-muted);font-size:11px;">اللقب</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            const rankTitles = ['الملك', 'المقاتل', 'المجتهد', 'جيد', 'مبتدئ'];
+            const rankEmojis = ['👑', '💪', '🏃', '👍', '🌱'];
+            top5.forEach(([id, count], idx) => {
+                const member = allMembers.find(m => m.member_id === id);
+                const name = member ? member.full_name : id;
+                let rTitle = rankTitles[idx] || 'جيد';
+                let rEmoji = rankEmojis[idx] || '👍';
+                if (count >= 25) { rTitle = 'الملك'; rEmoji = '👑'; }
+                else if (count >= 20) { rTitle = 'المقاتل'; rEmoji = '💪'; }
+                else if (count >= 15) { rTitle = 'المجتهد'; rEmoji = '🏃'; }
+                else if (count >= 10) { rTitle = 'جيد'; rEmoji = '👍'; }
+                else if (count >= 5) { rTitle = 'مبتدئ'; rEmoji = '🌱'; }
+                const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : (idx+1);
+                const isMe = id === profileMemberId;
+                html += `
+                    <tr style="border-bottom:1px solid rgba(0,0,0,0.04);${isMe ? 'background:rgba(245,158,11,0.04);border-right:3px solid var(--accent);' : ''}">
+                        <td style="padding:8px 0;font-size:14px;color:var(--text-muted);">${medal}</td>
+                        <td style="padding:8px 0;font-size:13px;color:var(--text-primary);">${name}${isMe ? ' <span style="font-size:11px;color:var(--accent);font-weight:600;">(أنت)</span>' : ''}</td>
+                        <td style="padding:8px 0;font-size:13px;font-weight:600;color:var(--text-primary);">${count}</td>
+                        <td style="padding:8px 0;font-size:13px;color:var(--text-muted);">${rEmoji} ${rTitle}</td>
+                    </tr>
+                `;
+            });
+            html += `</tbody></table></div>`;
+            content = html;
+            break;
+        }
+
+        // ============================================================
+        // member_percent — Minimal
+        // ============================================================
+        case 'member_percent': {
+            const totalMembers = allMembers.length || 1;
+            const todayCheckinsAll = allCheckins.filter(c => normalizeDate(c.checkin_date) === today).length;
+            const percentage = Math.round((todayCheckinsAll / totalMembers) * 100);
+            title = '📊 دخول اليوم';
+            const emoji = percentage >= 50 ? '🔥' : percentage >= 25 ? '👍' : '😴';
+            const statusText = percentage >= 50 ? 'ممتاز!' :
+                               percentage >= 25 ? 'في تحسن' : 'حسّن أداءك';
+            content = `
+                <div style="text-align:center;padding:12px 0;">
+                    <div style="font-size:48px;font-weight:700;color:var(--primary);">${percentage}%</div>
+                    <div style="font-size:16px;color:var(--text-secondary);margin-top:4px;">
+                        <span style="font-size:24px;">${emoji}</span> ${statusText}
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;max-width:260px;margin-left:auto;margin-right:auto;">
+                        <div ${cardStyle('var(--bg-body)')}>
+                            <div style="font-size:12px;color:var(--text-muted);">الدخول اليوم</div>
+                            <div style="font-size:22px;font-weight:700;color:var(--primary);">${todayCheckinsAll}</div>
+                        </div>
+                        <div ${cardStyle('var(--bg-body)')}>
+                            <div style="font-size:12px;color:var(--text-muted);">الأعضاء</div>
+                            <div style="font-size:22px;font-weight:700;color:var(--primary);">${totalMembers}</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:16px;">
+                        <div style="height:6px;background:var(--bg-body);border-radius:6px;overflow:hidden;">
+                            <div style="height:100%;width:${percentage}%;background:${percentage>=50?'var(--success)':percentage>=25?'var(--warning)':'var(--danger)'};border-radius:6px;"></div>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-top:4px;">
+                            <span>${formatDate(today)}</span>
+                            <span>${percentage}%</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            break;
+        }
+
+        // ============================================================
+        // member_daysleft — Minimal
+        // ============================================================
+        case 'member_daysleft': {
+            let days = '-';
+            let expiryDisplay = 'غير مدفوع';
             if (profileExpiryStr && profileExpiryStr !== '-') {
                 const diff = daysBetween(today, normalizeDate(profileExpiryStr));
-                daysLeft = diff >= 0 ? diff + ' يوم' : 'منتهي';
+                days = diff >= 0 ? diff + ' يوم' : 'منتهي';
+                expiryDisplay = formatDate(profileExpiryStr);
             }
-            $('mStatDaysLeft').textContent = daysLeft;
-        }
-
-        function showCardDetail(type) {
-            let title = 'تفاصيل';
-            let content = '';
-            const today = getTodayStr();
-            const thisMonth = today.slice(0, 7);
-
-            switch (type) {
-                case 'member_revenue': {
-                    const allPaymentsHistory = profilePayments;
-                    const monthPayments = allPaymentsHistory.filter(p => p.payment_date && normalizeDate(p.payment_date)
-                        .slice(0, 7) === thisMonth);
-                    const totalMonth = monthPayments.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
-                    const totalAll = allPaymentsHistory.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
-                    title = '💰 سجل المدفوعات بالكامل';
-                    let tableHtml =
-                        `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
-                                    <div style="background:var(--bg-body);border-radius:8px;padding:10px;border:1px solid rgba(0,0,0,0.04);text-align:center;">
-                                        <div style="font-size:11px;color:var(--text-muted);">هذا الشهر</div>
-                                        <div style="font-size:22px;font-weight:700;color:var(--primary);">${toEGP(totalMonth)}</div>
-                                    </div>
-                                    <div style="background:var(--bg-body);border-radius:8px;padding:10px;border:1px solid rgba(0,0,0,0.04);text-align:center;">
-                                        <div style="font-size:11px;color:var(--text-muted);">الإجمالي الكلي</div>
-                                        <div style="font-size:22px;font-weight:700;color:var(--success);">${toEGP(totalAll)}</div>
-                                    </div>
-                                </div>`;
-                    if (allPaymentsHistory.length === 0) {
-                        content = tableHtml +
-                            `<p class="text-muted text-center" style="padding:20px 0;">لا يوجد سجل مدفوعات</p>`;
-                    } else {
-                        let rows = allPaymentsHistory.map((p, i) =>
-                            `<tr>
-                                        <td>${i+1}</td>
-                                        <td>${toEGP(p.amount)}</td>
-                                        <td>${formatDate(p.payment_date)}</td>
-                                        <td>${p.months_paid || 1} شهر</td>
-                                        <td>${formatDate(p.expiry_date)}</td>
-                                    </tr>`
-                        ).join('');
-                        tableHtml +=
-                            `<div class="table-wrap" style="max-height:300px;">
-                                        <table class="rank-table">
-                                            <thead><tr><th>#</th><th>المبلغ</th><th>التاريخ</th><th>الأشهر</th><th>انتهاء الصلاحية</th></tr></thead>
-                                            <tbody>${rows}</tbody>
-                                        </table>
-                                    </div>`;
-                        content = tableHtml;
-                    }
-                    break;
-                }
-                case 'member_xp': {
-                    const xp = getXp(profileMemberId);
-                    const points = getPoints(profileMemberId);
-                    title = '⭐ نقاط الاجتهاد (XP)';
-                    const xpList = allMembers.map(m => ({ id: m.member_id, name: m.full_name, xp: getXp(m
-                            .member_id) }))
-                        .sort((a, b) => b.xp - a.xp)
-                        .slice(0, 12);
-                    let tableHtml =
-                        `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
-                                    <div style="background:var(--bg-body);border-radius:8px;padding:10px;border:1px solid rgba(0,0,0,0.04);text-align:center;">
-                                        <div style="font-size:11px;color:var(--text-muted);">نقاط XP الخاصة بك</div>
-                                        <div style="font-size:22px;font-weight:700;color:var(--primary);">${xp}</div>
-                                    </div>
-                                    <div style="background:var(--bg-body);border-radius:8px;padding:10px;border:1px solid rgba(0,0,0,0.04);text-align:center;">
-                                        <div style="font-size:11px;color:var(--text-muted);">نقاط الدفع</div>
-                                        <div style="font-size:22px;font-weight:700;color:var(--success);">${points}</div>
-                                    </div>
-                                </div>
-                                <div style="margin-bottom:10px;"><strong>أعلى 12 عضو في XP:</strong></div>
-                                <div class="table-wrap" style="max-height:300px;">
-                                    <table class="rank-table">
-                                        <thead><tr><th>#</th><th>الاسم</th><th>XP</th></tr></thead>
-                                        <tbody>`;
-                    xpList.forEach((m, i) => {
-                        const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '';
-                        tableHtml += `<tr>
-                                                <td>${medal || (i+1)}</td>
-                                                <td>${m.name}${m.id === profileMemberId ? ' 👈 أنت' : ''}</td>
-                                                <td>${m.xp}</td>
-                                            </tr>`;
-                    });
-                    tableHtml += `</tbody></table></div>`;
-                    content = tableHtml;
-                    break;
-                }
-                default: {
-                    content = '📊 تفاصيل إضافية';
-                }
-            }
-            openModal(title, content);
-        }
-
-        // ============================================================
-        // TOP 8, STATUS, QR, PDF, GOAL, CALENDAR, WEIGHT
-        // ============================================================
-        function loadTop8() {
-            const container = $('top8Container');
-            if (!container) return;
-            if (!allCheckins || allCheckins.length === 0) {
-                container.innerHTML = '<p class="text-muted text-sm">⏳ جارٍ تحميل البيانات...</p>';
-                return;
-            }
-            const today = new Date();
-            const oneYearAgo = new Date(today);
-            oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-            const oneYearAgoStr = oneYearAgo.toISOString().split('T')[0];
-            const checkinCounts = {};
-            allCheckins.forEach(c => {
-                if (c.checkin_date && normalizeDate(c.checkin_date) >= oneYearAgoStr) {
-                    const id = c.member_id;
-                    if (id) checkinCounts[id] = (checkinCounts[id] || 0) + 1;
-                }
-            });
-            const sorted = Object.entries(checkinCounts).sort((a, b) => b[1] - a[1]).slice(0, 8);
-            if (sorted.length === 0) {
-                container.innerHTML = '<p class="text-muted text-sm">📭 لا توجد بيانات دخول خلال العام</p>';
-                return;
-            }
-            const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣'];
-            const titles = ['🏆 ملك اللياقة', '👑 نائب الملك', '💪 المقاتل المثابر',
-                '🏃 مجتهد جداً', '👍 جيد جداً', '🌟 ممتاز', '✨ بداية جيدة', '💪 واعد'
-            ];
-            const colorClasses = ['gold', 'gold', 'gold', '', '', '', '', ''];
-            let html = '<div class="top7-card">';
-            sorted.forEach(([memberId, count], idx) => {
-                const member = allMembers.find(m => m.member_id === memberId);
-                const name = member ? member.full_name : memberId;
-                const colorClass = colorClasses[idx] || '';
-                const isMe = memberId === profileMemberId;
-                const meBadge = isMe ? ' 👈 أنت' : '';
-                html += `
-                            <div class="top7-item ${colorClass}" style="${colorClass === 'gold' ? 'background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.3);' : ''}">
-                                <span class="rank-medal">${medals[idx] || '🏅'}</span>
-                                <div class="top7-name">${name}${meBadge}</div>
-                                <div class="top7-points">⭐ ${count} مرة</div>
-                                <div class="top7-title">${titles[idx] || 'قادم بقوة'}</div>
+            title = '⏳ الأيام المتبقية';
+            const color = days === 'منتهي' ? 'var(--danger)' : days === '-' ? 'var(--warning)' : 'var(--success)';
+            const emoji = days === 'منتهي' ? '🔴' : days === '-' ? '🟡' : '🟢';
+            content = `
+                <div style="text-align:center;padding:16px 0;">
+                    <div style="font-size:48px;font-weight:700;color:${color};">${emoji} ${days}</div>
+                    <div style="font-size:14px;color:var(--text-secondary);margin-top:6px;">
+                        ${profileExpiryStr !== '-' ? `ينتهي في ${expiryDisplay}` : 'لا يوجد سجل دفع'}
+                    </div>
+                    ${days !== '-' ? `
+                        <div style="display:flex;justify-content:center;gap:8px;margin-top:14px;flex-wrap:wrap;">
+                            <span style="background:var(--bg-body);padding:4px 14px;border-radius:20px;font-size:12px;color:var(--text-secondary);">
+                                <i class="fas fa-calendar-check"></i> ${formatDate(today)}
+                            </span>
+                            <span style="background:var(--bg-body);padding:4px 14px;border-radius:20px;font-size:12px;color:var(--text-secondary);">
+                                <i class="fas fa-calendar-day"></i> ${expiryDisplay}
+                            </span>
+                        </div>
+                        <div style="margin-top:14px;">
+                            <div style="height:6px;background:var(--bg-body);border-radius:6px;overflow:hidden;">
+                                <div style="height:100%;width:${days === 'منتهي' ? 0 : 50}%;background:${color};border-radius:6px;"></div>
                             </div>
-                        `;
-            });
-            html += '</div>';
-            const myRank = sorted.findIndex(([id]) => id === profileMemberId);
-            let encouragementMsg = '';
-            if (myRank === 0) encouragementMsg = '👑 أنت الأفضل! ممتاز! أنت قدوة للآخرين! 💪';
-            else if (myRank === 1) encouragementMsg = '🥈 رائع! أنت على بعد خطوة من المركز الأول! استمر! 💪';
-            else if (myRank === 2) encouragementMsg = '🥉 ممتاز! أنت ضمن أفضل 3! فخور بنفسك! 🏆';
-            else if (myRank >= 0 && myRank < 8) encouragementMsg = '🌟 أنت ضمن أفضل 8! ممتاز! استمر في العمل! 💪';
-            else encouragementMsg = '💪 كل خطوة لها معناها! استمر وستصل! 🚀';
-            html +=
-                `<div style="text-align:center;margin-top:10px;padding:8px 12px;background:var(--bg-body);border-radius:var(--radius-sm);border-right:4px solid var(--accent);font-size:13px;color:var(--text-secondary);">${encouragementMsg}</div>`;
-            html +=
-                `<div style="text-align:center;margin-top:8px;font-size:11px;color:var(--text-muted);"><i class="fas fa-calendar-alt"></i> بيانات آخر عام (${formatDate(oneYearAgoStr)} - ${formatDate(getTodayStr())})</div>`;
-            container.innerHTML = html;
+                            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-top:4px;">
+                                <span>المدة المتبقية</span>
+                                <span>${days}</span>
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            break;
         }
+
+        default:
+            content = '<p class="text-muted text-center" style="padding:20px 0;font-size:14px;">📊 لا توجد تفاصيل</p>';
+            break;
+    }
+
+    // เปิด Modal
+    openModal(title, content);
+}
+
+        // ============================================================
+// ============================================================
+// ============================================================
+// RENDER TOP 8 CONTENT — แสดงผลอันดับ (ใช้ allCheckins โดยตรง)
+// ============================================================
+function renderTop8Content(container) {
+    if (!container) {
+        console.warn('⚠️ ไม่พบ container');
+        return;
+    }
+    
+    // ✅ ใช้ allCheckins โดยตรง
+    if (!allCheckins || allCheckins.length === 0) {
+        console.warn('⚠️ allCheckins ว่าง');
+        container.innerHTML = `
+            <div style="text-align:center;padding:20px 0;color:var(--text-muted);">
+                <i class="fas fa-inbox" style="font-size:28px;display:block;margin-bottom:8px;opacity:0.4;"></i>
+                <span>📭 لا توجد بيانات دخول</span>
+            </div>
+        `;
+        return;
+    }
+    
+    const today = new Date();
+    const oneYearAgo = new Date(today);
+    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+    const oneYearAgoStr = oneYearAgo.toISOString().split('T')[0];
+    
+    console.log('📊 คำนวณ Top 8 จากข้อมูล', allCheckins.length, 'รายการ');
+    console.log('📅 ตั้งแต่', oneYearAgoStr);
+    
+    // ✅ นับจำนวนเช็คอินของแต่ละสมาชิก (เฉพาะ 1 ปี)
+    const checkinCounts = {};
+    allCheckins.forEach(c => {
+        if (c.checkin_date && normalizeDate(c.checkin_date) >= oneYearAgoStr) {
+            const id = c.member_id;
+            if (id) {
+                checkinCounts[id] = (checkinCounts[id] || 0) + 1;
+            }
+        }
+    });
+    
+    console.log('📊 checkinCounts:', Object.keys(checkinCounts).length, 'คน');
+    
+    // ✅ เรียงลำดับและเลือก 8 อันดับแรก
+    const sorted = Object.entries(checkinCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
+    
+    if (sorted.length === 0) {
+        container.innerHTML = `
+            <div style="text-align:center;padding:20px 0;color:var(--text-muted);">
+                <i class="fas fa-inbox" style="font-size:28px;display:block;margin-bottom:8px;opacity:0.4;"></i>
+                <span>📭 لا توجد بيانات دخول خلال العام</span>
+            </div>
+        `;
+        return;
+    }
+    
+    console.log('🏆 Top 8:', sorted);
+    
+    // ✅ แสดงผล Top 8
+    const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣'];
+    const titles = [
+        '🏆 ملك اللياقة',
+        '👑 نائب الملك',
+        '💪 المقاتل المثابر',
+        '🏃 مجتهد جداً',
+        '👍 جيد جداً',
+        '🌟 ممتاز',
+        '✨ بداية جيدة',
+        '💪 واعد'
+    ];
+    const colorClasses = ['gold', 'gold', 'gold', '', '', '', '', ''];
+    
+    let html = '<div class="top7-card">';
+    sorted.forEach(([memberId, count], idx) => {
+        // ✅ ใช้ allMembers ในการค้นหาชื่อ
+        const member = allMembers.find(m => m.member_id === memberId);
+        const name = member ? member.full_name : memberId;
+        const colorClass = colorClasses[idx] || '';
+        const isMe = memberId === profileMemberId;
+        const meBadge = isMe ? ' 👈 أنت' : '';
+        const medal = medals[idx] || '🏅';
+        const title = titles[idx] || '💪 قادم بقوة';
+        
+        html += `
+            <div class="top7-item ${colorClass}" style="${colorClass === 'gold' ? 'background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.3);' : ''}">
+                <span class="rank-medal">${medal}</span>
+                <div class="top7-name">${name}${meBadge}</div>
+                <div class="top7-points">⭐ ${count} ครั้ง</div>
+                <div class="top7-title">${title}</div>
+            </div>
+        `;
+    });
+    html += '</div>';
+    
+    // ✅ ข้อความให้กำลังใจ
+    const myRank = sorted.findIndex(([id]) => id === profileMemberId);
+    let encouragementMsg = '';
+    if (myRank === 0) {
+        encouragementMsg = '👑 أنت الأفضل! ممتاز! أنت قدوة للآخرين! 💪';
+    } else if (myRank === 1) {
+        encouragementMsg = '🥈 رائع! أنت على بعد خطوة من المركز الأول! استمر! 💪';
+    } else if (myRank === 2) {
+        encouragementMsg = '🥉 ممتاز! أنت ضمن أفضل 3! فخور بنفسك! 🏆';
+    } else if (myRank >= 0 && myRank < 8) {
+        encouragementMsg = '🌟 أنت ضمن أفضل 8! ممتاز! استمر في العمل! 💪';
+    } else {
+        encouragementMsg = '💪 كل خطوة لها معناها! استمر وستصل! 🚀';
+    }
+    
+    html += `
+        <div style="text-align:center;margin-top:12px;padding:10px 14px;background:var(--bg-body);border-radius:var(--radius-sm);border-right:4px solid var(--accent);font-size:13px;color:var(--text-secondary);">
+            ${encouragementMsg}
+        </div>
+        <div style="text-align:center;margin-top:6px;font-size:11px;color:var(--text-muted);">
+            <i class="fas fa-calendar-alt"></i> ข้อมูล ${formatDate(oneYearAgoStr)} - ${formatDate(getTodayStr())}
+        </div>
+    `;
+    
+    container.innerHTML = html;
+}
 
         function renderMemberStatus(member, isExpired, hasPayment, expiryDateStr) {
             const container = document.getElementById('memberStatusBanner');
@@ -6615,9 +7039,18 @@ function generateProfileQR(memberId) {
         // ============================================================
         // LOGIN / LOGOUT
         // ============================================================
+// ============================================================
+// CHECK AUTH — ตรวจสอบสิทธิ์และโหลดหน้า
+// ============================================================
+// ============================================================
+// CHECK AUTH — ตรวจสอบสิทธิ์และโหลดหน้า (Member Fix)
+// ============================================================
 function checkAuth() {
     const role = localStorage.getItem('gym_role');
     const user = localStorage.getItem('gym_user');
+    
+    console.log('🔍 checkAuth() ถูกเรียก');
+    console.log('🔍 role:', role, 'user:', user);
     
     if (role === 'admin' || role === 'member') {
         // ซ่อนหน้า Login
@@ -6628,16 +7061,12 @@ function checkAuth() {
         
         if (role === 'admin') {
             // 🔹 Admin Mode
+            console.log('👑 Admin Mode');
             navItems.forEach(item => {
                 const page = item.dataset.page;
-                if (page === 'profile') {
-                    item.style.display = 'none';  // ซ่อน Profile สำหรับ Admin
-                } else {
-                    item.style.display = 'flex';   // แสดงเมนูอื่นทั้งหมด
-                }
+                if (page === 'profile') item.style.display = 'none';
+                else item.style.display = 'flex';
             });
-            
-            // ตั้งค่า Sidebar Admin
             profileMemberId = null;
             document.getElementById('sidebarUserName').textContent = 'Admin';
             document.getElementById('sidebarUserRole').textContent = 'مدير النظام';
@@ -6653,47 +7082,54 @@ function checkAuth() {
             switchTab('dashboard');
             
         } else if (role === 'member' && user) {
-            // 🔹 Member Mode — ซ่อนเมนู Admin ทั้งหมด
+            // 🔹 Member Mode — แก้ไขตรงนี้!
+            console.log('👤 Member Mode - user:', user);
+            
+            // ✅ ตั้งค่า profileMemberId
+            profileMemberId = user;
+            
+            // ✅ ซ่อนเมนูที่ไม่จำเป็น
             navItems.forEach(item => {
                 const page = item.dataset.page;
-                if (page === 'profile') {
-                    item.style.display = 'flex';   // แสดงเฉพาะ Profile
-                } else {
-                    item.style.display = 'none';    // ซ่อนเมนูอื่นทั้งหมด
-                }
+                if (page === 'profile') item.style.display = 'flex';
+                else item.style.display = 'none';
             });
             
-            // ตั้งค่า Sidebar Member
-            profileMemberId = user;
+            // ✅ ตั้งค่า Sidebar
             document.getElementById('sidebarUserName').textContent = 'عضو';
             document.getElementById('sidebarUserRole').textContent = 'مستخدم';
             document.getElementById('sidebarAvatar').textContent = 'M';
             
-            // โหลดข้อมูล Member
+            // ✅ โหลดข้อมูลที่จำเป็นสำหรับหน้า Profile
+            console.log('🔄 กำลังโหลดข้อมูลสมาชิก...');
+            
+            // โหลดข้อมูลพื้นฐาน (allMembers, allCheckins, allPayments)
             Promise.all([
-                apiCall('/members').then(d => { allMembers = d.data || []; }),
-                apiCall('/checkin').then(d => { allCheckins = d.data || []; }),
-                apiCall('/payments').then(d => { allPayments = d.data || []; })
+                apiCall('/members').then(d => { allMembers = d.data || []; console.log('✅ allMembers loaded:', allMembers.length); }),
+                apiCall('/checkin').then(d => { allCheckins = d.data || []; console.log('✅ allCheckins loaded:', allCheckins.length); }),
+                apiCall('/payments').then(d => { allPayments = d.data || []; console.log('✅ allPayments loaded:', allPayments.length); })
             ]).then(() => {
-                setTimeout(() => {
-                    loadProfile();
-                    switchTab('profile');  // ไปที่หน้า Profile ทันที
-                }, 300);
-            }).catch(() => {
-                setTimeout(() => {
-                    loadProfile();
-                    switchTab('profile');
-                }, 300);
+                console.log('✅ ข้อมูลพื้นฐานโหลดเสร็จ');
+                // ✅ ตอนนี้เรียก loadProfile()
+                loadProfile();
+                // ✅ เปลี่ยนหน้าไปที่ Profile
+                switchTab('profile');
+            }).catch((error) => {
+                console.error('❌ โหลดข้อมูลพื้นฐานล้มเหลว:', error);
+                showToast('❌ ไม่สามารถโหลดข้อมูลได้', 'error');
+                // ลองโหลด Profile โดยตรง (หวังว่า API จะยังทำงาน)
+                loadProfile();
             });
         }
         
-        // ซ่อน Profile Nav ถ้าเป็น Admin (เผื่อกรณี)
+        // ซ่อน Profile Nav สำหรับ Admin
         document.getElementById('profileNav').style.display = role === 'member' ? 'flex' : 'none';
         
         startAutoRefresh();
         return true;
     }
     
+    console.warn('⚠️ ไม่มี session');
     return false;
 }
 
@@ -6852,28 +7288,6 @@ async function handleLogin() {
                 txt.textContent = '❌ ' + e.message; }
         }
 
-        function renderDebug(data, error) {
-            const container = $('debugContent');
-            if (error) {
-                container.innerHTML =
-                    `<div class="error-text"><i class="fas fa-times-circle"></i> ${error}</div><div class="text-muted text-sm">${data ? '📦 بيانات جزئية:' : '⚠️ لا توجد بيانات'}</div>${data ? `<pre>${JSON.stringify(data, null, 2)}</pre>` : ''}`;
-                return;
-            }
-            if (!data) { container.innerHTML =
-                    '<span class="text-muted"><i class="fas fa-spinner fa-spin"></i> في انتظار التحميل...</span>'; return; }
-            const summary = data.summary || {};
-            container.innerHTML = `
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;color:var(--text-muted);font-size:11px;margin-bottom:6px;">
-                            <div>📊 مفاتيح الملخص: ${Object.keys(summary).join(', ')}</div>
-                            <div>👥 الأعضاء: ${(data.members||[]).length} عضو</div>
-                            <div>💳 المدفوعات: ${(data.payments||[]).length} عملية</div>
-                            <div>📈 الإيرادات الشهرية: ${(data.revenue_by_month||[]).length} شهر</div>
-                            <div>📉 اتجاه الدخول: ${(data.checkin_trend||[]).length} يوم</div>
-                            <div>⏰ ساعات الذروة: ${(data.peak_hours||[]).length} ساعة</div>
-                        </div>
-                        <details><summary style="color:#4ade80;cursor:pointer;font-size:12px;font-weight:600;">📄 عرض JSON كامل</summary><pre>${JSON.stringify(data, null, 2)}</pre></details>
-                    `;
-        }
 
         function copyDebugInfo() {
             const content = $('debugContent').innerText;
@@ -6967,6 +7381,454 @@ async function handleLogin() {
             console.log('⌨️ Ctrl+R = تحديث, ESC = إغلاق النافذة');
             console.log('✅ تحسينات: تقرير اليوم مضغوط, المدفوعات اليوم في الأعلى, تحليل الإيرادات مع مقارنة الربح/الخسارة');
         });
+
+// ============================================================
+// RENDER PROFILE HEADER — แสดงชื่อ + เบอร์ + ฉายา
+// ============================================================
+function renderProfileHeader() {
+    console.log('🔄 renderProfileHeader() ถูกเรียก');
+    
+    const m = profileMember;
+    if (!m) {
+        console.warn('⚠️ profileMember ไม่มีข้อมูล');
+        return;
+    }
+    
+    const nameEl = document.getElementById('profileName');
+    const phoneEl = document.getElementById('profilePhoneText');
+    const avatarEl = document.getElementById('avatarInitial');
+    const statusBadge = document.getElementById('statusBadgeHeader');
+    const rankEmoji = document.getElementById('rankEmoji');
+    const rankTitle = document.getElementById('rankTitle');
+    const rankCount = document.getElementById('rankCount');
+    
+    // ชื่อ
+    if (nameEl) {
+        nameEl.textContent = m.full_name || '-';
+        console.log('✅ ชื่อ:', nameEl.textContent);
+    }
+    
+    // เบอร์
+    if (phoneEl) {
+        phoneEl.textContent = m.phone || '-';
+        console.log('✅ เบอร์:', phoneEl.textContent);
+    }
+    
+    // Avatar
+    if (avatarEl) {
+        const firstChar = m.full_name ? m.full_name.charAt(0).toUpperCase() : '👤';
+        avatarEl.textContent = firstChar;
+        console.log('✅ Avatar:', firstChar);
+    }
+    
+    // สถานะ
+    if (statusBadge) {
+        const hasPayment = profilePayments.length > 0;
+        let isExpired = false;
+        if (profileExpiryStr && profileExpiryStr !== '-') {
+            const expDate = new Date(normalizeDate(profileExpiryStr));
+            isExpired = expDate <= new Date();
+        }
+        if (isExpired) {
+            statusBadge.textContent = '🔴 منتهي';
+            statusBadge.className = 'expired';
+        } else if (!hasPayment) {
+            statusBadge.textContent = '🟡 غير مدفوع';
+            statusBadge.className = 'welcome';
+        } else {
+            statusBadge.textContent = '🟢 نشط';
+            statusBadge.className = '';
+        }
+        console.log('✅ สถานะ:', statusBadge.textContent);
+    }
+    
+    // ฉายา
+    const today = getTodayStr();
+    const thisMonth = today.slice(0, 7);
+    const myMonthCheckins = profileCheckins.filter(c => 
+        c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) === thisMonth
+    );
+    const myCount = myMonthCheckins.length;
+    
+    let rankData = { emoji: '🌱', title: 'مبتدئ', color: '#94a3b8' };
+    if (myCount >= 25) rankData = { emoji: '👑', title: 'الملك', color: '#f59e0b' };
+    else if (myCount >= 20) rankData = { emoji: '💪', title: 'المقاتل', color: '#f59e0b' };
+    else if (myCount >= 15) rankData = { emoji: '🏃', title: 'المجتهد', color: '#f59e0b' };
+    else if (myCount >= 10) rankData = { emoji: '👍', title: 'جيد', color: '#f59e0b' };
+    else if (myCount >= 5) rankData = { emoji: '😴', title: 'كسول', color: '#f59e0b' };
+    
+    if (rankEmoji) rankEmoji.textContent = rankData.emoji;
+    if (rankTitle) {
+        rankTitle.textContent = rankData.title;
+        rankTitle.style.color = rankData.color;
+    }
+    if (rankCount) rankCount.textContent = myCount + ' مرّة';
+    
+    console.log('✅ ฉายา:', rankData.emoji, rankData.title);
+}
+
+// ============================================================
+// RENDER PROFILE CARD — แสดงบัตรสมาชิก
+// ============================================================
+function renderProfileCard() {
+    console.log('🔄 renderProfileCard() ถูกเรียก');
+    
+    const m = profileMember;
+    if (!m) {
+        console.warn('⚠️ profileMember ไม่มีข้อมูล');
+        return;
+    }
+    
+    // ✅ คำนวณข้อมูล
+    hasPaymentHistory = profilePayments.length > 0;
+    let expiryDate = null;
+    profileExpiryStr = '-';
+    let isExpired = false;
+    
+    if (profilePayments.length > 0) {
+        const sorted = [...profilePayments].sort((a, b) => {
+            const da = normalizeDate(a.expiry_date || a['تاريخ انتهاء الصلاحية']);
+            const db = normalizeDate(b.expiry_date || b['تاريخ انتهاء الصلاحية']);
+            if (!da && !db) return 0;
+            if (!da) return 1;
+            if (!db) return -1;
+            return da.localeCompare(db);
+        });
+        const latest = sorted[sorted.length - 1];
+        profileExpiryStr = latest.expiry_date || latest['تاريخ انتهاء الصلاحية'] || '-';
+        if (profileExpiryStr && profileExpiryStr !== '-') {
+            expiryDate = new Date(normalizeDate(profileExpiryStr));
+            isExpired = expiryDate <= new Date();
+        }
+    }
+    isMemberExpired = isExpired;
+    
+    const points = getPoints(m.member_id);
+    const xp = getXp(m.member_id);
+    const expiryDisplay = profileExpiryStr && profileExpiryStr !== '-' ? formatDate(profileExpiryStr) : 'غير مدفوع';
+    
+    // ✅ อัปเดตบัตร
+    const previewName = document.getElementById('previewName');
+    const previewId = document.getElementById('previewId');
+    const previewPhone = document.getElementById('previewPhone');
+    const previewType = document.getElementById('previewType');
+    const previewExpiry = document.getElementById('previewExpiry');
+    const previewPoints = document.getElementById('previewPoints');
+    const previewXp = document.getElementById('previewXp');
+    const previewStartDate = document.getElementById('previewStartDate');
+    const previewExpiryFooter = document.getElementById('previewExpiryFooter');
+    
+    if (previewName) previewName.textContent = m.full_name || 'الاسم';
+    if (previewId) previewId.textContent = m.member_id || 'G-XXXX';
+    if (previewPhone) previewPhone.textContent = m.phone || '-';
+    if (previewType) previewType.textContent = m.membership_type || '-';
+    if (previewExpiry) previewExpiry.textContent = expiryDisplay;
+    if (previewPoints) previewPoints.textContent = points;
+    if (previewXp) previewXp.textContent = xp;
+    if (previewStartDate) previewStartDate.textContent = formatDate(m.start_date);
+    if (previewExpiryFooter) {
+        previewExpiryFooter.textContent = expiryDisplay;
+        previewExpiryFooter.className = isExpired ? 'expiry' : '';
+    }
+    
+    // ✅ สถานะ Banner
+    renderMemberStatus(m, isExpired, hasPaymentHistory, profileExpiryStr);
+    
+    // ✅ QR Code
+    generateProfileQR(m.member_id);
+    
+    // ✅ แสดง/ซ่อนส่วนต่างๆ
+    const showFull = !isExpired && hasPaymentHistory;
+    const goalSection = document.getElementById('goalSection');
+    const calendarSection = document.getElementById('calendarSection');
+    const weightSection = document.getElementById('weightSection');
+    const top8Panel = document.getElementById('top8Panel');
+    const expiredOverlay = document.getElementById('profileExpiredOverlay');
+    
+    if (goalSection) goalSection.style.display = showFull ? 'block' : 'none';
+    if (calendarSection) calendarSection.style.display = showFull ? 'block' : 'none';
+    if (weightSection) weightSection.style.display = showFull ? 'block' : 'none';
+    if (top8Panel) top8Panel.style.display = 'block';
+    if (expiredOverlay) expiredOverlay.classList.toggle('show', isExpired);
+    
+    if (showFull) {
+        loadGoalProgress();
+        renderCalendar();
+        loadWeightData();
+        renderWeightChart();
+    }
+    
+    updateMemberDashboard();
+    loadTop8();
+    
+    console.log('✅ บัตรแสดงผลเรียบร้อย');
+}
+
+  // ============================================================
+// LOAD TOP 8 — อันดับการเข้าใช้สูงสุด 8 อันดับของปี
+// ============================================================
+function loadTop8() {
+    const container = document.getElementById('top8Container');
+    if (!container) {
+        console.warn('⚠️ ไม่พบ top8Container');
+        return;
+    }
+    
+    console.log('🔄 loadTop8() ถูกเรียก');
+    console.log('🔍 allCheckins length:', allCheckins ? allCheckins.length : 0);
+    console.log('🔍 allMembers length:', allMembers ? allMembers.length : 0);
+    
+    if (!allCheckins || allCheckins.length === 0) {
+        console.log('⏳ ยังไม่มีข้อมูล checkins กำลังโหลด...');
+        container.innerHTML = `
+            <div style="text-align:center;padding:20px 0;color:var(--text-muted);">
+                <i class="fas fa-spinner fa-spin" style="font-size:24px;display:block;margin-bottom:10px;"></i>
+                <span>⏳ جارٍ تحميل البيانات...</span>
+            </div>
+        `;
+        
+        (async function fetchCheckinsForTop8() {
+            try {
+                console.log('📡 กำลังโหลด checkins จาก API...');
+                const res = await apiCall('/checkin');
+                if (res && res.data && res.data.length > 0) {
+                    allCheckins = res.data;
+                    console.log('✅ โหลด checkins สำเร็จ:', allCheckins.length, 'รายการ');
+                    
+                    if (!allMembers || allMembers.length === 0) {
+                        const membersRes = await apiCall('/members');
+                        allMembers = membersRes.data || [];
+                        console.log('✅ โหลด members สำเร็จ:', allMembers.length, 'คน');
+                    }
+                    
+                    renderTop8Content(container);
+                } else {
+                    container.innerHTML = `
+                        <div style="text-align:center;padding:20px 0;color:var(--text-muted);">
+                            <i class="fas fa-inbox" style="font-size:28px;display:block;margin-bottom:8px;opacity:0.4;"></i>
+                            <span>📭 لا توجد بيانات دخول</span>
+                        </div>
+                    `;
+                }
+            } catch (e) {
+                console.error('❌ โหลด checkins ล้มเหลว:', e);
+                container.innerHTML = `
+                    <div style="text-align:center;padding:20px 0;color:var(--danger);">
+                        <i class="fas fa-exclamation-circle" style="font-size:24px;display:block;margin-bottom:10px;"></i>
+                        <span>❌ لا يمكن تحميل البيانات</span>
+                    </div>
+                `;
+            }
+        })();
+        return;
+    }
+    
+    console.log('✅ มีข้อมูล checkins แล้ว', allCheckins.length, 'รายการ');
+    renderTop8Content(container);
+}
+
+// ============================================================
+// RENDER TOP 8 CONTENT — แสดงผลอันดับ
+// ============================================================
+function renderTop8Content(container) {
+    if (!container) {
+        console.warn('⚠️ ไม่พบ container');
+        return;
+    }
+    
+    if (!allCheckins || allCheckins.length === 0) {
+        console.warn('⚠️ allCheckins ว่าง');
+        container.innerHTML = `
+            <div style="text-align:center;padding:20px 0;color:var(--text-muted);">
+                <i class="fas fa-inbox" style="font-size:28px;display:block;margin-bottom:8px;opacity:0.4;"></i>
+                <span>📭 لا توجد بيانات دخول</span>
+            </div>
+        `;
+        return;
+    }
+    
+    const today = new Date();
+    const oneYearAgo = new Date(today);
+    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+    const oneYearAgoStr = oneYearAgo.toISOString().split('T')[0];
+    
+    console.log('📊 คำนวณ Top 8 จากข้อมูล', allCheckins.length, 'รายการ');
+    console.log('📅 ตั้งแต่', oneYearAgoStr);
+    
+    const checkinCounts = {};
+    allCheckins.forEach(c => {
+        if (c.checkin_date && normalizeDate(c.checkin_date) >= oneYearAgoStr) {
+            const id = c.member_id;
+            if (id) {
+                checkinCounts[id] = (checkinCounts[id] || 0) + 1;
+            }
+        }
+    });
+    
+    console.log('📊 checkinCounts:', Object.keys(checkinCounts).length, 'คน');
+    
+    const sorted = Object.entries(checkinCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
+    
+    if (sorted.length === 0) {
+        container.innerHTML = `
+            <div style="text-align:center;padding:20px 0;color:var(--text-muted);">
+                <i class="fas fa-inbox" style="font-size:28px;display:block;margin-bottom:8px;opacity:0.4;"></i>
+                <span>📭 لا توجد بيانات دخول خلال العام</span>
+            </div>
+        `;
+        return;
+    }
+    
+    console.log('🏆 Top 8:', sorted);
+    
+    const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣'];
+    const titles = [
+        '🏆 ملك اللياقة',
+        '👑 نائب الملك',
+        '💪 المقاتل المثابر',
+        '🏃 مجتهد جداً',
+        '👍 جيد جداً',
+        '🌟 ممتاز',
+        '✨ بداية جيدة',
+        '💪 واعد'
+    ];
+    const colorClasses = ['gold', 'gold', 'gold', '', '', '', '', ''];
+    
+    let html = '<div class="top7-card">';
+    sorted.forEach(([memberId, count], idx) => {
+        const member = allMembers.find(m => m.member_id === memberId);
+        const name = member ? member.full_name : memberId;
+        const colorClass = colorClasses[idx] || '';
+        const isMe = memberId === profileMemberId;
+        const meBadge = isMe ? ' 👈 أنت' : '';
+        const medal = medals[idx] || '🏅';
+        const title = titles[idx] || '💪 قادم بقوة';
+        
+        html += `
+            <div class="top7-item ${colorClass}" style="${colorClass === 'gold' ? 'background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.3);' : ''}">
+                <span class="rank-medal">${medal}</span>
+                <div class="top7-name">${name}${meBadge}</div>
+                <div class="top7-points">⭐ ${count} ครั้ง</div>
+                <div class="top7-title">${title}</div>
+            </div>
+        `;
+    });
+    html += '</div>';
+    
+    const myRank = sorted.findIndex(([id]) => id === profileMemberId);
+    let encouragementMsg = '';
+    if (myRank === 0) {
+        encouragementMsg = '👑 أنت الأفضل! ممتاز! أنت قدوة للآخرين! 💪';
+    } else if (myRank === 1) {
+        encouragementMsg = '🥈 رائع! أنت على بعد خطوة من المركز الأول! استمر! 💪';
+    } else if (myRank === 2) {
+        encouragementMsg = '🥉 ممتاز! أنت ضمن أفضل 3! فخور بنفسك! 🏆';
+    } else if (myRank >= 0 && myRank < 8) {
+        encouragementMsg = '🌟 أنت ضمن أفضل 8! ممتاز! استمر في العمل! 💪';
+    } else {
+        encouragementMsg = '💪 كل خطوة لها معناها! استمر وستصل! 🚀';
+    }
+    
+    html += `
+        <div style="text-align:center;margin-top:12px;padding:10px 14px;background:var(--bg-body);border-radius:var(--radius-sm);border-right:4px solid var(--accent);font-size:13px;color:var(--text-secondary);">
+            ${encouragementMsg}
+        </div>
+        <div style="text-align:center;margin-top:6px;font-size:11px;color:var(--text-muted);">
+            <i class="fas fa-calendar-alt"></i> ข้อมูล ${formatDate(oneYearAgoStr)} - ${formatDate(getTodayStr())}
+        </div>
+    `;
+    
+    container.innerHTML = html;
+}      
+    
+// ============================================================
+// RENDER DEBUG — แสดงข้อมูลดีบัก (Admin + Member)
+// ============================================================
+function renderDebug(data, error) {
+    const container = document.getElementById('debugContent');
+    if (!container) return;
+    
+    // ✅ ถ้ามี error แสดง error
+    if (error) {
+        container.innerHTML = `
+            <div class="error-text"><i class="fas fa-times-circle"></i> ERROR: ${error}</div>
+            <div class="text-muted text-sm">${data ? '📦 ข้อมูลบางส่วน:' : '⚠️ ไม่มีข้อมูล'}</div>
+            ${data ? `<pre>${JSON.stringify(data, null, 2)}</pre>` : ''}
+        `;
+        return;
+    }
+    
+    // ✅ ใช้ lastData ถ้ามี (Admin) หรือใช้ข้อมูลจากตัวแปรอื่น (Member)
+    const summary = data?.summary || {};
+    const members = data?.members || allMembers || [];
+    const payments = data?.payments || allPayments || [];
+    const checkins = data?.checkins || allCheckins || [];
+    const revenueData = data?.revenue_by_month || [];
+    const trendData = data?.checkin_trend || [];
+    const peakData = data?.peak_hours || [];
+    
+    // ✅ ตรวจสอบว่ามีข้อมูลจาก lastData หรือไม่
+    const hasData = data !== null && data !== undefined;
+    const isMember = !hasData && allMembers.length > 0;
+    
+    if (isMember) {
+        // 🔹 Member Mode — ใช้ข้อมูลจากตัวแปรที่มี
+        container.innerHTML = `
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;color:var(--text-muted);font-size:12px;margin-bottom:8px;">
+                <div>👥 สมาชิกทั้งหมด: <strong style="color:#4ade80;">${allMembers.length}</strong> คน</div>
+                <div>💳 การชำระเงิน: <strong style="color:#4ade80;">${allPayments.length}</strong> รายการ</div>
+                <div>📈 เช็คอินทั้งหมด: <strong style="color:#4ade80;">${allCheckins.length}</strong> ครั้ง</div>
+                <div>👤 สมาชิกปัจจุบัน: <strong style="color:#4ade80;">${profileMember?.full_name || '-'}</strong></div>
+                <div>🆔 รหัส: <strong style="color:#4ade80;">${profileMemberId || '-'}</strong></div>
+                <div>🕐 อัปเดตล่าสุด: <strong style="color:#4ade80;">${new Date().toLocaleString('ar-EG')}</strong></div>
+            </div>
+            <div style="margin-top:6px;padding:6px 12px;background:rgba(56,189,248,0.08);border-radius:6px;border-right:3px solid var(--secondary);">
+                <span style="color:var(--text-muted);font-size:11px;">
+                    <i class="fas fa-info-circle" style="color:var(--secondary);"></i>
+                    ${profileCheckins.length > 0 ? `✅ ประวัติเช็คอินของท่าน: ${profileCheckins.length} ครั้ง` : '⚠️ ยังไม่มีประวัติเช็คอิน'}
+                    ${profilePayments.length > 0 ? ` | 💳 ชำระเงิน: ${profilePayments.length} ครั้ง` : ''}
+                </span>
+            </div>
+            <details style="margin-top:6px;">
+                <summary style="color:#4ade80;cursor:pointer;font-size:12px;font-weight:600;">📄 ดูข้อมูลของท่าน</summary>
+                <pre style="color:#b0c4de;font-size:10px;margin-top:4px;max-height:150px;overflow-y:auto;background:rgba(0,0,0,0.2);padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);">
+${JSON.stringify({
+    member: profileMember,
+    checkins: profileCheckins.slice(0, 10),
+    payments: profilePayments.slice(0, 10),
+    total_checkins: profileCheckins.length,
+    total_payments: profilePayments.length
+}, null, 2)}
+                </pre>
+            </details>
+        `;
+        return;
+    }
+    
+    // 🔹 Admin Mode — ใช้ lastData
+    if (!data) {
+        container.innerHTML = '<span class="text-muted"><i class="fas fa-spinner fa-spin"></i> ในขณะนี้ข้อมูลกำลังโหลด...</span>';
+        return;
+    }
+    
+    container.innerHTML = `
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;color:var(--text-muted);font-size:12px;margin-bottom:8px;">
+            <div>📊 summary keys: ${Object.keys(summary).join(', ')}</div>
+            <div>👥 members: ${members.length} คน</div>
+            <div>💳 payments: ${payments.length} รายการ</div>
+            <div>📈 revenue_by_month: ${revenueData.length} เดือน</div>
+            <div>📉 checkin_trend: ${trendData.length} วัน</div>
+            <div>⏰ peak_hours: ${peakData.length} ชั่วโมง</div>
+        </div>
+        <details>
+            <summary style="color:#4ade80;cursor:pointer;font-size:13px;font-weight:600;">📄 ดู JSON เต็ม</summary>
+            <pre>${JSON.stringify(data, null, 2)}</pre>
+        </details>
+    `;
+}   
+    
     </script>
 </body>
 </html>
