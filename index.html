@@ -5615,153 +5615,141 @@ case 'expired': {
             renderChart('ageDistChart', 'bar', aLabels, aValues, 'العدد', '#0ea5e9', textColor, gridColor);
         }
 
-        // ============================================================
-        // PROFILE (Member)
-        // ============================================================
-        function showProfileLoading(show) {
-            const card = document.getElementById('profileCard');
-            if (show) {
-                const fields = ['profileName', 'profileId', 'profilePhone', 'profileType', 'profilePoints', 'profileXp',
-                    'profileRank'
-                ];
-                fields.forEach(id => {
-                    const el = $(id);
-                    if (el && !el.dataset.loading) {
-                        el.dataset.loading = 'true';
-                        el.textContent = '⏳ جارٍ التحميل...';
-                    }
-                });
-            } else {
-                document.querySelectorAll('[data-loading="true"]').forEach(el => { el.dataset.loading = ''; });
-            }
+// ============================================================
+// RENDER PROFILE HEADER (ชื่อ + เบอร์ + ฉายา)
+// ============================================================
+function renderProfileHeader() {
+    // ✅ ตรวจสอบว่ามี Element หรือไม่
+    const nameEl = document.getElementById('profileName');
+    const phoneEl = document.getElementById('profilePhoneText');
+    const rankTextEl = document.getElementById('profileRankText');
+    const rankBadgeEl = document.getElementById('profileRankBadge');
+    
+    // ถ้าไม่มี Element เหล่านี้ → ไม่ต้องทำอะไร (ป้องกัน Error)
+    if (!nameEl && !phoneEl && !rankTextEl) return;
+    
+    // ดึงข้อมูล
+    const m = profileMember;
+    if (!m) return;
+    
+    // ✅ อัปเดตชื่อ
+    if (nameEl) nameEl.textContent = m.full_name || '-';
+    
+    // ✅ อัปเดตเบอร์โทร
+    if (phoneEl) phoneEl.textContent = m.phone || '-';
+    
+    // ✅ คำนวณฉายา
+    const today = getTodayStr();
+    const thisMonth = today.slice(0, 7);
+    const myMonthCheckins = profileCheckins.filter(c => 
+        c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) === thisMonth
+    );
+    const myCount = myMonthCheckins.length;
+    
+    let rankTitle = 'مبتدئ';
+    let rankIcon = '🌱';
+    if (myCount >= 25) { rankTitle = 'الملك'; rankIcon = '👑'; }
+    else if (myCount >= 20) { rankTitle = 'المقاتل'; rankIcon = '💪'; }
+    else if (myCount >= 15) { rankTitle = 'المجتهد'; rankIcon = '🏃'; }
+    else if (myCount >= 10) { rankTitle = 'جيد'; rankIcon = '👍'; }
+    else if (myCount >= 5) { rankTitle = 'كسول'; rankIcon = '😴'; }
+    
+    // ✅ อัปเดตฉายา
+    if (rankTextEl) rankTextEl.textContent = rankTitle + ' (' + myCount + ' مرّة)';
+    if (rankBadgeEl) {
+        rankBadgeEl.innerHTML = `<i class="fas fa-crown"></i> ${rankIcon} ${rankTitle}`;
+    }
+}
+
+// ============================================================
+// RENDER PROFILE CARD (เฉพาะบัตร)
+// ============================================================
+function renderProfileCard() {
+    const m = profileMember;
+    if (!m) return;
+    
+    // ข้อมูลที่ต้องใช้
+    hasPaymentHistory = profilePayments.length > 0;
+    let expiryDate = null;
+    profileExpiryStr = '-';
+    let isExpired = false;
+    
+    if (profilePayments.length > 0) {
+        const sorted = [...profilePayments].sort((a, b) => {
+            const da = normalizeDate(a.expiry_date || a['تاريخ انتهاء الصلاحية']);
+            const db = normalizeDate(b.expiry_date || b['تاريخ انتهاء الصلاحية']);
+            if (!da && !db) return 0;
+            if (!da) return 1;
+            if (!db) return -1;
+            return da.localeCompare(db);
+        });
+        const latest = sorted[sorted.length - 1];
+        profileExpiryStr = latest.expiry_date || latest['تاريخ انتهاء الصلاحية'] || '-';
+        if (profileExpiryStr && profileExpiryStr !== '-') {
+            expiryDate = new Date(normalizeDate(profileExpiryStr));
+            isExpired = expiryDate <= new Date();
         }
-
-        async function loadProfile() {
-            showProfileLoading(true);
-            try {
-                if (!allMembers || allMembers.length === 0) {
-                    try { const memberData = await apiCall('/members');
-                        allMembers = memberData.data || []; } catch (e) {}
-                }
-                if (!allCheckins || allCheckins.length === 0) {
-                    try { const checkinData = await apiCall('/checkin');
-                        allCheckins = checkinData.data || []; } catch (e) {}
-                }
-                if (!allPayments || allPayments.length === 0) {
-                    try { const payData = await apiCall('/payments');
-                        allPayments = payData.data || []; } catch (e) {}
-                }
-
-                const [memberData, ciData, payData] = await Promise.all([
-                    apiCall(`/members/${profileMemberId}`),
-                    apiCall(`/checkin/member/${profileMemberId}`),
-                    apiCall(`/payments/member/${profileMemberId}`)
-                ]);
-                profileMember = memberData.data || memberData;
-                profileCheckins = ciData.data || [];
-                profilePayments = payData.data || [];
-
-                setCachedData('profile_' + profileMemberId, {
-                    member: profileMember,
-                    checkins: profileCheckins,
-                    payments: profilePayments
-                });
-
-                renderProfileData();
-                showProfileLoading(false);
-
-            } catch (e) {
-                console.error('❌ خطأ في loadProfile:', e);
-                const cached = getCachedData('profile_' + profileMemberId);
-                if (cached) {
-                    profileMember = cached.member;
-                    profileCheckins = cached.checkins || [];
-                    profilePayments = cached.payments || [];
-                    renderProfileData();
-                    showToast('⚠️ جاري عرض البيانات المخزنة مؤقتًا (غير متصل)', 'warning');
-                    showProfileLoading(false);
-                } else {
-                    showToast('❌ فشل تحميل الملف الشخصي: ' + e.message, 'error');
-                    showProfileLoading(false);
-                }
-            }
-        }
-
-        function renderProfileData() {
-            const m = profileMember;
-            hasPaymentHistory = profilePayments.length > 0;
-            let expiryDate = null;
-            profileExpiryStr = '-';
-            let isExpired = false;
-            if (profilePayments.length > 0) {
-                const sorted = [...profilePayments].sort((a, b) => {
-                    const da = normalizeDate(a.expiry_date || a['تاريخ انتهاء الصلاحية']);
-                    const db = normalizeDate(b.expiry_date || b['تاريخ انتهاء الصلاحية']);
-                    if (!da && !db) return 0;
-                    if (!da) return 1;
-                    if (!db) return -1;
-                    return da.localeCompare(db);
-                });
-                const latest = sorted[sorted.length - 1];
-                profileExpiryStr = latest.expiry_date || latest['تاريخ انتهاء الصلاحية'] || '-';
-                if (profileExpiryStr && profileExpiryStr !== '-') {
-                    expiryDate = new Date(normalizeDate(profileExpiryStr));
-                    isExpired = expiryDate <= new Date();
-                }
-            }
-            isMemberExpired = isExpired;
-
-            renderMemberStatus(m, isExpired, hasPaymentHistory, profileExpiryStr);
-            $('profileName').textContent = m.full_name || '-';
-            $('profileId').textContent = 'الرقم: ' + (m.member_id || '-');
-            $('profilePhone').innerHTML = '<i class="fas fa-phone"></i> ' + (m.phone || '-');
-            $('profileType').innerHTML = '<i class="fas fa-tag"></i> ' + (m.membership_type || '-');
-
-            const points = getPoints(m.member_id);
-            const xp = updateMemberXp(m.member_id, allCheckins);
-
-            $('profilePoints').innerHTML = '<i class="fas fa-coins"></i> النقاط: ' + points;
-            $('profileXp').innerHTML = '<i class="fas fa-star"></i> XP: ' + xp;
-            $('profileRank').innerHTML = '<i class="fas fa-medal"></i> المستوى: ' + (m.rank || '-');
-
-            const expiryDisplay = profileExpiryStr && profileExpiryStr !== '-' ? formatDate(profileExpiryStr) :
-                'غير مدفوع';
-            $('profileExpiryStatus').innerHTML = isExpired ?
-                `<span style="color:var(--danger);"><i class="fas fa-circle"></i> منتهي (${expiryDisplay})</span>` :
-                hasPaymentHistory ?
-                `<span style="color:var(--success);"><i class="fas fa-circle"></i> نشط (ينتهي ${expiryDisplay})</span>` :
-                `<span style="color:var(--warning);"><i class="fas fa-circle"></i> لا يوجد سجل دفع</span>`;
-
-            $('previewName').textContent = m.full_name || 'الاسم';
-            $('previewId').textContent = m.member_id || 'G-XXXX';
-            $('previewPhone').textContent = m.phone || '-';
-            $('previewType').textContent = m.membership_type || '-';
-            $('previewExpiry').textContent = expiryDisplay;
-            $('previewPoints').textContent = points;
-            $('previewXp').textContent = xp;
-            $('previewStartDate').textContent = formatDate(m.start_date);
-            $('previewExpiryFooter').textContent = expiryDisplay;
-            $('previewExpiryFooter').className = isExpired ? 'expiry' : '';
-
-            generateProfileQR(m.member_id);
-
-            const showFull = !isExpired && hasPaymentHistory;
-            document.getElementById('goalSection').style.display = showFull ? 'block' : 'none';
-            document.getElementById('calendarSection').style.display = showFull ? 'block' : 'none';
-            document.getElementById('weightSection').style.display = showFull ? 'block' : 'none';
-            document.getElementById('top8Panel').style.display = 'block';
-            document.getElementById('profileExpiredOverlay').classList.toggle('show', isExpired);
-
-            if (showFull) {
-                loadGoalProgress();
-                renderCalendar();
-                loadWeightData();
-                renderWeightChart();
-            }
-
-            updateMemberDashboard();
-            loadTop8();
-        }
+    }
+    isMemberExpired = isExpired;
+    
+    const points = getPoints(m.member_id);
+    const xp = updateMemberXp(m.member_id, allCheckins);
+    const expiryDisplay = profileExpiryStr && profileExpiryStr !== '-' ? formatDate(profileExpiryStr) : 'غير مدفوع';
+    
+    // ✅ อัปเดตข้อมูลในบัตร
+    const previewName = document.getElementById('previewName');
+    const previewId = document.getElementById('previewId');
+    const previewPhone = document.getElementById('previewPhone');
+    const previewType = document.getElementById('previewType');
+    const previewExpiry = document.getElementById('previewExpiry');
+    const previewPoints = document.getElementById('previewPoints');
+    const previewXp = document.getElementById('previewXp');
+    const previewStartDate = document.getElementById('previewStartDate');
+    const previewExpiryFooter = document.getElementById('previewExpiryFooter');
+    
+    if (previewName) previewName.textContent = m.full_name || 'الاسم';
+    if (previewId) previewId.textContent = m.member_id || 'G-XXXX';
+    if (previewPhone) previewPhone.textContent = m.phone || '-';
+    if (previewType) previewType.textContent = m.membership_type || '-';
+    if (previewExpiry) previewExpiry.textContent = expiryDisplay;
+    if (previewPoints) previewPoints.textContent = points;
+    if (previewXp) previewXp.textContent = xp;
+    if (previewStartDate) previewStartDate.textContent = formatDate(m.start_date);
+    if (previewExpiryFooter) {
+        previewExpiryFooter.textContent = expiryDisplay;
+        previewExpiryFooter.className = isExpired ? 'expiry' : '';
+    }
+    
+    // ✅ สถานะ Banner
+    renderMemberStatus(m, isExpired, hasPaymentHistory, profileExpiryStr);
+    
+    // ✅ QR Code
+    generateProfileQR(m.member_id);
+    
+    // ✅ แสดง/ซ่อนส่วนต่างๆ
+    const showFull = !isExpired && hasPaymentHistory;
+    const goalSection = document.getElementById('goalSection');
+    const calendarSection = document.getElementById('calendarSection');
+    const weightSection = document.getElementById('weightSection');
+    const top8Panel = document.getElementById('top8Panel');
+    const expiredOverlay = document.getElementById('profileExpiredOverlay');
+    
+    if (goalSection) goalSection.style.display = showFull ? 'block' : 'none';
+    if (calendarSection) calendarSection.style.display = showFull ? 'block' : 'none';
+    if (weightSection) weightSection.style.display = showFull ? 'block' : 'none';
+    if (top8Panel) top8Panel.style.display = 'block';
+    if (expiredOverlay) expiredOverlay.classList.toggle('show', isExpired);
+    
+    if (showFull) {
+        loadGoalProgress();
+        renderCalendar();
+        loadWeightData();
+        renderWeightChart();
+    }
+    
+    updateMemberDashboard();
+    loadTop8();
+}
 
         function updateMemberDashboard() {
             if (!profileMember) return;
