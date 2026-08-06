@@ -3716,18 +3716,20 @@
             <div id="memberStatusBanner"></div>
             <div class="card-panel relative" id="profileCard">
                 <div class="expired-overlay" id="profileExpiredOverlay"><i class="fas fa-lock"></i><h3>العضوية منتهية الصلاحية</h3><p>يرجى الاتصال بالمسؤول</p></div>
-                <div style="display:flex; flex-wrap:wrap; gap:14px; margin-bottom:10px;">
-                    <div style="flex:1; min-width:160px;">
-                        <h3 id="profileName" style="font-size:22px;font-weight:800;">-</h3>
-                        <p class="text-muted text-sm" id="profileId"><i class="fas fa-id-badge"></i> الرقم: -</p>
-                        <p class="text-muted text-sm" id="profilePhone"><i class="fas fa-phone"></i> -</p>
-                        <p class="text-muted text-sm" id="profileType"><i class="fas fa-tag"></i> -</p>
-                        <p class="text-muted text-sm" id="profilePoints"><i class="fas fa-coins"></i> النقاط: 0</p>
-                        <p class="text-muted text-sm" id="profileXp"><i class="fas fa-star"></i> XP: 0</p>
-                        <p class="text-muted text-sm" id="profileRank"><i class="fas fa-medal"></i> المستوى: -</p>
-                        <span id="profileExpiryStatus" style="font-weight:700;font-size:13px;display:block;margin-top:4px;"></span>
-                    </div>
-                </div>
+<!-- ✅ แสดงแค่ ชื่อ + เบอร์โทร + ฉายา -->
+<div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-bottom:12px; padding:10px 14px; background:var(--bg-body); border-radius:var(--radius-sm); border-right:4px solid var(--accent);">
+    <div style="flex:1; min-width:120px;">
+        <h3 id="profileName" style="font-size:20px;font-weight:700;color:var(--text-primary);">-</h3>
+        <p class="text-muted text-sm" id="profilePhone" style="margin-top:2px;">
+            <i class="fas fa-phone" style="color:var(--primary);"></i> <span id="profilePhoneText">-</span>
+        </p>
+    </div>
+    <div style="text-align:left; padding:4px 14px; background:var(--accent-light); border-radius:30px; border:1px solid rgba(245,158,11,0.2);">
+        <span id="profileRankBadge" style="font-size:14px; font-weight:700; color:var(--accent);">
+            <i class="fas fa-crown"></i> <span id="profileRankText">-</span>
+        </span>
+    </div>
+</div>
                 <div style="display:flex; justify-content:center; margin-top:6px;">
                     <div class="member-card-preview" id="memberCardPreview">
                         <div class="mc-header"><div class="mc-brand"><i class="fas fa-dumbbell"></i><span>Pro Gym</span></div><span class="mc-badge" id="previewType">-</span></div>
@@ -5689,19 +5691,32 @@ case 'expired': {
 
 function renderProfileData() {
     const m = profileMember;
-    // ... โค้ดอื่นๆ ...
+    // ... โค้ดอื่นๆ (hasPaymentHistory, expiryDate, isExpired, points, xp) ...
 
-    // ❌ ลบส่วนนี้ (เพราะไม่มี HTML ให้อัปเดตแล้ว)
-    // $('profileName').textContent = m.full_name || '-';
-    // $('profileId').textContent = 'الرقم: ' + (m.member_id || '-');
-    // $('profilePhone').innerHTML = '<i class="fas fa-phone"></i> ' + (m.phone || '-');
-    // $('profileType').innerHTML = '<i class="fas fa-tag"></i> ' + (m.membership_type || '-');
-    // $('profilePoints').innerHTML = '<i class="fas fa-coins"></i> النقاط: ' + points;
-    // $('profileXp').innerHTML = '<i class="fas fa-star"></i> XP: ' + xp;
-    // $('profileRank').innerHTML = '<i class="fas fa-medal"></i> المستوى: ' + (m.rank || '-');
-    // $('profileExpiryStatus').innerHTML = ...;
+    // ✅ อัปเดตเฉพาะ ชื่อ + เบอร์โทร + ฉายา
+    $('profileName').textContent = m.full_name || '-';
+    $('profilePhoneText').textContent = m.phone || '-';
+    
+    // ✅ คำนวณฉายาประจำเดือน
+    const today = getTodayStr();
+    const thisMonth = today.slice(0, 7);
+    const myMonthCheckins = profileCheckins.filter(c => 
+        c.checkin_date && normalizeDate(c.checkin_date).slice(0, 7) === thisMonth
+    );
+    const myCount = myMonthCheckins.length;
+    
+    let rankTitle = 'مبتدئ';
+    let rankIcon = '🌱';
+    if (myCount >= 25) { rankTitle = 'الملك'; rankIcon = '👑'; }
+    else if (myCount >= 20) { rankTitle = 'المقاتل'; rankIcon = '💪'; }
+    else if (myCount >= 15) { rankTitle = 'المجتهد'; rankIcon = '🏃'; }
+    else if (myCount >= 10) { rankTitle = 'جيد'; rankIcon = '👍'; }
+    else if (myCount >= 5) { rankTitle = 'كسول'; rankIcon = '😴'; }
+    
+    $('profileRankText').textContent = rankTitle + ' (' + myCount + ' مرّة)';
+    $('profileRankBadge').innerHTML = `<i class="fas fa-crown"></i> ${rankIcon} ${rankTitle}`;
 
-    // ✅ อัปเดตเฉพาะบัตรอย่างเดียว
+    // ✅ อัปเดตบัตร (เหมือนเดิม)
     $('previewName').textContent = m.full_name || 'الاسم';
     $('previewId').textContent = m.member_id || 'G-XXXX';
     $('previewPhone').textContent = m.phone || '-';
@@ -5712,7 +5727,7 @@ function renderProfileData() {
     $('previewStartDate').textContent = formatDate(m.start_date);
     $('previewExpiryFooter').textContent = expiryDisplay;
 
-    // ... ที่เหลือ
+    // ... ส่วนอื่นๆ (QR, Goal, Calendar, etc.)
 }
 
             generateProfileQR(m.member_id);
