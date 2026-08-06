@@ -6216,22 +6216,34 @@ function updateMemberDashboard() {
     const totalPaid = monthPayments.reduce((sum, p) => sum + parseFloat(p.amount || 0), 0);
     safeSetText('mStatRevenue', toEGP(totalPaid));
 
-   // ============================================================
-// 2. XP + Streak + Bonus (mStatXp)
+   // // ============================================================
+// ============================================================
+// ============================================================
+// 2. XP + Streak + ข้อความกำลังใจ
 // ============================================================
 const memberId = m.member_id;
 const currentXp = getXp(memberId);
 const currentStreak = getStreak(memberId);
-const bonusToday = calculateXpBonusForStreak(currentStreak);
-const bonusTomorrow = calculateXpBonusForStreak(currentStreak + 1);
 
-let xpDisplay = `⭐ ${currentXp} XP`;
-if (currentStreak > 0) {
-    xpDisplay += ` | 🔥 ${currentStreak} يوم`;
-}
-xpDisplay += ` | ➕ غداً: +${bonusTomorrow}`;
+// ✅ ข้อความกำลังใจตาม Streak
+let msg = '💪 استمر!';
+if (currentStreak >= 20) msg = '👑 أسطورة!';
+else if (currentStreak >= 10) msg = '🔥 ممتاز!';
+else if (currentStreak >= 5) msg = '💪 مستمر!';
+else if (currentStreak >= 3) msg = '👍 بداية جيدة!';
+else if (currentStreak === 0) msg = '🌟 ابدأ اليوم!';
 
-safeSetText('mStatXp', xpDisplay);
+let xpDisplay = `
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:4px;">
+        <span style="font-size:14px;font-weight:700;"> ${currentXp}</span>
+        ${currentStreak > 0 ? `<span style="font-size:11px;color:var(--accent);">🔥 ${currentStreak}</span>` : ''}
+    </div>
+    <div style="font-size:10px;color:var(--text-secondary);text-align:left;margin-top:1px;">
+        ${msg}
+    </div>
+`;
+
+safeSetHTML('mStatXp', xpDisplay);
 
     // ============================================================
     // 3. เวลาที่คนเข้าใช้มากที่สุด (mStatPeak)
@@ -6945,13 +6957,7 @@ function renderTop8Content(container) {
             } else {
                 html =
                     `
-                            <div class="status-banner active">
-                                <i class="fas fa-check-circle"></i>
-                                <div>
-                                    <strong><i class="fas fa-check-circle"></i> العضوية نشطة</strong>
-                                    <span style="font-size:13px;display:block;">تنتهي في ${formatDate(expiryDateStr)}</span>
-                                </div>
-                            </div>
+
                         `;
             }
             container.innerHTML = html;
