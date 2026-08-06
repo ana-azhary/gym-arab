@@ -3478,6 +3478,115 @@
     }
 }
 
+/* ============================================================
+   MEMBER STATS CARDS — ดูดี ไม่รก
+   ============================================================ */
+
+.member-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.member-stats-grid .stat-card-click {
+    padding: 10px 12px;
+    min-height: 70px;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.member-stats-grid .stat-card-click:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    background: var(--bg-card-hover);
+}
+
+.member-stats-grid .stat-card-click .stat-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #fff;
+    flex-shrink: 0;
+    margin-bottom: 2px;
+}
+
+.member-stats-grid .stat-card-click .num {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-top: 1px;
+}
+
+.member-stats-grid .stat-card-click .label {
+    font-size: 10px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Responsive: มือถือ */
+@media (max-width: 768px) {
+    .member-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    .member-stats-grid .stat-card-click {
+        padding: 8px 10px;
+        min-height: 60px;
+    }
+    .member-stats-grid .stat-card-click .num {
+        font-size: 16px;
+    }
+    .member-stats-grid .stat-card-click .label {
+        font-size: 9px;
+    }
+    .member-stats-grid .stat-card-click .stat-icon {
+        width: 26px;
+        height: 26px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .member-stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+    .member-stats-grid .stat-card-click {
+        padding: 6px 8px;
+        min-height: 50px;
+    }
+    .member-stats-grid .stat-card-click .num {
+        font-size: 14px;
+    }
+    .member-stats-grid .stat-card-click .label {
+        font-size: 8px;
+    }
+    .member-stats-grid .stat-card-click .stat-icon {
+        width: 22px;
+        height: 22px;
+        font-size: 10px;
+    }
+}
 
     </style>
 </head>
@@ -3875,14 +3984,65 @@
 
         <!-- PAGE: PROFILE (Member Dashboard) -->
         <div id="page-profile" class="page-section">
-            <div class="member-stats-grid" id="memberStatsGrid">
-                <div class="stat-card-click" onclick="showCardDetail('member_revenue')"><div class="stat-top"><div class="stat-icon blue"><i class="fas fa-credit-card"></i></div></div><div class="num" id="mStatRevenue">-</div><div class="label">مدفوعات هذا الشهر</div></div>
-                <div class="stat-card-click" onclick="showCardDetail('member_xp')"><div class="stat-top"><div class="stat-icon green"><i class="fas fa-star"></i></div></div><div class="num" id="mStatXp">-</div><div class="label">نقاط الاجتهاد (XP)</div></div>
-                <div class="stat-card-click" onclick="showCardDetail('member_peak')"><div class="stat-top"><div class="stat-icon amber"><i class="fas fa-clock"></i></div></div><div class="num" id="mStatPeak">-</div><div class="label">أكثر وقت دخول</div></div>
-                <div class="stat-card-click" onclick="showCardDetail('member_rank')"><div class="stat-top"><div class="stat-icon purple"><i class="fas fa-trophy"></i></div></div><div class="num" id="mStatRank">-</div><div class="label">اللقب الشهري</div></div>
-                <div class="stat-card-click" onclick="showCardDetail('member_percent')"><div class="stat-top"><div class="stat-icon indigo"><i class="fas fa-percent"></i></div></div><div class="num" id="mStatPercent">-</div><div class="label">دخول اليوم</div></div>
-                <div class="stat-card-click" onclick="showCardDetail('member_daysleft')"><div class="stat-top"><div class="stat-icon red"><i class="fas fa-hourglass-half"></i></div></div><div class="num" id="mStatDaysLeft">-</div><div class="label">أيام متبقية للتجديد</div></div>
-            </div>
+            <!-- ============================================================
+     MEMBER STATS CARDS — 6 การ์ด (ภาษาอาหรับทั้งหมด)
+     ============================================================ -->
+<div class="member-stats-grid" id="memberStatsGrid">
+    
+    <!-- 1. ยอดชำระเงินเดือนนี้ -->
+    <div class="stat-card-click" onclick="showCardDetail('member_revenue')">
+        <div class="stat-top">
+            <div class="stat-icon blue"><i class="fas fa-credit-card"></i></div>
+        </div>
+        <div class="num" id="mStatRevenue">-</div>
+        <div class="label">💰 الإيرادات الشهرية</div>
+    </div>
+    
+    <!-- 2. XP + Streak -->
+    <div class="stat-card-click" onclick="showCardDetail('member_xp')">
+        <div class="stat-top">
+            <div class="stat-icon green"><i class="fas fa-star"></i></div>
+        </div>
+        <div class="num" id="mStatXp">-</div>
+        <div class="label">⭐ نقاط الاجتهاد</div>
+    </div>
+    
+    <!-- 3. وقت الذروة -->
+    <div class="stat-card-click" onclick="showCardDetail('member_peak')">
+        <div class="stat-top">
+            <div class="stat-icon amber"><i class="fas fa-clock"></i></div>
+        </div>
+        <div class="num" id="mStatPeak">-</div>
+        <div class="label">⏰ وقت الذروة</div>
+    </div>
+    
+    <!-- 4. اللقب الشهري (ฉายาประจำเดือน) -->
+    <div class="stat-card-click" onclick="showCardDetail('member_rank')">
+        <div class="stat-top">
+            <div class="stat-icon purple"><i class="fas fa-trophy"></i></div>
+        </div>
+        <div class="num" id="mStatRank">-</div>
+        <div class="label">🏅 اللقب الشهري</div>
+    </div>
+    
+    <!-- 5. نسبة دخول اليوم -->
+    <div class="stat-card-click" onclick="showCardDetail('member_percent')">
+        <div class="stat-top">
+            <div class="stat-icon indigo"><i class="fas fa-percent"></i></div>
+        </div>
+        <div class="num" id="mStatPercent">-</div>
+        <div class="label">📊 نسبة الدخول اليوم</div>
+    </div>
+    
+    <!-- 6. الأيام المتبقية (วันเหลือ) -->
+    <div class="stat-card-click" onclick="showCardDetail('member_daysleft')">
+        <div class="stat-top">
+            <div class="stat-icon red"><i class="fas fa-hourglass-half"></i></div>
+        </div>
+        <div class="num" id="mStatDaysLeft">-</div>
+        <div class="label">⏳ الأيام المتبقية</div>
+    </div>
+</div>
             <div id="memberStatusBanner"></div>
             <div class="card-panel relative" id="profileCard">
                 <div class="expired-overlay" id="profileExpiredOverlay"><i class="fas fa-lock"></i><h3>العضوية منتهية الصلاحية</h3><p>يرجى الاتصال بالمسؤول</p></div>
@@ -6089,7 +6249,7 @@ safeSetText('mStatXp', xpDisplay);
     const sortedHours = Object.entries(hourCounts).sort((a, b) => b[1] - a[1]);
     if (sortedHours.length > 0) {
         const top = sortedHours[0];
-        safeSetHTML('mStatPeak', `<span class="top-hour-highlight">${top[0]}:00</span> (${top[1]} ครั้ง)`);
+        safeSetHTML('mStatPeak', `<span class="top-hour-highlight">${top[0]}:00</span> (${top[1]} مرّة)`);
     } else {
         safeSetText('mStatPeak', 'لا توجد بيانات');
     }
@@ -6108,7 +6268,7 @@ safeSetText('mStatXp', xpDisplay);
     else if (myCount >= 15) { rankTitle = 'المجتهد'; rankIcon = '<i class="fas fa-running"></i>'; }
     else if (myCount >= 10) { rankTitle = 'جيد'; rankIcon = '<i class="fas fa-thumbs-up"></i>'; }
     else if (myCount >= 5) { rankTitle = 'كسول'; rankIcon = '<i class="fas fa-bed"></i>'; }
-    safeSetHTML('mStatRank', rankIcon + ' ' + rankTitle + ` (${myCount} ครั้ง)`);
+    safeSetHTML('mStatRank', rankIcon + ' ' + rankTitle + ` (${myCount} مرّة)`);
 
     // ============================================================
     // 5. เช็คอินวันนี้ (mStatPercent)
@@ -6138,7 +6298,7 @@ safeSetText('mStatXp', xpDisplay);
     let daysLeft = '-';
     if (profileExpiryStr && profileExpiryStr !== '-') {
         const diff = daysBetween(today, normalizeDate(profileExpiryStr));
-        daysLeft = diff >= 0 ? diff + ' วัน' : 'หมดอายุ';
+        daysLeft = diff >= 0 ? diff + 'يومًا' : 'หมดอายุ';
     }
     safeSetText('mStatDaysLeft', daysLeft);
 
@@ -6400,7 +6560,7 @@ case 'member_peak': {
             <div style="margin-bottom:12px;text-align:center;padding:8px;background:var(--bg-body);border-radius:var(--radius-sm);border-right:4px solid var(--accent);">
                 <span style="font-size:13px;color:var(--text-secondary);">
                     <i class="fas fa-info-circle" style="color:var(--accent);"></i>
-                    จำนวนเช็คอินทั้งหมดในเดือนนี้: <strong>${monthPeak.length}</strong> ครั้ง
+                     إجمالي عدد الدخول هذا الشهر: <strong>${monthPeak.length}</strong> مرّة
                 </span>
             </div>
             <table class="rank-table">
@@ -6709,7 +6869,7 @@ function renderTop8Content(container) {
             <div class="top8-item ${colorClass}">
                 <div class="top8-rank">${medal}</div>
                 <div class="top8-name">${name}${isMe ? ' ✨' : ''}</div>
-                <div class="top8-count">⭐ ${count} ครั้ง</div>
+                <div class="top8-count">⭐ ${count} مرّة</div>
                 ${meBadge}
                 <div style="font-size:10px;color:var(--text-muted);margin-top:3px;font-weight:500;">${title}</div>
             </div>
@@ -8075,7 +8235,7 @@ function renderTop8Content(container) {
             <div class="top7-item ${colorClass}" style="${colorClass === 'gold' ? 'background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.3);' : ''}">
                 <span class="rank-medal">${medal}</span>
                 <div class="top7-name">${name}${meBadge}</div>
-                <div class="top7-points">⭐ ${count} ครั้ง</div>
+                <div class="top7-points">⭐ ${count} مرّة</div>
                 <div class="top7-title">${title}</div>
             </div>
         `;
