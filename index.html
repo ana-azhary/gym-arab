@@ -7405,7 +7405,7 @@ function generateProfileQR(memberId) {
             const times = map[dateStr] || [];
             const detail = document.getElementById('calendarTimeDetail');
             if (times.length) {
-                detail.innerHTML = `<i class="fas fa-calendar-alt"></i> ${formatDate(dateStr)}: دخل في ${times.join(', ')}`;
+                detail.innerHTML = `<i class="fas fa-calendar-alt"></i> ${formatDate(dateStr)}: دخلت في ${times.join(', ')}`;
             } else {
                 detail.innerHTML = `<i class="fas fa-calendar-alt"></i> ${formatDate(dateStr)}: لا يوجد دخول`;
             }
