@@ -5702,102 +5702,134 @@ function renderDashPaymentTable(payments) {
 
             try {
                 switch (type) {
-                    case 'todayCheckins': {
-                        title = '✅ دخول اليوم (TODAY)';
-                        const res = await apiCall('/checkin');
-                        const allCheckinsFresh = res.data || [];
-                        const todayCheckins = allCheckinsFresh.filter(c => normalizeDate(c.checkin_date) ===
-                        todayStr);
-                        if (lastData) {
-                            if (!lastData.summary) lastData.summary = {};
-                            lastData.summary.today_checkins = todayCheckins.length;
-                            lastData.checkins = todayCheckins.slice(0, 20);
-                            updateDashboardCards(lastData.summary);
-                        }
-                        $('statTodayCheckins').textContent = todayCheckins.length;
-                        if (!todayCheckins.length) { content = 'لا يوجد دخول اليوم'; } else {
-                            let table =
-                                `<div class="table-wrap"><table class="rank-table"><thead><tr><th>#</th><th>الرقم</th><th>الاسم</th><th>الوقت</th><th>اتصال</th></tr></thead><tbody>`;
-                            todayCheckins.slice(0, 50).forEach((c, i) => {
-                                const member = members.find(m => m.member_id === c.member_id);
-                                const name = member ? member.full_name : '-';
-                                const phone = member ? member.phone : '';
-                                const wa = formatPhoneForWhatsApp(phone);
-                                const waLink = wa ?
-                                    `https://wa.me/${wa}?text=${encodeURIComponent('👋 مرحباً ' + name + '! سعدنا برؤيتك في Pro Gym اليوم! 💪')}` :
-                                    '#';
-                                table += `<tr>
-                                            <td>${i+1}</td>
-                                            <td><strong>${c.member_id}</strong></td>
-                                            <td>${name}</td>
-                                            <td>${c.checkin_time||'-'}</td>
-                                            <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
-                                        </tr>`;
-                            });
-                            table += '</tbody></table></div>';
-                            content =
-                            `العدد: <strong>${todayCheckins.length}</strong> مرة<br><br>${table}`;
-                        }
-                        break;
-                    }
+case 'todayCheckins': {
+    title = '✅ دخول اليوم (TODAY)';
+    const todayStr = getTodayStr();
+    
+    content = '<div style="text-align:center;padding:20px;"><i class="fas fa-spinner fa-spin"></i> جارٍ التحميل...</div>';
+    openModal(title, content);
+    
+    try {
+        const res = await apiCall('/checkin');
+        const allCheckinsFresh = res.data || [];
+        const todayCheckins = allCheckinsFresh.filter(c => normalizeDate(c.checkin_date) === todayStr);
+        
+        if (lastData) {
+            if (!lastData.summary) lastData.summary = {};
+            lastData.summary.today_checkins = todayCheckins.length;
+            lastData.checkins = todayCheckins.slice(0, 20);
+            updateDashboardCards(lastData.summary);
+        }
+        $('statTodayCheckins').textContent = todayCheckins.length;
+        
+        if (!todayCheckins.length) {
+            content = 'لا يوجد دخول اليوم';
+        } else {
+            let table = `<div class="table-wrap"><table class="rank-table"><thead><tr><th>#</th><th>الرقم</th><th>الاسم</th><th>الوقت</th><th>اتصال</th></tr></thead><tbody>`;
+            todayCheckins.slice(0, 50).forEach((c, i) => {
+                const member = allMembers.find(m => m.member_id === c.member_id);
+                const name = member ? member.full_name : '-';
+                const phone = member ? member.phone : '';
+                const wa = formatPhoneForWhatsApp(phone);
+                const waLink = wa ? `https://wa.me/${wa}?text=${encodeURIComponent('👋 مرحباً ' + name + '! سعدنا برؤيتك في Pro Gym اليوم! 💪')}` : '#';
+                table += `<tr>
+                            <td>${i+1}</td>
+                            <td><strong>${c.member_id}</strong></td>
+                            <td>${name}</td>
+                            <td>${c.checkin_time||'-'}</td>
+                            <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
+                        </tr>`;
+            });
+            table += '</tbody></table></div>';
+            content = `العدد: <strong>${todayCheckins.length}</strong> مرة<br><br>${table}`;
+        }
+        
+        const modalContent = document.querySelector('#tempModal .modal-box > div');
+        if (modalContent) modalContent.innerHTML = content;
+        else openModal(title, content);
+        
+    } catch (e) {
+        console.error('Error loading todayCheckins:', e);
+        content = '❌ فشل تحميل البيانات: ' + e.message;
+        const modalContent = document.querySelector('#tempModal .modal-box > div');
+        if (modalContent) modalContent.innerHTML = content;
+        else openModal(title, content);
+    }
+    break;
+}
+
 case 'todayPayments': {
     title = '💳 مدفوعات اليوم (TODAY)';
-    const res = await apiCall('/payments');
-    const allPaymentsFresh = res.data || [];
-    const todayPayers = allPaymentsFresh.filter(p => normalizeDate(p.payment_date) === todayStr);
+    const todayStr = getTodayStr();
     
-    // ✅ เรียงลำดับตามเวลาจ่าย (ล่าสุดบนสุด)
-    todayPayers.sort((a, b) => {
-        const ta = a.payment_time || '00:00:00';
-        const tb = b.payment_time || '00:00:00';
-        return ta < tb ? 1 : -1;
-    });
+    // ✅ แสดง Loading
+    content = '<div style="text-align:center;padding:20px;"><i class="fas fa-spinner fa-spin"></i> جارٍ التحميل...</div>';
+    openModal(title, content);
     
-    if (lastData) {
-        if (!lastData.summary) lastData.summary = {};
-        lastData.summary.today_payments = todayPayers.length;
-        const totalToday = todayPayers.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
-        lastData.summary.this_month_revenue = totalToday;
-        lastData.today_payers = todayPayers;
-        updateDashboardCards(lastData.summary);
-    }
-    $('statTodayPayments').textContent = todayPayers.length;
-    
-    if (!todayPayers.length) {
-        content = 'لا توجد مدفوعات اليوم';
-    } else {
-        const totalToday = todayPayers.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
-        let table = `<div class="table-wrap"><table class="rank-table">
-                    <thead><tr><th>#</th><th>الرقم</th><th>الاسم</th><th>المبلغ</th><th>الوقت</th><th>انتهاء الصلاحية</th><th>اتصال</th></tr></thead><tbody>`;
+    try {
+        const res = await apiCall('/payments');
+        const allPaymentsFresh = res.data || [];
+        const todayPayers = allPaymentsFresh.filter(p => normalizeDate(p.payment_date) === todayStr);
         
-        todayPayers.slice(0, 50).forEach((p, i) => {
-            // หาชื่อสมาชิก
-            const member = allMembers.find(m => m.member_id === p.member_id);
-            const name = member ? member.full_name : p.member_id || '-';
-            const phone = member ? member.phone : '';
-            
-            // เวลาจ่าย
-            const paymentTime = p.payment_time || '-';
-            
-            // WhatsApp
-            const wa = formatPhoneForWhatsApp(phone);
-            const waLink = wa ? `https://wa.me/${wa}?text=${encodeURIComponent('✅ شكراً للدفع ' + toEGP(p.amount) + ' ' + name + '! تم تجديد العضوية')}` : '#';
-            
-            // ✅ Badge สีเขียวเฉพาะเวลา
-            const timeBadge = paymentTime !== '-' ? `<span class="badge-time">🕐 ${paymentTime}</span>` : '-';
-            
-            table += `<tr>
-                        <td>${i+1}</td>
-                        <td><strong>${p.member_id || '-'}</strong></td>
-                        <td>${name}</td>
-                        <td>${toEGP(p.amount || 0)}</td>
-                        <td>${timeBadge}</td>
-                        <td>${formatDate(p.expiry_date)}</td>
-                        <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
-                    </tr>`;
+        // ✅ เรียงตามเวลาจ่าย (ล่าสุดบนสุด)
+        todayPayers.sort((a, b) => {
+            const ta = a.payment_time || '00:00:00';
+            const tb = b.payment_time || '00:00:00';
+            return ta < tb ? 1 : -1;
         });
-        table += '</tbody></table></div>';
-        content = `الإجمالي: <strong>${toEGP(totalToday)}</strong> (${todayPayers.length} عملية)<br><br>${table}`;
+        
+        // ✅ อัปเดต lastData (ถ้ามี)
+        if (lastData) {
+            if (!lastData.summary) lastData.summary = {};
+            lastData.summary.today_payments = todayPayers.length;
+            const totalToday = todayPayers.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
+            lastData.summary.this_month_revenue = totalToday;
+            lastData.today_payers = todayPayers;
+            updateDashboardCards(lastData.summary);
+        }
+        $('statTodayPayments').textContent = todayPayers.length;
+        
+        if (!todayPayers.length) {
+            content = 'لا توجد مدفوعات اليوم';
+        } else {
+            const totalToday = todayPayers.reduce((s, p) => s + parseFloat(p.amount || 0), 0);
+            let table = `<div class="table-wrap"><table class="rank-table">
+                        <thead><tr><th>#</th><th>الرقم</th><th>الاسم</th><th>المبلغ</th><th>الوقت</th><th>انتهاء الصلاحية</th><th>اتصال</th></tr></thead><tbody>`;
+            
+            todayPayers.slice(0, 50).forEach((p, i) => {
+                const member = allMembers.find(m => m.member_id === p.member_id);
+                const name = member ? member.full_name : p.member_id || '-';
+                const phone = member ? member.phone : '';
+                const paymentTime = p.payment_time || '-';
+                const wa = formatPhoneForWhatsApp(phone);
+                const waLink = wa ? `https://wa.me/${wa}?text=${encodeURIComponent('✅ شكراً للدفع ' + toEGP(p.amount) + ' ' + name + '! تم تجديد العضوية')}` : '#';
+                const timeBadge = paymentTime !== '-' ? `<span class="badge-time">🕐 ${paymentTime}</span>` : '-';
+                
+                table += `<tr>
+                            <td>${i+1}</td>
+                            <td><strong>${p.member_id || '-'}</strong></td>
+                            <td>${name}</td>
+                            <td>${toEGP(p.amount || 0)}</td>
+                            <td>${timeBadge}</td>
+                            <td>${formatDate(p.expiry_date)}</td>
+                            <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
+                        </tr>`;
+            });
+            table += '</tbody></table></div>';
+            content = `الإجمالي: <strong>${toEGP(totalToday)}</strong> (${todayPayers.length} عملية)<br><br>${table}`;
+        }
+        
+        // ✅ อัปเดต Modal
+        const modalContent = document.querySelector('#tempModal .modal-box > div');
+        if (modalContent) modalContent.innerHTML = content;
+        else openModal(title, content);
+        
+    } catch (e) {
+        console.error('Error loading todayPayments:', e);
+        content = '❌ فشل تحميل البيانات: ' + e.message;
+        const modalContent = document.querySelector('#tempModal .modal-box > div');
+        if (modalContent) modalContent.innerHTML = content;
+        else openModal(title, content);
     }
     break;
 }
@@ -6101,150 +6133,149 @@ case 'expired': {
                             `العدد: <strong>${allMembersFresh.length}</strong> عضو (عرض 50 فقط)<br><br>${table}`;
                         break;
                     }
-                    case 'revenue': {
-                        title = '💰 الإيرادات (آخر 3 أشهر)';
-                        const res = await apiCall('/payments');
-                        const allPaymentsFresh = res.data || [];
-                        const revByMonth = {};
-                        allPaymentsFresh.forEach(p => {
-                            if (p.payment_date) {
-                                const m = normalizeDate(p.payment_date).slice(0, 7);
-                                revByMonth[m] = (revByMonth[m] || 0) + parseFloat(p.amount || 0);
-                            }
-                        });
-                        const sortedMonths = Object.keys(revByMonth).sort();
-                        const lastMonths = sortedMonths.slice(-3);
-                        const lastValues = lastMonths.map(m => revByMonth[m] || 0);
-                        const lastLabels = lastMonths.map(m => {
-                            const d = new Date(m + '-01');
-                            return d.toLocaleDateString('ar-EG', { month: 'short',
-                            year: 'numeric' });
-                        });
-                        if (lastData) {
-                            if (!lastData.summary) lastData.summary = {};
-                            lastData.summary.this_month_revenue = lastValues[lastValues.length - 1] || 0;
-                            updateDashboardCards(lastData.summary);
-                        }
-                        if (lastMonths.length === 0) {
-                            content =
-                                `<div style="text-align:center;padding:20px 0;"><div style="font-size:48px;color:var(--text-muted);margin-bottom:12px;">📊</div><h4 style="color:var(--text-muted);">لا توجد بيانات للإيرادات</h4><p style="color:var(--text-muted);font-size:13px;margin-top:8px;">ابدأ بتسجيل المدفوعات لعرض الرسم البياني</p></div>`;
-                        } else {
-                            let analysisHtml = '';
-                            if (lastValues.length >= 2) {
-                                const current = lastValues[lastValues.length - 1];
-                                const previous = lastValues[lastValues.length - 2];
-                                const diff = current - previous;
-                                let badgeClass = 'flat',
-                                    badgeIcon = '➖',
-                                    badgeText = 'ثابت';
-                                let diffText = '';
-                                if (diff > 0) {
-                                    badgeClass = 'up';
-                                    badgeIcon = '📈';
-                                    badgeText = 'زيادة';
-                                    const pct = previous > 0 ? (diff / previous) * 100 : 100;
-                                    diffText =
-                                        `زيادة ${pct.toFixed(1)}% (${toEGP(diff)}) مقارنة بالشهر السابق`;
-                                } else if (diff < 0) {
-                                    badgeClass = 'down';
-                                    badgeIcon = '📉';
-                                    badgeText = 'انخفاض';
-                                    const pct = previous > 0 ? (Math.abs(diff) / previous) * 100 : 100;
-                                    diffText =
-                                        `انخفاض ${pct.toFixed(1)}% (${toEGP(Math.abs(diff))}) مقارنة بالشهر السابق`;
-                                } else {
-                                    diffText = 'لا يوجد تغيير مقارنة بالشهر السابق';
-                                }
-                                analysisHtml = `
-                                            <div class="revenue-analysis">
-                                                <div>
-                                                    <span class="analysis-badge ${badgeClass}">
-                                                        ${badgeIcon} ${badgeText}
-                                                    </span>
-                                                    <span class="analysis-detail">${diffText}</span>
-                                                </div>
-                                                <div class="analysis-detail">
-                                                    <strong>${lastLabels[lastLabels.length-1] || 'هذا الشهر'}</strong>
-                                                    : ${toEGP(current)} |
-                                                    <strong>${lastLabels[lastLabels.length-2] || 'الشهر الماضي'}</strong>
-                                                    : ${toEGP(previous)}
-                                                </div>
-                                            </div>
-                                        `;
-                            } else {
-                                analysisHtml = `<div class="revenue-analysis">📊 لا توجد بيانات كافية للمقارنة</div>`;
-                            }
-
-                            let chartHtml =
-                                `<div style="height:200px;margin-top:12px;"><canvas id="revenueModalChart"></canvas></div>`;
-                            let tableHtml =
-                                `<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;">
-                                            <div style="background:var(--bg-body);border-radius:8px;padding:10px;border:1px solid rgba(0,0,0,0.04);text-align:center;">
-                                                <div style="font-size:11px;color:var(--text-muted);">${lastLabels[lastLabels.length-1] || 'هذا الشهر'}</div>
-                                                <div style="font-size:22px;font-weight:700;color:var(--primary);">${toEGP(lastValues[lastValues.length-1] || 0)}</div>
-                                            </div>
-                                            <div style="background:var(--bg-body);border-radius:8px;padding:10px;border:1px solid rgba(0,0,0,0.04);text-align:center;">
-                                                <div style="font-size:11px;color:var(--text-muted);">${lastLabels.length > 1 ? lastLabels[lastLabels.length-2] : '-'}</div>
-                                                <div style="font-size:22px;font-weight:700;color:var(--primary);">${lastValues.length > 1 ? toEGP(lastValues[lastValues.length-2] || 0) : '-'}</div>
-                                            </div>
-                                            <div style="background:var(--bg-body);border-radius:8px;padding:10px;border:1px solid rgba(0,0,0,0.04);text-align:center;">
-                                                <div style="font-size:11px;color:var(--text-muted);">${lastLabels.length > 2 ? lastLabels[lastLabels.length-3] : '-'}</div>
-                                                <div style="font-size:22px;font-weight:700;color:var(--primary);">${lastValues.length > 2 ? toEGP(lastValues[lastValues.length-3] || 0) : '-'}</div>
-                                            </div>
-                                        </div>`;
-                            content = `
-                                        ${analysisHtml}
-                                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
-                                            <div style="background:var(--bg-body);border-radius:8px;padding:12px;border:1px solid rgba(0,0,0,0.04);text-align:center;">
-                                                <div style="font-size:11px;color:var(--text-muted);">إجمالي ${lastLabels[lastLabels.length-1] || 'هذا الشهر'}</div>
-                                                <div style="font-size:26px;font-weight:700;color:var(--primary);">${toEGP(lastValues[lastValues.length-1] || 0)}</div>
-                                            </div>
-                                            <div style="background:var(--bg-body);border-radius:8px;padding:12px;border:1px solid rgba(0,0,0,0.04);text-align:center;">
-                                                <div style="font-size:11px;color:var(--text-muted);">عدد المدفوعات</div>
-                                                <div style="font-size:26px;font-weight:700;color:var(--text-primary);">${allPaymentsFresh.filter(p => p.payment_date && normalizeDate(p.payment_date).slice(0,7) === lastMonths[lastMonths.length-1]).length}</div>
-                                            </div>
-                                        </div>
-                                        ${tableHtml}
-                                        ${chartHtml}
-                                    `;
-                            setTimeout(() => {
-                                const canvas = document.getElementById('revenueModalChart');
-                                if (canvas && lastLabels.length) {
-                                    if (revenueModalChartInstance) {
-                                        revenueModalChartInstance.destroy();
-                                        revenueModalChartInstance = null;
-                                    }
-                                    const ctx = canvas.getContext('2d');
-                                    revenueModalChartInstance = new Chart(ctx, {
-                                        type: 'bar',
-                                        data: { labels: lastLabels, datasets: [{ label: 'الإيرادات (ج.م)',
-                                                data: lastValues,
-                                                backgroundColor: [
-                                                    'rgba(15,59,94,0.7)',
-                                                    'rgba(15,59,94,0.5)',
-                                                    'rgba(15,59,94,0.3)'
-                                                ],
-                                                borderColor: '#0f3b5e',
-                                                borderWidth: 2
-                                            }] },
-                                        options: { responsive: true,
-                                            maintainAspectRatio: true,
-                                            plugins: { legend: { display: false },
-                                                tooltip: { callbacks: { label: function(
-                                                        context) { return context
-                                                        .parsed.y + ' ج.م'; } } }
-                                            },
-                                            scales: { y: { beginAtZero: true,
-                                                ticks: { callback: function(
-                                                        value) { return value
-                                                        .toLocaleString(
-                                                            'ar-EG') + ' ج.م'; } } } } }
-                                    });
-                                }
-                            }, 300);
-                        }
-                        break;
+case 'revenue': {
+    title = '💰 الإيرادات (آخر 3 أشهر)';
+    
+    content = '<div style="text-align:center;padding:20px;"><i class="fas fa-spinner fa-spin"></i> جارٍ التحميل...</div>';
+    openModal(title, content);
+    
+    try {
+        const res = await apiCall('/payments');
+        const allPaymentsFresh = res.data || [];
+        const revByMonth = {};
+        allPaymentsFresh.forEach(p => {
+            if (p.payment_date) {
+                const m = normalizeDate(p.payment_date).slice(0, 7);
+                revByMonth[m] = (revByMonth[m] || 0) + parseFloat(p.amount || 0);
+            }
+        });
+        const sortedMonths = Object.keys(revByMonth).sort();
+        const lastMonths = sortedMonths.slice(-3);
+        const lastValues = lastMonths.map(m => revByMonth[m] || 0);
+        const lastLabels = lastMonths.map(m => {
+            const d = new Date(m + '-01');
+            return d.toLocaleDateString('ar-EG', { month: 'short', year: 'numeric' });
+        });
+        
+        if (lastData) {
+            if (!lastData.summary) lastData.summary = {};
+            lastData.summary.this_month_revenue = lastValues[lastValues.length - 1] || 0;
+            updateDashboardCards(lastData.summary);
+        }
+        
+        if (lastMonths.length === 0) {
+            content = `<div style="text-align:center;padding:20px 0;"><div style="font-size:48px;color:var(--text-muted);margin-bottom:12px;">📊</div><h4 style="color:var(--text-muted);">لا توجد بيانات للإيرادات</h4><p style="color:var(--text-muted);font-size:13px;margin-top:8px;">ابدأ بتسجيل المدفوعات لعرض الرسم البياني</p></div>`;
+        } else {
+            // วิเคราะห์รายได้
+            let analysisHtml = '';
+            if (lastValues.length >= 2) {
+                const current = lastValues[lastValues.length - 1];
+                const previous = lastValues[lastValues.length - 2];
+                const diff = current - previous;
+                let badgeClass = 'flat', badgeIcon = '➖', badgeText = 'ثابت';
+                let diffText = '';
+                if (diff > 0) {
+                    badgeClass = 'up'; badgeIcon = '📈'; badgeText = 'زيادة';
+                    const pct = previous > 0 ? (diff / previous) * 100 : 100;
+                    diffText = `زيادة ${pct.toFixed(1)}% (${toEGP(diff)}) مقارنة بالشهر السابق`;
+                } else if (diff < 0) {
+                    badgeClass = 'down'; badgeIcon = '📉'; badgeText = 'انخفاض';
+                    const pct = previous > 0 ? (Math.abs(diff) / previous) * 100 : 100;
+                    diffText = `انخفاض ${pct.toFixed(1)}% (${toEGP(Math.abs(diff))}) مقارنة بالشهر السابق`;
+                } else {
+                    diffText = 'لا يوجد تغيير مقارنة بالشهر السابق';
+                }
+                analysisHtml = `
+                    <div class="revenue-analysis">
+                        <div>
+                            <span class="analysis-badge ${badgeClass}">
+                                ${badgeIcon} ${badgeText}
+                            </span>
+                            <span class="analysis-detail">${diffText}</span>
+                        </div>
+                        <div class="analysis-detail">
+                            <strong>${lastLabels[lastLabels.length-1] || 'هذا الشهر'}</strong>
+                            : ${toEGP(current)} |
+                            <strong>${lastLabels[lastLabels.length-2] || 'الشهر الماضي'}</strong>
+                            : ${toEGP(previous)}
+                        </div>
+                    </div>
+                `;
+            } else {
+                analysisHtml = `<div class="revenue-analysis">📊 لا توجد بيانات كافية للمقارنة</div>`;
+            }
+            
+            let chartHtml = `<div style="height:200px;margin-top:12px;"><canvas id="revenueModalChart"></canvas></div>`;
+            let tableHtml = `<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;">
+                        <div style="background:var(--bg-body);border-radius:8px;padding:10px;border:1px solid rgba(0,0,0,0.04);text-align:center;">
+                            <div style="font-size:11px;color:var(--text-muted);">${lastLabels[lastLabels.length-1] || 'هذا الشهر'}</div>
+                            <div style="font-size:22px;font-weight:700;color:var(--primary);">${toEGP(lastValues[lastValues.length-1] || 0)}</div>
+                        </div>
+                        <div style="background:var(--bg-body);border-radius:8px;padding:10px;border:1px solid rgba(0,0,0,0.04);text-align:center;">
+                            <div style="font-size:11px;color:var(--text-muted);">${lastLabels.length > 1 ? lastLabels[lastLabels.length-2] : '-'}</div>
+                            <div style="font-size:22px;font-weight:700;color:var(--primary);">${lastValues.length > 1 ? toEGP(lastValues[lastValues.length-2] || 0) : '-'}</div>
+                        </div>
+                        <div style="background:var(--bg-body);border-radius:8px;padding:10px;border:1px solid rgba(0,0,0,0.04);text-align:center;">
+                            <div style="font-size:11px;color:var(--text-muted);">${lastLabels.length > 2 ? lastLabels[lastLabels.length-3] : '-'}</div>
+                            <div style="font-size:22px;font-weight:700;color:var(--primary);">${lastValues.length > 2 ? toEGP(lastValues[lastValues.length-3] || 0) : '-'}</div>
+                        </div>
+                    </div>`;
+            
+            content = `
+                ${analysisHtml}
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+                    <div style="background:var(--bg-body);border-radius:8px;padding:12px;border:1px solid rgba(0,0,0,0.04);text-align:center;">
+                        <div style="font-size:11px;color:var(--text-muted);">إجمالي ${lastLabels[lastLabels.length-1] || 'هذا الشهر'}</div>
+                        <div style="font-size:26px;font-weight:700;color:var(--primary);">${toEGP(lastValues[lastValues.length-1] || 0)}</div>
+                    </div>
+                    <div style="background:var(--bg-body);border-radius:8px;padding:12px;border:1px solid rgba(0,0,0,0.04);text-align:center;">
+                        <div style="font-size:11px;color:var(--text-muted);">عدد المدفوعات</div>
+                        <div style="font-size:26px;font-weight:700;color:var(--text-primary);">${allPaymentsFresh.filter(p => p.payment_date && normalizeDate(p.payment_date).slice(0,7) === lastMonths[lastMonths.length-1]).length}</div>
+                    </div>
+                </div>
+                ${tableHtml}
+                ${chartHtml}
+            `;
+            
+            // รอให้ DOM อัปเดตก่อนสร้าง chart
+            setTimeout(() => {
+                const canvas = document.getElementById('revenueModalChart');
+                if (canvas && lastLabels.length) {
+                    if (revenueModalChartInstance) {
+                        revenueModalChartInstance.destroy();
+                        revenueModalChartInstance = null;
                     }
+                    const ctx = canvas.getContext('2d');
+                    revenueModalChartInstance = new Chart(ctx, {
+                        type: 'bar',
+                        data: { labels: lastLabels, datasets: [{ label: 'الإيرادات (ج.م)',
+                                data: lastValues,
+                                backgroundColor: ['rgba(15,59,94,0.7)', 'rgba(15,59,94,0.5)', 'rgba(15,59,94,0.3)'],
+                                borderColor: '#0f3b5e',
+                                borderWidth: 2 }] },
+                        options: { responsive: true, maintainAspectRatio: true,
+                            plugins: { legend: { display: false },
+                                tooltip: { callbacks: { label: function(context) { return context.parsed.y + ' ج.م'; } } } },
+                            scales: { y: { beginAtZero: true, ticks: { callback: function(value) { return value.toLocaleString('ar-EG') + ' ج.م'; } } } } }
+                    });
+                }
+            }, 300);
+        }
+        
+        const modalContent = document.querySelector('#tempModal .modal-box > div');
+        if (modalContent) modalContent.innerHTML = content;
+        else openModal(title, content);
+        
+    } catch (e) {
+        console.error('Error loading revenue:', e);
+        content = '❌ فشل تحميل البيانات: ' + e.message;
+        const modalContent = document.querySelector('#tempModal .modal-box > div');
+        if (modalContent) modalContent.innerHTML = content;
+        else openModal(title, content);
+    }
+    break;
+}
+
                     default:
                         content = 'لا توجد بيانات';
                 }
