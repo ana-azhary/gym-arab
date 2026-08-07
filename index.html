@@ -6479,7 +6479,7 @@ safeSetHTML('mStatXp', xpDisplay);
     const sortedHours = Object.entries(hourCounts).sort((a, b) => b[1] - a[1]);
     if (sortedHours.length > 0) {
         const top = sortedHours[0];
-        safeSetHTML('mStatPeak', `<span class="top-hour-highlight">${top[0]}:00</span> (${top[1]} مرّة)`);
+        safeSetHTML('mStatPeak', `<span class="top-hour-highlight">${top[0]}:00</span> `);
     } else {
         safeSetText('mStatPeak', 'لا توجد بيانات');
     }
