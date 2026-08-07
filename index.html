@@ -4209,6 +4209,85 @@
     }
 }
 
+/* ============================================================
+   TABLES — RESPONSIVE
+   ============================================================ */
+
+/* ✅ ตารางเลื่อนแนวนอน */
+.table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius-sm);
+}
+
+.table-wrap table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 600px;
+}
+
+.table-wrap table th,
+.table-wrap table td {
+    padding: 6px 10px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.table-wrap table th:first-child,
+.table-wrap table td:first-child {
+    width: 30px;
+}
+
+.table-wrap table th:last-child,
+.table-wrap table td:last-child {
+    min-width: 120px;
+}
+
+/* ✅ แสดงแถบเลื่อนแนวตั้ง */
+.table-wrap {
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+.table-wrap table thead {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: var(--bg-body);
+}
+
+/* ✅ ซ่อน "العمر" บนมือถือ */
+@media (max-width: 768px) {
+    .hide-phone {
+        display: none !important;
+    }
+    .table-wrap table {
+        font-size: 12px;
+        min-width: 460px;
+    }
+    .table-wrap table th,
+    .table-wrap table td {
+        padding: 4px 6px;
+    }
+    .table-wrap table td .btn-sm {
+        padding: 1px 6px;
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .table-wrap table {
+        font-size: 11px;
+        min-width: 380px;
+    }
+    .table-wrap table th,
+    .table-wrap table td {
+        padding: 3px 4px;
+    }
+}
+
+
     </style>
 </head>
 <body>
@@ -4469,40 +4548,63 @@
         </div>
 
         <!-- PAGE: MEMBERS -->
-        <div id="page-members" class="page-section">
-            <div class="flex-center" style="justify-content:space-between; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
-                <h3 style="font-size:18px;font-weight:700;"><i class="fas fa-users" style="color:var(--primary);"></i> إدارة الأعضاء</h3>
-                <div style="display:flex;gap:6px;flex-wrap:wrap;">
-                    <button class="btn btn-success" onclick="toggleForm('memberAddForm')"><i class="fas fa-plus"></i> إضافة</button>
-                    <button class="btn btn-outline" onclick="fetchMembers()"><i class="fas fa-sync"></i> تحميل</button>
-                </div>
-            </div>
-            <div id="memberAddForm" class="card-panel" style="display:none;">
-                <h4 style="margin-bottom:10px;font-weight:700;font-size:15px;"><i class="fas fa-user-plus" style="color:var(--primary);"></i> إضافة عضو جديد</h4>
-                <div class="form-row">
-                    <input type="text" id="mId" placeholder="الرقم" style="flex:0 0 120px;" />
-                    <input type="text" id="mName" placeholder="الاسم الكامل" />
-                    <input type="text" id="mPhone" placeholder="الهاتف" style="flex:0 0 120px;" />
-                    <input type="number" id="mAge" placeholder="العمر" style="flex:0 0 70px;" />
-                    <select id="mType" style="flex:0 0 100px;"><option value="عادي">عادي</option><option value="متوسط">متوسط</option><option value="مميز">مميز</option></select>
-                    <input type="text" id="mPassword" placeholder="كلمة المرور (عشوائي)" style="flex:0 0 130px;" />
-                    <button class="btn btn-success" onclick="addMember()"><i class="fas fa-save"></i> حفظ</button>
-                    <button class="btn btn-outline" onclick="toggleForm('memberAddForm')">إلغاء</button>
-                </div>
-            </div>
-            <div class="card-panel">
-                <div class="card-header">
-                    <h3>قائمة الأعضاء <span class="badge" id="memberCountBadge">0</span></h3>
-                    <input type="text" id="memberSearchInput" placeholder="بحث..." style="padding:4px 12px;border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.06);background:var(--bg-body);color:var(--text-primary);font-size:12px;width:160px;" oninput="filterMemberTable()" />
-                </div>
-                <div class="table-wrap">
-                    <table>
-                        <thead><tr><th>الرقم</th><th>الاسم</th><th>الهاتف</th><th>العمر</th><th>النوع</th><th>النقاط</th><th>XP</th><th>انتهاء الصلاحية</th><th>إجراءات</th></tr></thead>
-                        <tbody id="membersTableBody"><tr><td colspan="9" class="empty-row"><i class="fas fa-spinner fa-spin"></i> جارٍ التحميل...</td></tr></tbody>
-                    </table>
-                </div>
-            </div>
+        <!-- ============================================================
+    PAGE: MEMBERS (Admin)
+    ============================================================ -->
+<div id="page-members" class="page-section">
+    <div class="flex-center" style="justify-content:space-between; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
+        <h3 style="font-size:18px;font-weight:700;"><i class="fas fa-users" style="color:var(--primary);"></i> إدارة الأعضاء</h3>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <button class="btn btn-success" onclick="toggleForm('memberAddForm')"><i class="fas fa-plus"></i> إضافة</button>
+            <button class="btn btn-outline" onclick="fetchMembers()"><i class="fas fa-sync"></i> تحميل</button>
         </div>
+    </div>
+
+    <div id="memberAddForm" class="card-panel" style="display:none;">
+        <h4 style="margin-bottom:10px;font-weight:700;font-size:15px;"><i class="fas fa-user-plus" style="color:var(--primary);"></i> إضافة عضو جديد</h4>
+        <div class="form-row">
+            <input type="text" id="mId" placeholder="الرقم" style="flex:0 0 120px;" />
+            <input type="text" id="mName" placeholder="الاسم الكامل" />
+            <input type="text" id="mPhone" placeholder="الهاتف" style="flex:0 0 120px;" />
+            <input type="number" id="mAge" placeholder="العمر" style="flex:0 0 70px;" />
+            <select id="mType" style="flex:0 0 100px;">
+                <option value="عادي">عادي</option>
+                <option value="متوسط">متوسط</option>
+                <option value="مميز">مميز</option>
+            </select>
+            <input type="text" id="mPassword" placeholder="كلمة المرور (عشوائي)" style="flex:0 0 130px;" />
+            <button class="btn btn-success" onclick="addMember()"><i class="fas fa-save"></i> حفظ</button>
+            <button class="btn btn-outline" onclick="toggleForm('memberAddForm')">إلغاء</button>
+        </div>
+    </div>
+
+    <div class="card-panel">
+        <div class="card-header">
+            <h3>قائمة الأعضاء <span class="badge" id="memberCountBadge">0</span></h3>
+            <input type="text" id="memberSearchInput" placeholder="بحث..." style="padding:4px 12px;border-radius:var(--radius-sm);border:1px solid rgba(0,0,0,0.06);background:var(--bg-body);color:var(--text-primary);font-size:12px;width:160px;" oninput="filterMemberTable()" />
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>الرقم</th>
+                        <th>الاسم</th>
+                        <th>الهاتف</th>
+                        <th class="hide-phone">العمر</th>
+                        <th>النوع</th>
+                        <th>النقاط</th>
+                        <th>XP</th>
+                        <th>إجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="membersTableBody">
+                    <tr><td colspan="9" class="empty-row"><i class="fas fa-spinner fa-spin"></i> جارٍ التحميل...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
         <!-- PAGE: CHECKIN -->
         <div id="page-checkin" class="page-section">
