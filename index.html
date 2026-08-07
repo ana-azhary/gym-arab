@@ -3588,6 +3588,81 @@
     }
 }
 
+/* ============================================================
+   FIX: MODAL TABLES — กระชับ ไม่ล้น
+   ============================================================ */
+
+/* ✅ ตารางในโมดัลทั้งหมด */
+.modal-box .table-wrap {
+    overflow-x: hidden !important;  /* ปิดการเลื่อนแนวนอน */
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.modal-box .table-wrap table {
+    min-width: unset !important;
+    width: 100% !important;
+    table-layout: fixed;
+}
+
+.modal-box .table-wrap th,
+.modal-box .table-wrap td {
+    padding: 4px 6px !important;
+    font-size: 12px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+/* ✅ กำหนดสัดส่วนคอลัมน์ (4 คอลัมน์) */
+.modal-box .table-wrap th:first-child,
+.modal-box .table-wrap td:first-child {
+    width: 12%;
+}
+.modal-box .table-wrap th:nth-child(2),
+.modal-box .table-wrap td:nth-child(2) {
+    width: 40%;
+}
+.modal-box .table-wrap th:nth-child(3),
+.modal-box .table-wrap td:nth-child(3) {
+    width: 24%;
+}
+.modal-box .table-wrap th:nth-child(4),
+.modal-box .table-wrap td:nth-child(4) {
+    width: 24%;
+}
+
+/* ✅ เฉพาะตารางที่มี 3 คอลัมน์ (member_peak) */
+.modal-box .table-wrap th:nth-child(3):last-child,
+.modal-box .table-wrap td:nth-child(3):last-child {
+    width: 30%;
+}
+.modal-box .table-wrap th:first-child:not(:nth-last-child(3)) ~ th,
+.modal-box .table-wrap td:first-child:not(:nth-last-child(3)) ~ td {
+    /* ใช้ default */
+}
+
+/* ✅ ปรับสำหรับมือถือ */
+@media (max-width: 480px) {
+    .modal-box .table-wrap th,
+    .modal-box .table-wrap td {
+        padding: 3px 4px !important;
+        font-size: 10px !important;
+    }
+    .modal-box .table-wrap th:nth-child(2),
+    .modal-box .table-wrap td:nth-child(2) {
+        width: 35%;
+    }
+    .modal-box .table-wrap th:nth-child(3),
+    .modal-box .table-wrap td:nth-child(3) {
+        width: 25%;
+    }
+    .modal-box .table-wrap th:nth-child(4),
+    .modal-box .table-wrap td:nth-child(4) {
+        width: 28%;
+    }
+}
     </style>
 </head>
 <body>
