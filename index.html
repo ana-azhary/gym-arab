@@ -3731,6 +3731,81 @@
     }
 }
 
+/* ============================================================
+   FIX: ADMIN & DAILY TABLES — แสดงเต็มความสูงจอ
+   ============================================================ */
+
+/* ✅ ทุกหน้าที่มีตาราง (Members, Check-in, Payments, Daily Report) */
+#page-members .table-wrap,
+#page-checkin .table-wrap,
+#page-payments .table-wrap,
+#page-daily .table-wrap {
+    max-height: none !important;
+    height: auto !important;
+    min-height: 400px;
+    overflow-y: visible !important;
+}
+
+/* ✅ ทำให้ card-panel ขยายเต็มพื้นที่ */
+#page-members .card-panel,
+#page-checkin .card-panel,
+#page-payments .card-panel,
+#page-daily .card-panel {
+    height: auto !important;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+#page-members .card-panel .table-wrap,
+#page-checkin .card-panel .table-wrap,
+#page-payments .card-panel .table-wrap,
+#page-daily .card-panel .table-wrap {
+    flex: 1;
+    min-height: 350px;
+    max-height: none !important;
+}
+
+/* ✅ ถ้าต้องการให้เต็มจอจริง ๆ (Desktop) */
+@media (min-height: 700px) {
+    #page-members .card-panel .table-wrap,
+    #page-checkin .card-panel .table-wrap,
+    #page-payments .card-panel .table-wrap,
+    #page-daily .card-panel .table-wrap {
+        min-height: 500px !important;
+    }
+}
+
+/* ✅ Responsive: มือถือ */
+@media (max-width: 768px) {
+    #page-members .card-panel,
+    #page-checkin .card-panel,
+    #page-payments .card-panel,
+    #page-daily .card-panel {
+        min-height: 350px !important;
+    }
+    #page-members .card-panel .table-wrap,
+    #page-checkin .card-panel .table-wrap,
+    #page-payments .card-panel .table-wrap,
+    #page-daily .card-panel .table-wrap {
+        min-height: 250px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    #page-members .card-panel,
+    #page-checkin .card-panel,
+    #page-payments .card-panel,
+    #page-daily .card-panel {
+        min-height: 280px !important;
+    }
+    #page-members .card-panel .table-wrap,
+    #page-checkin .card-panel .table-wrap,
+    #page-payments .card-panel .table-wrap,
+    #page-daily .card-panel .table-wrap {
+        min-height: 200px !important;
+    }
+}
     </style>
 </head>
 <body>
