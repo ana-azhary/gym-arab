@@ -3479,445 +3479,403 @@
 }
 
 /* ============================================================
-   MEMBER STATS CARDS — ดูดี ไม่รก
+   MOBILE FONT SIZE — ตัวหนังสือใหญ่ขึ้น
    ============================================================ */
 
-.member-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 18px;
-}
-
-.member-stats-grid .stat-card-click {
-    padding: 10px 12px;
-    min-height: 70px;
-    justify-content: center;
-    border-radius: var(--radius-sm);
-    background: var(--bg-card);
-    backdrop-filter: var(--glass-blur);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: var(--shadow-sm);
-    transition: all var(--transition);
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
-}
-
-.member-stats-grid .stat-card-click:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-    background: var(--bg-card-hover);
-}
-
-.member-stats-grid .stat-card-click .stat-icon {
-    width: 30px;
-    height: 30px;
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    color: #fff;
-    flex-shrink: 0;
-    margin-bottom: 2px;
-}
-
-.member-stats-grid .stat-card-click .num {
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1.2;
-    color: var(--text-primary);
-    margin-top: 1px;
-}
-
-.member-stats-grid .stat-card-click .label {
-    font-size: 10px;
-    color: var(--text-secondary);
-    margin-top: 2px;
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Responsive: มือถือ */
 @media (max-width: 768px) {
-    .member-stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
+    /* ✅ ตัวหนังสือพื้นฐาน */
+    body {
+        font-size: 16px !important;  /* เพิ่มจาก 15px */
+        line-height: 1.7;
     }
-    .member-stats-grid .stat-card-click {
-        padding: 8px 10px;
-        min-height: 60px;
+    
+    /* ✅ ส่วนหัว */
+    .topbar .topbar-left .page-title h2 {
+        font-size: 20px !important;
     }
+    .topbar .topbar-left .page-title p {
+        font-size: 14px !important;
+    }
+    
+    /* ✅ การ์ดสถิติ */
+    .stat-card-click .num {
+        font-size: 20px !important;
+    }
+    .stat-card-click .label {
+        font-size: 12px !important;
+    }
+    
+    /* ✅ ตาราง */
+    .table-wrap table {
+        font-size: 14px !important;
+    }
+    .table-wrap table th {
+        font-size: 12px !important;
+    }
+    .table-wrap table td {
+        font-size: 13px !important;
+    }
+    
+    /* ✅ ปุ่ม */
+    .btn {
+        font-size: 14px !important;
+        padding: 8px 16px !important;
+    }
+    .btn-sm {
+        font-size: 12px !important;
+        padding: 6px 12px !important;
+    }
+    
+    /* ✅ การ์ดพาเนล */
+    .card-panel .card-header h3 {
+        font-size: 16px !important;
+    }
+    
+    /* ✅ ฟอร์ม */
+    .form-row input,
+    .form-row select {
+        font-size: 14px !important;
+        padding: 8px 12px !important;
+    }
+    
+    /* ✅ Member Stats */
     .member-stats-grid .stat-card-click .num {
-        font-size: 16px;
+        font-size: 18px !important;
     }
     .member-stats-grid .stat-card-click .label {
-        font-size: 9px;
+        font-size: 11px !important;
     }
-    .member-stats-grid .stat-card-click .stat-icon {
-        width: 26px;
-        height: 26px;
-        font-size: 12px;
+    
+    /* ✅ KPI */
+    .kpi-item .kpi-val {
+        font-size: 18px !important;
     }
-}
-
-@media (max-width: 480px) {
-    .member-stats-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 6px;
+    .kpi-item .kpi-label {
+        font-size: 11px !important;
     }
-    .member-stats-grid .stat-card-click {
-        padding: 6px 8px;
-        min-height: 50px;
+    
+    /* ✅ Sidebar */
+    .app-sidebar .nav-item {
+        font-size: 16px !important;
+        padding: 12px 16px !important;
     }
-    .member-stats-grid .stat-card-click .num {
-        font-size: 14px;
+    .app-sidebar .brand .brand-text h1 {
+        font-size: 22px !important;
     }
-    .member-stats-grid .stat-card-click .label {
-        font-size: 8px;
+    .app-sidebar .sidebar-footer .sidebar-user .user-info .name {
+        font-size: 15px !important;
     }
-    .member-stats-grid .stat-card-click .stat-icon {
-        width: 22px;
-        height: 22px;
-        font-size: 10px;
+    
+    /* ✅ Member Card */
+    .member-card-preview .mc-body .mc-info .mc-name {
+        font-size: 19px !important;
     }
-}
-
-/* ============================================================
-   FIX: MODAL TABLES — กระชับ ไม่ล้น
-   ============================================================ */
-
-/* ✅ ตารางในโมดัลทั้งหมด */
-.modal-box .table-wrap {
-    overflow-x: hidden !important;  /* ปิดการเลื่อนแนวนอน */
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.modal-box .table-wrap table {
-    min-width: unset !important;
-    width: 100% !important;
-    table-layout: fixed;
-}
-
-.modal-box .table-wrap th,
-.modal-box .table-wrap td {
-    padding: 4px 6px !important;
-    font-size: 12px !important;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: center;
-}
-
-/* ✅ กำหนดสัดส่วนคอลัมน์ (4 คอลัมน์) */
-.modal-box .table-wrap th:first-child,
-.modal-box .table-wrap td:first-child {
-    width: 12%;
-}
-.modal-box .table-wrap th:nth-child(2),
-.modal-box .table-wrap td:nth-child(2) {
-    width: 40%;
-}
-.modal-box .table-wrap th:nth-child(3),
-.modal-box .table-wrap td:nth-child(3) {
-    width: 24%;
-}
-.modal-box .table-wrap th:nth-child(4),
-.modal-box .table-wrap td:nth-child(4) {
-    width: 24%;
-}
-
-/* ✅ เฉพาะตารางที่มี 3 คอลัมน์ (member_peak) */
-.modal-box .table-wrap th:nth-child(3):last-child,
-.modal-box .table-wrap td:nth-child(3):last-child {
-    width: 30%;
-}
-.modal-box .table-wrap th:first-child:not(:nth-last-child(3)) ~ th,
-.modal-box .table-wrap td:first-child:not(:nth-last-child(3)) ~ td {
-    /* ใช้ default */
-}
-
-/* ✅ ปรับสำหรับมือถือ */
-@media (max-width: 480px) {
-    .modal-box .table-wrap th,
-    .modal-box .table-wrap td {
-        padding: 3px 4px !important;
+    .member-card-preview .mc-body .mc-info .mc-id {
+        font-size: 12px !important;
+    }
+    .member-card-preview .mc-body .mc-info .mc-detail {
+        font-size: 11px !important;
+    }
+    .member-card-preview .mc-header .mc-brand {
+        font-size: 17px !important;
+    }
+    .member-card-preview .mc-header .mc-badge {
+        font-size: 11px !important;
+    }
+    .member-card-preview .mc-footer {
         font-size: 10px !important;
     }
-    .modal-box .table-wrap th:nth-child(2),
-    .modal-box .table-wrap td:nth-child(2) {
-        width: 35%;
+    
+    /* ✅ Profile Header */
+    #profileName {
+        font-size: 20px !important;
     }
-    .modal-box .table-wrap th:nth-child(3),
-    .modal-box .table-wrap td:nth-child(3) {
-        width: 25%;
+    #profilePhone {
+        font-size: 15px !important;
     }
-    .modal-box .table-wrap th:nth-child(4),
-    .modal-box .table-wrap td:nth-child(4) {
-        width: 28%;
+    #rankTitle {
+        font-size: 14px !important;
+    }
+    #rankCount {
+        font-size: 11px !important;
+    }
+    
+    /* ✅ Modal */
+    .modal-box .modal-header h3 {
+        font-size: 20px !important;
+    }
+    .modal-box .form-group label {
+        font-size: 14px !important;
+    }
+    .modal-box .form-group input,
+    .modal-box .form-group select {
+        font-size: 14px !important;
+        padding: 10px 14px !important;
+    }
+    .modal-box .btn-submit {
+        font-size: 16px !important;
+        padding: 14px !important;
+    }
+    
+    /* ✅ Toast */
+    .toast-item {
+        font-size: 14px !important;
+        padding: 14px 18px !important;
+    }
+    
+    /* ✅ Calendar */
+    .calendar-grid .day-cell {
+        font-size: 13px !important;
+        padding: 6px 4px !important;
+    }
+    
+    /* ✅ Progress */
+    .progress-wrap .progress-label {
+        font-size: 13px !important;
+    }
+    
+    /* ✅ Goal & Encouragement */
+    .goal-encouragement {
+        font-size: 14px !important;
+    }
+    .bmi-encouragement {
+        font-size: 14px !important;
+    }
+    
+    /* ✅ Top 7 */
+    .top7-item .top7-name {
+        font-size: 14px !important;
+    }
+    .top7-item .top7-points {
+        font-size: 12px !important;
+    }
+    .top7-item .top7-title {
+        font-size: 11px !important;
+    }
+    
+    /* ✅ Daily Report */
+    .daily-detail-table {
+        font-size: 14px !important;
+    }
+    .daily-detail-table .badge-daily {
+        font-size: 12px !important;
+    }
+    
+    /* ✅ Login */
+    #loginPage .login-box .logo h1 {
+        font-size: 28px !important;
+    }
+    #loginPage .login-box .input-group input {
+        font-size: 16px !important;
+        padding: 14px 48px 14px 16px !important;
+    }
+    #loginPage .login-box .btn-login {
+        font-size: 18px !important;
+        padding: 16px !important;
+    }
+    #loginPage .login-box .register-row .btn-register {
+        font-size: 15px !important;
+        padding: 12px !important;
     }
 }
 /* ============================================================
-   FIX: ADMIN TABLES — แสดงเต็มความสูงจอ
+   MOBILE FONT SIZE — ตัวหนังสือใหญ่ขึ้น
    ============================================================ */
 
-/* ✅ ลบ max-height ที่จำกัดออก และให้แสดงเต็มพื้นที่ */
-#page-members .table-wrap,
-#page-checkin .table-wrap,
-#page-payments .table-wrap {
-    max-height: none !important;
-    height: auto !important;
-    min-height: 400px;
-    overflow-y: visible !important;
-}
-
-/* ✅ ทำให้ตารางขยายเต็มพื้นที่ที่เหลือ */
-#page-members .card-panel,
-#page-checkin .card-panel,
-#page-payments .card-panel {
-    height: auto !important;
-    min-height: 500px;
-    display: flex;
-    flex-direction: column;
-}
-
-#page-members .card-panel .table-wrap,
-#page-checkin .card-panel .table-wrap,
-#page-payments .card-panel .table-wrap {
-    flex: 1;
-    min-height: 350px;
-    max-height: none !important;
-}
-
-/* ✅ ถ้าต้องการให้เต็มจอจริง ๆ */
-@media (min-height: 700px) {
-    #page-members .card-panel .table-wrap,
-    #page-checkin .card-panel .table-wrap,
-    #page-payments .card-panel .table-wrap {
-        min-height: 500px !important;
-    }
-}
-
-/* ✅ Responsive: มือถือ */
 @media (max-width: 768px) {
-    #page-members .card-panel,
-    #page-checkin .card-panel,
-    #page-payments .card-panel {
-        min-height: 350px !important;
+    /* ✅ ตัวหนังสือพื้นฐาน */
+    body {
+        font-size: 16px !important;  /* เพิ่มจาก 15px */
+        line-height: 1.7;
     }
-    #page-members .card-panel .table-wrap,
-    #page-checkin .card-panel .table-wrap,
-    #page-payments .card-panel .table-wrap {
-        min-height: 250px !important;
+    
+    /* ✅ ส่วนหัว */
+    .topbar .topbar-left .page-title h2 {
+        font-size: 20px !important;
     }
-}
-
-@media (max-width: 480px) {
-    #page-members .card-panel,
-    #page-checkin .card-panel,
-    #page-payments .card-panel {
-        min-height: 280px !important;
+    .topbar .topbar-left .page-title p {
+        font-size: 14px !important;
     }
-    #page-members .card-panel .table-wrap,
-    #page-checkin .card-panel .table-wrap,
-    #page-payments .card-panel .table-wrap {
-        min-height: 200px !important;
+    
+    /* ✅ การ์ดสถิติ */
+    .stat-card-click .num {
+        font-size: 20px !important;
     }
-}
-
-/* ============================================================
-   FIX: ADMIN & DAILY TABLES — แสดงเต็มความสูงจอ
-   ============================================================ */
-
-/* ✅ ทุกหน้าที่มีตาราง (Members, Check-in, Payments, Daily Report) */
-#page-members .table-wrap,
-#page-checkin .table-wrap,
-#page-payments .table-wrap,
-#page-daily .table-wrap {
-    max-height: none !important;
-    height: auto !important;
-    min-height: 400px;
-    overflow-y: visible !important;
-}
-
-/* ✅ ทำให้ card-panel ขยายเต็มพื้นที่ */
-#page-members .card-panel,
-#page-checkin .card-panel,
-#page-payments .card-panel,
-#page-daily .card-panel {
-    height: auto !important;
-    min-height: 500px;
-    display: flex;
-    flex-direction: column;
-}
-
-#page-members .card-panel .table-wrap,
-#page-checkin .card-panel .table-wrap,
-#page-payments .card-panel .table-wrap,
-#page-daily .card-panel .table-wrap {
-    flex: 1;
-    min-height: 350px;
-    max-height: none !important;
-}
-
-/* ✅ ถ้าต้องการให้เต็มจอจริง ๆ (Desktop) */
-@media (min-height: 700px) {
-    #page-members .card-panel .table-wrap,
-    #page-checkin .card-panel .table-wrap,
-    #page-payments .card-panel .table-wrap,
-    #page-daily .card-panel .table-wrap {
-        min-height: 500px !important;
+    .stat-card-click .label {
+        font-size: 12px !important;
     }
-}
-
-/* ✅ Responsive: มือถือ */
-@media (max-width: 768px) {
-    #page-members .card-panel,
-    #page-checkin .card-panel,
-    #page-payments .card-panel,
-    #page-daily .card-panel {
-        min-height: 350px !important;
+    
+    /* ✅ ตาราง */
+    .table-wrap table {
+        font-size: 14px !important;
     }
-    #page-members .card-panel .table-wrap,
-    #page-checkin .card-panel .table-wrap,
-    #page-payments .card-panel .table-wrap,
-    #page-daily .card-panel .table-wrap {
-        min-height: 250px !important;
+    .table-wrap table th {
+        font-size: 12px !important;
     }
-}
-
-@media (max-width: 480px) {
-    #page-members .card-panel,
-    #page-checkin .card-panel,
-    #page-payments .card-panel,
-    #page-daily .card-panel {
-        min-height: 280px !important;
+    .table-wrap table td {
+        font-size: 13px !important;
     }
-    #page-members .card-panel .table-wrap,
-    #page-checkin .card-panel .table-wrap,
-    #page-payments .card-panel .table-wrap,
-    #page-daily .card-panel .table-wrap {
-        min-height: 200px !important;
+    
+    /* ✅ ปุ่ม */
+    .btn {
+        font-size: 14px !important;
+        padding: 8px 16px !important;
     }
-}
-
-/* ============================================================
-   TOP 8 TABLE — ดีไซน์หรูหรา พร้อมเลื่อน
-   ============================================================ */
-#top8Container .top8-table-wrap {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin: 8px 0;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border-color);
-}
-#top8Container .top8-table {
-    width: 100%;
-    min-width: 400px;
-    border-collapse: collapse;
-    font-size: 13px;
-}
-#top8Container .top8-table th {
-    padding: 8px 12px;
-    text-align: center;
-    font-weight: 700;
-    font-size: 11px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    background: var(--bg-body);
-    border-bottom: 2px solid var(--border-color);
-}
-#top8Container .top8-table td {
-    padding: 6px 12px;
-    text-align: center;
-    border-bottom: 1px solid var(--border-color);
-    vertical-align: middle;
-}
-#top8Container .top8-table tr:hover td {
-    background: rgba(15, 59, 94, 0.03);
-}
-#top8Container .top8-table .rank-cell {
-    width: 50px;
-    font-size: 20px;
-    font-weight: 700;
-}
-#top8Container .top8-table .rank-circle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--bg-card);
-    border: 2px solid var(--border-color);
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text-primary);
-}
-#top8Container .top8-table .rank-1 .rank-circle {
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
-    border-color: #f59e0b;
-    color: #fff;
-    box-shadow: 0 2px 12px rgba(245, 158, 11, 0.3);
-}
-#top8Container .top8-table .rank-2 .rank-circle {
-    background: linear-gradient(135deg, #d1d5db, #9ca3af);
-    border-color: #9ca3af;
-    color: #fff;
-    box-shadow: 0 2px 12px rgba(156, 163, 175, 0.3);
-}
-#top8Container .top8-table .rank-3 .rank-circle {
-    background: linear-gradient(135deg, #cd7f32, #b45309);
-    border-color: #b45309;
-    color: #fff;
-    box-shadow: 0 2px 12px rgba(180, 83, 9, 0.3);
-}
-#top8Container .top8-table .name-cell {
-    font-weight: 600;
-    text-align: right;
-}
-#top8Container .top8-table .count-cell {
-    font-weight: 700;
-    color: var(--primary);
-}
-#top8Container .top8-table .me-row {
-    background: rgba(245, 158, 11, 0.06) !important;
-    border-right: 3px solid var(--accent);
-}
-#top8Container .top8-table .me-row td {
-    background: rgba(245, 158, 11, 0.06) !important;
-}
-#top8Container .top8-table .me-badge {
-    font-size: 10px;
-    background: var(--accent);
-    color: #fff;
-    padding: 0 10px;
-    border-radius: 30px;
-    line-height: 18px;
-    display: inline-block;
-    margin-right: 4px;
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-    #top8Container .top8-table {
-        font-size: 11px;
-        min-width: 320px;
+    .btn-sm {
+        font-size: 12px !important;
+        padding: 6px 12px !important;
     }
-    #top8Container .top8-table th,
-    #top8Container .top8-table td {
-        padding: 4px 8px;
+    
+    /* ✅ การ์ดพาเนล */
+    .card-panel .card-header h3 {
+        font-size: 16px !important;
     }
-    #top8Container .top8-table .rank-circle {
-        width: 30px;
-        height: 30px;
-        font-size: 14px;
+    
+    /* ✅ ฟอร์ม */
+    .form-row input,
+    .form-row select {
+        font-size: 14px !important;
+        padding: 8px 12px !important;
+    }
+    
+    /* ✅ Member Stats */
+    .member-stats-grid .stat-card-click .num {
+        font-size: 18px !important;
+    }
+    .member-stats-grid .stat-card-click .label {
+        font-size: 11px !important;
+    }
+    
+    /* ✅ KPI */
+    .kpi-item .kpi-val {
+        font-size: 18px !important;
+    }
+    .kpi-item .kpi-label {
+        font-size: 11px !important;
+    }
+    
+    /* ✅ Sidebar */
+    .app-sidebar .nav-item {
+        font-size: 16px !important;
+        padding: 12px 16px !important;
+    }
+    .app-sidebar .brand .brand-text h1 {
+        font-size: 22px !important;
+    }
+    .app-sidebar .sidebar-footer .sidebar-user .user-info .name {
+        font-size: 15px !important;
+    }
+    
+    /* ✅ Member Card */
+    .member-card-preview .mc-body .mc-info .mc-name {
+        font-size: 19px !important;
+    }
+    .member-card-preview .mc-body .mc-info .mc-id {
+        font-size: 12px !important;
+    }
+    .member-card-preview .mc-body .mc-info .mc-detail {
+        font-size: 11px !important;
+    }
+    .member-card-preview .mc-header .mc-brand {
+        font-size: 17px !important;
+    }
+    .member-card-preview .mc-header .mc-badge {
+        font-size: 11px !important;
+    }
+    .member-card-preview .mc-footer {
+        font-size: 10px !important;
+    }
+    
+    /* ✅ Profile Header */
+    #profileName {
+        font-size: 20px !important;
+    }
+    #profilePhone {
+        font-size: 15px !important;
+    }
+    #rankTitle {
+        font-size: 14px !important;
+    }
+    #rankCount {
+        font-size: 11px !important;
+    }
+    
+    /* ✅ Modal */
+    .modal-box .modal-header h3 {
+        font-size: 20px !important;
+    }
+    .modal-box .form-group label {
+        font-size: 14px !important;
+    }
+    .modal-box .form-group input,
+    .modal-box .form-group select {
+        font-size: 14px !important;
+        padding: 10px 14px !important;
+    }
+    .modal-box .btn-submit {
+        font-size: 16px !important;
+        padding: 14px !important;
+    }
+    
+    /* ✅ Toast */
+    .toast-item {
+        font-size: 14px !important;
+        padding: 14px 18px !important;
+    }
+    
+    /* ✅ Calendar */
+    .calendar-grid .day-cell {
+        font-size: 13px !important;
+        padding: 6px 4px !important;
+    }
+    
+    /* ✅ Progress */
+    .progress-wrap .progress-label {
+        font-size: 13px !important;
+    }
+    
+    /* ✅ Goal & Encouragement */
+    .goal-encouragement {
+        font-size: 14px !important;
+    }
+    .bmi-encouragement {
+        font-size: 14px !important;
+    }
+    
+    /* ✅ Top 7 */
+    .top7-item .top7-name {
+        font-size: 14px !important;
+    }
+    .top7-item .top7-points {
+        font-size: 12px !important;
+    }
+    .top7-item .top7-title {
+        font-size: 11px !important;
+    }
+    
+    /* ✅ Daily Report */
+    .daily-detail-table {
+        font-size: 14px !important;
+    }
+    .daily-detail-table .badge-daily {
+        font-size: 12px !important;
+    }
+    
+    /* ✅ Login */
+    #loginPage .login-box .logo h1 {
+        font-size: 28px !important;
+    }
+    #loginPage .login-box .input-group input {
+        font-size: 16px !important;
+        padding: 14px 48px 14px 16px !important;
+    }
+    #loginPage .login-box .btn-login {
+        font-size: 18px !important;
+        padding: 16px !important;
+    }
+    #loginPage .login-box .register-row .btn-register {
+        font-size: 15px !important;
+        padding: 12px !important;
     }
 }
     </style>
@@ -3947,7 +3905,7 @@
             </div>
             <button class="btn-login" onclick="handleLogin()">
                 <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
-            </button> 
+            </button>
             <div class="register-row">
                 <button class="btn-register member" onclick="openRegisterMember()">
                     <i class="fas fa-user-plus"></i> تسجيل عضو جديد
@@ -4316,65 +4274,14 @@
 
         <!-- PAGE: PROFILE (Member Dashboard) -->
         <div id="page-profile" class="page-section">
-            <!-- ============================================================
-     MEMBER STATS CARDS — 6 การ์ด (ภาษาอาหรับทั้งหมด)
-     ============================================================ -->
-<div class="member-stats-grid" id="memberStatsGrid">
-    
-    <!-- 1. ยอดชำระเงินเดือนนี้ -->
-    <div class="stat-card-click" onclick="showCardDetail('member_revenue')">
-        <div class="stat-top">
-            <div class="stat-icon blue"><i class="fas fa-credit-card"></i></div>
-        </div>
-        <div class="num" id="mStatRevenue">-</div>
-        <div class="label">💰 الإيرادات الشهرية</div>
-    </div>
-    
-    <!-- 2. XP + Streak -->
-    <div class="stat-card-click" onclick="showCardDetail('member_xp')">
-        <div class="stat-top">
-            <div class="stat-icon green"><i class="fas fa-star"></i></div>
-        </div>
-        <div class="num" id="mStatXp">-</div>
-        <div class="label">⭐ نقاط الاجتهاد</div>
-    </div>
-    
-    <!-- 3. وقت الذروة -->
-    <div class="stat-card-click" onclick="showCardDetail('member_peak')">
-        <div class="stat-top">
-            <div class="stat-icon amber"><i class="fas fa-clock"></i></div>
-        </div>
-        <div class="num" id="mStatPeak">-</div>
-        <div class="label">⏰ وقت الذروة</div>
-    </div>
-    
-    <!-- 4. اللقب الشهري (ฉายาประจำเดือน) -->
-    <div class="stat-card-click" onclick="showCardDetail('member_rank')">
-        <div class="stat-top">
-            <div class="stat-icon purple"><i class="fas fa-trophy"></i></div>
-        </div>
-        <div class="num" id="mStatRank">-</div>
-        <div class="label">🏅 اللقب الشهري</div>
-    </div>
-    
-    <!-- 5. نسبة دخول اليوم -->
-    <div class="stat-card-click" onclick="showCardDetail('member_percent')">
-        <div class="stat-top">
-            <div class="stat-icon indigo"><i class="fas fa-percent"></i></div>
-        </div>
-        <div class="num" id="mStatPercent">-</div>
-        <div class="label">📊 نسبة الدخول اليوم</div>
-    </div>
-    
-    <!-- 6. الأيام المتبقية (วันเหลือ) -->
-    <div class="stat-card-click" onclick="showCardDetail('member_daysleft')">
-        <div class="stat-top">
-            <div class="stat-icon red"><i class="fas fa-hourglass-half"></i></div>
-        </div>
-        <div class="num" id="mStatDaysLeft">-</div>
-        <div class="label">⏳ الأيام المتبقية</div>
-    </div>
-</div>
+            <div class="member-stats-grid" id="memberStatsGrid">
+                <div class="stat-card-click" onclick="showCardDetail('member_revenue')"><div class="stat-top"><div class="stat-icon blue"><i class="fas fa-credit-card"></i></div></div><div class="num" id="mStatRevenue">-</div><div class="label">مدفوعات هذا الشهر</div></div>
+                <div class="stat-card-click" onclick="showCardDetail('member_xp')"><div class="stat-top"><div class="stat-icon green"><i class="fas fa-star"></i></div></div><div class="num" id="mStatXp">-</div><div class="label">نقاط الاجتهاد (XP)</div></div>
+                <div class="stat-card-click" onclick="showCardDetail('member_peak')"><div class="stat-top"><div class="stat-icon amber"><i class="fas fa-clock"></i></div></div><div class="num" id="mStatPeak">-</div><div class="label">أكثر وقت دخول</div></div>
+                <div class="stat-card-click" onclick="showCardDetail('member_rank')"><div class="stat-top"><div class="stat-icon purple"><i class="fas fa-trophy"></i></div></div><div class="num" id="mStatRank">-</div><div class="label">اللقب الشهري</div></div>
+                <div class="stat-card-click" onclick="showCardDetail('member_percent')"><div class="stat-top"><div class="stat-icon indigo"><i class="fas fa-percent"></i></div></div><div class="num" id="mStatPercent">-</div><div class="label">دخول اليوم</div></div>
+                <div class="stat-card-click" onclick="showCardDetail('member_daysleft')"><div class="stat-top"><div class="stat-icon red"><i class="fas fa-hourglass-half"></i></div></div><div class="num" id="mStatDaysLeft">-</div><div class="label">أيام متبقية للتجديد</div></div>
+            </div>
             <div id="memberStatusBanner"></div>
             <div class="card-panel relative" id="profileCard">
                 <div class="expired-overlay" id="profileExpiredOverlay"><i class="fas fa-lock"></i><h3>العضوية منتهية الصلاحية</h3><p>يرجى الاتصال بالمسؤول</p></div>
@@ -4414,7 +4321,7 @@
                 </div>
             </div>
             <div class="card-panel" id="top8Panel">
-                <div class="card-header"><h3><i class="fas fa-trophy" style="color:var(--accent);"></i> أعلى الأعضاء دخول خلال السنة</h3><span class="text-xs text-muted">(أفضل 8)</span></div>
+                <div class="card-header"><h3><i class="fas fa-trophy" style="color:var(--accent);"></i> أعلى 8 دخول خلال العام</h3><span class="text-xs text-muted">(أفضل 8)</span></div>
                 <div id="top8Container"><p class="text-muted text-sm"><i class="fas fa-spinner fa-spin"></i> جارٍ التحميل...</p></div>
             </div>
             <div class="card-panel" id="goalSection">
@@ -4601,6 +4508,10 @@
 // XP SYSTEM V2 — Streak-based, no reset, warning on 3 missed days
 // ============================================================
 
+// ============================================================
+// XP SYSTEM V2 — Streak-based, no reset, warning on 3 missed days
+// ============================================================
+
 function getXp(memberId) {
     const key = 'xp_' + memberId;
     const val = localStorage.getItem(key);
@@ -4624,6 +4535,67 @@ function setStreak(memberId, value) {
 function getLastCheckinDate(memberId) {
     const key = 'lastCheckin_' + memberId;
     return localStorage.getItem(key) || null;
+}
+
+function setLastCheckinDate(memberId, dateStr) {
+    localStorage.setItem('lastCheckin_' + memberId, dateStr);
+}
+
+function calculateXpBonusForStreak(streak) {
+    if (streak < 3) return 1;
+    if (streak < 5) return 2;
+    if (streak < 10) return 3;
+    if (streak < 20) return 5;
+    return 8;
+}
+
+function updateMemberXp(memberId, checkins) {
+    const today = getTodayStr();
+    const lastDate = getLastCheckinDate(memberId);
+    let currentStreak = getStreak(memberId);
+    let currentXp = getXp(memberId);
+    let missedDays = 0;
+    let streakReset = false;
+
+    if (lastDate) {
+        const diff = daysBetween(lastDate, today);
+        if (diff === 1) {
+            // เข้าวันถัดไป: Streak +1
+            currentStreak += 1;
+        } else if (diff > 1 && diff <= 3) {
+            // ขาด 2-3 วัน: Streak คงเดิม
+            missedDays = diff - 1;
+        } else if (diff > 3) {
+            // ขาดเกิน 3 วัน: รีเซ็ต Streak
+            missedDays = diff - 1;
+            currentStreak = 0;
+            streakReset = true;
+        }
+    } else {
+        // ครั้งแรก
+        currentStreak = 1;
+    }
+
+    // ถ้าวันนี้เช็คอินแล้ว (diff === 0) ไม่ต้องเพิ่ม
+    if (lastDate === today) {
+        return currentXp;
+    }
+
+    const bonus = calculateXpBonusForStreak(currentStreak);
+    const newXp = currentXp + bonus;
+
+    setXp(memberId, newXp);
+    setStreak(memberId, currentStreak);
+    setLastCheckinDate(memberId, today);
+
+    // เตือนเมื่อขาด 3 วันขึ้นไป
+    if (streakReset) {
+        showToast('⚠️ تم إعادة تعيين تسلسلك اليومي بسبب الغياب لأكثر من 3 أيام!', 'warning');
+    } else if (missedDays >= 2) {
+        showToast(`⚠️ لقد تغيبت ${missedDays} أيام، استمر في الحضور لتجنب إعادة التعيين!`, 'warning');
+    }
+
+    return newXp;
 }
 // ============================================================
 // CHECK STREAK WARNING — เตือนเมื่อขาด 2-3 วัน
@@ -5636,55 +5608,76 @@ case 'expired': {
         return diff < 0 || diff === 0;
     });
 
-    // ✅ แทรกโค้ดเรียงลำดับตรงนี้ !!!
+    // ✅ เรียงลำดับ: หมดอายุล่าสุดบนสุด
     expiredMembers.sort((a, b) => {
-        const dateA = normalizeDate(a.expiry_date);
-        const dateB = normalizeDate(b.expiry_date);
-        if (!dateA && !dateB) return 0;
-        if (!dateA) return 1;
-        if (!dateB) return -1;
-        return dateB.localeCompare(dateA); // มากไปน้อย (0 วันอยู่บน)
+        const da = normalizeDate(a.expiry_date);
+        const db = normalizeDate(b.expiry_date);
+        if (!da && !db) return 0;
+        if (!da) return 1;
+        if (!db) return -1;
+        return da < db ? 1 : -1;
     });
 
-    // โค้ดส่วนที่เหลือ (อัปเดต lastData, สร้างตาราง) ไม่ต้องแก้
     if (lastData) {
         if (!lastData.summary) lastData.summary = {};
         lastData.summary.expired_members = expiredMembers.length;
         lastData.members = allMembersFresh;
         updateDashboardCards(lastData.summary);
     }
-    // ... ที่เหลือ
-    
-                        $('statExpired').textContent = expiredMembers.length;
-                        if (!expiredMembers.length) { content = '🎉 لا يوجد أعضاء منتهي الصلاحية'; } else {
-                            let table =
-                                `<div class="table-wrap"><table class="rank-table">
-                                            <thead><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>تاريخ الانتهاء</th><th>مضى (يوم)</th><th>اتصال</th></tr></thead><tbody>`;
-                            expiredMembers.slice(0, 100).forEach((m, idx) => {
-                                const phone = m.phone || '';
-                                const wa = formatPhoneForWhatsApp(phone);
-                                const daysOver = daysBetween(normalizeDate(m.expiry_date), todayStr);
-                                const waLink = wa ?
-                                    `https://wa.me/${wa}?text=${encodeURIComponent('👋 مرحباً ' + m.full_name + '، لاحظنا انتهاء عضويتك منذ ' + daysOver + ' يوم، ندعوك لتجديدها والعودة لممارسة الرياضة! 💪')}` :
-                                    '#';
-                                let bgColor = '';
-                                if (daysOver > 30) bgColor = 'background:rgba(220,38,38,0.15);';
-                                else if (daysOver > 7) bgColor = 'background:rgba(245,158,11,0.15);';
-                                table += `<tr>
-                                            <td>${idx + 1}</td>
-                                            <td><strong>${m.full_name || '-'}</strong></td>
-                                            <td>${phone || '-'}</td>
-                                            <td>${formatDate(m.expiry_date)}</td>
-                                            <td style="font-weight:700;color:var(--danger);${bgColor}">${daysOver} يوم</td>
-                                            <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
-                                        </tr>`;
-                            });
-                            table += '</tbody></table></div>';
-                            content =
-                                `العدد: <strong>${expiredMembers.length}</strong> عضو (عرض أول 100)<br><br>${table}`;
-                        }
-                        break;
-                    }
+    $('statExpired').textContent = expiredMembers.length;
+
+    if (!expiredMembers.length) {
+        content = '🎉 لا يوجد أعضاء منتهي الصلاحية';
+    } else {
+        const todayStr = getTodayStr();
+        let table = `<div class="table-wrap"><table class="rank-table">
+                    <thead><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>تاريخ الانتهاء</th><th>الحالة</th><th>اتصال</th></tr></thead><tbody>`;
+
+        expiredMembers.slice(0, 100).forEach((m, idx) => {
+            const phone = m.phone || '';
+            const wa = formatPhoneForWhatsApp(phone);
+            
+            // ✅ คำนวณวันหมดอายุ
+            let daysOver = 0;
+            let badgeHtml = '';
+            
+            try {
+                const expiryNorm = normalizeDate(m.expiry_date);
+                const todayNorm = normalizeDate(todayStr);
+                if (expiryNorm && todayNorm) {
+                    daysOver = daysBetween(expiryNorm, todayNorm);
+                    if (daysOver < 0) daysOver = 0;
+                }
+            } catch(e) {
+                console.warn('⚠️ วันที่ไม่ถูกต้อง:', m.expiry_date);
+                daysOver = 0;
+            }
+
+            // ✅ สร้าง Badge
+            if (daysOver === 0) {
+                badgeHtml = `<span class="status-badge today-expired">🔴 اليوم</span>`;
+            } else {
+                badgeHtml = `<span class="status-badge days-expired">🟠 منذ ${daysOver} يوم</span>`;
+            }
+
+            const waLink = wa ? `https://wa.me/${wa}?text=${encodeURIComponent('👋 مرحباً ' + m.full_name + '، لاحظنا انتهاء عضويتك منذ ' + daysOver + ' يوم، ندعوك لتجديدها والعودة لممارسة الرياضة! 💪')}` : '#';
+            
+            table += `<tr>
+                        <td>${idx + 1}</td>
+                        <td><strong>${m.full_name || '-'}</strong></td>
+                        <td>${phone || '-'}</td>
+                        <td>${formatDate(m.expiry_date)}</td>
+                        <td>${badgeHtml}</td>
+                        <td>${wa ? `<a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i></a>` : '-'}</td>
+                    </tr>`;
+        });
+        table += '</tbody></table></div>';
+        content = `العدد: <strong>${expiredMembers.length}</strong> عضو (عرض أول 100)<br><br>${table}`;
+    }
+    break;
+}
+
+
                     case 'expiring': {
                         title = '⏳ الأعضاء على وشك الانتهاء (7 أيام)';
                         const allMembersFresh = await fetchMembersWithExpiry();
@@ -6548,8 +6541,6 @@ function updateMemberDashboard() {
     const totalPaid = monthPayments.reduce((sum, p) => sum + parseFloat(p.amount || 0), 0);
     safeSetText('mStatRevenue', toEGP(totalPaid));
 
-   // // ============================================================
-// ============================================================
 // ============================================================
 // 2. XP + Streak + ข้อความกำลังใจ
 // ============================================================
@@ -6612,7 +6603,7 @@ safeSetHTML('mStatXp', xpDisplay);
     else if (myCount >= 15) { rankTitle = 'المجتهد'; rankIcon = '<i class="fas fa-running"></i>'; }
     else if (myCount >= 10) { rankTitle = 'جيد'; rankIcon = '<i class="fas fa-thumbs-up"></i>'; }
     else if (myCount >= 5) { rankTitle = 'كسول'; rankIcon = '<i class="fas fa-bed"></i>'; }
-    safeSetHTML('mStatRank', rankIcon + ' ' + rankTitle + ` (${myCount} مرّة)`);
+    safeSetHTML('mStatRank', rankIcon + ' ' + rankTitle + ` ${myCount} `);
 
     // ============================================================
     // 5. เช็คอินวันนี้ (mStatPercent)
@@ -6636,15 +6627,32 @@ safeSetHTML('mStatXp', xpDisplay);
         safeSetText('mStatPercent', '⏳ جارٍ التحميل...');
     }
 
-    // ============================================================
-    // 6. จำนวนวันเหลือ (mStatDaysLeft)
-    // ============================================================
-    let daysLeft = '-';
-    if (profileExpiryStr && profileExpiryStr !== '-') {
-        const diff = daysBetween(today, normalizeDate(profileExpiryStr));
-        daysLeft = diff >= 0 ? diff + 'يومًا' : 'หมดอายุ';
+  // ============================================================
+// 6. จำนวนวันเหลือ (mStatDaysLeft) — ภาษาอาหรับ
+// ============================================================
+let daysLeft = '-';
+if (profileExpiryStr && profileExpiryStr !== '-') {
+    const diff = daysBetween(today, normalizeDate(profileExpiryStr));
+    if (diff >= 0) {
+        // ✅ แปลงจำนวนวันเป็นภาษาอาหรับ
+        let dayWord = '';
+        if (diff === 0) {
+            dayWord = 'اليوم'; // วันนี้
+        } else if (diff === 1) {
+            dayWord = 'يوم واحد'; // 1 วัน
+        } else if (diff === 2) {
+            dayWord = 'يومان'; // 2 วัน
+        } else if (diff >= 3 && diff <= 10) {
+            dayWord = diff + ' أيام'; // 3-10 วัน
+        } else {
+            dayWord = diff + ' يوم'; // มากกว่า 10 วัน
+        }
+        daysLeft = dayWord;
+    } else {
+        daysLeft = 'منتهي'; // หมดอายุแล้ว
     }
-    safeSetText('mStatDaysLeft', daysLeft);
+}
+safeSetText('mStatDaysLeft', daysLeft);
 
     // ============================================================
     // 7. แต้มสะสม (mStatPoints) — ถ้ามีการ์ดนี้
@@ -6904,7 +6912,7 @@ case 'member_peak': {
             <div style="margin-bottom:12px;text-align:center;padding:8px;background:var(--bg-body);border-radius:var(--radius-sm);border-right:4px solid var(--accent);">
                 <span style="font-size:13px;color:var(--text-secondary);">
                     <i class="fas fa-info-circle" style="color:var(--accent);"></i>
-                     إجمالي عدد الدخول هذا الشهر: <strong>${monthPeak.length}</strong> مرّة
+                    إجمالي عدد الدخول هذا الشهر: <strong>${monthPeak.length}</strong> مرة
                 </span>
             </div>
             <table class="rank-table">
@@ -7133,7 +7141,127 @@ case 'member_rank': {
 }
 
         // ============================================================
+// ============================================================
+// ============================================================
+// RENDER TOP 8 CONTENT — แสดงผลอันดับ (ใช้ allCheckins โดยตรง)
+// ============================================================
+function renderTop8Content(container) {
+    if (!container) {
+        console.warn('⚠️ ไม่พบ container');
+        return;
+    }
 
+    if (!allCheckins || allCheckins.length === 0) {
+        container.innerHTML = `
+            <div style="text-align:center;padding:30px 0;color:var(--text-muted);">
+                <i class="fas fa-inbox" style="font-size:32px;display:block;margin-bottom:10px;opacity:0.3;"></i>
+                <span style="font-size:14px;">📭 لا توجد بيانات دخول خلال العام</span>
+            </div>
+        `;
+        return;
+    }
+
+    const today = new Date();
+    const oneYearAgo = new Date(today);
+    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+    const oneYearAgoStr = oneYearAgo.toISOString().split('T')[0];
+
+    const checkinCounts = {};
+    allCheckins.forEach(c => {
+        if (c.checkin_date && normalizeDate(c.checkin_date) >= oneYearAgoStr) {
+            const id = c.member_id;
+            if (id) {
+                checkinCounts[id] = (checkinCounts[id] || 0) + 1;
+            }
+        }
+    });
+
+    const sorted = Object.entries(checkinCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
+
+    if (sorted.length === 0) {
+        container.innerHTML = `
+            <div style="text-align:center;padding:30px 0;color:var(--text-muted);">
+                <i class="fas fa-inbox" style="font-size:32px;display:block;margin-bottom:10px;opacity:0.3;"></i>
+                <span style="font-size:14px;">📭 لا توجد بيانات دخول خلال العام</span>
+            </div>
+        `;
+        return;
+    }
+
+    // กำหนด medals และ titles
+    const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣'];
+    const titles = [
+        'ملك اللياقة',
+        'نائب الملك',
+        'المقاتل المثابر',
+        'مجتهد جداً',
+        'جيد جداً',
+        'ممتاز',
+        'بداية جيدة',
+        'قادم بقوة'
+    ];
+    const colorClasses = ['gold', 'gold', 'gold', '', '', '', '', ''];
+
+    let html = '<div class="top8-grid">';
+
+    sorted.forEach(([memberId, count], idx) => {
+        const member = allMembers.find(m => m.member_id === memberId);
+        const name = member ? member.full_name : memberId;
+        const isMe = memberId === profileMemberId;
+        const colorClass = colorClasses[idx] || '';
+        const medal = medals[idx] || '🏅';
+        const title = titles[idx] || 'قادم بقوة';
+
+        // Badge "👑 أنت" (ถ้าเป็นตัวเอง)
+        const meBadge = isMe ? `<span class="top8-badge">👑 أنت</span>` : '';
+
+        html += `
+            <div class="top8-item ${colorClass}">
+                <div class="top8-rank">${medal}</div>
+                <div class="top8-name">${name}${isMe ? ' ✨' : ''}</div>
+                <div class="top8-count">⭐ ${count} مرة</div>
+                ${meBadge}
+                <div style="font-size:10px;color:var(--text-muted);margin-top:3px;font-weight:500;">${title}</div>
+            </div>
+        `;
+    });
+
+    html += '</div>';
+
+    // ข้อความให้กำลังใจ
+    const myRank = sorted.findIndex(([id]) => id === profileMemberId);
+    let encouragementMsg = '';
+    let emoji = '💪';
+    if (myRank === 0) {
+        encouragementMsg = '👑 أنت رقم واحد! مذهل! أنت قدوة للجميع!';
+        emoji = '👑';
+    } else if (myRank === 1) {
+        encouragementMsg = '🥈 رائع! أنت على بعد خطوة واحدة من القمة! استمر!';
+        emoji = '🔥';
+    } else if (myRank === 2) {
+        encouragementMsg = '🥉 ممتاز! أنت ضمن أفضل 3! فخور بك!';
+        emoji = '⭐';
+    } else if (myRank >= 0 && myRank < 8) {
+        encouragementMsg = `🌟 أنت في المرتبة ${myRank+1} من أفضل 8! عمل رائع!`;
+        emoji = '💪';
+    } else {
+        encouragementMsg = '🚀 كل يوم هو فرصة جديدة! استمر وستصل إلى القمة!';
+        emoji = '💪';
+    }
+
+    html += `
+        <div class="top8-encouragement">
+            ${emoji} ${encouragementMsg}
+        </div>
+        <div class="top8-footer">
+            <i class="fas fa-calendar-alt"></i> البيانات من ${formatDate(oneYearAgoStr)} إلى ${formatDate(getTodayStr())}
+        </div>
+    `;
+
+    container.innerHTML = html;
+}
 
         function renderMemberStatus(member, isExpired, hasPayment, expiryDateStr) {
             const container = document.getElementById('memberStatusBanner');
@@ -7169,7 +7297,13 @@ case 'member_rank': {
             } else {
                 html =
                     `
-
+                            <div class="status-banner active">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong><i class="fas fa-check-circle"></i> العضوية نشطة</strong>
+                                    <span style="font-size:13px;display:block;">تنتهي في ${formatDate(expiryDateStr)}</span>
+                                </div>
+                            </div>
                         `;
             }
             container.innerHTML = html;
@@ -7399,7 +7533,7 @@ function generateProfileQR(memberId) {
             const times = map[dateStr] || [];
             const detail = document.getElementById('calendarTimeDetail');
             if (times.length) {
-                detail.innerHTML = `<i class="fas fa-calendar-alt"></i> ${formatDate(dateStr)}: دخلت في ${times.join(', ')}`;
+                detail.innerHTML = `<i class="fas fa-calendar-alt"></i> ${formatDate(dateStr)}: دخل في ${times.join(', ')}`;
             } else {
                 detail.innerHTML = `<i class="fas fa-calendar-alt"></i> ${formatDate(dateStr)}: لا يوجد دخول`;
             }
@@ -8374,12 +8508,17 @@ function loadTop8() {
 // RENDER TOP 8 CONTENT — แสดงผลอันดับ
 // ============================================================
 function renderTop8Content(container) {
-    if (!container) return;
+    if (!container) {
+        console.warn('⚠️ ไม่พบ container');
+        return;
+    }
+    
     if (!allCheckins || allCheckins.length === 0) {
+        console.warn('⚠️ allCheckins ว่าง');
         container.innerHTML = `
             <div style="text-align:center;padding:20px 0;color:var(--text-muted);">
                 <i class="fas fa-inbox" style="font-size:28px;display:block;margin-bottom:8px;opacity:0.4;"></i>
-                <span>📭 لا توجد بيانات دخول خلال العام</span>
+                <span>📭 لا توجد بيانات دخول</span>
             </div>
         `;
         return;
@@ -8390,13 +8529,20 @@ function renderTop8Content(container) {
     oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
     const oneYearAgoStr = oneYearAgo.toISOString().split('T')[0];
     
+    console.log('📊 คำนวณ Top 8 จากข้อมูล', allCheckins.length, 'รายการ');
+    console.log('📅 ตั้งแต่', oneYearAgoStr);
+    
     const checkinCounts = {};
     allCheckins.forEach(c => {
         if (c.checkin_date && normalizeDate(c.checkin_date) >= oneYearAgoStr) {
             const id = c.member_id;
-            if (id) checkinCounts[id] = (checkinCounts[id] || 0) + 1;
+            if (id) {
+                checkinCounts[id] = (checkinCounts[id] || 0) + 1;
+            }
         }
     });
+    
+    console.log('📊 checkinCounts:', Object.keys(checkinCounts).length, 'คน');
     
     const sorted = Object.entries(checkinCounts)
         .sort((a, b) => b[1] - a[1])
@@ -8412,49 +8558,42 @@ function renderTop8Content(container) {
         return;
     }
     
+    console.log('🏆 Top 8:', sorted);
+    
     const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣'];
-    const rankClasses = ['rank-1', 'rank-2', 'rank-3', '', '', '', '', ''];
+    const titles = [
+        '🏆 ملك اللياقة',
+        '👑 نائب الملك',
+        '💪 المقاتل المثابر',
+        '🏃 مجتهد جداً',
+        '👍 جيد جداً',
+        '🌟 ممتاز',
+        '✨ بداية جيدة',
+        '💪 واعد'
+    ];
+    const colorClasses = ['gold', 'gold', 'gold', '', '', '', '', ''];
     
-    let html = `
-        <div class="top8-table-wrap">
-            <table class="top8-table">
-                <thead>
-                    <tr>
-                        <th>الترتيب</th>
-                        <th>الاسم</th>
-                        <th>عدد الدخول</th>
-                    </tr>
-                </thead>
-                <tbody>
-    `;
-    
+    let html = '<div class="top7-card">';
     sorted.forEach(([memberId, count], idx) => {
         const member = allMembers.find(m => m.member_id === memberId);
         const name = member ? member.full_name : memberId;
+        const colorClass = colorClasses[idx] || '';
         const isMe = memberId === profileMemberId;
-        const rankClass = rankClasses[idx] || '';
+        const meBadge = isMe ? ' 👈 أنت' : '';
         const medal = medals[idx] || '🏅';
-        const meBadge = isMe ? '<span class="me-badge">👈 أنت</span>' : '';
-        const rowClass = isMe ? 'me-row' : '';
+        const title = titles[idx] || '💪 قادم بقوة';
         
         html += `
-            <tr class="${rowClass} ${rankClass}">
-                <td class="rank-cell">
-                    <span class="rank-circle">${medal}</span>
-                </td>
-                <td class="name-cell">${name} ${meBadge}</td>
-                <td class="count-cell">${count} مرة</td>
-            </tr>
+            <div class="top7-item ${colorClass}" style="${colorClass === 'gold' ? 'background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.3);' : ''}">
+                <span class="rank-medal">${medal}</span>
+                <div class="top7-name">${name}${meBadge}</div>
+                <div class="top7-points">⭐ ${count} مرة</div>
+                <div class="top7-title">${title}</div>
+            </div>
         `;
     });
+    html += '</div>';
     
-    html += `
-                </tbody>
-            </table>
-        </div>
-    `;
-    
-    // ข้อความให้กำลังใจ
     const myRank = sorted.findIndex(([id]) => id === profileMemberId);
     let encouragementMsg = '';
     if (myRank === 0) {
@@ -8474,18 +8613,13 @@ function renderTop8Content(container) {
             ${encouragementMsg}
         </div>
         <div style="text-align:center;margin-top:6px;font-size:11px;color:var(--text-muted);">
-            <i class="fas fa-calendar-alt"></i> بيانات آخر عام (${formatDate(oneYearAgoStr)} - ${formatDate(getTodayStr())})
+            <i class="fas fa-calendar-alt"></i> ข้อมูล ${formatDate(oneYearAgoStr)} - ${formatDate(getTodayStr())}
         </div>
     `;
     
     container.innerHTML = html;
 }      
-    
-// ============================================================
-// RENDER DEBUG — แสดงข้อมูลดีบัก (Admin + Member)
-// ============================================================
-  
-    
+
     </script>
 </body>
 </html>
