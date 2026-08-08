@@ -1694,21 +1694,46 @@
             font-size: 13px;
         }
 
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-            background: rgba(0, 0, 0, 0.50);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .modal-overlay.show {
-            display: flex !important;
-        }
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100000 !important;   /* ✅ สูงกว่าหน้า Login */
+    background: rgba(0, 0, 0, 0.50);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.modal-overlay.show {
+    display: flex !important;
+}
+
+#loginPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(145deg, var(--primary-dark), var(--primary));
+    padding: 20px;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;   /* ✅ ต่ำกว่า Modal */
+}
+
+.toast-container {
+    position: fixed;
+    bottom: 28px;
+    left: 28px;
+    z-index: 100001 !important;  /* ✅ อยู่เหนือทุกอย่าง */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 380px;
+    width: 100%;
+}
+
         .modal-box {
             background: var(--bg-surface);
             border-radius: var(--radius-lg);
@@ -4790,50 +4815,78 @@
                 <div id="bmiEncouragement" class="bmi-encouragement healthy" style="display:none;">💪 حافظ على صحتك!</div>
                 <div style="margin-top:12px;max-height:180px;"><canvas id="weightChart"></canvas></div>
             </div>
-        </div>
+        </div> <!-- end page-profile -->
 
+    </main> <!-- end app-main -->
 
-    <!-- MODALS -->
+    <!-- ✅ MODAL: REGISTER MEMBER (ย้ายออกนอก main) -->
     <div class="modal-overlay" id="registerMemberModal">
-        <div class="modal-box">
+        <div class="modal-box" style="max-width: 650px;">
             <div class="modal-header">
-                <h3><span style="background:linear-gradient(135deg, var(--primary), var(--secondary)); padding:8px 12px; border-radius:12px; color:#fff; font-size:18px;"><i class="fas fa-dumbbell"></i></span> تسجيل عضو جديد في Pro Gym</h3>
+                <h3 style="display:flex;align-items:center;gap:10px;">
+                    <span style="background:linear-gradient(135deg, var(--primary), var(--secondary)); padding:8px 12px; border-radius:12px; color:#fff; font-size:18px;">
+                        <i class="fas fa-dumbbell"></i>
+                    </span>
+                    تسجيل عضو جديد في Pro Gym
+                </h3>
                 <button class="close" onclick="closeRegisterModal('registerMemberModal')">&times;</button>
             </div>
             <div style="margin-bottom:18px;padding:14px 18px;background:linear-gradient(135deg,rgba(16,185,129,0.08),rgba(56,189,248,0.08));border-radius:var(--radius-sm);border-right:4px solid var(--success);">
-                <p style="font-size:13px;color:var(--text-secondary);margin:0;display:flex;align-items:center;gap:10px;"><i class="fas fa-sparkles" style="color:var(--success);font-size:18px;"></i><span>يتم إنشاء رقم عضو <strong style="color:var(--primary);">تلقائيًا</strong> وجاهز للاستخدام! 💪</span></p>
+                <p style="font-size:13px;color:var(--text-secondary);margin:0;display:flex;align-items:center;gap:10px;">
+                    <i class="fas fa-sparkles" style="color:var(--success);font-size:18px;"></i>
+                    <span>يتم إنشاء رقم عضو <strong style="color:var(--primary);">تلقائيًا</strong> وجاهز للاستخدام! 💪</span>
+                </p>
             </div>
-            <div id="registerMemberForm">
+            <div id="registerMemberForm" style="display:block !important;">
                 <div class="form-group">
                     <label><i class="fas fa-id-card" style="color:var(--primary);margin-left:6px;"></i> رقم العضو <span style="color:var(--danger);">*</span></label>
                     <div class="copy-group">
-                        <input type="text" id="regMemberId" readonly />
+                        <input type="text" id="regMemberId" readonly style="background:rgba(15,59,94,0.04) !important;font-weight:700;font-size:16px;" />
                         <button class="btn-copy" id="copyMemberIdBtn" onclick="copyMemberId()"><i class="fas fa-copy"></i> نسخ</button>
                     </div>
                     <small id="copyMessage" style="color:var(--success);font-size:11px;display:none;margin-top:4px;"><i class="fas fa-check-circle"></i> تم النسخ!</small>
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-user" style="color:var(--primary);margin-left:6px;"></i> الاسم الكامل <span style="color:var(--danger);">*</span></label>
-                    <input type="text" id="regMemberFullName" placeholder="مثال: محمد علي" />
+                    <input type="text" id="regMemberFullName" placeholder="مثال: محمد علي" style="width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:2px solid rgba(0,0,0,0.06);background:var(--bg-body);color:var(--text-primary);font-size:14px;" />
                 </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
-                    <div class="form-group"><label><i class="fas fa-phone" style="color:var(--primary);margin-left:6px;"></i> رقم الهاتف</label><input type="text" id="regMemberPhone" placeholder="05xxxxxxxx" /></div>
-                    <div class="form-group"><label><i class="fas fa-calendar" style="color:var(--primary);margin-left:6px;"></i> العمر</label><input type="number" id="regMemberAge" placeholder="25" /></div>
+                    <div class="form-group">
+                        <label><i class="fas fa-phone" style="color:var(--primary);margin-left:6px;"></i> رقم الهاتف</label>
+                        <input type="text" id="regMemberPhone" placeholder="05xxxxxxxx" style="width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:2px solid rgba(0,0,0,0.06);background:var(--bg-body);color:var(--text-primary);font-size:14px;" />
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar" style="color:var(--primary);margin-left:6px;"></i> العمر</label>
+                        <input type="number" id="regMemberAge" placeholder="25" style="width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:2px solid rgba(0,0,0,0.06);background:var(--bg-body);color:var(--text-primary);font-size:14px;" />
+                    </div>
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-tag" style="color:var(--primary);margin-left:6px;"></i> نوع العضوية</label>
-                    <select id="regMemberType"><option value="عادي">🏋️ عادي</option><option value="متوسط">⭐ متوسط</option><option value="مميز">👑 مميز</option></select>
+                    <select id="regMemberType" style="width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:2px solid rgba(0,0,0,0.06);background:var(--bg-body);color:var(--text-primary);font-size:14px;">
+                        <option value="عادي">🏋️ عادي</option>
+                        <option value="متوسط">⭐ متوسط</option>
+                        <option value="مميز">👑 مميز</option>
+                    </select>
                 </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;">
-                    <div class="form-group"><label><i class="fas fa-lock" style="color:var(--primary);margin-left:6px;"></i> كلمة المرور <span style="color:var(--danger);">*</span></label><input type="text" id="regMemberPassword" placeholder="على الأقل 4 أحرف" /></div>
-                    <div class="form-group"><label><i class="fas fa-check-circle" style="color:var(--primary);margin-left:6px;"></i> تأكيد كلمة المرور</label><input type="text" id="regMemberPasswordConfirm" placeholder="تأكيد كلمة المرور" /></div>
+                    <div class="form-group">
+                        <label><i class="fas fa-lock" style="color:var(--primary);margin-left:6px;"></i> كلمة المرور <span style="color:var(--danger);">*</span></label>
+                        <input type="text" id="regMemberPassword" placeholder="على الأقل 4 أحرف" style="width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:2px solid rgba(0,0,0,0.06);background:var(--bg-body);color:var(--text-primary);font-size:14px;" />
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-check-circle" style="color:var(--primary);margin-left:6px;"></i> تأكيد كلمة المرور</label>
+                        <input type="text" id="regMemberPasswordConfirm" placeholder="تأكيد كلمة المرور" style="width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:2px solid rgba(0,0,0,0.06);background:var(--bg-body);color:var(--text-primary);font-size:14px;" />
+                    </div>
                 </div>
-                <button class="btn btn-success btn-submit" onclick="registerMember()"><i class="fas fa-user-plus"></i> تسجيل العضو</button>
+                <button class="btn btn-success btn-submit" onclick="registerMember()" style="width:100%;padding:14px;font-size:16px;border-radius:var(--radius-sm);font-weight:700;border:none;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;">
+                    <i class="fas fa-user-plus"></i> تسجيل العضو
+                </button>
                 <div id="regMemberResult" style="margin-top:12px;text-align:center;font-size:14px;font-weight:600;padding:8px;border-radius:var(--radius-sm);"></div>
             </div>
         </div>
     </div>
 
+    <!-- ✅ MODAL: REGISTER ADMIN (ย้ายออกนอก main) -->
     <div class="modal-overlay" id="registerAdminModal">
         <div class="modal-box">
             <div class="modal-header">
@@ -4862,9 +4915,7 @@
     <!-- TOAST CONTAINER -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- ============================================================
-    JAVASCRIPT (Full Version with All Fixes)
-    ============================================================ -->
+
     <script>
         // ============================================================
         // CONFIG
@@ -8751,30 +8802,44 @@ function generateProfileQR(memberId) {
         // ============================================================
         // REGISTER MODALS
         // ============================================================
-        async function openRegisterMember() {
-            const modal = document.getElementById('registerMemberModal');
-            if (!modal) { showToast('⚠️ لم يتم العثور على النافذة', 'error'); return; }
-            modal.classList.add('show');
-            modal.style.display = 'flex';
-            document.getElementById('regMemberFullName').value = '';
-            document.getElementById('regMemberPhone').value = '';
-            document.getElementById('regMemberAge').value = '';
-            document.getElementById('regMemberType').value = 'عادي';
-            document.getElementById('regMemberPassword').value = '';
-            document.getElementById('regMemberPasswordConfirm').value = '';
-            document.getElementById('regMemberResult').textContent = '';
-            document.getElementById('regMemberResult').innerHTML = '';
-            document.getElementById('copyMessage').style.display = 'none';
-            try {
-                const data = await apiCall('/members');
-                const members = data.data || [];
-                document.getElementById('regMemberId').value = generateNewMemberId(members);
-                showToast('✅ جاهز للتسجيل', 'success');
-            } catch (e) {
-                document.getElementById('regMemberId').value = 'G-0001';
-                showToast('⚠️ تم استخدام الرقم الافتراضي G-0001', 'warning');
-            }
-        }
+async function openRegisterMember() {
+    const modal = document.getElementById('registerMemberModal');
+    if (!modal) {
+        alert('⚠️ ไม่พบหน้าต่างสมัครสมาชิก');  // ใช้ alert เพราะ Toast อาจถูกบดบัง
+        return;
+    }
+
+    // ✅ แสดง Modal ทันที (ก่อนเรียก API)
+    modal.classList.add('show');
+    modal.style.display = 'flex';
+    modal.style.zIndex = '100000';  // ✅ สูงกว่าหน้า Login
+
+    // ✅ รีเซ็ตฟอร์ม
+    document.getElementById('regMemberFullName').value = '';
+    document.getElementById('regMemberPhone').value = '';
+    document.getElementById('regMemberAge').value = '';
+    document.getElementById('regMemberType').value = 'عادي';
+    document.getElementById('regMemberPassword').value = '';
+    document.getElementById('regMemberPasswordConfirm').value = '';
+    document.getElementById('regMemberResult').textContent = '';
+    document.getElementById('copyMessage').style.display = 'none';
+
+    // ✅ สร้าง ID เบื้องต้น (เผื่อ API ล้มเหลว)
+    const tempId = 'G-' + String(Math.floor(Math.random() * 9000 + 1000)).padStart(4, '0');
+    document.getElementById('regMemberId').value = tempId;
+
+    // ✅ โหลด ID จริงจาก API (ไม่ต้องรอ)
+    try {
+        const data = await apiCall('/members');
+        const members = data.data || [];
+        const newId = generateNewMemberId(members);
+        document.getElementById('regMemberId').value = newId;
+        showToast('✅ พร้อมสมัครสมาชิก', 'success');
+    } catch (e) {
+        // ใช้ ID ที่สร้างไว้แล้ว (ไม่ต้องแจ้งเตือน)
+        console.warn('⚠️ ใช้ ID อัตโนมัติ:', tempId);
+    }
+}
 
         async function openRegisterAdmin() {
             const modal = document.getElementById('registerAdminModal');
@@ -8823,114 +8888,67 @@ function generateProfileQR(memberId) {
             });
         }
 
-        async function registerMember() {
-            const memberId = document.getElementById('regMemberId').value.trim();
-            const fullName = document.getElementById('regMemberFullName').value.trim();
-            const phone = document.getElementById('regMemberPhone').value.trim();
-            const age = document.getElementById('regMemberAge').value.trim();
-            const membershipType = document.getElementById('regMemberType').value;
-            const password = document.getElementById('regMemberPassword').value.trim();
-            const confirmPass = document.getElementById('regMemberPasswordConfirm').value.trim();
-            const resultDiv = document.getElementById('regMemberResult');
+async function registerMember() {
+    const memberId = document.getElementById('regMemberId').value.trim();
+    const fullName = document.getElementById('regMemberFullName').value.trim();
+    const phone = document.getElementById('regMemberPhone').value.trim();
+    const age = document.getElementById('regMemberAge').value.trim();
+    const membershipType = document.getElementById('regMemberType').value;
+    const password = document.getElementById('regMemberPassword').value.trim();
+    const confirmPass = document.getElementById('regMemberPasswordConfirm').value.trim();
+    const resultDiv = document.getElementById('regMemberResult');
 
-            if (!memberId) { resultDiv.innerHTML =
-                    '<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> لا يوجد رقم</span>';
-                resultDiv.style.background = 'rgba(239,68,68,0.06)'; return; }
-            if (!fullName) { resultDiv.innerHTML =
-                    '<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> يرجى إدخال الاسم</span>';
-                resultDiv.style.background = 'rgba(239,68,68,0.06)'; return; }
-            if (!password || password.length < 4) { resultDiv.innerHTML =
-                    '<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> كلمة المرور >=4 أحرف</span>';
-                resultDiv.style.background = 'rgba(239,68,68,0.06)'; return; }
-            if (password !== confirmPass) { resultDiv.innerHTML =
-                    '<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> كلمة المرور غير متطابقة</span>';
-                resultDiv.style.background = 'rgba(239,68,68,0.06)'; return; }
-            try {
-                const data = await apiCall('/members');
-                const members = data.data || [];
-                if (members.find(m => m.member_id === memberId)) {
-                    resultDiv.innerHTML =
-                        `<span style="color:var(--danger);"><i class="fas fa-times-circle"></i> الرقم ${memberId} موجود بالفعل</span>`;
-                    resultDiv.style.background = 'rgba(239,68,68,0.06)';
-                    return;
-                }
-                await apiCall('/members', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        member_id: memberId,
-                        full_name: fullName,
-                        phone: phone || '',
-                        age: age || '',
-                        membership_type: membershipType,
-                        password: password,
-                        start_date: getTodayStr()
-                    })
-                });
-                resultDiv.innerHTML =
-                    `<span style="color:var(--success);"><i class="fas fa-check-circle"></i> تم التسجيل بنجاح!<br>الرقم: <strong>${memberId}</strong> | كلمة المرور: <strong>${password}</strong></span>`;
-                resultDiv.style.background = 'rgba(16,185,129,0.06)';
-                showToast(`✅ تم تسجيل ${memberId} بنجاح`, 'success');
-                localStorage.setItem('gym_role', 'member');
-                localStorage.setItem('gym_user', memberId);
-                setTimeout(() => {
-                    closeRegisterModal('registerMemberModal');
-                    document.getElementById('loginPage').style.display = 'none';
-                    document.getElementById('appMain').style.display = 'block';
-                    showToast(`🔑 مرحباً ${fullName}!`, 'success');
-                    checkAuth();
-                }, 1500);
-            } catch (error) {
-                resultDiv.innerHTML =
-                    `<span style="color:var(--danger);"><i class="fas fa-times-circle"></i> ${error.message}</span>`;
-                resultDiv.style.background = 'rgba(239,68,68,0.06)';
-                showToast('❌ ' + error.message, 'error');
-            }
+    // ✅ ตรวจสอบข้อมูลเบื้องต้น
+    if (!memberId) { resultDiv.innerHTML = '<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> لا يوجد رقم</span>'; return; }
+    if (!fullName) { resultDiv.innerHTML = '<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> يرجى إدخال الاسم</span>'; return; }
+    if (!password || password.length < 4) { resultDiv.innerHTML = '<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> كلمة المرور >=4 أحرف</span>'; return; }
+    if (password !== confirmPass) { resultDiv.innerHTML = '<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> كلمة المرور غير متطابقة</span>'; return; }
+
+    try {
+        // ✅ ส่งข้อมูลไป API โดยไม่ต้องตรวจสอบ ID ซ้ำ (ให้ API เป็นคนตอบ)
+        await apiCall('/members', {
+            method: 'POST',
+            body: JSON.stringify({
+                member_id: memberId,
+                full_name: fullName,
+                phone: phone || '',
+                age: age || '',
+                membership_type: membershipType,
+                password: password,
+                start_date: getTodayStr()
+            })
+        });
+
+        resultDiv.innerHTML = `<span style="color:var(--success);"><i class="fas fa-check-circle"></i> تم التسجيل بنجاح!<br>الرقم: <strong>${memberId}</strong> | كلمة المرور: <strong>${password}</strong></span>`;
+        resultDiv.style.background = 'rgba(16,185,129,0.06)';
+        showToast(`✅ تم تسجيل ${memberId} بنجاح`, 'success');
+
+        // ✅ ปิด Modal และเข้าสู่ระบบอัตโนมัติ
+        setTimeout(() => {
+            closeRegisterModal('registerMemberModal');
+            localStorage.setItem('gym_role', 'member');
+            localStorage.setItem('gym_user', memberId);
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('appMain').style.display = 'block';
+            showToast(`🔑 مرحباً ${fullName}!`, 'success');
+            checkAuth();  // โหลดหน้า Profile
+        }, 1500);
+
+    } catch (error) {
+        // ถ้า API บอกว่า ID ซ้ำ ให้แจ้งให้เปลี่ยน ID
+        if (error.message.includes('already exists') || error.message.includes('duplicate')) {
+            resultDiv.innerHTML = `<span style="color:var(--danger);"><i class="fas fa-times-circle"></i> الرقم ${memberId} موجود بالفعل، يرجى تغيير الرقم</span>`;
+            // สร้าง ID ใหม่ให้
+            const newId = generateNewMemberId(allMembers);
+            document.getElementById('regMemberId').value = newId;
+            showToast('🔄 تم إنشاء رقم جديد تلقائياً', 'info');
+        } else {
+            resultDiv.innerHTML = `<span style="color:var(--danger);"><i class="fas fa-times-circle"></i> ${error.message}</span>`;
+            showToast('❌ ' + error.message, 'error');
         }
-
-        async function registerAdmin() {
-            const secret = document.getElementById('regAdminSecret').value.trim();
-            const newPass = document.getElementById('regAdminPass').value.trim();
-            const confirmPass = document.getElementById('regAdminPassConfirm').value.trim();
-            const resultDiv = document.getElementById('regAdminResult');
-
-            if (secret !== ADMIN_RESET_CODE) {
-                resultDiv.innerHTML =
-                    `<span style="color:var(--danger);"><i class="fas fa-times-circle"></i> الكود السري غير صحيح (adminreset-2026)</span>`;
-                resultDiv.style.background = 'rgba(239,68,68,0.06)';
-                return;
-            }
-            if (newPass.length < 6) {
-                resultDiv.innerHTML =
-                    `<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> كلمة المرور يجب أن تكون 6 أحرف على الأقل</span>`;
-                resultDiv.style.background = 'rgba(239,68,68,0.06)';
-                return;
-            }
-            if (newPass !== confirmPass) {
-                resultDiv.innerHTML =
-                    `<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> كلمة المرور غير متطابقة</span>`;
-                resultDiv.style.background = 'rgba(239,68,68,0.06)';
-                return;
-            }
-            try {
-                const hash = await sha256(newPass);
-                localStorage.setItem('adminHash', hash);
-                resultDiv.innerHTML =
-                    `<span style="color:var(--success);"><i class="fas fa-check-circle"></i> تم تعيين كلمة مرور المشرف بنجاح!<br><small>كلمة المرور الجديدة: <strong>${newPass}</strong></small></span>`;
-                resultDiv.style.background = 'rgba(16,185,129,0.06)';
-                showToast('✅ تم تعيين كلمة مرور المشرف بنجاح', 'success');
-                setTimeout(() => {
-                    closeRegisterModal('registerAdminModal');
-                    document.getElementById('loginUser').value = 'admin';
-                    document.getElementById('loginPass').value = newPass;
-                    showToast('🔑 يرجى النقر على "تسجيل الدخول"', 'info');
-                }, 2000);
-            } catch (e) {
-                resultDiv.innerHTML =
-                    `<span style="color:var(--danger);"><i class="fas fa-times-circle"></i} ${e.message}</span>`;
-                resultDiv.style.background = 'rgba(239,68,68,0.06)';
-                showToast('❌ ' + e.message, 'error');
-            }
-        }
+        resultDiv.style.background = 'rgba(239,68,68,0.06)';
+    }
+}
 
         // ============================================================
         // LOGIN / LOGOUT
@@ -9601,7 +9619,217 @@ function getRealStatus(member, allPayments) {
     return 'active';
 }
 
+// ============================================================
+// REGISTER MODALS — เปิดหน้าต่างสมัครสมาชิก
+// ============================================================
+async function openRegisterMember() {
+    console.log('🔄 openRegisterMember() ถูกเรียก');
+    
+    const modal = document.getElementById('registerMemberModal');
+    if (!modal) {
+        alert('⚠️ ไม่พบหน้าต่างสมัครสมาชิก กรุณารีเฟรชหน้าเว็บ');
+        return;
+    }
 
+    try {
+        // ✅ แสดง Modal ทันที
+        modal.classList.add('show');
+        modal.style.display = 'flex';
+        modal.style.zIndex = '100000';  // สูงกว่าหน้า Login
+        
+        // ✅ รีเซ็ตฟอร์ม
+        document.getElementById('regMemberFullName').value = '';
+        document.getElementById('regMemberPhone').value = '';
+        document.getElementById('regMemberAge').value = '';
+        document.getElementById('regMemberType').value = 'عادي';
+        document.getElementById('regMemberPassword').value = '';
+        document.getElementById('regMemberPasswordConfirm').value = '';
+        document.getElementById('regMemberResult').textContent = '';
+        document.getElementById('regMemberResult').innerHTML = '';
+        document.getElementById('copyMessage').style.display = 'none';
+        
+        // ✅ สร้าง ID เบื้องต้น (เผื่อ API ล้มเหลว)
+        const tempId = 'G-' + String(Math.floor(Math.random() * 9000 + 1000)).padStart(4, '0');
+        document.getElementById('regMemberId').value = tempId;
+        
+        // ✅ โหลด ID จริงจาก API (ไม่ต้องรอให้เสร็จก็เปิด Modal แล้ว)
+        try {
+            const data = await apiCall('/members');
+            const members = data.data || [];
+            const newId = generateNewMemberId(members);
+            document.getElementById('regMemberId').value = newId;
+            showToast('✅ พร้อมสมัครสมาชิก', 'success');
+        } catch (e) {
+            // ใช้ ID ที่สร้างไว้แล้ว
+            console.warn('⚠️ ใช้ ID อัตโนมัติ:', tempId);
+            // ไม่ต้องแจ้งเตือนผู้ใช้ เพราะ Modal เปิดแล้ว
+        }
+        
+        console.log('✅ Modal สมัครสมาชิกเปิดแล้ว');
+        
+    } catch (error) {
+        console.error('❌ openRegisterMember Error:', error);
+        alert('เกิดข้อผิดพลาด: ' + error.message);
+    }
+}
+
+// ============================================================
+// REGISTER MEMBER — บันทึกข้อมูลสมาชิกใหม่
+// ============================================================
+async function registerMember() {
+    console.log('🔄 registerMember() ถูกเรียก');
+    
+    const memberId = document.getElementById('regMemberId').value.trim();
+    const fullName = document.getElementById('regMemberFullName').value.trim();
+    const phone = document.getElementById('regMemberPhone').value.trim();
+    const age = document.getElementById('regMemberAge').value.trim();
+    const membershipType = document.getElementById('regMemberType').value;
+    const password = document.getElementById('regMemberPassword').value.trim();
+    const confirmPass = document.getElementById('regMemberPasswordConfirm').value.trim();
+    const resultDiv = document.getElementById('regMemberResult');
+
+    // ✅ ตรวจสอบข้อมูล
+    if (!memberId) {
+        resultDiv.innerHTML = '<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> ไม่มีเลขสมาชิก</span>';
+        resultDiv.style.background = 'rgba(239,68,68,0.06)';
+        return;
+    }
+    if (!fullName) {
+        resultDiv.innerHTML = '<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> กรุณากรอกชื่อ-นามสกุล</span>';
+        resultDiv.style.background = 'rgba(239,68,68,0.06)';
+        return;
+    }
+    if (!password || password.length < 4) {
+        resultDiv.innerHTML = '<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> รหัสผ่านต้องมีความยาวอย่างน้อย 4 ตัวอักษร</span>';
+        resultDiv.style.background = 'rgba(239,68,68,0.06)';
+        return;
+    }
+    if (password !== confirmPass) {
+        resultDiv.innerHTML = '<span style="color:var(--danger);"><i class="fas fa-exclamation-circle"></i> รหัสผ่านไม่ตรงกัน</span>';
+        resultDiv.style.background = 'rgba(239,68,68,0.06)';
+        return;
+    }
+
+    try {
+        // ✅ ส่งข้อมูลไป API
+        await apiCall('/members', {
+            method: 'POST',
+            body: JSON.stringify({
+                member_id: memberId,
+                full_name: fullName,
+                phone: phone || '',
+                age: age || '',
+                membership_type: membershipType,
+                password: password,
+                start_date: getTodayStr()
+            })
+        });
+
+        // ✅ แสดงผลสำเร็จ
+        resultDiv.innerHTML = `
+            <span style="color:var(--success);">
+                <i class="fas fa-check-circle"></i> ลงทะเบียนสำเร็จ!<br>
+                เลขสมาชิก: <strong>${memberId}</strong> | รหัสผ่าน: <strong>${password}</strong>
+            </span>
+        `;
+        resultDiv.style.background = 'rgba(16,185,129,0.06)';
+        showToast(`✅ ลงทะเบียน ${memberId} สำเร็จ`, 'success');
+
+        // ✅ ปิด Modal และเข้าสู่ระบบอัตโนมัติ
+        setTimeout(() => {
+            closeRegisterModal('registerMemberModal');
+            
+            // ตั้งค่า Session
+            localStorage.setItem('gym_role', 'member');
+            localStorage.setItem('gym_user', memberId);
+            
+            // ซ่อนหน้า Login
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('appMain').style.display = 'block';
+            
+            showToast(`🔑 ยินดีต้อนรับ ${fullName}!`, 'success');
+            
+            // โหลดหน้า Profile
+            checkAuth();
+        }, 1500);
+
+    } catch (error) {
+        console.error('❌ registerMember Error:', error);
+        
+        // ✅ ถ้า ID ซ้ำ
+        if (error.message && (error.message.includes('already exists') || error.message.includes('duplicate'))) {
+            resultDiv.innerHTML = `
+                <span style="color:var(--danger);">
+                    <i class="fas fa-times-circle"></i> เลขสมาชิก ${memberId} มีอยู่แล้ว กรุณาเปลี่ยนเลขสมาชิก
+                </span>
+            `;
+            // สร้าง ID ใหม่ให้
+            try {
+                const data = await apiCall('/members');
+                const members = data.data || [];
+                const newId = generateNewMemberId(members);
+                document.getElementById('regMemberId').value = newId;
+                showToast('🔄 สร้างเลขสมาชิกใหม่ให้อัตโนมัติ', 'info');
+            } catch (e) {
+                // ไม่ต้องทำอะไร
+            }
+        } else {
+            resultDiv.innerHTML = `<span style="color:var(--danger);"><i class="fas fa-times-circle"></i> ${error.message}</span>`;
+            showToast('❌ ' + error.message, 'error');
+        }
+        resultDiv.style.background = 'rgba(239,68,68,0.06)';
+    }
+}
+
+// ============================================================
+// CLOSE REGISTER MODAL — ปิดหน้าต่างสมัครสมาชิก
+// ============================================================
+function closeRegisterModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+        modal.classList.remove('show');
+        modal.style.display = 'none';
+    }
+    // ปิด Modal อื่นที่อาจค้างอยู่
+    document.querySelectorAll('.modal-overlay.show').forEach(el => {
+        el.classList.remove('show');
+        el.style.display = 'none';
+    });
+}
+
+// ============================================================
+// COPY MEMBER ID — คัดลอกเลขสมาชิก
+// ============================================================
+function copyMemberId() {
+    const input = document.getElementById('regMemberId');
+    const btn = document.getElementById('copyMemberIdBtn');
+    const msg = document.getElementById('copyMessage');
+    
+    if (!input || !input.value) {
+        showToast('⚠️ ไม่มีเลขสมาชิกให้คัดลอก', 'warning');
+        return;
+    }
+    
+    navigator.clipboard.writeText(input.value).then(() => {
+        msg.style.display = 'block';
+        msg.innerHTML = `<i class="fas fa-check-circle"></i> คัดลอกแล้ว! ใช้เลข <strong>${input.value}</strong> เพื่อเข้าสู่ระบบ`;
+        btn.classList.add('copied');
+        btn.innerHTML = '<i class="fas fa-check"></i> คัดลอกแล้ว';
+        showToast(`✅ คัดลอกเลข ${input.value} แล้ว`, 'success');
+        setTimeout(() => {
+            btn.classList.remove('copied');
+            btn.innerHTML = '<i class="fas fa-copy"></i> คัดลอก';
+        }, 3000);
+    }).catch(() => {
+        // Fallback
+        input.select();
+        input.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        msg.style.display = 'block';
+        msg.innerHTML = `<i class="fas fa-check-circle"></i> คัดลอกแล้ว! ใช้เลข <strong>${input.value}</strong> เพื่อเข้าสู่ระบบ`;
+        showToast(`✅ คัดลอกเลข ${input.value} แล้ว`, 'success');
+    });
+}
     </script>
 </body>
 </html>
