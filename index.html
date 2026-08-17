@@ -6938,15 +6938,21 @@ case 'newMembers': {
             };
             
             // ✅ ฟังก์ชันสร้างข้อความ WhatsApp สำหรับสมาชิกใหม่
-            function generateNewMemberMessage(member) {
-                const hasPayment = allPaymentsFresh.some(p => p.member_id === member.member_id);
-                let template = '';
-                
-                if (hasPayment) {
-                    const payments = allPaymentsFresh.filter(p => p.member_id === member.member_id);
-                    const latest = payments.length > 0 ? payments[payments.length - 1] : null;
-                    
-                    template = `مرحباً ${member.full_name} 👋،
+function generateNewMemberMessage(member) {
+    const hasPayment = allPaymentsFresh.some(p => p.member_id === member.member_id);
+    let template = '';
+
+    if (hasPayment) {
+        const payments = allPaymentsFresh.filter(p => p.member_id === member.member_id);
+        const latest = payments.length > 0 ? payments[payments.length - 1] : null;
+
+        // ✅ ใช้ expiry_date จาก payment (ถ้ามี) หรือจาก member
+        let expiryDisplay = member.expiry_date ? formatDate(member.expiry_date) : '-';
+        if (latest && latest.expiry_date) {
+            expiryDisplay = formatDate(latest.expiry_date);
+        }
+
+        template = `مرحباً ${member.full_name} 👋،
 نحن سعداء بوجودك معنا في صالة Gym Pro الرياضية! 🏋️
 
 📋 بيانات عضويتك:
@@ -6955,7 +6961,7 @@ case 'newMembers': {
 • رقم العضو: ${member.member_id}
 • تاريخ التسجيل: ${formatDate(member.start_date)}
 • نوع العضوية: ${member.membership_type || 'عادي'}
-• تاريخ انتهاء العضوية: ${formatDate(member.expiry_date) || 'غير محدد'}
+• تاريخ انتهاء العضوية: ${expiryDisplay}
 • كلمة المرور: ${member.password || '1234'}
 
 💰 آخر دفعة:
@@ -6967,8 +6973,8 @@ case 'newMembers': {
 
 مع خالص التحية،
 إدارة صالة Gym Pro 🏋️`;
-                } else {
-                    template = `مرحباً ${member.full_name} 👋،
+    } else {
+        template = `مرحباً ${member.full_name} 👋،
 نرحب بك في صالة Gym Pro الرياضية! 🏋️
 نحن سعداء بانضمامك إلى عائلتنا الرياضية.
 
@@ -6989,9 +6995,9 @@ case 'newMembers': {
 
 مع خالص التحية،
 إدارة صالة Gym Pro 🏋️`;
-                }
-                return template;
-            }
+    }
+    return template;
+}
             
             // ✅ สร้างตาราง
             let table = `
@@ -11112,4 +11118,3 @@ function copyMemberId() {
     </script>
 </body>
 </html>
-
