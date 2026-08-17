@@ -5795,7 +5795,7 @@
 // ============================================================
 
 // ============================================================
-// XP SYSTEM V2 — Streak-based, no reset, warning on 3 missed days
+// XP SYSTEM — ทำงานจากการเช็คอินจริงเท่านั้น
 // ============================================================
 
 function getXp(memberId) {
@@ -5835,8 +5835,22 @@ function calculateXpBonusForStreak(streak) {
     return 8;
 }
 
+// ✅ ฟังก์ชันหลัก - ทำงานเฉพาะเมื่อมีการเช็คอินจริง
 function updateMemberXp(memberId, checkins) {
     const today = getTodayStr();
+    
+    // ✅ ตรวจสอบว่าสมาชิกมีการเช็คอินวันนี้หรือไม่ (จากข้อมูลจริง)
+    const hasCheckinToday = checkins.some(c => 
+        c.member_id === memberId && 
+        normalizeDate(c.checkin_date) === today
+    );
+    
+    // ❌ ถ้าไม่มีการเช็คอินวันนี้ → ไม่ให้คะแนน
+    if (!hasCheckinToday) {
+        return getXp(memberId);
+    }
+    
+    // ✅ ถ้ามีการเช็คอินจริง → คำนวณ XP ตาม Streak
     const lastDate = getLastCheckinDate(memberId);
     let currentStreak = getStreak(memberId);
     let currentXp = getXp(memberId);
@@ -5846,39 +5860,43 @@ function updateMemberXp(memberId, checkins) {
     if (lastDate) {
         const diff = daysBetween(lastDate, today);
         if (diff === 1) {
-            // เข้าวันถัดไป: Streak +1
+            // ✅ เข้าวันถัดไป: Streak +1
             currentStreak += 1;
         } else if (diff > 1 && diff <= 3) {
-            // ขาด 2-3 วัน: Streak คงเดิม
+            // ⚠️ ขาด 2-3 วัน: Streak คงเดิม (เตือน)
             missedDays = diff - 1;
         } else if (diff > 3) {
-            // ขาดเกิน 3 วัน: รีเซ็ต Streak
+            // ❌ ขาดเกิน 3 วัน: รีเซ็ต Streak
             missedDays = diff - 1;
             currentStreak = 0;
             streakReset = true;
         }
     } else {
-        // ครั้งแรก
+        // ✅ ครั้งแรก: เริ่ม Streak ที่ 1
         currentStreak = 1;
     }
 
-    // ถ้าวันนี้เช็คอินแล้ว (diff === 0) ไม่ต้องเพิ่ม
+    // ✅ ถ้าวันนี้มีการเช็คอินแล้ว และ lastDate === today → ไม่ต้องเพิ่มซ้ำ
     if (lastDate === today) {
         return currentXp;
     }
 
+    // ✅ คำนวณโบนัสตาม Streak
     const bonus = calculateXpBonusForStreak(currentStreak);
     const newXp = currentXp + bonus;
 
+    // ✅ บันทึกข้อมูล
     setXp(memberId, newXp);
     setStreak(memberId, currentStreak);
     setLastCheckinDate(memberId, today);
 
-    // เตือนเมื่อขาด 3 วันขึ้นไป
+    // ✅ แจ้งเตือนตามสถานะ
     if (streakReset) {
-        showToast('⚠️ تم إعادة تعيين تسلسلك اليومي بسبب الغياب لأكثر من 3 أيام!', 'warning');
+        showToast(`⚠️ ${memberId} ถูก reset Streak เนื่องจากขาดเกิน 3 วัน`, 'warning');
     } else if (missedDays >= 2) {
-        showToast(`⚠️ لقد تغيبت ${missedDays} أيام، استمر في الحضور لتجنب إعادة التعيين!`, 'warning');
+        showToast(`⚠️ ${memberId} ขาด ${missedDays} วัน ระวัง Streak จะถูกรีเซ็ต!`, 'warning');
+    } else if (bonus > 1) {
+        showToast(`🔥 ${memberId} ได้รับ +${bonus} XP (Streak ${currentStreak} วัน)`, 'success');
     }
 
     return newXp;
