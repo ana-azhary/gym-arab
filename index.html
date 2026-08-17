@@ -4913,6 +4913,54 @@
     transform: scale(1.05);
     box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
 }
+
+/* ============================================================
+   MONTHLY CHART — ดีไซน์สวยงาม
+   ============================================================ */
+#monthlyChartSection {
+    margin-top: 4px;
+}
+#monthlyChartSection .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+#monthlyChartSection .card-header h3 i {
+    font-size: 18px;
+}
+#monthlyChartSummary .stat-item {
+    background: var(--bg-body);
+    border-radius: 8px;
+    padding: 6px 10px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+#monthlyChartSummary .stat-item .number {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
+}
+#monthlyChartSummary .stat-item .label {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+#monthlyChartSummary .stat-item .change {
+    font-size: 11px;
+    font-weight: 600;
+}
+#monthlyChartSummary .stat-item .change.up {
+    color: var(--success);
+}
+#monthlyChartSummary .stat-item .change.down {
+    color: var(--danger);
+}
+#monthlyChartSummary .stat-item .change.flat {
+    color: var(--text-muted);
+}
+
         
     </style>
 </head>
@@ -5416,6 +5464,24 @@
                 <div id="bmiEncouragement" class="bmi-encouragement healthy" style="display:none;">💪 حافظ على صحتك!</div>
                 <div style="margin-top:12px;max-height:180px;"><canvas id="weightChart"></canvas></div>
             </div>
+            <!-- 📊 กราฟแสดงการเข้าใช้ยิมรายเดือน -->
+<div class="card-panel" id="monthlyChartSection">
+    <div class="card-header">
+        <h3 style="font-size:16px;font-weight:700;">
+            <i class="fas fa-chart-bar" style="color:var(--accent);"></i> 
+            📊 الدخول الشهري
+            <span style="font-size:12px;font-weight:400;color:var(--text-muted);">
+                (مقارنة الأشهر)
+            </span>
+        </h3>
+        <span id="monthlyChartStats" style="font-size:12px;color:var(--text-muted);"></span>
+    </div>
+    <div style="height:200px;position:relative;margin-top:4px;">
+        <canvas id="monthlyCheckinChart"></canvas>
+    </div>
+    <div id="monthlyChartSummary" style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:12px;color:var(--text-secondary);"></div>
+</div>
+
         </div> <!-- end page-profile -->
 
     </main> <!-- end app-main -->
@@ -8751,8 +8817,9 @@ async function loadProfile() {
             if (showFull) {
                 loadGoalProgress();
                 renderCalendar();
-                loadWeightData();
+                loadWeightData();  
                 renderWeightChart();
+                renderMonthlyCheckinChart();  // ✅ เพิ่มบรรทัดนี้
             }
 
             updateMemberDashboard();
@@ -11115,6 +11182,165 @@ function copyMemberId() {
         showToast(`✅ คัดลอกเลข ${input.value} แล้ว`, 'success');
     });
 }
+
+// ============================================================
+// MONTHLY CHECKIN CHART — กราฟแสดงการเข้าใช้รายเดือน
+// ============================================================
+let monthlyChartInstance = null;
+
+function renderMonthlyCheckinChart() {
+    const canvas = document.getElementById('monthlyCheckinChart');
+    if (!canvas) return;
+    
+    // ✅ ตรวจสอบว่าสมาชิกมีข้อมูลหรือไม่
+    if (!profileCheckins || profileCheckins.length === 0) {
+        document.getElementById('monthlyChartSection').style.display = 'none';
+        return;
+    }
+    
+    // ✅ แสดงส่วนนี้
+    document.getElementById('monthlyChartSection').style.display = 'block';
+    
+    // ✅ คำนวณจำนวนเช็คอินแต่ละเดือน (ย้อนหลัง 12 เดือน)
+    const today = new Date();
+    const months = [];
+    const counts = [];
+    const monthLabels = [];
+    
+    for (let i = 11; i >= 0; i--) {
+        const d = new Date(today);
+        d.setMonth(d.getMonth() - i);
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const monthKey = `${year}-${month}`;
+        
+        // ✅ นับจำนวนเช็คอินในเดือนนี้
+        const count = profileCheckins.filter(c => {
+            if (!c.checkin_date) return false;
+            const cDate = normalizeDate(c.checkin_date);
+            return cDate && cDate.slice(0, 7) === monthKey;
+        }).length;
+        
+        months.push(monthKey);
+        counts.push(count);
+        monthLabels.push(d.toLocaleDateString('ar-EG', { month: 'short', year: 'numeric' }));
+    }
+    
+    // ✅ คำนวณสถิติ
+    const total = counts.reduce((s, v) => s + v, 0);
+    const max = Math.max(...counts, 1);
+    const maxIndex = counts.indexOf(max);
+    const maxMonth = monthLabels[maxIndex] || '-';
+    const thisMonth = counts[counts.length - 1] || 0;
+    const lastMonth = counts[counts.length - 2] || 0;
+    const change = thisMonth - lastMonth;
+    const changeText = change > 0 ? `📈 +${change}` : change < 0 ? `📉 ${change}` : '➖';
+    const changeClass = change > 0 ? 'up' : change < 0 ? 'down' : 'flat';
+    
+    // ✅ อัปเดตสรุปสถิติ
+    const summary = document.getElementById('monthlyChartSummary');
+    if (summary) {
+        summary.innerHTML = `
+            <div class="stat-item">
+                <div class="number">${total}</div>
+                <div class="label">📊 إجمالي الدخول</div>
+            </div>
+            <div class="stat-item">
+                <div class="number">${max}</div>
+                <div class="label">🏆 أعلى شهر (${maxMonth})</div>
+            </div>
+            <div class="stat-item">
+                <div class="number">${thisMonth}</div>
+                <div class="label">📅 هذا الشهر</div>
+                <div class="change ${changeClass}">${changeText} عن الشهر الماضي</div>
+            </div>
+        `;
+    }
+    
+    // ✅ อัปเดตสถิติใน Header
+    const statsEl = document.getElementById('monthlyChartStats');
+    if (statsEl) {
+        statsEl.textContent = `📊 ${total} مرة | 🏆 ${max} (${maxMonth})`;
+    }
+    
+    // ✅ สร้างกราฟ
+    if (monthlyChartInstance) {
+        monthlyChartInstance.destroy();
+        monthlyChartInstance = null;
+    }
+    
+    const ctx = canvas.getContext('2d');
+    const isDarkMode = isDark;
+    const textColor = isDarkMode ? '#b0b0cc' : '#4a4a6a';
+    const gridColor = isDarkMode ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+    
+    // ✅ กำหนดสีของแท่ง
+    const barColors = counts.map((count, idx) => {
+        if (idx === counts.length - 1) return 'rgba(16,185,129,0.85)'; // เดือนนี้ = เขียว
+        if (count === max && max > 0) return 'rgba(245,158,11,0.85)'; // เดือนที่มีมากสุด = ทอง
+        return 'rgba(56,189,248,0.6)'; // สีฟ้า
+    });
+    
+    monthlyChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: monthLabels,
+            datasets: [{
+                label: 'عدد الدخول',
+                data: counts,
+                backgroundColor: barColors,
+                borderColor: barColors.map(c => c.replace('0.85', '1').replace('0.6', '1')),
+                borderWidth: 1.5,
+                borderRadius: 4,
+                borderSkipped: false,
+                barPercentage: 0.7,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.parsed.y + ' مرة';
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: textColor,
+                        font: { size: 10 },
+                        stepSize: Math.max(1, Math.round(max / 5)),
+                        callback: function(value) {
+                            return value + ' مرة';
+                        }
+                    },
+                    grid: { color: gridColor }
+                },
+                x: {
+                    ticks: {
+                        color: textColor,
+                        font: { size: 9 },
+                        maxRotation: 45,
+                        minRotation: 30
+                    },
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+    
+    console.log('✅ กราฟรายเดือนแสดงผลแล้ว');
+}
+
+// ✅ เรียกใน renderProfileData() เมื่อ showFull = true
+// และใน loadProfile() หลังจากโหลดข้อมูลเสร็จ
+
     </script>
 </body>
 </html>
