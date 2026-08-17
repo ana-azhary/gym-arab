@@ -4961,7 +4961,64 @@
     color: var(--text-muted);
 }
 
-        
+  /* แถบด้านล่าง - ซ่อนไว้ก่อน */
+.bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 6px 0 env(safe-area-inset-bottom);
+    justify-content: space-around;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.08);
+}
+
+/* แสดงเฉพาะมือถือ และเฉพาะหน้า Profile */
+@media (max-width: 992px) {
+    .bottom-nav.show {
+        display: flex !important;
+    }
+    .app-main {
+        padding-bottom: 80px !important; /* เผื่อที่ว่างให้แถบ */
+    }
+}
+
+.nav-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 10px;
+    gap: 2px;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+.nav-btn i {
+    font-size: 18px;
+}
+.nav-btn.active {
+    color: var(--secondary);
+}
+.nav-btn.active::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 20%;
+    right: 20%;
+    height: 3px;
+    background: var(--secondary);
+    border-radius: 0 0 4px 4px;
+}
+
     </style>
 </head>
 <body>
@@ -5380,6 +5437,31 @@
 
         <!-- PAGE: PROFILE (Member Dashboard) -->
         <div id="page-profile" class="page-section">
+
+            <!-- แถบเมนูด้านล่าง (เฉพาะมือถือ) -->
+<div id="bottomNav" class="bottom-nav">
+    <button class="nav-btn active" data-target="profileHeader" onclick="scrollToSection('profileHeader')">
+        <i class="fas fa-user"></i>
+        <span>โปรไฟล์</span>
+    </button>
+    <button class="nav-btn" data-target="memberStatsGrid" onclick="scrollToSection('memberStatsGrid')">
+        <i class="fas fa-chart-simple"></i>
+        <span>สถิติ</span>
+    </button>
+    <button class="nav-btn" data-target="calendarSection" onclick="scrollToSection('calendarSection')">
+        <i class="fas fa-calendar-days"></i>
+        <span>ปฏิทิน</span>
+    </button>
+    <button class="nav-btn" data-target="goalSection" onclick="scrollToSection('goalSection')">
+        <i class="fas fa-bullseye"></i>
+        <span>เป้าหมาย</span>
+    </button>
+    <button class="nav-btn" data-target="weightSection" onclick="scrollToSection('weightSection')">
+        <i class="fas fa-weight-scale"></i>
+        <span>น้ำหนัก</span>
+    </button>
+</div>
+
             <div class="member-stats-grid" id="memberStatsGrid">
                 <div class="stat-card-click" onclick="showCardDetail('member_revenue')"><div class="stat-top"><div class="stat-icon blue"><i class="fas fa-credit-card"></i></div></div><div class="num" id="mStatRevenue">-</div><div class="label">مدفوعات هذا الشهر</div></div>
                 <div class="stat-card-click" onclick="showCardDetail('member_xp')"><div class="stat-top"><div class="stat-icon green"><i class="fas fa-star"></i></div></div><div class="num" id="mStatXp">-</div><div class="label">نقاط الاجتهاد (XP)</div></div>
@@ -11340,6 +11422,49 @@ function renderMonthlyCheckinChart() {
 
 // ✅ เรียกใน renderProfileData() เมื่อ showFull = true
 // และใน loadProfile() หลังจากโหลดข้อมูลเสร็จ
+// ฟังก์ชันเลื่อนไปยังส่วนต่างๆ
+function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const topOffset = 70; // เผื่อแถบด้านบน
+    const y = el.getBoundingClientRect().top + window.scrollY - topOffset;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+    updateBottomNav(id);
+}
+
+// อัปเดตปุ่มให้เป็น Active
+function updateBottomNav(activeId) {
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.target === activeId);
+    });
+}
+
+// ตรวจจับการเลื่อนเพื่อเปลี่ยนปุ่มอัตโนมัติ
+function initBottomNavScroll() {
+    const sections = ['profileHeader', 'memberStatsGrid', 'calendarSection', 'goalSection', 'weightSection'];
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                updateBottomNav(entry.target.id);
+            }
+        });
+    }, { rootMargin: '-70px 0px -50% 0px' });
+    sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+    });
+}
+
+// เรียกตอนแสดงหน้า Profile และเมื่อโหลดเสร็จ
+function showBottomNav(show) {
+    const nav = document.getElementById('bottomNav');
+    if (nav) {
+        nav.classList.toggle('show', show);
+    }
+}
+
+// เพิ่มใน switchTab และ checkAuth ให้เรียก showBottomNav
+
 
     </script>
 </body>
