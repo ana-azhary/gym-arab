@@ -4961,64 +4961,122 @@
     color: var(--text-muted);
 }
 
-  /* แถบด้านล่าง - ซ่อนไว้ก่อน */
+/* ============================================================
+   BOTTOM NAVIGATION v2 — สวยงาม โปร่งแสง
+   ============================================================ */
+
 .bottom-nav {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 999;
-    background: var(--bg-card);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-top: 1px solid rgba(255,255,255,0.08);
-    padding: 6px 0 env(safe-area-inset-bottom);
-    justify-content: space-around;
-    box-shadow: 0 -4px 24px rgba(0,0,0,0.08);
+    display: none !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 9999 !important;
+    background: rgba(255, 255, 255, 0.75) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.3) !important;
+    padding: 8px 0 env(safe-area-inset-bottom, 8px) 0 !important;
+    justify-content: space-around !important;
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.05) !important;
+    transition: transform 0.3s ease !important;
 }
 
-/* แสดงเฉพาะมือถือ และเฉพาะหน้า Profile */
-@media (max-width: 992px) {
+/* แสดงบนมือถือ */
+@media (max-width: 768px) {
     .bottom-nav.show {
         display: flex !important;
     }
     .app-main {
-        padding-bottom: 80px !important; /* เผื่อที่ว่างให้แถบ */
+        padding-bottom: 85px !important;
     }
 }
 
-.nav-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    font-size: 10px;
-    gap: 2px;
-    padding: 4px 10px;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-}
-.nav-btn i {
-    font-size: 18px;
-}
-.nav-btn.active {
-    color: var(--secondary);
-}
-.nav-btn.active::after {
-    content: '';
-    position: absolute;
-    top: -6px;
-    left: 20%;
-    right: 20%;
-    height: 3px;
-    background: var(--secondary);
-    border-radius: 0 0 4px 4px;
+/* ปุ่ม */
+.bottom-nav .nav-btn {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+    border: none !important;
+    color: #94a3b8 !important;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    gap: 2px !important;
+    padding: 4px 6px !important;
+    cursor: pointer !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+    flex: 1 !important;
+    max-width: 72px !important;
+    border-radius: 12px !important;
 }
 
+.bottom-nav .nav-btn i {
+    font-size: 22px !important;
+    transition: all 0.25s ease !important;
+}
+
+.bottom-nav .nav-btn span {
+    font-size: 9px !important;
+    white-space: nowrap !important;
+    letter-spacing: 0.2px !important;
+}
+
+/* Active state */
+.bottom-nav .nav-btn.active {
+    color: var(--primary) !important;
+}
+.bottom-nav .nav-btn.active i {
+    transform: translateY(-2px) scale(1.08) !important;
+    color: var(--primary) !important;
+    filter: drop-shadow(0 2px 8px rgba(15, 59, 94, 0.15)) !important;
+}
+.bottom-nav .nav-btn.active::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -8px !important;
+    left: 30% !important;
+    right: 30% !important;
+    height: 3px !important;
+    background: var(--primary) !important;
+    border-radius: 0 0 4px 4px !important;
+    box-shadow: 0 0 16px rgba(15, 59, 94, 0.2) !important;
+}
+
+/* Hover */
+.bottom-nav .nav-btn:not(.active):hover {
+    color: var(--text-primary) !important;
+}
+.bottom-nav .nav-btn:not(.active):hover i {
+    transform: scale(1.05) !important;
+}
+
+/* Dark mode */
+[data-theme="dark"] .bottom-nav {
+    background: rgba(30, 41, 59, 0.85) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.04) !important;
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.3) !important;
+}
+[data-theme="dark"] .bottom-nav .nav-btn {
+    color: #64748b !important;
+}
+[data-theme="dark"] .bottom-nav .nav-btn.active {
+    color: var(--secondary) !important;
+}
+[data-theme="dark"] .bottom-nav .nav-btn.active i {
+    color: var(--secondary) !important;
+    filter: drop-shadow(0 2px 8px rgba(56, 189, 248, 0.2)) !important;
+}
+[data-theme="dark"] .bottom-nav .nav-btn.active::before {
+    background: var(--secondary) !important;
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.3) !important;
+}
+[data-theme="dark"] .bottom-nav .nav-btn:not(.active):hover {
+    color: var(--text-inverse) !important;
+}
+        
     </style>
 </head>
 <body>
@@ -5437,31 +5495,27 @@
 
         <!-- PAGE: PROFILE (Member Dashboard) -->
         <div id="page-profile" class="page-section">
-
-            <!-- แถบเมนูด้านล่าง (เฉพาะมือถือ) -->
+            <!-- ============================================================
+   BOTTOM NAVIGATION — แถบเลื่อนด่วน (มือถือ) v2
+   ============================================================ -->
 <div id="bottomNav" class="bottom-nav">
-    <button class="nav-btn active" data-target="profileHeader" onclick="scrollToSection('profileHeader')">
-        <i class="fas fa-user"></i>
-        <span>โปรไฟล์</span>
-    </button>
     <button class="nav-btn" data-target="memberStatsGrid" onclick="scrollToSection('memberStatsGrid')">
-        <i class="fas fa-chart-simple"></i>
-        <span>สถิติ</span>
+        <i class="fas fa-chart-bar"></i>
+        <span>إحصائيات</span>
     </button>
     <button class="nav-btn" data-target="calendarSection" onclick="scrollToSection('calendarSection')">
-        <i class="fas fa-calendar-days"></i>
-        <span>ปฏิทิน</span>
+        <i class="fas fa-calendar-alt"></i>
+        <span>تقويم</span>
     </button>
     <button class="nav-btn" data-target="goalSection" onclick="scrollToSection('goalSection')">
-        <i class="fas fa-bullseye"></i>
-        <span>เป้าหมาย</span>
+        <i class="fas fa-flag-checkered"></i>
+        <span>هدف</span>
     </button>
     <button class="nav-btn" data-target="weightSection" onclick="scrollToSection('weightSection')">
-        <i class="fas fa-weight-scale"></i>
-        <span>น้ำหนัก</span>
+        <i class="fas fa-weight"></i>
+        <span>وزن</span>
     </button>
 </div>
-
             <div class="member-stats-grid" id="memberStatsGrid">
                 <div class="stat-card-click" onclick="showCardDetail('member_revenue')"><div class="stat-top"><div class="stat-icon blue"><i class="fas fa-credit-card"></i></div></div><div class="num" id="mStatRevenue">-</div><div class="label">مدفوعات هذا الشهر</div></div>
                 <div class="stat-card-click" onclick="showCardDetail('member_xp')"><div class="stat-top"><div class="stat-icon green"><i class="fas fa-star"></i></div></div><div class="num" id="mStatXp">-</div><div class="label">نقاط الاجتهاد (XP)</div></div>
@@ -11422,40 +11476,12 @@ function renderMonthlyCheckinChart() {
 
 // ✅ เรียกใน renderProfileData() เมื่อ showFull = true
 // และใน loadProfile() หลังจากโหลดข้อมูลเสร็จ
-// ฟังก์ชันเลื่อนไปยังส่วนต่างๆ
-function scrollToSection(id) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const topOffset = 70; // เผื่อแถบด้านบน
-    const y = el.getBoundingClientRect().top + window.scrollY - topOffset;
-    window.scrollTo({ top: y, behavior: 'smooth' });
-    updateBottomNav(id);
-}
 
-// อัปเดตปุ่มให้เป็น Active
-function updateBottomNav(activeId) {
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.target === activeId);
-    });
-}
+// ============================================================
+// BOTTOM NAVIGATION v2 — ระบบเลื่อนแม่นยำ + อัปเดตอัตโนมัติ
+// ============================================================
 
-// ตรวจจับการเลื่อนเพื่อเปลี่ยนปุ่มอัตโนมัติ
-function initBottomNavScroll() {
-    const sections = ['profileHeader', 'memberStatsGrid', 'calendarSection', 'goalSection', 'weightSection'];
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                updateBottomNav(entry.target.id);
-            }
-        });
-    }, { rootMargin: '-70px 0px -50% 0px' });
-    sections.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) observer.observe(el);
-    });
-}
-
-// เรียกตอนแสดงหน้า Profile และเมื่อโหลดเสร็จ
+// ✅ แสดง/ซ่อนแถบ
 function showBottomNav(show) {
     const nav = document.getElementById('bottomNav');
     if (nav) {
@@ -11463,7 +11489,115 @@ function showBottomNav(show) {
     }
 }
 
-// เพิ่มใน switchTab และ checkAuth ให้เรียก showBottomNav
+// ✅ เลื่อนไปยังส่วน พร้อมออฟเซ็ต
+function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (!el) {
+        console.warn(`⚠️ Element #${id} not found`);
+        return;
+    }
+    // คำนวณตำแหน่งให้แม่นยำ
+    const rect = el.getBoundingClientRect();
+    const offset = 70; // ความสูงของแถบด้านบน
+    const targetY = rect.top + window.scrollY - offset;
+    
+    window.scrollTo({
+        top: targetY,
+        behavior: 'smooth'
+    });
+    
+    // อัปเดตปุ่ม active ทันที
+    updateBottomNav(id);
+}
+
+// ✅ อัปเดตปุ่ม active
+function updateBottomNav(activeId) {
+    document.querySelectorAll('.bottom-nav .nav-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.target === activeId);
+    });
+}
+
+// ✅ ตรวจจับการเลื่อนเพื่อเปลี่ยน active อัตโนมัติ (แม่นยำ)
+function initBottomNavObserver() {
+    const sectionIds = ['profileHeader', 'memberStatsGrid', 'calendarSection', 'goalSection', 'weightSection'];
+    const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+    
+    if (sections.length === 0) {
+        console.warn('⚠️ ไม่พบ sections สำหรับ observer');
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        // หา section ที่กำลังแสดงมากที่สุด
+        let visibleSection = null;
+        let maxRatio = 0;
+        entries.forEach(entry => {
+            if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+                maxRatio = entry.intersectionRatio;
+                visibleSection = entry.target.id;
+            }
+        });
+        if (visibleSection) {
+            updateBottomNav(visibleSection);
+        }
+    }, {
+        rootMargin: '-70px 0px -50% 0px', // ออฟเซ็ตให้แม่นยำ
+        threshold: [0, 0.25, 0.5, 0.75, 1]
+    });
+
+    sections.forEach(section => observer.observe(section));
+}
+
+// ✅ เปิดใช้งานแถบ (เรียกเมื่อเข้า Profile)
+function enableBottomNav() {
+    // เพิ่ม id และ scroll-margin-top ให้กับส่วนที่จำเป็น (ถ้ายังไม่มี)
+    const profileHeader = document.querySelector('#page-profile .flex-center:has(#profileName)') || 
+                         document.querySelector('#page-profile .flex-center');
+    if (profileHeader && !profileHeader.id) {
+        profileHeader.id = 'profileHeader';
+        profileHeader.style.scrollMarginTop = '70px';
+    }
+    const statsGrid = document.querySelector('#page-profile .member-stats-grid');
+    if (statsGrid && !statsGrid.id) {
+        statsGrid.id = 'memberStatsGrid';
+        statsGrid.style.scrollMarginTop = '70px';
+    }
+    // calendarSection, goalSection, weightSection มี id อยู่แล้ว
+    
+    showBottomNav(true);
+    // รอให้ DOM พร้อมก่อนสร้าง observer
+    setTimeout(initBottomNavObserver, 400);
+}
+
+function disableBottomNav() {
+    showBottomNav(false);
+}
+
+// ✅ ตรวจจับการเปลี่ยนหน้าแบบอัตโนมัติ (ไม่ต้องไปแก้ switchTab)
+function observePageChange() {
+    const profilePage = document.getElementById('page-profile');
+    if (!profilePage) return;
+
+    // สังเกตการเปลี่ยนแปลงคลาส active
+    const observer = new MutationObserver(() => {
+        if (profilePage.classList.contains('active')) {
+            enableBottomNav();
+        } else {
+            disableBottomNav();
+        }
+    });
+    observer.observe(profilePage, { attributes: true, attributeFilter: ['class'] });
+    
+    // ตรวจสอบสถานะปัจจุบัน
+    if (profilePage.classList.contains('active')) {
+        setTimeout(enableBottomNav, 500);
+    }
+}
+
+// เริ่มทำงานเมื่อ DOM พร้อม
+document.addEventListener('DOMContentLoaded', function() {
+    observePageChange();
+});
 
 
     </script>
