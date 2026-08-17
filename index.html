@@ -4961,116 +4961,7 @@
     color: var(--text-muted);
 }
 
-/* ============================================================
-   BOTTOM NAVIGATION — แบบแอพมือถือ
-   ============================================================ */
-
-/* ✅ Bottom Nav Container */
-.bottom-nav {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 999;
-    background: var(--bg-surface);
-    border-top: 1px solid var(--border-color);
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
-    padding: 4px 0 env(safe-area-inset-bottom, 8px) 0;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-}
-
-/* ✅ แสดงเฉพาะบนมือถือ */
-@media (max-width: 768px) {
-    .bottom-nav {
-        display: flex !important;
-    }
-    .app-main {
-        padding-bottom: 80px !important; /* เว้นที่ว่างให้ Bottom Nav */
-    }
-}
-
-/* ✅ ปุ่มใน Bottom Nav */
-.bottom-nav .nav-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 0;
-    gap: 2px;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    color: var(--text-muted);
-    transition: all 0.2s ease;
-    font-size: 10px;
-    font-weight: 500;
-    position: relative;
-}
-.bottom-nav .nav-item i {
-    font-size: 20px;
-    transition: all 0.2s ease;
-}
-.bottom-nav .nav-item span {
-    font-size: 9px;
-}
-.bottom-nav .nav-item.active {
-    color: var(--primary);
-}
-.bottom-nav .nav-item.active i {
-    transform: scale(1.1);
-    color: var(--primary);
-}
-.bottom-nav .nav-item .badge-nav-bottom {
-    position: absolute;
-    top: 2px;
-    right: 50%;
-    transform: translateX(calc(50% + 14px));
-    background: var(--danger);
-    color: #fff;
-    font-size: 8px;
-    font-weight: 700;
-    padding: 0 5px;
-    border-radius: 30px;
-    line-height: 14px;
-    min-width: 16px;
-    text-align: center;
-}
-
-/* ✅ หน้าแต่ละแท็บ (ซ่อน/แสดง) */
-.profile-tab {
-    display: none;
-    animation: fadeSlide 0.3s ease;
-}
-.profile-tab.active {
-    display: block;
-}
-
-/* ✅ Tab Headers */
-.tab-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0 12px 0;
-    border-bottom: 1px solid var(--border-color);
-    margin-bottom: 12px;
-}
-.tab-header h3 {
-    font-size: 18px;
-    font-weight: 700;
-}
-.tab-header .tab-actions {
-    display: flex;
-    gap: 6px;
-}
-.tab-header .tab-actions .btn {
-    padding: 4px 12px;
-    font-size: 11px;
-    border-radius: 30px;
-}
-
+        
     </style>
 </head>
 <body>
@@ -5591,83 +5482,9 @@
     <div id="monthlyChartSummary" style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:12px;color:var(--text-secondary);"></div>
 </div>
 
-<!-- ============================================================
-   MEMBER DASHBOARD TABS (แบบแอพมือถือ)
-   ============================================================ -->
-<div class="profile-tab active" id="tab-overview">
-    <div class="tab-header">
-        <h3>📊 نظرة عامة</h3>
-        <div class="tab-actions">
-            <button class="btn btn-outline btn-sm" onclick="refreshProfile()"><i class="fas fa-sync"></i></button>
-        </div>
-    </div>
-    <!-- ✅ 6 การ์ดสถิติจะแสดงที่นี่ (ย้ายมาจากข้างล่าง) -->
-    <div id="tabOverviewContent">
-        <!-- เนื้อหาจะถูกโหลดจาก JavaScript -->
-    </div>
-</div>
-
-<div class="profile-tab" id="tab-card">
-    <div class="tab-header">
-        <h3>💳 بطاقة العضوية</h3>
-        <div class="tab-actions">
-            <button class="btn btn-primary btn-sm" onclick="downloadQR()"><i class="fas fa-qrcode"></i></button>
-            <button class="btn btn-success btn-sm" onclick="downloadMemberCardPDF()"><i class="fas fa-file-pdf"></i></button>
-        </div>
-    </div>
-    <div id="tabCardContent">
-        <!-- บัตรสมาชิกจะแสดงที่นี่ -->
-    </div>
-</div>
-
-<div class="profile-tab" id="tab-progress">
-    <div class="tab-header">
-        <h3>📈 التقدم</h3>
-    </div>
-    <div id="tabProgressContent">
-        <!-- เป้าหมาย, ปฏิทิน, BMI, กราฟ -->
-    </div>
-</div>
-
-<div class="profile-tab" id="tab-ranking">
-    <div class="tab-header">
-        <h3>🏆 الترتيب</h3>
-    </div>
-    <div id="tabRankingContent">
-        <!-- Top 8 จะแสดงที่นี่ -->
-    </div>
-</div>
-
-
         </div> <!-- end page-profile -->
 
     </main> <!-- end app-main -->
-
-   <!-- ============================================================
-   BOTTOM NAVIGATION — แถบเมนูด้านล่าง (เฉพาะมือถือ)
-   ============================================================ -->
-<nav class="bottom-nav" id="bottomNav">
-    <button class="nav-item active" data-tab="tab-overview" onclick="switchProfileTab('tab-overview')">
-        <i class="fas fa-chart-pie"></i>
-        <span>الرئيسية</span>
-    </button>
-    <button class="nav-item" data-tab="tab-card" onclick="switchProfileTab('tab-card')">
-        <i class="fas fa-id-card"></i>
-        <span>البطاقة</span>
-        <span class="badge-nav-bottom" id="badgeCard">1</span>
-    </button>
-    <button class="nav-item" data-tab="tab-progress" onclick="switchProfileTab('tab-progress')">
-        <i class="fas fa-chart-line"></i>
-        <span>التقدم</span>
-    </button>
-    <button class="nav-item" data-tab="tab-ranking" onclick="switchProfileTab('tab-ranking')">
-        <i class="fas fa-trophy"></i>
-        <span>الترتيب</span>
-    </button>
-</nav>
-
-
-
 
     <!-- ✅ MODAL: REGISTER MEMBER (ย้ายออกนอก main) -->
     <div class="modal-overlay" id="registerMemberModal">
@@ -5882,35 +5699,54 @@ function calculateXpBonusForStreak(streak) {
     return 8;
 }
 
-function getXp(memberId) {
-    const key = 'xp_' + memberId;
-    const val = localStorage.getItem(key);
-    return val ? parseInt(val, 10) : 0;
-}
+function updateMemberXp(memberId, checkins) {
+    const today = getTodayStr();
+    const lastDate = getLastCheckinDate(memberId);
+    let currentStreak = getStreak(memberId);
+    let currentXp = getXp(memberId);
+    let missedDays = 0;
+    let streakReset = false;
 
-function setXp(memberId, value) {
-    localStorage.setItem('xp_' + memberId, String(value));
-}
+    if (lastDate) {
+        const diff = daysBetween(lastDate, today);
+        if (diff === 1) {
+            // เข้าวันถัดไป: Streak +1
+            currentStreak += 1;
+        } else if (diff > 1 && diff <= 3) {
+            // ขาด 2-3 วัน: Streak คงเดิม
+            missedDays = diff - 1;
+        } else if (diff > 3) {
+            // ขาดเกิน 3 วัน: รีเซ็ต Streak
+            missedDays = diff - 1;
+            currentStreak = 0;
+            streakReset = true;
+        }
+    } else {
+        // ครั้งแรก
+        currentStreak = 1;
+    }
 
-function getStreak(memberId) {
-    const key = 'streak_' + memberId;
-    const val = localStorage.getItem(key);
-    return val ? parseInt(val, 10) : 0;
-}
+    // ถ้าวันนี้เช็คอินแล้ว (diff === 0) ไม่ต้องเพิ่ม
+    if (lastDate === today) {
+        return currentXp;
+    }
 
-function setStreak(memberId, value) {
-    localStorage.setItem('streak_' + memberId, String(value));
-}
+    const bonus = calculateXpBonusForStreak(currentStreak);
+    const newXp = currentXp + bonus;
 
-function getLastCheckinDate(memberId) {
-    const key = 'lastCheckin_' + memberId;
-    return localStorage.getItem(key) || null;
-}
+    setXp(memberId, newXp);
+    setStreak(memberId, currentStreak);
+    setLastCheckinDate(memberId, today);
 
-function setLastCheckinDate(memberId, dateStr) {
-    localStorage.setItem('lastCheckin_' + memberId, dateStr);
-}
+    // เตือนเมื่อขาด 3 วันขึ้นไป
+    if (streakReset) {
+        showToast('⚠️ تم إعادة تعيين تسلسلك اليومي بسبب الغياب لأكثر من 3 أيام!', 'warning');
+    } else if (missedDays >= 2) {
+        showToast(`⚠️ لقد تغيبت ${missedDays} أيام، استمر في الحضور لتجنب إعادة التعيين!`, 'warning');
+    }
 
+    return newXp;
+}
 // ============================================================
 // CHECK STREAK WARNING — เตือนเมื่อขาด 2-3 วัน
 // ============================================================
@@ -11505,113 +11341,6 @@ function renderMonthlyCheckinChart() {
 // ✅ เรียกใน renderProfileData() เมื่อ showFull = true
 // และใน loadProfile() หลังจากโหลดข้อมูลเสร็จ
 
-// ============================================================
-// PROFILE TABS — เปลี่ยนแท็บแบบแอพมือถือ
-// ============================================================
-let currentProfileTab = 'tab-overview';
-
-function switchProfileTab(tabId) {
-    // ✅ ซ่อนทุกแท็บ
-    document.querySelectorAll('.profile-tab').forEach(el => {
-        el.classList.remove('active');
-    });
-    
-    // ✅ แสดงแท็บที่เลือก
-    const target = document.getElementById(tabId);
-    if (target) {
-        target.classList.add('active');
-    }
-    
-    // ✅ อัปเดตปุ่ม Bottom Nav
-    document.querySelectorAll('.bottom-nav .nav-item').forEach(el => {
-        el.classList.remove('active');
-        if (el.dataset.tab === tabId) {
-            el.classList.add('active');
-        }
-    });
-    
-    currentProfileTab = tabId;
-    localStorage.setItem('profileTab', tabId);
-    
-    // ✅ โหลดเนื้อหาเฉพาะแท็บ (ถ้าจำเป็น)
-    if (tabId === 'tab-overview') {
-        renderTabOverview();
-    } else if (tabId === 'tab-card') {
-        renderTabCard();
-    } else if (tabId === 'tab-progress') {
-        renderTabProgress();
-    } else if (tabId === 'tab-ranking') {
-        renderTabRanking();
-    }
-}
-
-// ✅ ฟังก์ชัน Render แต่ละแท็บ
-function renderTabOverview() {
-    const container = document.getElementById('tabOverviewContent');
-    if (!container) return;
-    // ✅ ย้ายการ์ดสถิติมาไว้ที่นี่
-    const statsGrid = document.getElementById('memberStatsGrid');
-    if (statsGrid) {
-        container.innerHTML = '';
-        container.appendChild(statsGrid.cloneNode(true));
-    }
-}
-
-function renderTabCard() {
-    const container = document.getElementById('tabCardContent');
-    if (!container) return;
-    // ✅ ย้ายบัตรมาไว้ที่นี่
-    const card = document.getElementById('profileCard');
-    if (card) {
-        container.innerHTML = '';
-        container.appendChild(card.cloneNode(true));
-    }
-}
-
-function renderTabProgress() {
-    const container = document.getElementById('tabProgressContent');
-    if (!container) return;
-    // ✅ รวม เป้าหมาย, ปฏิทิน, BMI, กราฟ
-    let html = '';
-    const goal = document.getElementById('goalSection');
-    const calendar = document.getElementById('calendarSection');
-    const weight = document.getElementById('weightSection');
-    const chart = document.getElementById('monthlyChartSection');
-    if (goal) html += goal.outerHTML;
-    if (calendar) html += calendar.outerHTML;
-    if (weight) html += weight.outerHTML;
-    if (chart) html += chart.outerHTML;
-    container.innerHTML = html;
-}
-
-function renderTabRanking() {
-    const container = document.getElementById('tabRankingContent');
-    if (!container) return;
-    const top8 = document.getElementById('top8Panel');
-    if (top8) {
-        container.innerHTML = '';
-        container.appendChild(top8.cloneNode(true));
-    }
-}
-
-// ✅ รีเฟรชโปรไฟล์
-function refreshProfile() {
-    showToast('🔄 جارٍ التحديث...', 'info');
-    loadProfile();
-}
-
-// ✅ เรียกแท็บที่บันทึกไว้ (หลังโหลดโปรไฟล์)
-function restoreProfileTab() {
-    const saved = localStorage.getItem('profileTab');
-    if (saved && document.getElementById(saved)) {
-        switchProfileTab(saved);
-    } else {
-        switchProfileTab('tab-overview');
-    }
-}
-
-
     </script>
 </body>
 </html>
-
