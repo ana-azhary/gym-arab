@@ -341,8 +341,8 @@ button,input,select,textarea{font-family:inherit}
 <div id="loginPage">
 <div class="login-box">
 <div class="logo"><i class="fas fa-dumbbell"></i><h1>Pro Gym</h1><p>نظام إدارة اللياقة البدنية</p></div>
-<div class="input-group"><i class="fas fa-user"></i><input type="text" id="loginUser" placeholder="اسم المستخدم (admin أو رقم العضو)" value="admin" /></div>
-<div class="input-group"><i class="fas fa-lock"></i><input type="password" id="loginPass" placeholder="كلمة المرور" value="admin123" /></div>
+<div class="input-group"><i class="fas fa-user"></i><input type="text" id="loginUser" placeholder="اسم المستخدم (admin أو رقم العضو)" autocomplete="username" /></div>
+<div class="input-group"><i class="fas fa-lock"></i><input type="password" id="loginPass" placeholder="كلمة المرور" autocomplete="current-password" /></div>
 <button class="btn-login" onclick="handleLogin()"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</button>
 <div class="register-row">
 <button class="btn-register member" onclick="openRegisterMember()"><i class="fas fa-user-plus"></i> تسجيل عضو جديد</button>
@@ -369,6 +369,9 @@ button,input,select,textarea{font-family:inherit}
 </nav>
 <div class="sidebar-footer">
 <div class="sidebar-user"><div class="avatar" id="sidebarAvatar">A</div><div class="user-info"><span class="name" id="sidebarUserName">Admin</span><span class="role" id="sidebarUserRole">مدير النظام</span></div></div>
+<button class="btn-logout-side" id="securityBtn" onclick="showSecurityPanel()" style="display:none;border-color:var(--c-primary);color:var(--c-primary);">
+<i class="fas fa-shield-halved"></i> الأمان
+</button>
 <button class="btn-logout-side" onclick="logout()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
 </div>
 </aside>
@@ -398,14 +401,6 @@ button,input,select,textarea{font-family:inherit}
 <div class="stat-card-click" onclick="showStatDetail('newMembers')"><div class="stat-top"><div class="stat-icon pink"><i class="fas fa-user-plus"></i></div></div><div class="num" id="statNewMembers">-</div><div class="label">جدد هذا الشهر</div></div>
 <div class="stat-card-click" onclick="showStatDetail('expired')"><div class="stat-top"><div class="stat-icon indigo"><i class="fas fa-user-slash"></i></div></div><div class="num" id="statExpired">-</div><div class="label">منتهي الصلاحية</div></div>
 <div class="stat-card-click" onclick="showStatDetail('todayPayments')"><div class="stat-top"><div class="stat-icon teal"><i class="fas fa-hand-holding-usd"></i></div></div><div class="num" id="statTodayPayments">-</div><div class="label">مدفوعات اليوم</div></div>
-</div>
-
-<!-- ✅ WhatsApp Bulk Buttons (restored) -->
-<div class="card-panel" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:var(--s-3) var(--s-5);">
-<button class="btn btn-whatsapp btn-sm" onclick="sendWhatsAppExpiryReminderBulk()"><i class="fab fa-whatsapp"></i> تذكير باقتراب الانتهاء</button>
-<button class="btn btn-whatsapp btn-sm" onclick="sendWhatsAppExpiredEncouragementBulk()"><i class="fab fa-whatsapp"></i> تشجيع للمنتهي صلاحيتهم</button>
-<button class="btn btn-whatsapp btn-sm" onclick="sendWhatsAppNewMemberUnpaidBulk()"><i class="fab fa-whatsapp"></i> ترحيب بالأعضاء الجدد</button>
-<span class="text-xs text-muted">(انقر لإرسال رسالة عبر WhatsApp)</span>
 </div>
 
 <div class="chart-grid">
@@ -739,9 +734,9 @@ const CURRENCY_SYMBOL = 'ج.م';
 const CACHE_TTL = 30000;
 
 // ============================================================
-// 🔒 SECURITY LAYER v2
+// 🔒 SECURITY LAYER v3 — No default password
 // ============================================================
-const PASSWORD_SALT = 'progym-v2-salt-2026';
+const PASSWORD_SALT = 'progym-v3-salt-2026';
 const SESSION_MAX_AGE = 8 * 60 * 60 * 1000;
 
 async function hashPassword(p) { return await sha256(p + PASSWORD_SALT); }
@@ -769,6 +764,23 @@ function secureClearSession() {
     localStorage.removeItem('gym_role');
     localStorage.removeItem('gym_user');
 }
+
+// ✅ สร้างรหัสสุ่มสำหรับ admin ครั้งแรก (ไม่มีตัวอักษรสับสน)
+function generateFirstTimePassword() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+    const groups = [4, 4, 4, 4];
+    let result = [];
+    for (let g = 0; g < groups.length; g++) {
+        let part = '';
+        const arr = new Uint8Array(groups[g]);
+        crypto.getRandomValues(arr);
+        for (let i = 0; i < groups[g]; i++) part += chars[arr[i] % chars.length];
+        result.push(part);
+    }
+    return result.join('-');
+}
+
+// ✅ Reset code (สำหรับกู้คืนรหัส admin)
 function generateResetCode() {
     const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
     let code = '';
@@ -779,14 +791,6 @@ function generateResetCode() {
         if (i === 4 || i === 9 || i === 14) code += '-';
     }
     return code;
-}
-async function getOrCreateResetHash() {
-    let h = localStorage.getItem('resetCodeHash');
-    if (h) return { hash: h, isNew: false };
-    const code = generateResetCode();
-    h = await sha256(code + PASSWORD_SALT);
-    localStorage.setItem('resetCodeHash', h);
-    return { hash: h, isNew: true, code };
 }
 async function verifyResetCode(code) {
     const stored = localStorage.getItem('resetCodeHash');
@@ -914,7 +918,7 @@ function addDays(d, n) { const x = new Date(d); x.setDate(x.getDate() + n); retu
 function daysBetween(a, b) { return Math.floor((new Date(normalizeDate(b)) - new Date(normalizeDate(a))) / (1000 * 60 * 60 * 24)); }
 
 // ============================================================
-// ✅ WHATSAPP — ครบทุกฟังก์ชัน
+// WHATSAPP
 // ============================================================
 function formatPhoneForWhatsApp(phone) {
     if (!phone) return null;
@@ -923,155 +927,11 @@ function formatPhoneForWhatsApp(phone) {
     if (!c.startsWith('20')) c = '20' + c;
     return c;
 }
-
-// ✅ ใกล้หมดอายุ — รายคน
-function sendWhatsAppExpiryReminder(phone, name, daysLeft, expiryDate) {
-    if (!phone) { showToast('⚠️ هذا العضو ليس لديه رقم هاتف', 'warning'); return; }
-    const wa = formatPhoneForWhatsApp(phone);
-    if (!wa) { showToast('⚠️ رقم الهاتف غير صحيح', 'error'); return; }
-    const formattedDate = expiryDate ? formatDate(expiryDate) : 'غير محدد';
-    const msg = encodeURIComponent(
-        `مرحباً ${name} 👋\n` +
-        `نود إعلامك بأن عضويتك ستنتهي خلال ${daysLeft} يوم (${formattedDate})\n` +
-        `يرجى الاتصال بالإدارة لتجديد العضوية...\n` +
-        `💪 نتمنى لك دوام الصحة ونحن في انتظارك!`
-    );
-    window.open(`https://wa.me/${wa}?text=${msg}`, '_blank');
-    showToast(`📱 فتح WhatsApp لـ ${name}`, 'info');
-}
-
-// ✅ หมดอายุแล้ว — รายคน
-function sendWhatsAppExpiredEncouragement(phone, name, daysOverdue, expiryDate) {
-    if (!phone) { showToast('⚠️ هذا العضو ليس لديه رقم هاتف', 'warning'); return; }
-    const wa = formatPhoneForWhatsApp(phone);
-    if (!wa) { showToast('⚠️ رقم الهاتف غير صحيح', 'error'); return; }
-    const formattedDate = expiryDate ? formatDate(expiryDate) : 'غير محدد';
-    const msg = encodeURIComponent(
-        `مرحباً ${name} 👋\n` +
-        `لاحظنا أن عضويتك انتهت منذ ${daysOverdue} يوم (${formattedDate})\n` +
-        `ندعوك للعودة وممارسة الرياضة مرة أخرى! 💪\n` +
-        `نتمنى لك صحة جيدة ونحن في انتظارك!`
-    );
-    window.open(`https://wa.me/${wa}?text=${msg}`, '_blank');
-    showToast(`📱 فتح WhatsApp لـ ${name}`, 'info');
-}
-
-// ✅ ขอบคุณการชำระเงิน
-function sendWhatsAppPaymentThanks(phone, name, amount, paymentDate, newExpiry) {
-    if (!phone) { showToast('⚠️ هذا العضو ليس لديه رقم هاتف', 'warning'); return; }
-    const wa = formatPhoneForWhatsApp(phone);
-    if (!wa) { showToast('⚠️ رقم الهاتف غير صحيح', 'error'); return; }
-    const formattedDate = paymentDate ? formatDate(paymentDate) : 'اليوم';
-    const formattedNewExpiry = newExpiry ? formatDate(newExpiry) : 'غير محدد';
-    const msg = encodeURIComponent(
-        `شكراً ${name} 🙏 على الدفع في الوقت المحدد!\n` +
-        `لقد استلمنا مبلغ ${amount} ج.م في ${formattedDate}\n` +
-        `تاريخ انتهاء الصلاحية الجديد هو ${formattedNewExpiry}\n` +
-        `💪 ننصحك بممارسة الرياضة يومياً لتحقيق أهدافك!`
-    );
-    window.open(`https://wa.me/${wa}?text=${msg}`, '_blank');
-    showToast(`📱 فتح WhatsApp لـ ${name}`, 'info');
-}
-
-// ✅ ต้อนรับสมาชิกใหม่ (ยังไม่จ่าย)
-function sendWhatsAppNewMemberUnpaid(phone, name, memberId, password, startDate, membershipType) {
-    if (!phone) { showToast('⚠️ هذا العضو ليس لديه رقم هاتف', 'warning'); return; }
-    const wa = formatPhoneForWhatsApp(phone);
-    if (!wa) { showToast('⚠️ رقم الهاتف غير صحيح', 'error'); return; }
-    const msg = encodeURIComponent(
-        `مرحباً ${name} 👋 مرحباً بك في Pro Gym!\n` +
-        `لقد تم تسجيلك (${memberId}) ولكن لم يتم الدفع بعد...\n` +
-        `يرجى الاتصال بالإدارة لإتمام الدفع\n` +
-        `💪 نحن في انتظارك بكل سرور! نتمنى لك النجاح في رحلة اللياقة!`
-    );
-    window.open(`https://wa.me/${wa}?text=${msg}`, '_blank');
-    showToast(`📱 فتح WhatsApp لـ ${name}`, 'info');
-}
-
-// ✅ ทั่วไป — สมาชิก
 function sendWhatsAppMember(member) {
     if (!member || !member.phone) { showToast('⚠️ لا يوجد رقم هاتف', 'warning'); return; }
     const wa = formatPhoneForWhatsApp(member.phone);
     const msg = encodeURIComponent(`👋 مرحباً ${member.full_name} من Pro Gym`);
     window.open(`https://wa.me/${wa}?text=${msg}`, '_blank');
-}
-
-// ✅ Bulk — ใกล้หมดอายุ
-function sendWhatsAppExpiryReminderBulk() {
-    const today = getTodayStr();
-    const expiring = allMembers.filter(m => {
-        if (!m.expiry_date || !m.phone) return false;
-        const e = new Date(normalizeDate(m.expiry_date));
-        const diff = (e - new Date()) / (1000 * 60 * 60 * 24);
-        return diff > 0 && diff <= 7;
-    });
-    if (!expiring.length) { showToast('📭 لا يوجد أعضاء على وشك الانتهاء', 'info'); return; }
-    let count = 0;
-    expiring.forEach(m => {
-        const daysLeft = Math.ceil((new Date(normalizeDate(m.expiry_date)) - new Date()) / (1000 * 60 * 60 * 24));
-        const wa = formatPhoneForWhatsApp(m.phone);
-        if (wa) {
-            const msg = encodeURIComponent(
-                `مرحباً ${m.full_name} 👋\n` +
-                `نود إعلامك بأن عضويتك ستنتهي خلال ${daysLeft} يوم (${formatDate(m.expiry_date)})\n` +
-                `يرجى الاتصال بالإدارة لتجديد العضوية... 💪`
-            );
-            setTimeout(() => { window.open(`https://wa.me/${wa}?text=${msg}`, '_blank'); }, count * 2000);
-            count++;
-        }
-    });
-    showToast(`📤 فتح WhatsApp لـ ${count} عضو`, 'info');
-}
-
-// ✅ Bulk — หมดอายุ
-function sendWhatsAppExpiredEncouragementBulk() {
-    const today = getTodayStr();
-    const expired = allMembers.filter(m => {
-        if (!m.expiry_date || !m.phone) return false;
-        return normalizeDate(m.expiry_date) < today;
-    });
-    if (!expired.length) { showToast('📭 لا يوجد أعضاء منتهية صلاحيتهم', 'info'); return; }
-    let count = 0;
-    expired.forEach(m => {
-        const daysOver = daysBetween(normalizeDate(m.expiry_date), today);
-        const wa = formatPhoneForWhatsApp(m.phone);
-        if (wa) {
-            const msg = encodeURIComponent(
-                `مرحباً ${m.full_name} 👋\n` +
-                `لقد انتهت عضويتك منذ ${daysOver} يوم (${formatDate(m.expiry_date)})\n` +
-                `ندعوك للعودة وممارسة الرياضة مرة أخرى! 💪`
-            );
-            setTimeout(() => { window.open(`https://wa.me/${wa}?text=${msg}`, '_blank'); }, count * 2000);
-            count++;
-        }
-    });
-    showToast(`📤 فتح WhatsApp لـ ${count} عضو`, 'info');
-}
-
-// ✅ Bulk — สมาชิกใหม่ยังไม่จ่าย
-function sendWhatsAppNewMemberUnpaidBulk() {
-    const thisMonth = getTodayStr().slice(0, 7);
-    const newUnpaid = allMembers.filter(m => {
-        if (!m.start_date || !m.phone) return false;
-        if (normalizeDate(m.start_date).slice(0, 7) !== thisMonth) return false;
-        const hasPay = allPayments.some(p => p.member_id === m.member_id);
-        return !hasPay;
-    });
-    if (!newUnpaid.length) { showToast('📭 لا يوجد أعضاء جدد غير مدفوع', 'info'); return; }
-    let count = 0;
-    newUnpaid.forEach(m => {
-        const wa = formatPhoneForWhatsApp(m.phone);
-        if (wa) {
-            const msg = encodeURIComponent(
-                `مرحباً ${m.full_name} 👋 مرحباً بك في Pro Gym!\n` +
-                `لقد تم تسجيلك (${m.member_id}) ولكن لم يتم الدفع بعد...\n` +
-                `يرجى الاتصال بالإدارة لإتمام الدفع 💪`
-            );
-            setTimeout(() => { window.open(`https://wa.me/${wa}?text=${msg}`, '_blank'); }, count * 2000);
-            count++;
-        }
-    });
-    showToast(`📤 فتح WhatsApp لـ ${count} عضو`, 'info');
 }
 
 // ============================================================
@@ -1098,6 +958,100 @@ function generateNewMemberId(members) {
     let max = 0;
     members.forEach(m => { if ((m.member_id || '').startsWith('G-')) { const n = parseInt(m.member_id.substring(2), 10); if (!isNaN(n) && n > max) max = n; } });
     return 'G-' + String(max + 1).padStart(4, '0');
+}
+
+// ============================================================
+// FIRST TIME SETUP MODAL (สำหรับ admin ครั้งแรก)
+// ============================================================
+function showFirstTimeSetupModal(tempPassword) {
+    const o = document.createElement('div');
+    o.className = 'modal-overlay show';
+    o.id = 'firstTimeModal';
+    o.style.zIndex = '100003';
+    o.innerHTML = `
+        <div class="modal-box" style="max-width:520px;">
+            <div class="modal-header">
+                <h3 style="color:var(--c-success);">
+                    <i class="fas fa-rocket"></i> مرحباً! تهيئة النظام لأول مرة
+                </h3>
+            </div>
+            <div style="padding:0 4px 16px;">
+                <div style="background:var(--c-success-soft);border:1px solid var(--c-success);border-radius:8px;padding:14px;margin-bottom:16px;">
+                    <p style="font-size:13px;color:var(--c-text-2);margin:0;line-height:1.7;">
+                        <i class="fas fa-info-circle" style="color:var(--c-success);"></i>
+                        هذه أول مرة تفتح فيها النظام. تم إنشاء <strong>كلمة مرور مؤقتة</strong> عشوائية للـ admin.
+                        <br>يجب استخدامها للدخول ثم تعيين كلمة مرور جديدة خاصة بك.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> اسم المستخدم</label>
+                    <input type="text" value="admin" readonly style="background:var(--c-surface-3);color:var(--c-primary);font-weight:800;text-align:center;font-family:var(--font-mono);" />
+                </div>
+                <div style="background:var(--c-surface-2);border:2px dashed var(--c-primary);border-radius:8px;padding:20px;text-align:center;margin-bottom:16px;">
+                    <div style="font-size:11px;color:var(--c-text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:1.5px;">كلمة المرور المؤقتة</div>
+                    <div id="_ftPass" style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:800;color:var(--c-primary);letter-spacing:1px;word-break:break-all;">
+                        ${tempPassword}
+                    </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                    <button id="_ftCopy" class="btn btn-outline" style="padding:12px;">
+                        <i class="fas fa-copy"></i> نسخ
+                    </button>
+                    <button id="_ftDl" class="btn btn-outline" style="padding:12px;">
+                        <i class="fas fa-download"></i> تحميل
+                    </button>
+                </div>
+                <button id="_ftOk" class="btn btn-primary" style="width:100%;padding:14px;margin-top:16px;font-weight:700;">
+                    <i class="fas fa-check-circle"></i> حفظت كلمة المرور، متابعة
+                </button>
+                <p style="font-size:11px;color:var(--c-text-muted);text-align:center;margin-top:12px;line-height:1.6;">
+                    ⚠️ لن تُعرض هذه الكلمة مرة أخرى. احفظها في مكان آمن (ملف، ورقة، مدير كلمات المرور).
+                </p>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(o);
+
+    o.querySelector('#_ftCopy').onclick = () => {
+        navigator.clipboard.writeText(tempPassword).then(() => showToast('✅ تم النسخ', 'success')).catch(() => {});
+    };
+    o.querySelector('#_ftDl').onclick = () => {
+        const content = 
+`═══════════════════════════════════════
+   Pro Gym — بيانات دخول Admin الأولى
+═══════════════════════════════════════
+
+⚠️ احفظ هذا الملف في مكان آمن!
+
+📋 اسم المستخدم: admin
+🔑 كلمة المرور المؤقتة:
+${tempPassword}
+
+كيفية الاستخدام:
+1. أدخل "admin" في شاشة الدخول
+2. أدخل كلمة المرور أعلاه
+3. سيُطلب منك فوراً تعيين كلمة مرور جديدة
+4. بعد التعيين، استخدم كلمة المرور الجديدة
+
+تاريخ الإنشاء: ${new Date().toLocaleString('ar-EG')}
+
+═══════════════════════════════════════
+`;
+        const b = new Blob([content], { type: 'text/plain;charset=utf-8' });
+        const l = document.createElement('a');
+        l.href = URL.createObjectURL(b);
+        l.download = `progym-first-time-${new Date().toISOString().split('T')[0]}.txt`;
+        l.click();
+        showToast('✅ تم التحميل', 'success');
+    };
+    o.querySelector('#_ftOk').onclick = () => {
+        o.remove();
+        showToast('✅ يمكنك تسجيل الدخول الآن', 'success');
+        // auto-fill username
+        document.getElementById('loginUser').value = 'admin';
+        document.getElementById('loginPass').value = '';
+        document.getElementById('loginPass').focus();
+    };
 }
 
 // ============================================================
@@ -1269,13 +1223,12 @@ function openModal(title, html) {
 function closeTempModal() { const el = document.getElementById('tempModal'); if (el) el.remove(); }
 
 // ============================================================
-// STAT DETAILS — พร้อม WhatsApp Rich Messages
+// STAT DETAILS
 // ============================================================
 async function showStatDetail(type) {
     const today = getTodayStr(), month = today.slice(0, 7);
     let title = '', content = '';
 
-    // ═══ TODAY CHECKINS ═══
     if (type === 'todayCheckins') {
         title = '✅ دخول اليوم';
         openModal(title, '<div style="text-align:center;padding:40px"><i class="fas fa-spinner fa-spin" style="font-size:48px"></i></div>');
@@ -1305,7 +1258,6 @@ async function showStatDetail(type) {
         } catch (e) { content = '❌ ' + e.message; }
     }
 
-    // ═══ TODAY PAYMENTS ═══
     else if (type === 'todayPayments') {
         title = '💳 مدفوعات اليوم';
         openModal(title, '<div style="text-align:center;padding:40px"><i class="fas fa-spinner fa-spin" style="font-size:48px"></i></div>');
@@ -1342,7 +1294,6 @@ async function showStatDetail(type) {
         } catch (e) { content = '❌ ' + e.message; }
     }
 
-    // ═══ NEW MEMBERS ═══
     else if (type === 'newMembers') {
         title = '➕ الأعضاء الجدد';
         openModal(title, '<div style="text-align:center;padding:40px"><i class="fas fa-spinner fa-spin" style="font-size:48px"></i></div>');
@@ -1371,7 +1322,6 @@ async function showStatDetail(type) {
         } catch (e) { content = '❌ ' + e.message; }
     }
 
-    // ═══ EXPIRED ═══
     else if (type === 'expired') {
         title = '🚫 منتهي الصلاحية';
         openModal(title, '<div style="text-align:center;padding:40px"><i class="fas fa-spinner fa-spin" style="font-size:48px"></i></div>');
@@ -1413,7 +1363,6 @@ async function showStatDetail(type) {
         } catch (e) { content = '❌ ' + e.message; }
     }
 
-    // ═══ EXPIRING ═══
     else if (type === 'expiring') {
         title = '⏳ على وشك الانتهاء';
         openModal(title, '<div style="text-align:center;padding:40px"><i class="fas fa-spinner fa-spin" style="font-size:48px"></i></div>');
@@ -1587,10 +1536,21 @@ async function addPayment() {
         $('paymentAddForm').style.display = 'none';
         $('pMember').value = ''; $('pAmount').value = '';
         await fetchPayments(); await refreshDashboard();
-        // ✅ ส่ง WhatsApp ขอบคุณทันทีถ้ามีเบอร์
         const m = allMembers.find(x => x.member_id === id);
         if (m && m.phone) {
-            setTimeout(() => sendWhatsAppPaymentThanks(m.phone, m.full_name, amount, getTodayStr(), null), 1000);
+            setTimeout(() => {
+                const wa = formatPhoneForWhatsApp(m.phone);
+                if (wa) {
+                    const msg = encodeURIComponent(
+                        `شكراً ${m.full_name} 🙏 على دفعك في الوقت المحدد!\n\n` +
+                        `💰 إيصال الدفع:\n━━━━━━━━━━━━━━━━\n` +
+                        `• المبلغ: ${amount} ج.م\n` +
+                        `• التاريخ: ${formatDate(getTodayStr())}\n\n` +
+                        `💪 نتمنى لك الاستمرار في ممارسة الرياضة!\n\nمع تحيات، إدارة Pro Gym 🏋️`
+                    );
+                    window.open(`https://wa.me/${wa}?text=${msg}`, '_blank');
+                }
+            }, 1000);
         }
     } catch (e) { showToast('❌ ' + e.message, 'error'); }
 }
@@ -1689,10 +1649,15 @@ function renderProfileData() {
     $('profileXp').innerHTML = '<i class="fas fa-star"></i> XP: ' + xp;
     const expDisp = profileExpiryStr !== '-' ? formatDate(profileExpiryStr) : 'غير مدفوع';
     $('profileExpiryStatus').innerHTML = isExp ? `<span style="color:var(--c-danger)">● منتهي (${expDisp})</span>` : hasPaymentHistory ? `<span style="color:var(--c-success)">● نشط (${expDisp})</span>` : `<span style="color:var(--c-warning)">● لا سجل</span>`;
-    ['previewName','previewId','previewPhone','previewType','previewExpiry','previewPoints','previewXp','previewStartDate','previewExpiryFooter'].forEach(id => {
-        const v = { previewName: m.full_name || 'الاسم', previewId: m.member_id || 'G-XXXX', previewPhone: m.phone || '-', previewType: m.membership_type || '-', previewExpiry: expDisp, previewPoints: points, previewXp: xp, previewStartDate: formatDate(m.start_date), previewExpiryFooter: expDisp };
-        if ($(id)) $(id).textContent = v[id];
-    });
+    $('previewName').textContent = m.full_name || 'الاسم';
+    $('previewId').textContent = m.member_id || 'G-XXXX';
+    $('previewPhone').textContent = m.phone || '-';
+    $('previewType').textContent = m.membership_type || '-';
+    $('previewExpiry').textContent = expDisp;
+    $('previewPoints').textContent = points;
+    $('previewXp').textContent = xp;
+    $('previewStartDate').textContent = formatDate(m.start_date);
+    $('previewExpiryFooter').textContent = expDisp;
     $('previewExpiryFooter').className = isExp ? 'expiry' : '';
     generateProfileQR(m.member_id);
     const showFull = !isExp && hasPaymentHistory;
@@ -2023,6 +1988,106 @@ function enableBottomNav() { showBottomNav(true); setTimeout(() => { const secs 
 function disableBottomNav() { showBottomNav(false); }
 function observePageChange() { const p = document.getElementById('page-profile'); if (!p) return; new MutationObserver(() => { if (p.classList.contains('active')) enableBottomNav(); else disableBottomNav(); }).observe(p, { attributes: true, attributeFilter: ['class'] }); }
 
+// ============================================================
+// 🛡️ SECURITY PANEL
+// ============================================================
+function showSecurityPanel() {
+    openModal('🛡️ لوحة الأمان', `
+        <div style="display:flex;flex-direction:column;gap:12px;">
+            <button class="btn btn-primary" onclick="showChangePasswordModal()" style="padding:16px;font-size:15px;justify-content:flex-start;">
+                <i class="fas fa-key"></i> تغيير كلمة المرور
+            </button>
+            <button class="btn btn-outline" onclick="showGenerateResetCodeModal()" style="padding:16px;font-size:15px;justify-content:flex-start;">
+                <i class="fas fa-shield-halved"></i> توليد كود استعادة جديد
+            </button>
+            <div style="padding:14px;background:var(--c-warning-soft);border-radius:8px;border:1px solid rgba(245,158,11,.2);margin-top:8px;">
+                <p style="font-size:12px;color:var(--c-text-2);margin:0;line-height:1.7;">
+                    <i class="fas fa-info-circle" style="color:var(--c-warning);"></i>
+                    <strong>ملاحظة:</strong> كود الاستعادة يُحفظ في هذا المتصفح فقط.
+                    احفظ الكود في مكان آمن لاستخدامه إذا نسيت كلمة المرور.
+                </p>
+            </div>
+        </div>
+    `);
+}
+
+function showChangePasswordModal() {
+    closeTempModal();
+    const o = document.createElement('div');
+    o.className = 'modal-overlay show';
+    o.id = 'changePassModal';
+    o.style.zIndex = '100002';
+    o.innerHTML = `
+        <div class="modal-box" style="max-width:480px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-key" style="color:var(--c-primary);"></i> تغيير كلمة المرور</h3>
+                <button class="close" onclick="document.getElementById('changePassModal').remove()">&times;</button>
+            </div>
+            <div style="padding:0 4px 16px;">
+                <div class="form-group">
+                    <label>كلمة المرور الحالية</label>
+                    <input type="password" id="_cpOld" autocomplete="current-password" />
+                </div>
+                <div class="form-group">
+                    <label>كلمة المرور الجديدة (8 أحرف على الأقل)</label>
+                    <input type="password" id="_cpNew" autocomplete="new-password" />
+                </div>
+                <div class="form-group">
+                    <label>تأكيد كلمة المرور الجديدة</label>
+                    <input type="password" id="_cpConfirm" autocomplete="new-password" />
+                </div>
+                <div id="_cpErr" style="color:var(--c-danger);font-size:13px;font-weight:600;margin-bottom:12px;display:none;"></div>
+                <button class="btn btn-success" style="width:100%;padding:14px;font-size:15px;" onclick="doChangePassword()">
+                    <i class="fas fa-save"></i> حفظ كلمة المرور
+                </button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(o);
+    setTimeout(() => o.querySelector('#_cpOld').focus(), 100);
+}
+
+async function doChangePassword() {
+    const oldP = document.getElementById('_cpOld').value;
+    const newP = document.getElementById('_cpNew').value;
+    const conf = document.getElementById('_cpConfirm').value;
+    const err = document.getElementById('_cpErr');
+
+    const oldHash = await hashPassword(oldP);
+    const stored = localStorage.getItem('adminHash');
+
+    if (oldHash !== stored) {
+        err.textContent = '❌ كلمة المرور الحالية غير صحيحة';
+        err.style.display = 'block';
+        return;
+    }
+    if (newP.length < 8) {
+        err.textContent = '⚠️ 8 أحرف على الأقل';
+        err.style.display = 'block';
+        return;
+    }
+    if (newP !== conf) {
+        err.textContent = '⚠️ كلمتا المرور غير متطابقتين';
+        err.style.display = 'block';
+        return;
+    }
+
+    localStorage.setItem('adminHash', await hashPassword(newP));
+    showToast('✅ تم تغيير كلمة المرور', 'success');
+    document.getElementById('changePassModal').remove();
+}
+
+async function showGenerateResetCodeModal() {
+    closeTempModal();
+    const hasExisting = !!localStorage.getItem('resetCodeHash');
+    if (hasExisting) {
+        if (!confirm('يوجد كود استعادة بالفعل. توليد كود جديد سيلغي القديم. متابعة؟')) return;
+    }
+    const code = generateResetCode();
+    localStorage.setItem('resetCodeHash', await sha256(code + PASSWORD_SALT));
+    showResetCodeModal(code);
+}
+
 function showResetCodeModal(code) {
     const o = document.createElement('div');
     o.className = 'modal-overlay show';
@@ -2042,26 +2107,31 @@ function showResetCodeModal(code) {
     o.querySelector('#_okR').onclick = () => { o.remove(); showToast('✅', 'success'); };
 }
 
+// ============================================================
+// PASSWORD PROMPT
+// ============================================================
 async function promptPasswordChange() {
     return new Promise(resolve => {
         const o = document.createElement('div');
         o.className = 'modal-overlay show';
         o.style.zIndex = '100002';
-        o.innerHTML = `<div class="modal-box" style="max-width:480px;"><div class="modal-header"><h3 style="color:var(--c-warning);"><i class="fas fa-shield-halved"></i> تنبيه أمني</h3></div><div style="padding:0 4px 16px;"><p style="font-size:14px;margin-bottom:16px;color:var(--c-text-2)">أنت تستخدم كلمة المرور الافتراضية. يجب تعيين كلمة مرور جديدة قبل الدخول.</p><div class="form-group"><label>كلمة المرور الجديدة (8+)</label><input type="password" id="_pN" autocomplete="new-password" /></div><div class="form-group"><label>تأكيد</label><input type="password" id="_pC" autocomplete="new-password" /></div><div id="_pE" style="color:var(--c-danger);font-size:13px;font-weight:600;margin-bottom:12px;display:none"></div><button id="_pOK" class="btn btn-success" style="width:100%;padding:12px;"><i class="fas fa-check"></i> تعيين</button></div></div>`;
+        o.innerHTML = `<div class="modal-box" style="max-width:480px;"><div class="modal-header"><h3 style="color:var(--c-warning);"><i class="fas fa-shield-halved"></i> تنبيه أمني</h3></div><div style="padding:0 4px 16px;"><p style="font-size:14px;margin-bottom:16px;color:var(--c-text-2)">أنت تستخدم كلمة المرور المؤقتة. يجب تعيين كلمة مرور جديدة خاصة بك قبل الدخول.</p><div class="form-group"><label>كلمة المرور الجديدة (8+)</label><input type="password" id="_pN" autocomplete="new-password" /></div><div class="form-group"><label>تأكيد</label><input type="password" id="_pC" autocomplete="new-password" /></div><div id="_pE" style="color:var(--c-danger);font-size:13px;font-weight:600;margin-bottom:12px;display:none"></div><button id="_pOK" class="btn btn-success" style="width:100%;padding:12px;"><i class="fas fa-check"></i> تعيين</button></div></div>`;
         document.body.appendChild(o);
-        o.querySelector('#_pN').focus();
+        setTimeout(() => o.querySelector('#_pN').focus(), 100);
         o.querySelector('#_pOK').onclick = () => {
             const p1 = o.querySelector('#_pN').value.trim();
             const p2 = o.querySelector('#_pC').value.trim();
             const err = o.querySelector('#_pE');
             if (p1.length < 8) { err.textContent = '⚠️ 8 أحرف على الأقل'; err.style.display = 'block'; return; }
-            if (p1 === 'admin123') { err.textContent = '⚠️ لا تستخدم الافتراضية'; err.style.display = 'block'; return; }
             if (p1 !== p2) { err.textContent = '⚠️ غير متطابقتين'; err.style.display = 'block'; return; }
             o.remove(); resolve(p1);
         };
     });
 }
 
+// ============================================================
+// REGISTER
+// ============================================================
 async function openRegisterMember() {
     const m = document.getElementById('registerMemberModal');
     if (!m) return;
@@ -2110,7 +2180,6 @@ async function registerMember() {
         res.innerHTML = `<div style="color:var(--c-success);font-weight:700;">✅ تم التسجيل!<br>الرقم: <strong>${id}</strong><br>كلمة المرور: <strong>${pass}</strong></div>`;
         res.style.background = 'var(--c-success-soft)';
         showToast(`✅ ${id}`, 'success');
-        // ✅ ส่ง WhatsApp ต้อนรับ
         if (phone) {
             setTimeout(() => {
                 const wa = formatPhoneForWhatsApp(phone);
@@ -2144,11 +2213,11 @@ async function registerAdmin() {
     const secret = $('regAdminSecret').value.trim(), pass = $('regAdminPass').value.trim(), conf = $('regAdminPassConfirm').value.trim(), r = $('regAdminResult');
     if (!(await verifyResetCode(secret))) { r.innerHTML = '<span style="color:var(--c-danger);font-weight:700">❌ كود غير صحيح</span>'; r.style.background = 'var(--c-danger-soft)'; return; }
     if (pass.length < 8) { r.innerHTML = '<span style="color:var(--c-danger)">⚠️ 8+</span>'; return; }
-    if (pass === 'admin123') { r.innerHTML = '<span style="color:var(--c-danger)">⚠️ لا تستخدم الافتراضية</span>'; return; }
     if (pass !== conf) { r.innerHTML = '<span style="color:var(--c-danger)">❌ غير متطابقة</span>'; return; }
     try {
         const hash = await hashPassword(pass);
         localStorage.setItem('adminHash', hash);
+        localStorage.removeItem('adminFirstTime');
         r.innerHTML = '<span style="color:var(--c-success);font-weight:700">✅ تم</span>';
         r.style.background = 'var(--c-success-soft)';
         showToast('✅ تم', 'success');
@@ -2156,6 +2225,9 @@ async function registerAdmin() {
     } catch (e) { r.innerHTML = `<span style="color:var(--c-danger)">${e.message}</span>`; }
 }
 
+// ============================================================
+// AUTH
+// ============================================================
 function checkAuth() {
     const session = secureGetSession();
     if (!session) return false;
@@ -2166,6 +2238,7 @@ function checkAuth() {
     const navItems = document.querySelectorAll('.nav-item');
     if (role === 'admin') {
         navItems.forEach(item => { item.style.display = item.dataset.page === 'profile' ? 'none' : 'flex'; });
+        $('securityBtn').style.display = 'flex';
         $('sidebarUserName').textContent = 'Admin';
         $('sidebarUserRole').textContent = 'مدير النظام';
         $('sidebarAvatar').textContent = 'A';
@@ -2173,6 +2246,7 @@ function checkAuth() {
         switchTab('dashboard');
     } else if (role === 'member') {
         navItems.forEach(item => { item.style.display = item.dataset.page === 'profile' ? 'flex' : 'none'; });
+        $('securityBtn').style.display = 'none';
         $('sidebarUserName').textContent = 'عضو';
         $('sidebarUserRole').textContent = 'مستخدم';
         $('sidebarAvatar').textContent = 'M';
@@ -2195,13 +2269,22 @@ async function handleLogin() {
     if (user === 'admin') {
         const hash = await hashPassword(pass);
         const stored = localStorage.getItem('adminHash');
-        const def = await hashPassword('admin123');
-        if (hash !== stored) { err.textContent = '❌ كلمة المرور غير صحيحة'; err.style.display = 'block'; return; }
-        if (hash === def) {
+        if (hash !== stored) { 
+            err.textContent = '❌ كلمة المرور غير صحيحة'; 
+            err.style.display = 'block'; 
+            return; 
+        }
+        // ✅ บังคับเปลี่ยน password ถ้ายังเป็นครั้งแรก
+        if (localStorage.getItem('adminFirstTime') === 'true') {
             const np = await promptPasswordChange();
-            if (!np) { err.textContent = '⚠️ يجب تعيين كلمة مرور جديدة'; err.style.display = 'block'; return; }
+            if (!np) { 
+                err.textContent = '⚠️ يجب تعيين كلمة مرور جديدة'; 
+                err.style.display = 'block'; 
+                return; 
+            }
             localStorage.setItem('adminHash', await hashPassword(np));
-            showToast('✅ سجّل الدخول مجدداً', 'success');
+            localStorage.removeItem('adminFirstTime');
+            showToast('✅ تم تعيين كلمة المرور. يرجى تسجيل الدخول مجدداً', 'success');
             $('loginPass').value = '';
             return;
         }
@@ -2238,6 +2321,7 @@ function logout() {
         secureClearSession();
         document.getElementById('loginPage').style.display = 'flex';
         document.getElementById('appMain').style.display = 'none';
+        $('securityBtn').style.display = 'none';
         showToast('👋', 'info');
         document.querySelectorAll('.nav-item').forEach(item => { item.style.display = 'flex'; });
         if (isSidebarOpen) toggleSidebar();
@@ -2297,7 +2381,11 @@ document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
         closeRegisterModal('registerMemberModal');
         closeRegisterModal('registerAdminModal');
-        const m = document.querySelector('.modal-overlay.show');
+        const cp = document.getElementById('changePassModal');
+        if (cp) cp.remove();
+        const ft = document.getElementById('firstTimeModal');
+        // ❌ ไม่ปิด first-time modal ด้วย Escape (บังคับอ่าน)
+        const m = document.querySelector('.modal-overlay.show:not(#firstTimeModal)');
         if (m) { const c = m.querySelector('.close'); if (c) c.click(); }
     }
 });
@@ -2308,16 +2396,19 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('offline', () => { $('offlineIndicator').style.display = 'block'; showToast('⚠️ لا اتصال', 'warning'); });
     if (!navigator.onLine) $('offlineIndicator').style.display = 'block';
 
+    // ✅ Initialization — ไม่มี default password อีกต่อไป
+    // ครั้งแรก: สร้าง random password + แสดง modal
     if (!localStorage.getItem('adminHash')) {
         (async () => {
-            localStorage.setItem('adminHash', await hashPassword('admin123'));
-            console.info('🔐 System initialized. Password change on first login.');
+            const randomPass = generateFirstTimePassword();
+            localStorage.setItem('adminHash', await hashPassword(randomPass));
+            localStorage.setItem('adminFirstTime', 'true');
+            // แสดง modal หลังโหลดเสร็จ
+            setTimeout(() => {
+                showFirstTimeSetupModal(randomPass);
+            }, 600);
         })();
     }
-    (async () => {
-        const info = await getOrCreateResetHash();
-        if (info.isNew) setTimeout(() => showResetCodeModal(info.code), 1500);
-    })();
 
     const loggedIn = checkAuth();
     if (!loggedIn) { document.getElementById('loginPage').style.display = 'flex'; document.getElementById('appMain').style.display = 'none'; testConnection(); }
